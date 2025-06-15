@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+
+const staff = [
+  {
+    name: 'ふじ',
+    role: '代表・科学実験講師',
+    image: '/images/staff-fuji.jpg',
+    description: '元プラネタリウム解説員として、宇宙や科学の魅力を多くの人に伝えてきました。子どもたちの「なぜ？」を大切に、科学の楽しさを体験できるプログラムを提供しています。',
+    qualifications: [
+      'プラネタリウム解説員経験',
+      '理科教育指導員',
+      '科学コミュニケーター'
+    ],
+    message: '科学は身近なところにあふれています。日常の「不思議」を一緒に解き明かしていきましょう！'
+  },
+  {
+    name: 'ご主人様',
+    role: '天文教育担当・星空写真家',
+    image: '/images/staff-master.jpg',
+    description: '大学非常勤講師として天文学を教えながら、星空写真家として活動。美しい星空の魅力と宇宙の神秘を、観望会や写真を通じて伝えています。',
+    qualifications: [
+      '大学非常勤講師（天文学）',
+      '天体写真家',
+      '天文教育普及員'
+    ],
+    message: '本物の星空を見上げる感動を、多くの人と共有したい。宇宙の壮大さを一緒に感じてみませんか？'
+  }
+];
+---
+
+<Layout title="スタッフ紹介">
+  <Header />
+  
+  <main class="flex-grow">
+    <Hero 
+      title="スタッフ紹介"
+      subtitle="科学の楽しさを伝えるプロフェッショナル"
+      useAurora={true}
+      showStars={true}
+    />
+    
+    <!-- Mission Section -->
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto text-center mb-16">
+          <h2 class="text-3xl font-bold text-text-dark mb-6">私たちの想い</h2>
+          <p class="text-lg text-text-gray leading-relaxed">
+            「科学の楽しさを伝え、世界をワクワクでいっぱいにする」<br /><br />
+            これが私たちサイエンス アンド スペース ラボ DONATIのミッションです。<br />
+            科学は難しいものではなく、身近で楽しいもの。<br />
+            子どもから大人まで、すべての人に科学の魅力を感じていただけるよう、<br />
+            情熱を持って活動しています。
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Staff Profiles -->
+    <section class="py-16 bg-gray-50">
+      <div class="container-custom">
+        <h2 class="text-3xl font-bold text-center text-text-dark mb-12">スタッフプロフィール</h2>
+        
+        <div class="space-y-16">
+          {staff.map((member, index) => (
+            <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
+                <div class="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
+                  <span class="text-6xl">{index === 0 ? '👩‍🔬' : '👨‍🏫'}</span>
+                </div>
+              </div>
+              
+              <div class={index % 2 === 1 ? 'lg:order-1' : ''}>
+                <h3 class="text-2xl font-bold text-text-dark mb-2">{member.name}</h3>
+                <p class="text-space-blue font-semibold mb-4">{member.role}</p>
+                <p class="text-text-gray mb-6 leading-relaxed">{member.description}</p>
+                
+                <div class="mb-6">
+                  <h4 class="font-semibold mb-3">資格・経歴</h4>
+                  <ul class="space-y-2">
+                    {member.qualifications.map((qualification) => (
+                      <li class="flex items-start">
+                        <svg class="w-5 h-5 text-accent-green mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-text-gray">{qualification}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-space-blue p-4 rounded">
+                  <p class="text-text-dark italic">「{member.message}」</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- Values Section -->
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <h2 class="text-3xl font-bold text-center text-text-dark mb-12">大切にしていること</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div class="text-center">
+            <div class="w-20 h-20 bg-accent-orange bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-3xl">💡</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">好奇心を育む</h3>
+            <p class="text-text-gray">
+              「なぜ？」「どうして？」という疑問を大切に、探求心を育てます
+            </p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-accent-green bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-3xl">🤝</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">体験を重視</h3>
+            <p class="text-text-gray">
+              実際に見て、触れて、体験することで深い理解と感動を提供します
+            </p>
+          </div>
+          
+          <div class="text-center">
+            <div class="w-20 h-20 bg-space-blue bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span class="text-3xl">🌟</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">楽しく学ぶ</h3>
+            <p class="text-text-gray">
+              科学は楽しい！ワクワクする気持ちを大切に学びをサポートします
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="py-16 bg-gradient-to-r from-space-blue to-deep-blue text-white">
+      <div class="container-custom text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">
+          私たちと一緒に科学の楽しさを体験しませんか？
+        </h2>
+        <p class="text-lg mb-8">
+          お気軽にお問い合わせください
+        </p>
+        <a href="/contact" class="btn-secondary inline-block">
+          お問い合わせはこちら
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

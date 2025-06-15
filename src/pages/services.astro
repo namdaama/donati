@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import StarrySection from '../components/StarrySection.astro';
+
+const services = [
+  {
+    id: 'science-show',
+    title: '科学実験ショー',
+    subtitle: '驚きと発見の体験型サイエンスショー',
+    description: '身近な材料を使った迫力ある実験を通じて、科学の楽しさや不思議さを体感できるショー形式のプログラムです。',
+    features: [
+      '対象年齢：幼児〜中学生（内容により調整可能）',
+      '所要時間：45分〜90分',
+      '参加人数：10名〜300名程度',
+      '出張対応可能'
+    ],
+    programs: [
+      '空気の力を体感！大気圧実験ショー',
+      '光と色の不思議！虹を作ろう',
+      '化学反応マジック！色が変わる実験',
+      '静電気パワー！電気の実験ショー'
+    ]
+  },
+  {
+    id: 'workshop',
+    title: '科学ワークショップ',
+    subtitle: '手を動かして学ぶ体験型教室',
+    description: '実際に手を動かして実験や工作を行うことで、科学の原理を楽しく学べるプログラムです。',
+    features: [
+      '対象年齢：小学生〜中学生',
+      '所要時間：60分〜120分',
+      '参加人数：5名〜30名程度',
+      '材料費別途'
+    ],
+    programs: [
+      'スライム作りで学ぶ高分子化学',
+      '顕微鏡で見る小さな世界',
+      'ロボットプログラミング入門',
+      '天体望遠鏡を作ろう'
+    ]
+  },
+  {
+    id: 'inquiry',
+    title: '探求学習プログラム',
+    subtitle: '科学的思考力を育む特別カリキュラム',
+    description: '「なぜ？」から始まる探求心を大切に、仮説・実験・考察のサイクルを通じて科学的思考力を育みます。',
+    features: [
+      '対象年齢：小学3年生〜6年生',
+      '期間：3ヶ月〜1年（月2回程度）',
+      '定員：10名程度',
+      '少人数制で個別指導'
+    ],
+    programs: [
+      '身の回りの科学を探求しよう',
+      '実験計画の立て方を学ぼう',
+      'データ分析と考察の方法',
+      '研究発表会への挑戦'
+    ]
+  },
+  {
+    id: 'stargazing',
+    title: '星空観望会・天文教室',
+    subtitle: '本物の星空で学ぶ宇宙の神秘',
+    description: '天体望遠鏡を使った観望会や、プラネタリウム解説員の経験を活かした星空案内をお届けします。',
+    features: [
+      '対象：全年齢',
+      '所要時間：90分〜180分',
+      '参加人数：10名〜100名程度',
+      '天候により内容変更あり'
+    ],
+    programs: [
+      '季節の星座と天体観察',
+      '月のクレーター観察会',
+      '惑星観望会（木星・土星・火星）',
+      '流星群観察会'
+    ]
+  }
+];
+---
+
+<Layout title="事業紹介">
+  <Header />
+  
+  <main class="flex-grow">
+    <Hero 
+      title="事業紹介"
+      subtitle="科学の楽しさを伝える多彩なプログラム"
+    />
+    
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto mb-16 text-center">
+          <p class="text-lg text-text-gray">
+            サイエンス アンド スペース ラボ DONATIでは、<br class="hidden md:inline" />
+            年齢や目的に合わせた様々な科学教育プログラムをご提供しています。<br />
+            学校での授業、イベント、企業研修など、ご要望に応じてカスタマイズも可能です。
+          </p>
+        </div>
+        
+        {services.map((service, index) => (
+          <div id={service.id} class={`${index !== 0 ? 'mt-24' : ''}`}>
+            <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
+                <h2 class="text-3xl font-bold text-text-dark mb-3">{service.title}</h2>
+                <p class="text-xl text-space-blue mb-6">{service.subtitle}</p>
+                <p class="text-text-gray mb-8">{service.description}</p>
+                
+                <div class="mb-8">
+                  <h3 class="text-lg font-semibold mb-4">実施要項</h3>
+                  <ul class="space-y-2">
+                    {service.features.map((feature) => (
+                      <li class="flex items-start">
+                        <svg class="w-5 h-5 text-accent-green mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-text-gray">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h3 class="text-lg font-semibold mb-4">プログラム例</h3>
+                  <ul class="space-y-2">
+                    {service.programs.map((program) => (
+                      <li class="flex items-start">
+                        <span class="text-accent-orange mr-2">▶</span>
+                        <span class="text-text-gray">{program}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              <div class={`bg-gray-100 rounded-lg h-96 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <span class="text-6xl">{service.id === 'science-show' ? '🧪' : service.id === 'workshop' ? '🔬' : service.id === 'inquiry' ? '🧠' : '🔭'}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div class="mt-24 bg-gradient-to-r from-space-blue to-deep-blue text-white rounded-2xl p-8 md:p-12 text-center">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">
+            プログラムのご相談・お見積もりは無料です
+          </h2>
+          <p class="text-lg mb-8 max-w-2xl mx-auto">
+            ご要望に合わせてカスタマイズいたします。<br />
+            まずはお気軽にお問い合わせください。
+          </p>
+          <a href="/contact" class="btn-secondary inline-block">
+            お問い合わせ・ご相談はこちら
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

@@ -1,0 +1,31 @@
+---
+import Stars from './Stars.astro';
+
+export interface Props {
+  className?: string;
+  children?: any;
+}
+
+const { className = '' } = Astro.props;
+---
+
+<section class={`relative bg-gradient-to-b from-deep-blue via-indigo-900 to-black overflow-hidden ${className}`}>
+  <Stars className="absolute inset-0" quantity={300} size={0.7} />
+  
+  <!-- Milky Way effect -->
+  <div class="absolute inset-0 opacity-20">
+    <div class="absolute inset-0 bg-gradient-to-br from-transparent via-white/10 to-transparent transform rotate-45"></div>
+  </div>
+  
+  <!-- Content -->
+  <div class="relative z-10">
+    <slot />
+  </div>
+</section>
+
+<style>
+  section {
+    position: relative;
+    min-height: 400px;
+  }
+</style>

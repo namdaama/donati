@@ -1,0 +1,110 @@
+---
+export interface Props {
+  className?: string;
+  quantity?: number;
+  staticity?: number;
+  ease?: number;
+  size?: number;
+  refresh?: boolean;
+}
+
+const { 
+  className = '', 
+  quantity = 100,
+  staticity = 200,
+  ease = 100,
+  size = 0.4,
+  refresh = true
+} = Astro.props;
+
+// Generate random stars
+const stars = Array.from({ length: quantity }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * size + 0.1,
+  animationDuration: Math.random() * 10 + 5,
+  animationDelay: Math.random() * 10,
+}));
+---
+
+<div class={`stars-container ${className}`}>
+  <svg class="stars-svg" aria-hidden="true">
+    <defs>
+      <filter id="star-glow">
+        <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+        <feMerge>
+          <feMergeNode in="coloredBlur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    </defs>
+    {stars.map((star) => (
+      <circle
+        key={star.id}
+        cx={`${star.x}%`}
+        cy={`${star.y}%`}
+        r={star.size}
+        class="star"
+        style={`
+          animation-duration: ${star.animationDuration}s;
+          animation-delay: ${star.animationDelay}s;
+        `}
+      />
+    ))}
+  </svg>
+</div>
+
+<style>
+  .stars-container {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .stars-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+
+  .star {
+    fill: white;
+    filter: url(#star-glow);
+    opacity: 0;
+    animation: twinkle linear infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  /* Add shooting star effect for some stars */
+  .star:nth-child(3n) {
+    animation-name: shooting-star;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes shooting-star {
+    0% {
+      opacity: 0;
+      transform: translateX(0) translateY(0) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translateX(10px) translateY(10px) scale(1.2);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(20px) translateY(20px) scale(0.8);
+    }
+  }
+</style>

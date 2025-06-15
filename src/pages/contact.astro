@@ -1,0 +1,120 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+
+const contactTypes = [
+  '科学実験ショーのご依頼',
+  'ワークショップのご依頼',
+  '星空観望会のご依頼',
+  '探求学習プログラムのご相談',
+  'その他のお問い合わせ'
+];
+---
+
+<Layout title="お問い合わせ">
+  <Header />
+  
+  <main class="flex-grow">
+    <Hero 
+      title="お問い合わせ"
+      subtitle="お気軽にご相談ください"
+    />
+    
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <p class="text-lg text-text-gray">
+              科学実験ショー、ワークショップ、星空観望会など、<br />
+              各種プログラムのご依頼・ご相談を承っております。<br />
+              まずはお気軽にお問い合わせください。
+            </p>
+          </div>
+          
+          <!-- Contact Form Info -->
+          <div class="bg-white rounded-lg shadow-lg p-8 mb-12">
+            <h2 class="text-2xl font-bold text-text-dark mb-6">お問い合わせフォーム</h2>
+            
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold mb-4">お問い合わせ種別</h3>
+              <ul class="space-y-2">
+                {contactTypes.map((type) => (
+                  <li class="flex items-center">
+                    <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-text-gray">{type}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div class="bg-gray-50 p-6 rounded-lg">
+              <p class="text-center text-text-gray mb-4">
+                お問い合わせは以下のGoogleフォームからお願いいたします
+              </p>
+              <div class="text-center">
+                <a 
+                  href="#" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="btn-primary inline-block"
+                >
+                  お問い合わせフォームを開く
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Response Time -->
+          <div class="bg-blue-50 border-l-4 border-space-blue p-6 rounded-lg mb-12">
+            <h3 class="font-semibold text-text-dark mb-2">ご返信について</h3>
+            <p class="text-text-gray">
+              お問い合わせいただいた内容は、通常2〜3営業日以内にご返信いたします。<br />
+              お急ぎの場合は、その旨をフォームにご記入ください。
+            </p>
+          </div>
+          
+          <!-- FAQ -->
+          <div>
+            <h2 class="text-2xl font-bold text-text-dark mb-6">よくあるご質問</h2>
+            
+            <div class="space-y-4">
+              <details class="bg-white rounded-lg shadow p-6">
+                <summary class="font-semibold cursor-pointer">出張エリアはどこまで対応可能ですか？</summary>
+                <p class="mt-4 text-text-gray">
+                  関東圏を中心に活動していますが、全国どこでも出張可能です。遠方の場合は交通費・宿泊費等が別途必要となります。
+                </p>
+              </details>
+              
+              <details class="bg-white rounded-lg shadow p-6">
+                <summary class="font-semibold cursor-pointer">料金はどのくらいですか？</summary>
+                <p class="mt-4 text-text-gray">
+                  プログラム内容、参加人数、時間などにより異なります。お見積もりは無料ですので、まずはお気軽にご相談ください。
+                </p>
+              </details>
+              
+              <details class="bg-white rounded-lg shadow p-6">
+                <summary class="font-semibold cursor-pointer">どのくらい前に予約が必要ですか？</summary>
+                <p class="mt-4 text-text-gray">
+                  ご希望日の1ヶ月前までにご連絡いただけると確実です。直前のご依頼も可能な限り対応いたしますので、ご相談ください。
+                </p>
+              </details>
+              
+              <details class="bg-white rounded-lg shadow p-6">
+                <summary class="font-semibold cursor-pointer">雨天時の星空観望会はどうなりますか？</summary>
+                <p class="mt-4 text-text-gray">
+                  室内での星空解説や、天体に関する実験・工作などの代替プログラムをご用意しています。中止の場合はキャンセル料はいただきません。
+                </p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

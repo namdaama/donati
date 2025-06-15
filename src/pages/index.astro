@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AchievementCard from '../components/AchievementCard.astro';
+import NewsCard from '../components/NewsCard.astro';
+
+const services = [
+  {
+    title: '科学実験ショー',
+    description: '楽しく学べる体験型の科学実験ショー。子どもたちの「なぜ？」「どうして？」を引き出します。',
+    icon: '🧪',
+    link: '/services#science-show',
+    color: 'accent-orange'
+  },
+  {
+    title: '科学ワークショップ',
+    description: '手を動かして学ぶ実験教室。科学の原理を体験しながら理解を深めます。',
+    icon: '🔬',
+    link: '/services#workshop',
+    color: 'accent-green'
+  },
+  {
+    title: '探求学習プログラム',
+    description: '科学的思考力を育む特別プログラム。問題解決能力を楽しく身につけます。',
+    icon: '🧠',
+    link: '/services#inquiry',
+    color: 'space-blue'
+  },
+  {
+    title: '星空観望会',
+    description: '本物の星空を見上げる感動体験。宇宙の神秘を専門解説とともにお届けします。',
+    icon: '🔭',
+    link: '/services#stargazing',
+    color: 'deep-blue'
+  }
+];
+
+const recentAchievements = [
+  {
+    title: '○○小学校 科学実験ショー',
+    date: '2024年3月15日',
+    location: '東京都',
+    description: '全校児童300名を対象に、空気の力をテーマにした実験ショーを実施しました。'
+  },
+  {
+    title: '夏休み科学ワークショップ',
+    date: '2024年8月5日',
+    location: '神奈川県',
+    description: '親子30組が参加。スライム作りと化学反応について楽しく学びました。'
+  },
+  {
+    title: '星空観望会 in ○○キャンプ場',
+    date: '2024年7月20日',
+    location: '山梨県',
+    description: '満天の星空の下、土星の環や月のクレーターを観察しました。'
+  }
+];
+
+const recentNews = [
+  {
+    title: '2024年夏休み特別プログラムの受付開始',
+    date: '2024年5月1日',
+    category: 'お知らせ',
+    excerpt: '今年も夏休み期間中の特別科学教室を開催します。人気のプログラムは早めのご予約をお勧めします。',
+    link: '/news/summer-2024'
+  },
+  {
+    title: '新プログラム「探求学習コース」スタート',
+    date: '2024年4月15日',
+    category: 'お知らせ',
+    excerpt: '科学的思考力を育む新しいプログラムを開始しました。小学3年生から6年生が対象です。',
+    link: '/news/new-program'
+  },
+  {
+    title: '春の星空観望会レポート',
+    date: '2024年3月25日',
+    category: 'レポート',
+    excerpt: '春の大三角形と北斗七星を観察した観望会の様子をレポートします。',
+    link: '/news/spring-stargazing'
+  }
+];
+---
+
+<Layout title="ホーム">
+  <Header />
+  
+  <main class="flex-grow">
+    <!-- Hero Section -->
+    <Hero 
+      title="科学の楽しさを伝え、世界をワクワクでいっぱいにする"
+      subtitle="サイエンス アンド スペース ラボ DONATIは、科学実験ショーや星空観望会を通じて、子どもから大人まで科学の魅力をお伝えします"
+      ctaText="事業内容を見る"
+      ctaLink="/services"
+      useAurora={true}
+      showStars={true}
+    />
+    
+    <!-- Services Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">事業紹介</h2>
+          <p class="text-lg text-text-gray max-w-2xl mx-auto">
+            科学の楽しさを体験できる様々なプログラムをご用意しています
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((service) => (
+            <ServiceCard {...service} />
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- Achievements Section -->
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">活動実績</h2>
+          <p class="text-lg text-text-gray max-w-2xl mx-auto">
+            これまでに実施した科学実験ショーやワークショップの一部をご紹介します
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {recentAchievements.map((achievement) => (
+            <AchievementCard {...achievement} />
+          ))}
+        </div>
+        
+        <div class="text-center">
+          <a href="/achievements" class="btn-primary inline-block">
+            もっと見る
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- News Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+      <div class="container-custom">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">お知らせ</h2>
+          <p class="text-lg text-text-gray max-w-2xl mx-auto">
+            最新の活動情報やイベントのお知らせをお届けします
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {recentNews.map((news) => (
+            <NewsCard {...news} />
+          ))}
+        </div>
+        
+        <div class="text-center">
+          <a href="/news" class="btn-primary inline-block">
+            すべてのお知らせを見る
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-16 md:py-24 bg-gradient-to-r from-space-blue to-deep-blue text-white">
+      <div class="container-custom text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+          科学の楽しさを一緒に体験しませんか？
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          科学実験ショー、ワークショップ、星空観望会など、<br class="hidden md:inline" />
+          ご要望に合わせたプログラムをご提案いたします
+        </p>
+        <a href="/contact" class="btn-secondary inline-block text-lg">
+          お問い合わせはこちら
+        </a>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>

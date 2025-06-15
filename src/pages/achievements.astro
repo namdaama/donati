@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Hero from '../components/Hero.astro';
+import AchievementCard from '../components/AchievementCard.astro';
+
+const achievements = [
+  {
+    title: '○○市立科学館 夏休み特別実験ショー',
+    date: '2024年8月10日',
+    location: '東京都○○市',
+    description: '「空気の不思議」をテーマに、大気圧や真空の実験を実施。200名以上の親子が参加し、大盛況でした。',
+    category: '科学実験ショー'
+  },
+  {
+    title: '△△小学校 理科特別授業',
+    date: '2024年7月5日',
+    location: '神奈川県△△市',
+    description: '6年生を対象に「化学反応の不思議」について実験授業を実施。酸とアルカリの中和反応を体験しました。',
+    category: '科学実験ショー'
+  },
+  {
+    title: '夏休み親子科学教室',
+    date: '2024年7月25日',
+    location: 'オンライン開催',
+    description: 'スライム作りを通じて高分子について学ぶワークショップ。全国から30組の親子が参加しました。',
+    category: 'ワークショップ'
+  },
+  {
+    title: '□□キャンプ場 星空観望会',
+    date: '2024年7月15日',
+    location: '山梨県□□郡',
+    description: '土星の環と木星の縞模様を観察。天の川も美しく見え、参加者から感動の声をいただきました。',
+    category: '星空観望会'
+  },
+  {
+    title: '春の探求学習プログラム',
+    date: '2024年4月〜6月',
+    location: '東京都内',
+    description: '3ヶ月間の探求学習プログラムを実施。10名の小学生が身の回りの科学について研究発表を行いました。',
+    category: '探求学習'
+  },
+  {
+    title: '企業向け科学コミュニケーション研修',
+    date: '2024年5月20日',
+    location: '東京都千代田区',
+    description: '技術系企業の社員向けに、科学を分かりやすく伝えるコミュニケーション研修を実施しました。',
+    category: 'その他'
+  }
+];
+
+const stats = [
+  { label: '実施回数', value: '150+', unit: '回' },
+  { label: '参加者数', value: '5,000+', unit: '名' },
+  { label: '実施都道府県', value: '15', unit: '都道府県' },
+  { label: '満足度', value: '98', unit: '%' }
+];
+---
+
+<Layout title="活動実績">
+  <Header />
+  
+  <main class="flex-grow">
+    <Hero 
+      title="活動実績"
+      subtitle="これまでの活動をご紹介します"
+      showStars={true}
+    />
+    
+    <!-- Stats Section -->
+    <section class="py-12 bg-gray-50">
+      <div class="container-custom">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+          {stats.map((stat) => (
+            <div class="text-center">
+              <div class="text-3xl md:text-4xl font-bold text-space-blue">{stat.value}<span class="text-xl">{stat.unit}</span></div>
+              <div class="text-text-gray mt-2">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- Achievements List -->
+    <section class="py-16 md:py-24">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto mb-12 text-center">
+          <p class="text-lg text-text-gray">
+            2023年の設立以来、様々な場所で科学の楽しさをお伝えしてきました。<br />
+            以下は最近の活動実績の一部です。
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          {achievements.map((achievement) => (
+            <AchievementCard {...achievement} />
+          ))}
+        </div>
+        
+        <div class="text-center">
+          <p class="text-text-gray mb-8">
+            この他にも多数の実績がございます。<br />
+            詳細についてはお気軽にお問い合わせください。
+          </p>
+          <a href="/contact" class="btn-primary inline-block">
+            お問い合わせはこちら
+          </a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="py-16 md:py-24 bg-gray-50">
+      <div class="container-custom">
+        <h2 class="text-3xl font-bold text-center text-text-dark mb-12">お客様の声</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-text-gray mb-4">
+              「子どもたちの目がキラキラと輝いていました。科学への興味を引き出す素晴らしいショーでした。」
+            </p>
+            <p class="text-sm font-semibold">— ○○小学校 理科担当教諭</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-text-gray mb-4">
+              「難しい内容を分かりやすく、楽しく伝えていただきました。また次回もお願いしたいです。」
+            </p>
+            <p class="text-sm font-semibold">— 科学館イベント担当者</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-text-gray mb-4">
+              「星空観望会で初めて土星の環を見ました。一生の思い出になる体験でした。」
+            </p>
+            <p class="text-sm font-semibold">— 観望会参加者</p>
+          </div>
+          
+          <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-text-gray mb-4">
+              「探求学習プログラムで、息子が自分で考える力がついたと実感しています。」
+            </p>
+            <p class="text-sm font-semibold">— プログラム参加者保護者</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <Footer />
+</Layout>
