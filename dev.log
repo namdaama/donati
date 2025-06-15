@@ -1,0 +1,71 @@
+
+> donati-website@0.0.1 dev
+> astro dev
+
+17:23:26 [types] Generated 0ms
+
+ astro  v4.16.18 ready in 169 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+17:23:26 watching for file changes...
+17:23:44 [200] / 7ms
+17:24:00 [watch] src/layouts/Layout.astro
+17:24:06 [watch] src/pages/index.astro
+17:24:15 [watch] src/layouts/Layout.astro
+17:24:25 [200] / 7ms
+17:25:22 [watch] src/pages/services.astro
+17:25:28 [watch] src/pages/achievements.astro
+17:25:34 [watch] src/pages/about.astro
+17:25:41 [watch] src/pages/contact.astro
+17:25:48 [watch] src/pages/news/index.astro
+17:26:30 [200] /services 6ms
+17:26:38 [200] /achievements 7ms
+17:26:54 [200] /about 3ms
+17:27:04 [200] /contact 2ms
+17:27:15 [200] /news 2ms
+17:27:32 [200] /services 4ms
+17:27:40 [200] / 8ms
+17:28:20 [200] / 2ms
+17:28:22 [404] /favicon.svg 2ms
+17:33:01 [watch] src/components/Hero.astro
+17:33:02 [200] / 3ms
+17:33:21 [watch] src/components/Hero.astro
+17:33:22 [200] / 3ms
+17:33:32 [watch] src/pages/index.astro
+17:33:33 [200] / 4ms
+17:36:30 [200] / 6ms
+17:36:47 [200] / 5ms
+17:36:48 [404] /favicon.svg 1ms
+17:36:50 [200] / 4ms
+17:37:48 [watch] src/components/Hero.astro
+17:37:49 [200] / 5ms
+17:37:49 [200] / 5ms
+17:38:05 [watch] src/components/Hero.astro
+17:38:06 [200] / 7ms
+17:38:06 [200] / 7ms
+17:38:23 [watch] src/pages/index.astro
+17:38:24 [200] / 7ms
+17:38:24 [200] / 7ms
+17:38:44 [watch] src/pages/services.astro
+17:38:45 [200] / 7ms
+17:38:45 [200] / 7ms
+17:38:53 [watch] src/pages/achievements.astro
+17:38:54 [200] / 5ms
+17:38:54 [200] / 6ms
+17:39:12 [watch] src/pages/about.astro
+17:39:13 [200] / 6ms
+17:39:13 [200] / 6ms
+17:39:19 [200] / 9ms
+17:41:21 [200] / 7ms
+17:42:39 [200] / 11ms
+18:35:21 [watch] src/components/Stars.astro
+18:35:22 [200] / 7ms
+18:35:27 [watch] src/components/Stars.astro
+18:35:28 [200] / 3ms
+18:35:35 [watch] src/components/Stars.astro
+18:35:36 [200] / 3ms
+18:35:36 [404] /favicon.svg 0ms
+18:35:57 [watch] src/pages/services.astro
+18:35:58 [200] / 5ms

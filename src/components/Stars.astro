@@ -2,19 +2,13 @@
 export interface Props {
   className?: string;
   quantity?: number;
-  staticity?: number;
-  ease?: number;
   size?: number;
-  refresh?: boolean;
 }
 
 const { 
   className = '', 
   quantity = 100,
-  staticity = 200,
-  ease = 100,
-  size = 0.4,
-  refresh = true
+  size = 0.4
 } = Astro.props;
 
 // Generate random stars
@@ -41,7 +35,6 @@ const stars = Array.from({ length: quantity }, (_, i) => ({
     </defs>
     {stars.map((star) => (
       <circle
-        key={star.id}
         cx={`${star.x}%`}
         cy={`${star.y}%`}
         r={star.size}
