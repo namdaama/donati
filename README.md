@@ -4,10 +4,12 @@
 
 ## 技術スタック
 
-- **Framework**: Astro
+- **Framework**: Astro 4.16
 - **Styling**: TailwindCSS
 - **CMS**: microCMS (準備済み)
 - **Language**: TypeScript
+- **画像管理**: 静的ファイル（public/images）
+- **外部連携**: Instagram埋め込み、Googleフォーム
 
 ## スマホ対応
 
@@ -35,24 +37,53 @@ npm run build
 npm run preview
 ```
 
+## 機能
+
+- **トップページカルーセル**: 自動スライド機能付きの画像カルーセル
+- **Instagram連携**: 最新の活動を表示
+- **お問い合わせフォーム**: Googleフォーム埋め込み
+- **レスポンシブデザイン**: モバイル・タブレット・デスクトップ対応
+- **高速表示**: Astroの静的サイト生成による最適化
+
 ## 環境変数
 
-`.env.example` を `.env` にコピーして、microCMSの認証情報を設定してください：
+`.env.example` を `.env` にコピーして、必要な情報を設定してください：
 
 ```env
+# microCMS設定（秘密情報）
 MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
+
+# 公開情報（PUBLIC_プレフィックス付き）
+PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
+PUBLIC_GOOGLE_FORM_ID=your-google-form-id
+PUBLIC_TWITTER_URL=
+PUBLIC_FACEBOOK_URL=
 ```
 
 ## ディレクトリ構造
 
 ```
 src/
-├── components/    # 再利用可能なコンポーネント
-├── layouts/       # ページレイアウト
-├── pages/         # ページファイル
-├── styles/        # グローバルスタイル
-└── lib/          # ユーティリティとAPI連携
+├── components/        # 再利用可能なコンポーネント
+│   ├── Carousel.astro        # カルーセルコンポーネント
+│   ├── InstagramSection.astro # Instagram埋め込み
+│   └── ...
+├── config/           # サイト設定
+│   └── site.ts      # URLやデータの一元管理
+├── layouts/          # ページレイアウト
+├── pages/            # ページファイル
+│   ├── index.astro  # トップページ
+│   ├── contact.astro # お問い合わせ（Googleフォーム）
+│   └── ...
+├── styles/           # グローバルスタイル
+└── lib/             # ユーティリティとAPI連携
+
+public/
+├── images/          # 静的画像ファイル
+│   ├── carousel/    # カルーセル用画像
+│   └── ...
+└── ...
 ```
 
 ## デプロイ
@@ -65,6 +96,8 @@ src/
 4. 環境変数を設定:
    - `MICROCMS_SERVICE_DOMAIN`: microCMSのサービスドメイン
    - `MICROCMS_API_KEY`: microCMSのAPIキー
+   - `PUBLIC_INSTAGRAM_URL`: InstagramプロフィールURL
+   - `PUBLIC_GOOGLE_FORM_ID`: GoogleフォームID
 5. 「Deploy」をクリック
 
 以降、`main`ブランチへのプッシュで自動的にデプロイされます。
