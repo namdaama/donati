@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import CustomCursorStarTheme from '../components/CustomCursor-StarTheme.astro';
 
 export interface Props {
   title: string;
@@ -28,6 +29,7 @@ const { title, description = 'サイエンス アンド スペース ラボ DONA
     <!-- Global Styles -->
   </head>
   <body class="min-h-screen flex flex-col">
+    <CustomCursorStarTheme />
     <slot />
   </body>
 </html>

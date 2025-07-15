@@ -1,0 +1,211 @@
+---
+// カスタムカーソルコンポーネント
+---
+
+<div class="custom-cursor" id="custom-cursor"></div>
+<div class="custom-cursor-follower" id="custom-cursor-follower"></div>
+
+<style>
+  /* カスタムカーソル本体 */
+  .custom-cursor {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-primary, #2c5aa0);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+    mix-blend-mode: difference;
+  }
+
+  /* カーソルフォロワー（追従する大きな円） */
+  .custom-cursor-follower {
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--color-primary, #2c5aa0);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.3s ease-out;
+    opacity: 0.3;
+  }
+
+  /* ホバー時のエフェクト */
+  .custom-cursor.hover {
+    transform: scale(2);
+    background-color: var(--color-primary, #2c5aa0);
+    opacity: 0.5;
+  }
+
+  .custom-cursor-follower.hover {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+
+  /* クリック時のエフェクト */
+  .custom-cursor.click {
+    transform: scale(0.8);
+  }
+
+  /* リンクホバー時 */
+  .custom-cursor.link-hover {
+    transform: scale(3);
+    background-color: var(--color-secondary, #f4a261);
+    border-color: var(--color-secondary, #f4a261);
+  }
+
+  /* テキスト選択時 */
+  .custom-cursor.text {
+    width: 2px;
+    height: 20px;
+    border-radius: 0;
+  }
+
+  /* タッチデバイスでは非表示 */
+  @media (hover: none) and (pointer: coarse) {
+    .custom-cursor,
+    .custom-cursor-follower {
+      display: none;
+    }
+  }
+
+  /* デフォルトカーソルを非表示 */
+  body.custom-cursor-active {
+    cursor: none;
+  }
+
+  body.custom-cursor-active * {
+    cursor: none !important;
+  }
+</style>
+
+<script>
+  class CustomCursor {
+    private cursor: HTMLElement;
+    private follower: HTMLElement;
+    private cursorPos = { x: 0, y: 0 };
+    private followerPos = { x: 0, y: 0 };
+    private isTouch = false;
+
+    constructor() {
+      this.cursor = document.getElementById('custom-cursor')!;
+      this.follower = document.getElementById('custom-cursor-follower')!;
+      
+      // タッチデバイスチェック
+      this.isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      
+      if (!this.isTouch) {
+        this.init();
+      }
+    }
+
+    init() {
+      // カスタムカーソルを有効化
+      document.body.classList.add('custom-cursor-active');
+      
+      // マウス移動イベント
+      document.addEventListener('mousemove', (e) => {
+        this.cursorPos.x = e.clientX;
+        this.cursorPos.y = e.clientY;
+        
+        // カーソル本体は即座に追従
+        this.cursor.style.left = `${this.cursorPos.x - 5}px`;
+        this.cursor.style.top = `${this.cursorPos.y - 5}px`;
+      });
+
+      // フォロワーのアニメーション
+      this.animateFollower();
+
+      // ホバーイベント
+      this.setupHoverEffects();
+
+      // クリックイベント
+      document.addEventListener('mousedown', () => {
+        this.cursor.classList.add('click');
+      });
+
+      document.addEventListener('mouseup', () => {
+        this.cursor.classList.remove('click');
+      });
+
+      // ページ離脱時
+      document.addEventListener('mouseleave', () => {
+        this.cursor.style.opacity = '0';
+        this.follower.style.opacity = '0';
+      });
+
+      document.addEventListener('mouseenter', () => {
+        this.cursor.style.opacity = '1';
+        this.follower.style.opacity = '0.3';
+      });
+    }
+
+    animateFollower() {
+      // フォロワーを滑らかに追従させる
+      const animate = () => {
+        this.followerPos.x += (this.cursorPos.x - this.followerPos.x) * 0.1;
+        this.followerPos.y += (this.cursorPos.y - this.followerPos.y) * 0.1;
+        
+        this.follower.style.left = `${this.followerPos.x - 15}px`;
+        this.follower.style.top = `${this.followerPos.y - 15}px`;
+        
+        requestAnimationFrame(animate);
+      };
+      animate();
+    }
+
+    setupHoverEffects() {
+      // リンクホバー
+      const links = document.querySelectorAll('a, button');
+      links.forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          this.cursor.classList.add('link-hover');
+          this.follower.classList.add('hover');
+        });
+        
+        link.addEventListener('mouseleave', () => {
+          this.cursor.classList.remove('link-hover');
+          this.follower.classList.remove('hover');
+        });
+      });
+
+      // テキストホバー
+      const textElements = document.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span');
+      textElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          this.cursor.classList.add('text');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+          this.cursor.classList.remove('text');
+        });
+      });
+
+      // インタラクティブ要素
+      const interactiveElements = document.querySelectorAll('input, textarea, select');
+      interactiveElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          this.cursor.classList.add('hover');
+          this.follower.classList.add('hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+          this.cursor.classList.remove('hover');
+          this.follower.classList.remove('hover');
+        });
+      });
+    }
+  }
+
+  // ページ読み込み後に初期化
+  document.addEventListener('DOMContentLoaded', () => {
+    new CustomCursor();
+  });
+
+  // Astroのページ遷移後も動作するように
+  document.addEventListener('astro:after-swap', () => {
+    new CustomCursor();
+  });
+</script>
