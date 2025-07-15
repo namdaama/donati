@@ -14,11 +14,11 @@ const { slides } = Astro.props;
 
 <section class="carousel-section">
   <div class="container">
-    <div class="carousel-wrapper">
+    <div class="carousel-wrapper" tabindex="0" role="region" aria-label="画像カルーセル" aria-roledescription="carousel">
       <div class="carousel-container">
         {slides.map((slide, index) => (
-          <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-target={slide.link}>
-            <img src={slide.image} alt={slide.alt} loading="lazy" />
+          <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-target={slide.link} role="group" aria-roledescription="slide" aria-label={`${index + 1} / ${slides.length}`}>
+            <img src={slide.image} alt={slide.alt} loading={index === 0 ? "eager" : "lazy"} />
             <div class="carousel-content">
               <h3>{slide.title}</h3>
               <p>{slide.description}</p>
@@ -26,11 +26,19 @@ const { slides } = Astro.props;
           </div>
         ))}
       </div>
-      <div class="carousel-dots">
-        {slides.map((_, index) => (
-          <span class={`dot ${index === 0 ? 'active' : ''}`} data-slide={index}></span>
+      <div class="carousel-dots" role="tablist" aria-label="スライドナビゲーション">
+        {slides.map((slide, index) => (
+          <button 
+            class={`dot ${index === 0 ? 'active' : ''}`} 
+            data-slide={index}
+            role="tab"
+            aria-selected={index === 0 ? "true" : "false"}
+            aria-label={`スライド ${index + 1}: ${slide.title}`}
+            tabindex={index === 0 ? "0" : "-1"}>
+          </button>
         ))}
       </div>
+      <div aria-live="polite" aria-atomic="true" class="sr-only"></div>
     </div>
   </div>
 </section>
@@ -46,6 +54,11 @@ const { slides } = Astro.props;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     background: var(--color-surface);
+  }
+  
+  .carousel-wrapper:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   .carousel-container {
@@ -104,6 +117,13 @@ const { slides } = Astro.props;
     background: #ccc;
     cursor: pointer;
     transition: background 0.3s ease;
+    border: none;
+    padding: 0;
+  }
+  
+  .dot:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
   }
 
   .dot.active {
@@ -122,6 +142,19 @@ const { slides } = Astro.props;
     .carousel-content p {
       font-size: 0.875rem;
     }
+  }
+  
+  /* スクリーンリーダー用のクラス */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 </style>
 
@@ -159,6 +192,29 @@ const { slides } = Astro.props;
         });
       });
 
+      // キーボードナビゲーション
+      this.container.addEventListener('keydown', (e) => {
+        switch(e.key) {
+          case 'ArrowLeft':
+            e.preventDefault();
+            this.prevSlide();
+            break;
+          case 'ArrowRight':
+            e.preventDefault();
+            this.nextSlide();
+            break;
+          case ' ':
+          case 'Enter':
+            e.preventDefault();
+            const target = e.target as HTMLElement;
+            if (target && target.classList && target.classList.contains('dot')) {
+              const index = parseInt(target.dataset?.slide || '0');
+              this.goToSlide(index);
+            }
+            break;
+        }
+      });
+
       // 自動スライド開始
       this.startAutoSlide();
 
@@ -170,17 +226,46 @@ const { slides } = Astro.props;
       this.container.addEventListener('mouseleave', () => {
         this.startAutoSlide();
       });
+
+      // フォーカス時にも自動スライド停止
+      this.container.addEventListener('focusin', () => {
+        this.stopAutoSlide();
+      });
+
+      this.container.addEventListener('focusout', () => {
+        // フォーカスがカルーセル外に移動した場合のみ再開
+        setTimeout(() => {
+          if (!this.container.contains(document.activeElement)) {
+            this.startAutoSlide();
+          }
+        }, 100);
+      });
     }
 
     goToSlide(index: number) {
       // 現在のアクティブを削除
       this.slides[this.currentSlide].classList.remove('active');
       this.dots[this.currentSlide].classList.remove('active');
+      this.dots[this.currentSlide].setAttribute('aria-selected', 'false');
+      this.dots[this.currentSlide].setAttribute('tabindex', '-1');
 
       // 新しいスライドをアクティブに
       this.currentSlide = index;
       this.slides[this.currentSlide].classList.add('active');
       this.dots[this.currentSlide].classList.add('active');
+      this.dots[this.currentSlide].setAttribute('aria-selected', 'true');
+      this.dots[this.currentSlide].setAttribute('tabindex', '0');
+      
+      // アクセシビリティのためのライブリージョン更新
+      const liveRegion = this.container.querySelector('[aria-live]');
+      if (liveRegion) {
+        liveRegion.textContent = `スライド ${index + 1} / ${this.slides.length}`;
+      }
+    }
+    
+    prevSlide() {
+      const prevIndex = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+      this.goToSlide(prevIndex);
     }
 
     nextSlide() {
