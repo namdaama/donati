@@ -6,6 +6,31 @@ import Hero from '../components/Hero.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import AchievementCard from '../components/AchievementCard.astro';
 import NewsCard from '../components/NewsCard.astro';
+import Carousel from '../components/Carousel.astro';
+
+const carouselSlides = [
+  {
+    image: '/images/carousel/experiment.jpg',
+    alt: '科学実験ショー',
+    title: '科学実験ショー',
+    description: '楽しい実験で科学の不思議を体験',
+    link: '/services#science-show'
+  },
+  {
+    image: '/images/carousel/stargazing.jpg',
+    alt: '星空観望会',
+    title: '星空観望会',
+    description: '本物の星空を見上げる感動体験',
+    link: '/services#stargazing'
+  },
+  {
+    image: '/images/carousel/workshop.jpg',
+    alt: '科学ワークショップ',
+    title: '科学ワークショップ',
+    description: '手を動かして学ぶ実験教室',
+    link: '/services#workshop'
+  }
+];
 
 const services = [
   {
@@ -97,6 +122,9 @@ const recentNews = [
       useAurora={true}
       showStars={true}
     />
+    
+    <!-- Carousel Section -->
+    <Carousel slides={carouselSlides} />
     
     <!-- Services Section -->
     <section class="py-16 md:py-24 bg-gray-50">
