@@ -4,6 +4,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 
+// Google FormのIDを環境変数から取得（なければデフォルト値を使用）
+const GOOGLE_FORM_ID = import.meta.env.GOOGLE_FORM_ID || '1FAIpQLSfwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 const contactTypes = [
   '科学実験ショーのご依頼',
   'ワークショップのご依頼',
@@ -17,6 +20,24 @@ const contactTypes = [
   <Header />
   
   <main class="flex-grow">
+    <style>
+      .form-wrapper {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        overflow: hidden;
+      }
+      
+      .form-wrapper iframe {
+        border-radius: 4px;
+      }
+      
+      @media (max-width: 767px) {
+        .form-wrapper iframe {
+          height: 600px;
+        }
+      }
+    </style>
     <Hero 
       title="お問い合わせ"
       subtitle="お気軽にご相談ください"
@@ -53,17 +74,20 @@ const contactTypes = [
             
             <div class="bg-gray-50 p-6 rounded-lg">
               <p class="text-center text-text-gray mb-4">
-                お問い合わせは以下のGoogleフォームからお願いいたします
+                お問い合わせは以下のフォームからお願いいたします
               </p>
-              <div class="text-center">
-                <a 
-                  href="#" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="btn-primary inline-block"
-                >
-                  お問い合わせフォームを開く
-                </a>
+              
+              <!-- Google Form Embed -->
+              <div class="form-wrapper mt-6">
+                <iframe 
+                  src={`https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform?embedded=true`} 
+                  width="100%" 
+                  height="800" 
+                  frameborder="0" 
+                  marginheight="0" 
+                  marginwidth="0">
+                  読み込んでいます…
+                </iframe>
               </div>
             </div>
           </div>
