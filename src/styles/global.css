@@ -3,6 +3,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* CSS変数定義 */
+:root {
+  /* 技術仕様書の配色 */
+  --color-primary: #2c5aa0;
+  --color-secondary: #f4a261;
+  /* 既存の配色も維持 */
+  --color-deep-blue: #1a237e;
+  --color-space-blue: #0d47a1;
+  --color-light-blue: #1976d2;
+  --color-accent: #ff6f00;
+  --color-accent-green: #00c853;
+  --color-text: #263238;
+  --color-text-gray: #546e7a;
+  --color-surface: #ffffff;
+  --color-background: #f5f5f5;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

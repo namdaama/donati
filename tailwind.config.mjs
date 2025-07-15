@@ -4,6 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
+        // 技術仕様書に合わせた配色
+        'primary-color': '#2c5aa0',      // メインブルー
+        'secondary-color': '#f4a261',     // アクセントオレンジ
+        // 既存の色も残す
         'deep-blue': '#1a237e',
         'space-blue': '#0d47a1',
         'light-blue': '#1976d2',
