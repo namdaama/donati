@@ -5,9 +5,25 @@ export function filterAnnouncementPosts(
   posts: InstagramPost[], 
   announcementHashtag: string
 ): AnnouncementPost[] {
-  return posts
-    .filter(post => post.hashtags.includes(announcementHashtag))
-    .map(post => parseAnnouncementPost(post));
+  console.log(`フィルタリング前の投稿数: ${posts.length}`);
+  console.log(`検索するハッシュタグ: ${announcementHashtag}`);
+  
+  const filtered = posts.filter(post => {
+    const hasTag = post.hashtags.includes(announcementHashtag);
+    if (!hasTag) {
+      // 部分一致も確認
+      const partialMatch = post.hashtags.some(tag => 
+        tag.toLowerCase().includes(announcementHashtag.toLowerCase().replace('#', ''))
+      );
+      if (partialMatch) {
+        console.log(`部分一致で見つかった投稿: ${post.title}, タグ: ${post.hashtags.join(', ')}`);
+      }
+    }
+    return hasTag;
+  });
+  
+  console.log(`フィルタリング後の投稿数: ${filtered.length}`);
+  return filtered.map(post => parseAnnouncementPost(post));
 }
 
 function parseAnnouncementPost(post: InstagramPost): AnnouncementPost {

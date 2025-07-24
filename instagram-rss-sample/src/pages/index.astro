@@ -7,6 +7,7 @@ import { ANNOUNCEMENT_CONFIG, UI_CONFIG } from '../config/constants';
 
 const rssUrl = import.meta.env.INSTAGRAM_RSS_URL || '';
 const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || ANNOUNCEMENT_CONFIG.DEFAULT_HASHTAG;
+const enableHashtagFilter = import.meta.env.ENABLE_HASHTAG_FILTER !== 'false';
 
 let announcements = [];
 if (rssUrl) {
@@ -14,8 +15,20 @@ if (rssUrl) {
   console.log(`取得した投稿数: ${posts.length}`);
   console.log('すべての投稿のハッシュタグ:', posts.map(p => ({ title: p.title, hashtags: p.hashtags })));
   
-  announcements = filterAnnouncementPosts(posts, announcementHashtag);
-  console.log(`${announcementHashtag} でフィルタ後の投稿数: ${announcements.length}`);
+  if (enableHashtagFilter) {
+    // ハッシュタグフィルターが有効な場合
+    announcements = filterAnnouncementPosts(posts, announcementHashtag);
+    console.log(`${announcementHashtag} でフィルタ後の投稿数: ${announcements.length}`);
+  } else {
+    // ハッシュタグフィルターが無効な場合、すべての投稿を表示
+    announcements = posts.map(post => ({
+      ...post,
+      category: 'news' as const,
+      eventDate: undefined,
+      location: undefined
+    }));
+    console.log(`ハッシュタグフィルター無効: ${announcements.length}件の投稿を表示`);
+  }
   
   // 最新の投稿のみを表示
   announcements = announcements.slice(0, ANNOUNCEMENT_CONFIG.MAX_DISPLAY_POSTS);
