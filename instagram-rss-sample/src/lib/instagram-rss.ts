@@ -3,6 +3,7 @@ import type { InstagramPost } from '../types/instagram';
 import { RSS_CONFIG } from '../config/constants';
 import { sanitizeXml, isValidRssFeed } from './utils/xml-sanitizer';
 import { ImageExtractorChain } from './utils/image-extractor';
+import { generateTitleWithCache } from './title-generator';
 
 const parser = new Parser({
   customFields: {
@@ -35,15 +36,29 @@ export async function fetchInstagramPosts(rssUrl: string): Promise<InstagramPost
     const sanitizedXml = sanitizeXml(xmlText);
     const feed = await parser.parseString(sanitizedXml);
     
-    return feed.items.map((item) => ({
+    // 基本的な投稿データを作成
+    const posts = feed.items.map((item) => ({
       id: item.guid || item.link || '',
-      title: item.title || extractFirstLine(item.content || ''),
+      title: item.title || '',
       content: cleanContent(item.content || item.description || ''),
       imageUrl: imageExtractor.extract(item),
       link: item.link || '',
       pubDate: new Date(item.pubDate || item.isoDate || ''),
       hashtags: extractHashtags(item.content || item.description || ''),
     }));
+    
+    // タイトルが不足している投稿に対して動的にタイトルを生成
+    const postsWithTitles = await Promise.all(
+      posts.map(async (post) => {
+        if (!post.title || post.title.trim() === '') {
+          const generatedTitle = await generateTitleWithCache(post.id, post.content);
+          return { ...post, title: generatedTitle };
+        }
+        return post;
+      })
+    );
+    
+    return postsWithTitles;
   } catch (error) {
     console.error('Error fetching Instagram RSS:', error);
     return [];
