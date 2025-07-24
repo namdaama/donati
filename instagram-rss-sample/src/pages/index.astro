@@ -1,9 +1,12 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnnouncementCard from '../components/AnnouncementCard.astro';
 import { fetchInstagramPosts } from '../lib/instagram-rss';
-import { filterAnnouncementPosts, generateSlug } from '../lib/announcement-parser';
+import { filterAnnouncementPosts } from '../lib/announcement-parser';
+import { ANNOUNCEMENT_CONFIG, UI_CONFIG } from '../config/constants';
 
 const rssUrl = import.meta.env.INSTAGRAM_RSS_URL || '';
-const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || '#donati_event';
+const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || ANNOUNCEMENT_CONFIG.DEFAULT_HASHTAG;
 
 let announcements = [];
 if (rssUrl) {
@@ -14,24 +17,13 @@ if (rssUrl) {
   announcements = filterAnnouncementPosts(posts, announcementHashtag);
   console.log(`${announcementHashtag} でフィルタ後の投稿数: ${announcements.length}`);
   
-  // 最新の4投稿のみを表示
-  announcements = announcements.slice(0, 4);
+  // 最新の投稿のみを表示
+  announcements = announcements.slice(0, ANNOUNCEMENT_CONFIG.MAX_DISPLAY_POSTS);
 }
 ---
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram告知投稿サンプル | DONATI</title>
-  <style>
-    body {
-      font-family: 'Noto Sans JP', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f5f5f5;
-    }
+<BaseLayout title="Instagram告知投稿サンプル | DONATI">
+  <style define:vars={{ primaryColor: UI_CONFIG.COLORS.PRIMARY }}>
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -39,83 +31,13 @@ if (rssUrl) {
     }
     h1 {
       text-align: center;
-      color: #2c5aa0;
+      color: var(--primaryColor);
       margin-bottom: 40px;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-    }
-    .card-image-container {
-      width: 100%;
-      height: 200px;
-      background-color: #f0f0f0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .card-image-container::before {
-      content: "📷";
-      font-size: 48px;
-      opacity: 0.3;
-      position: absolute;
-    }
-    .card-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      position: relative;
-      z-index: 1;
-    }
-    .card-content {
-      padding: 20px;
-    }
-    .card-category {
-      display: inline-block;
-      padding: 4px 8px;
-      background-color: #f4a261;
-      color: white;
-      border-radius: 4px;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-    .card-title {
-      margin: 0 0 10px 0;
-      font-size: 18px;
-      line-height: 1.4;
-    }
-    .card-meta {
-      color: #666;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .card-excerpt {
-      color: #333;
-      font-size: 14px;
-      line-height: 1.6;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .card-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
     }
     .setup-info {
       background: #fff3cd;
@@ -124,8 +46,6 @@ if (rssUrl) {
       margin-bottom: 40px;
     }
   </style>
-</head>
-<body>
   <div class="container">
     <h1>Instagram告知投稿から自動生成されたページ</h1>
     
@@ -145,34 +65,7 @@ if (rssUrl) {
     {announcements.length > 0 ? (
       <div class="grid">
         {announcements.map((announcement) => (
-          <a href={`/announcements/${generateSlug(announcement)}`} class="card-link">
-            <article class="card">
-              {announcement.imageUrl && (
-                <div class="card-image-container">
-                  <img 
-                    src={`https://images.weserv.nl/?url=${encodeURIComponent(announcement.imageUrl)}&w=400&h=400&fit=cover`} 
-                    alt={announcement.title} 
-                    class="card-image"
-                    loading="lazy"
-                    onerror="this.style.display='none'"
-                  />
-                </div>
-              )}
-              <div class="card-content">
-                <span class="card-category">{announcement.category}</span>
-                <h2 class="card-title">{announcement.title}</h2>
-                <div class="card-meta">
-                  {announcement.eventDate && (
-                    <div>開催日: {announcement.eventDate.toLocaleDateString('ja-JP')}</div>
-                  )}
-                  {announcement.location && (
-                    <div>場所: {announcement.location}</div>
-                  )}
-                </div>
-                <p class="card-excerpt">{announcement.content}</p>
-              </div>
-            </article>
-          </a>
+          <AnnouncementCard announcement={announcement} showLink={true} />
         ))}
       </div>
     ) : rssUrl ? (
@@ -182,5 +75,4 @@ if (rssUrl) {
       </p>
     ) : null}
   </div>
-</body>
-</html>
+</BaseLayout>

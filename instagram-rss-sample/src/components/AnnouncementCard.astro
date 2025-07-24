@@ -1,0 +1,149 @@
+---
+import type { AnnouncementPost } from '../types/instagram';
+import { generateSlug } from '../lib/announcement-parser';
+import { IMAGE_PROXY_CONFIG, UI_CONFIG } from '../config/constants';
+
+export interface Props {
+  announcement: AnnouncementPost;
+  showLink?: boolean;
+}
+
+const { announcement, showLink = true } = Astro.props;
+
+function getProxiedImageUrl(url: string) {
+  const { BASE_URL, DEFAULT_WIDTH, DEFAULT_HEIGHT, FIT } = IMAGE_PROXY_CONFIG;
+  return `${BASE_URL}?url=${encodeURIComponent(url)}&w=${DEFAULT_WIDTH}&h=${DEFAULT_HEIGHT}&fit=${FIT}`;
+}
+
+const CardWrapper = showLink ? 'a' : 'div';
+const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement)}`, class: 'card-link' } : { class: 'card-wrapper' };
+---
+
+<CardWrapper {...cardProps}>
+  <article class="card">
+    {announcement.imageUrl && (
+      <div class="card-image-container">
+        <img 
+          src={getProxiedImageUrl(announcement.imageUrl)}
+          alt={announcement.title} 
+          class="card-image"
+          loading="lazy"
+          onerror="this.style.display='none'"
+        />
+      </div>
+    )}
+    <div class="card-content">
+      <span class="card-category">{announcement.category}</span>
+      <h2 class="card-title">{announcement.title}</h2>
+      <div class="card-meta">
+        {announcement.eventDate && (
+          <div>開催日: {announcement.eventDate.toLocaleDateString('ja-JP')}</div>
+        )}
+        {announcement.location && (
+          <div>場所: {announcement.location}</div>
+        )}
+      </div>
+      <p class="card-excerpt">{announcement.content}</p>
+    </div>
+  </article>
+</CardWrapper>
+
+<style define:vars={{ 
+  primaryColor: UI_CONFIG.COLORS.PRIMARY, 
+  accentColor: UI_CONFIG.COLORS.ACCENT,
+  textColor: UI_CONFIG.COLORS.TEXT,
+  textMuted: UI_CONFIG.COLORS.TEXT_MUTED,
+  cardBg: UI_CONFIG.COLORS.CARD_BG,
+  imageHeight: `${UI_CONFIG.CARD.IMAGE_HEIGHT}px`,
+  borderRadius: `${UI_CONFIG.CARD.BORDER_RADIUS}px`,
+  shadow: UI_CONFIG.CARD.SHADOW,
+  shadowHover: UI_CONFIG.CARD.SHADOW_HOVER,
+  excerptLines: UI_CONFIG.CARD.EXCERPT_LINES,
+}}>
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  .card-wrapper {
+    display: block;
+  }
+  
+  .card {
+    background: var(--cardBg);
+    border-radius: var(--borderRadius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .card-link:hover .card {
+    transform: translateY(-4px);
+    box-shadow: var(--shadowHover);
+  }
+  
+  .card-image-container {
+    width: 100%;
+    height: var(--imageHeight);
+    background-color: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .card-image-container::before {
+    content: "📷";
+    font-size: 48px;
+    opacity: 0.3;
+    position: absolute;
+  }
+  
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card-content {
+    padding: 20px;
+  }
+  
+  .card-category {
+    display: inline-block;
+    padding: 4px 8px;
+    background-color: var(--accentColor);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .card-title {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--textColor);
+  }
+  
+  .card-meta {
+    color: var(--textMuted);
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .card-excerpt {
+    color: var(--textColor);
+    font-size: 14px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: var(--excerptLines);
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin: 0;
+  }
+</style>

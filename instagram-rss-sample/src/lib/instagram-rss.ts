@@ -1,5 +1,8 @@
 import Parser from 'rss-parser';
 import type { InstagramPost } from '../types/instagram';
+import { RSS_CONFIG } from '../config/constants';
+import { sanitizeXml, isValidRssFeed } from './utils/xml-sanitizer';
+import { ImageExtractorChain } from './utils/image-extractor';
 
 const parser = new Parser({
   customFields: {
@@ -10,9 +13,10 @@ const parser = new Parser({
   }
 });
 
+const imageExtractor = new ImageExtractorChain();
+
 export async function fetchInstagramPosts(rssUrl: string): Promise<InstagramPost[]> {
   try {
-    // Fetch the RSS feed manually to handle XML issues
     const response = await fetch(rssUrl);
     
     if (!response.ok) {
@@ -22,46 +26,24 @@ export async function fetchInstagramPosts(rssUrl: string): Promise<InstagramPost
     
     const xmlText = await response.text();
     
-    // Debug: Check if this is actually an RSS feed
-    if (!xmlText.includes('<rss') && !xmlText.includes('<feed')) {
+    if (!isValidRssFeed(xmlText)) {
       console.error('Response does not appear to be an RSS/Atom feed');
-      console.log('First 500 characters:', xmlText.substring(0, 500));
+      console.log(`First ${RSS_CONFIG.XML_PREVIEW_LENGTH} characters:`, xmlText.substring(0, RSS_CONFIG.XML_PREVIEW_LENGTH));
       return [];
     }
     
-    // Sanitize XML by escaping unescaped ampersands
-    const sanitizedXml = xmlText.replace(/&(?!(?:amp|lt|gt|quot|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;');
-    
+    const sanitizedXml = sanitizeXml(xmlText);
     const feed = await parser.parseString(sanitizedXml);
     
-    return feed.items.map((item) => {
-      // Extract hashtags from content
-      const hashtags = extractHashtags(item.content || item.description || '');
-      
-      // Extract image URL
-      let imageUrl = '';
-      if (item.mediaContent && item.mediaContent[0]) {
-        imageUrl = item.mediaContent[0].$.url;
-      } else if (item.enclosure) {
-        imageUrl = item.enclosure.url;
-      } else {
-        // Try to extract from content HTML
-        const imgMatch = (item.content || '').match(/<img[^>]+src="([^"]+)"/);
-        if (imgMatch) {
-          imageUrl = imgMatch[1];
-        }
-      }
-
-      return {
-        id: item.guid || item.link || '',
-        title: item.title || extractFirstLine(item.content || ''),
-        content: cleanContent(item.content || item.description || ''),
-        imageUrl,
-        link: item.link || '',
-        pubDate: new Date(item.pubDate || item.isoDate || ''),
-        hashtags,
-      };
-    });
+    return feed.items.map((item) => ({
+      id: item.guid || item.link || '',
+      title: item.title || extractFirstLine(item.content || ''),
+      content: cleanContent(item.content || item.description || ''),
+      imageUrl: imageExtractor.extract(item),
+      link: item.link || '',
+      pubDate: new Date(item.pubDate || item.isoDate || ''),
+      hashtags: extractHashtags(item.content || item.description || ''),
+    }));
   } catch (error) {
     console.error('Error fetching Instagram RSS:', error);
     return [];

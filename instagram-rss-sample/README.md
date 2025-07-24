@@ -1,84 +1,138 @@
-# Instagram RSS 動的ページ生成サンプル
+# Instagram RSS 告知投稿サンプル
 
-このサンプルは、Instagram RSSフィードから告知投稿を抽出し、動的にページを生成するAstroプロジェクトです。
+InstagramのRSSフィードから特定のハッシュタグを含む投稿を抽出し、自動的に告知ページを生成するAstroプロジェクトです。
 
 ## 機能
 
-- Instagram RSSフィードから投稿を取得
-- 特定のハッシュタグ（例: #donati_event）を含む告知投稿を抽出
-- 各告知投稿から個別ページを自動生成
-- 投稿内容から日時・場所などの情報を自動抽出
+- InstagramのRSSフィードから投稿を取得
+- 特定のハッシュタグ（例：#こみかる）でフィルタリング
+- 投稿から日付・場所情報を自動抽出
+- 各告知に個別ページを自動生成
+- CORS問題を回避する画像プロキシ機能
+- レスポンシブデザイン対応
 
 ## セットアップ
 
-1. **依存関係のインストール**
-   ```bash
-   npm install
-   ```
+### 1. 依存関係のインストール
 
-2. **環境変数の設定**
-   - `.env.example`を`.env`にコピー
-   - `INSTAGRAM_RSS_URL`にRSSフィードURLを設定
-   - `ANNOUNCEMENT_HASHTAG`に告知投稿の識別ハッシュタグを設定
-
-3. **開発サーバーの起動**
-   ```bash
-   npm run dev
-   ```
-
-## Instagram RSSフィードの取得方法
-
-### オプション1: RSS.app（推奨）
-1. https://rss.app にアクセス
-2. Instagram URLを入力してRSSフィードを生成
-3. 生成されたRSS URLを環境変数に設定
-
-### オプション2: 他のRSSサービス
-- Zapier
-- IFTTT
-- その他のInstagram-RSS変換サービス
-
-## ディレクトリ構造
-
-```
-instagram-rss-sample/
-├── src/
-│   ├── lib/
-│   │   ├── instagram-rss.ts    # RSSフィード取得処理
-│   │   └── announcement-parser.ts # 告知投稿の解析
-│   ├── pages/
-│   │   ├── index.astro         # 告知一覧ページ
-│   │   └── announcements/
-│   │       └── [...slug].astro # 個別告知ページ（動的生成）
-│   └── types/
-│       └── instagram.ts        # 型定義
-├── .env.example               # 環境変数テンプレート
-└── package.json
+```bash
+npm install
 ```
 
-## 告知投稿の書き方
+### 2. 環境変数の設定
 
-Instagram投稿を告知として認識させるために：
+`.env.example`を`.env`にコピーして、必要な値を設定：
 
-1. 設定したハッシュタグ（例: #donati_event）を含める
-2. 日時は「2025年1月21日」形式で記載
-3. 場所は「場所：」「会場：」「📍」のいずれかで記載
-
-例：
+```bash
+cp .env.example .env
 ```
-科学実験ショー開催！
 
-2025年2月15日（土）14:00〜16:00
-場所：東京科学館 3階ホール
+```env
+# InstagramのRSSフィードURL
+INSTAGRAM_RSS_URL=https://rss.app/feeds/your-feed-id.xml
 
-楽しい実験がいっぱい！
-参加費無料
+# 告知投稿を識別するハッシュタグ
+ANNOUNCEMENT_HASHTAG="#your-hashtag"
+```
 
-#donati_event #科学実験 #サイエンスショー
+### 3. 開発サーバーの起動
+
+```bash
+npm run dev
+```
+
+## 利用可能なスクリプト
+
+| コマンド | 説明 |
+|---------|------|
+| `npm run dev` | 開発サーバーを起動 |
+| `npm run build` | 型チェック後、本番用にビルド |
+| `npm run preview` | ビルド結果をローカルでプレビュー |
+| `npm run check` | Astroの型チェックを実行 |
+| `npm run lint` | ESLintでコードをチェック |
+| `npm run lint:fix` | ESLintでコードを自動修正 |
+| `npm run format` | Prettierでコードをフォーマット |
+| `npm run format:check` | フォーマットのチェックのみ |
+| `npm run typecheck` | TypeScriptの型チェック |
+| `npm run validate` | すべてのチェックを実行 |
+
+## プロジェクト構成
+
+```
+src/
+├── components/          # 再利用可能なコンポーネント
+│   └── AnnouncementCard.astro
+├── config/             # 設定ファイル
+│   └── constants.ts    # 定数定義
+├── layouts/            # レイアウトコンポーネント
+│   └── BaseLayout.astro
+├── lib/                # ライブラリ関数
+│   ├── announcement-parser.ts  # 告知投稿のパース
+│   ├── instagram-rss.ts        # RSS取得処理
+│   └── utils/                  # ユーティリティ関数
+│       ├── image-extractor.ts  # 画像URL抽出
+│       └── xml-sanitizer.ts    # XMLサニタイズ
+├── pages/              # ページコンポーネント
+│   ├── index.astro     # トップページ
+│   ├── announcements/  # 告知詳細ページ
+│   └── api/           # APIルート
+├── types/              # TypeScript型定義
+│   └── instagram.ts
+└── env.d.ts           # 環境変数の型定義
 ```
 
 ## カスタマイズ
 
-- `announcement-parser.ts`で抽出ロジックをカスタマイズ可能
-- ページデザインは各`.astro`ファイルで変更可能
-- カテゴリ分類のロジックも調整可能
+### ハッシュタグの変更
+
+`.env`ファイルの`ANNOUNCEMENT_HASHTAG`を変更：
+
+```env
+ANNOUNCEMENT_HASHTAG="#新しいハッシュタグ"
+```
+
+### 表示投稿数の変更
+
+`src/config/constants.ts`の`MAX_DISPLAY_POSTS`を編集：
+
+```typescript
+export const ANNOUNCEMENT_CONFIG = {
+  MAX_DISPLAY_POSTS: 4, // 表示する投稿数
+  // ...
+};
+```
+
+### カテゴリの追加
+
+`src/config/constants.ts`でカテゴリキーワードを追加：
+
+```typescript
+export const CATEGORY_KEYWORDS = {
+  workshop: ['workshop', 'ワークショップ'],
+  event: ['event', 'イベント'],
+  // 新しいカテゴリを追加
+  seminar: ['seminar', 'セミナー'],
+};
+```
+
+## トラブルシューティング
+
+### 画像が表示されない
+
+Instagram CDNの画像はCORS制限があるため、画像プロキシサービス（images.weserv.nl）を使用しています。
+
+### RSSフィードが取得できない
+
+1. RSS URLが正しいか確認
+2. RSS.appなどでフィードが有効か確認
+3. コンソールログでエラーメッセージを確認
+
+### ハッシュタグでフィルタされない
+
+1. ハッシュタグの形式を確認（#を含める）
+2. 大文字小文字の違いに注意
+3. コンソールログで取得した投稿のハッシュタグを確認
+
+## ライセンス
+
+MIT

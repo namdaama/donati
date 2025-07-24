@@ -1,4 +1,5 @@
 import type { InstagramPost, AnnouncementPost } from '../types/instagram';
+import { ANNOUNCEMENT_CONFIG, LOCATION_PATTERNS, CATEGORY_KEYWORDS } from '../config/constants';
 
 export function filterAnnouncementPosts(
   posts: InstagramPost[], 
@@ -26,14 +27,7 @@ function parseAnnouncementPost(post: InstagramPost): AnnouncementPost {
   }
 
   // Extract location
-  const locationPatterns = [
-    /場所[:：]\s*([^\n]+)/,
-    /会場[:：]\s*([^\n]+)/,
-    /開催地[:：]\s*([^\n]+)/,
-    /📍\s*([^\n]+)/
-  ];
-  
-  for (const pattern of locationPatterns) {
+  for (const pattern of LOCATION_PATTERNS) {
     const match = post.content.match(pattern);
     if (match) {
       announcement.location = match[1].trim();
@@ -45,13 +39,21 @@ function parseAnnouncementPost(post: InstagramPost): AnnouncementPost {
 }
 
 function determineCategory(hashtags: string[]): 'event' | 'news' | 'workshop' {
-  if (hashtags.some(tag => tag.includes('workshop') || tag.includes('ワークショップ'))) {
-    return 'workshop';
+  const lowerHashtags = hashtags.map(tag => tag.toLowerCase());
+  
+  if (lowerHashtags.some(tag => 
+    CATEGORY_KEYWORDS.workshop.some(keyword => tag.includes(keyword.toLowerCase()))
+  )) {
+    return ANNOUNCEMENT_CONFIG.CATEGORIES.WORKSHOP;
   }
-  if (hashtags.some(tag => tag.includes('event') || tag.includes('イベント'))) {
-    return 'event';
+  
+  if (lowerHashtags.some(tag => 
+    CATEGORY_KEYWORDS.event.some(keyword => tag.includes(keyword.toLowerCase()))
+  )) {
+    return ANNOUNCEMENT_CONFIG.CATEGORIES.EVENT;
   }
-  return 'news';
+  
+  return ANNOUNCEMENT_CONFIG.CATEGORIES.NEWS;
 }
 
 export function generateSlug(post: AnnouncementPost): string {
@@ -65,5 +67,5 @@ export function generateSlug(post: AnnouncementPost): string {
     ? `${post.eventDate.getFullYear()}-${String(post.eventDate.getMonth() + 1).padStart(2, '0')}`
     : `${post.pubDate.getFullYear()}-${String(post.pubDate.getMonth() + 1).padStart(2, '0')}`;
   
-  return `${dateStr}-${baseSlug}`.slice(0, 50);
+  return `${dateStr}-${baseSlug}`.slice(0, ANNOUNCEMENT_CONFIG.SLUG_MAX_LENGTH);
 }

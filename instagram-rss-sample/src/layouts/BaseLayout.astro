@@ -1,0 +1,40 @@
+---
+import { UI_CONFIG } from '../config/constants';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <slot name="head" />
+</head>
+<body>
+  <slot />
+</body>
+</html>
+
+<style is:global define:vars={{ bgColor: UI_CONFIG.COLORS.BACKGROUND }}>
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bgColor);
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+</style>

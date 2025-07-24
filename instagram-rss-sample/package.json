@@ -4,8 +4,16 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "eslint . --ext .ts,.tsx,.astro",
+    "lint:fix": "eslint . --ext .ts,.tsx,.astro --fix",
+    "format": "prettier --write \"**/*.{js,ts,tsx,astro,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,tsx,astro,json,md}\"",
+    "typecheck": "tsc --noEmit",
+    "validate": "npm run check && npm run typecheck && npm run lint && npm run format:check",
+    "prepare": "husky install"
   },
   "dependencies": {
     "astro": "^4.2.1",
@@ -13,6 +21,14 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "@types/node": "^20.11.5"
+    "@types/node": "^20.11.5",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-astro": "^0.31.3",
+    "prettier": "^3.2.4",
+    "prettier-plugin-astro": "^0.13.0",
+    "typescript": "^5.3.3",
+    "husky": "^8.0.3"
   }
 }
