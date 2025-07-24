@@ -8,7 +8,14 @@ const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || '#donati_eve
 let announcements = [];
 if (rssUrl) {
   const posts = await fetchInstagramPosts(rssUrl);
+  console.log(`取得した投稿数: ${posts.length}`);
+  console.log('すべての投稿のハッシュタグ:', posts.map(p => ({ title: p.title, hashtags: p.hashtags })));
+  
   announcements = filterAnnouncementPosts(posts, announcementHashtag);
+  console.log(`${announcementHashtag} でフィルタ後の投稿数: ${announcements.length}`);
+  
+  // 最新の4投稿のみを表示
+  announcements = announcements.slice(0, 4);
 }
 ---
 
@@ -51,10 +58,28 @@ if (rssUrl) {
       transform: translateY(-4px);
       box-shadow: 0 4px 16px rgba(0,0,0,0.15);
     }
-    .card-image {
+    .card-image-container {
       width: 100%;
       height: 200px;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-image-container::before {
+      content: "📷";
+      font-size: 48px;
+      opacity: 0.3;
+      position: absolute;
+    }
+    .card-image {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      position: relative;
+      z-index: 1;
     }
     .card-content {
       padding: 20px;
@@ -123,7 +148,15 @@ if (rssUrl) {
           <a href={`/announcements/${generateSlug(announcement)}`} class="card-link">
             <article class="card">
               {announcement.imageUrl && (
-                <img src={announcement.imageUrl} alt={announcement.title} class="card-image" />
+                <div class="card-image-container">
+                  <img 
+                    src={`https://images.weserv.nl/?url=${encodeURIComponent(announcement.imageUrl)}&w=400&h=400&fit=cover`} 
+                    alt={announcement.title} 
+                    class="card-image"
+                    loading="lazy"
+                    onerror="this.style.display='none'"
+                  />
+                </div>
               )}
               <div class="card-content">
                 <span class="card-category">{announcement.category}</span>

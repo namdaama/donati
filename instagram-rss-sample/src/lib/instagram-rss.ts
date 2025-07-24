@@ -12,7 +12,27 @@ const parser = new Parser({
 
 export async function fetchInstagramPosts(rssUrl: string): Promise<InstagramPost[]> {
   try {
-    const feed = await parser.parseURL(rssUrl);
+    // Fetch the RSS feed manually to handle XML issues
+    const response = await fetch(rssUrl);
+    
+    if (!response.ok) {
+      console.error(`RSS feed returned status ${response.status}`);
+      return [];
+    }
+    
+    const xmlText = await response.text();
+    
+    // Debug: Check if this is actually an RSS feed
+    if (!xmlText.includes('<rss') && !xmlText.includes('<feed')) {
+      console.error('Response does not appear to be an RSS/Atom feed');
+      console.log('First 500 characters:', xmlText.substring(0, 500));
+      return [];
+    }
+    
+    // Sanitize XML by escaping unescaped ampersands
+    const sanitizedXml = xmlText.replace(/&(?!(?:amp|lt|gt|quot|#\d+|#x[0-9a-fA-F]+);)/g, '&amp;');
+    
+    const feed = await parser.parseString(sanitizedXml);
     
     return feed.items.map((item) => {
       // Extract hashtags from content
