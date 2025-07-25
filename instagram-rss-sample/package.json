@@ -17,18 +17,21 @@
   },
   "dependencies": {
     "astro": "^4.2.1",
+    "lru-cache": "^11.1.0",
+    "node-fetch": "^3.3.2",
     "rss-parser": "^3.13.0",
-    "node-fetch": "^3.3.2"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@types/lru-cache": "^7.10.9",
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
     "eslint-plugin-astro": "^0.31.3",
+    "husky": "^8.0.3",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "^0.13.0",
-    "typescript": "^5.3.3",
-    "husky": "^8.0.3"
+    "typescript": "^5.3.3"
   }
 }
