@@ -1,0 +1,277 @@
+---
+import type { AnnouncementPost } from '../types/instagram';
+import AnnouncementCard from './AnnouncementCard.astro';
+import LoadingCard from './LoadingCard.astro';
+
+export interface Props {
+  announcements: AnnouncementPost[];
+  loading?: boolean;
+  enablePullToRefresh?: boolean;
+  enableInfiniteScroll?: boolean;
+}
+
+const { 
+  announcements, 
+  loading = false,
+  enablePullToRefresh = true,
+  enableInfiniteScroll = true 
+} = Astro.props;
+---
+
+<div class="announcement-container" data-announcement-container>
+  {enablePullToRefresh && (
+    <div class="pull-to-refresh" data-pull-to-refresh>
+      <div class="pull-icon">↓</div>
+      <div class="pull-text">引っ張って更新</div>
+    </div>
+  )}
+  
+  <div class="grid" data-announcements-grid>
+    {loading ? (
+      <>
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+        <LoadingCard />
+      </>
+    ) : (
+      announcements.map((announcement, index) => (
+        <div 
+          class="announcement-item" 
+          data-category={announcement.category}
+          data-index={index}
+          style={`animation-delay: ${index * 0.1}s`}
+        >
+          <AnnouncementCard announcement={announcement} showLink={true} />
+        </div>
+      ))
+    )}
+  </div>
+  
+  {enableInfiniteScroll && (
+    <div class="infinite-scroll-trigger" data-infinite-scroll-trigger>
+      <div class="loading-spinner">
+        <span>●</span>
+        <span>●</span>
+        <span>●</span>
+      </div>
+    </div>
+  )}
+</div>
+
+<style>
+  .announcement-container {
+    position: relative;
+    min-height: 400px;
+  }
+  
+  .pull-to-refresh {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .pull-to-refresh.visible {
+    opacity: 1;
+  }
+  
+  .pull-to-refresh.refreshing .pull-icon {
+    animation: spin 1s linear infinite;
+  }
+  
+  .pull-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+  
+  .pull-text {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .announcement-item {
+    animation: slideIn 0.4s ease-out backwards;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .infinite-scroll-trigger {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .infinite-scroll-trigger.loading {
+    opacity: 1;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    gap: 4px;
+  }
+  
+  .loading-spinner span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #999;
+    animation: bounce 1.4s infinite ease-in-out both;
+  }
+  
+  .loading-spinner span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+  
+  .loading-spinner span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+  
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);
+      opacity: 0.5;
+    }
+    40% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  // プルリフレッシュ機能
+  const container = document.querySelector('[data-announcement-container]');
+  const pullToRefresh = document.querySelector('[data-pull-to-refresh]');
+  
+  if (pullToRefresh && container) {
+    let startY = 0;
+    let currentY = 0;
+    let pulling = false;
+    
+    container.addEventListener('touchstart', (e) => {
+      if (window.scrollY === 0) {
+        startY = e.touches[0].clientY;
+        pulling = true;
+      }
+    });
+    
+    container.addEventListener('touchmove', (e) => {
+      if (!pulling) return;
+      
+      currentY = e.touches[0].clientY;
+      const pullDistance = currentY - startY;
+      
+      if (pullDistance > 0 && pullDistance < 150) {
+        e.preventDefault();
+        pullToRefresh.classList.add('visible');
+        pullToRefresh.style.transform = `translateX(-50%) translateY(${pullDistance}px)`;
+        
+        if (pullDistance > 80) {
+          pullToRefresh.querySelector('.pull-text').textContent = '離して更新';
+        }
+      }
+    });
+    
+    container.addEventListener('touchend', () => {
+      if (!pulling) return;
+      
+      const pullDistance = currentY - startY;
+      
+      if (pullDistance > 80) {
+        pullToRefresh.classList.add('refreshing');
+        pullToRefresh.querySelector('.pull-text').textContent = '更新中...';
+        
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      } else {
+        pullToRefresh.classList.remove('visible');
+        pullToRefresh.style.transform = 'translateX(-50%)';
+      }
+      
+      pulling = false;
+      startY = 0;
+      currentY = 0;
+    });
+  }
+  
+  // インフィニットスクロール
+  const infiniteTrigger = document.querySelector('[data-infinite-scroll-trigger]');
+  
+  if (infiniteTrigger) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          infiniteTrigger.classList.add('loading');
+          
+          // ここで追加の投稿を読み込む処理を実装
+          // 今回はデモなので、3秒後にフェードアウト
+          setTimeout(() => {
+            infiniteTrigger.classList.remove('loading');
+          }, 3000);
+        }
+      });
+    }, {
+      rootMargin: '100px'
+    });
+    
+    observer.observe(infiniteTrigger);
+  }
+  
+  // カードのホバーエフェクト（タッチデバイス対応）
+  const cards = document.querySelectorAll('.announcement-item');
+  
+  cards.forEach(card => {
+    card.addEventListener('touchstart', () => {
+      card.style.transform = 'scale(0.98)';
+    });
+    
+    card.addEventListener('touchend', () => {
+      card.style.transform = '';
+    });
+  });
+</script>

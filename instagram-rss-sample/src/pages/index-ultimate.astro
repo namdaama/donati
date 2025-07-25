@@ -1,0 +1,631 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnnouncementGrid from '../components/AnnouncementGrid.astro';
+import { fetchInstagramPostsCached, getCacheStats } from '../lib/instagram-rss-cached';
+import { filterAnnouncementPosts } from '../lib/announcement-parser';
+import { ANNOUNCEMENT_CONFIG, UI_CONFIG } from '../config/constants';
+
+const rssUrl = import.meta.env.INSTAGRAM_RSS_URL || '';
+const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || ANNOUNCEMENT_CONFIG.DEFAULT_HASHTAG;
+const enableHashtagFilter = import.meta.env.ENABLE_HASHTAG_FILTER !== 'false';
+
+let announcements = [];
+let error = null;
+let cacheStats = null;
+
+if (rssUrl) {
+  try {
+    const posts = await fetchInstagramPostsCached(rssUrl);
+    cacheStats = await getCacheStats();
+    
+    if (enableHashtagFilter) {
+      announcements = filterAnnouncementPosts(posts, announcementHashtag);
+    } else {
+      announcements = posts.map(post => ({
+        ...post,
+        category: 'news' as const,
+        eventDate: undefined,
+        location: undefined
+      }));
+    }
+    
+    announcements = announcements.slice(0, ANNOUNCEMENT_CONFIG.MAX_DISPLAY_POSTS * 2); // 多めに取得
+  } catch (e) {
+    error = e;
+    console.error('Error fetching posts:', e);
+  }
+}
+---
+
+<BaseLayout title="Instagram告知投稿 | DONATI">
+  <style define:vars={{ 
+    primaryColor: UI_CONFIG.COLORS.PRIMARY,
+    accentColor: UI_CONFIG.COLORS.ACCENT,
+  }}>
+    :root {
+      --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    .ultimate-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeInDown 0.8s var(--ease-out-expo);
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    h1 {
+      color: var(--primaryColor);
+      margin-bottom: 16px;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 18px;
+      opacity: 0.8;
+    }
+    
+    .smart-bar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 16px 24px;
+      margin-bottom: 32px;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: space-between;
+      align-items: center;
+      animation: slideUp 0.6s var(--ease-out-expo) 0.2s backwards;
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+      position: relative;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 12px 20px 12px 44px;
+      border: 2px solid #e0e0e0;
+      border-radius: 24px;
+      font-size: 16px;
+      transition: all 0.3s;
+      background: #f8f8f8;
+    }
+    
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primaryColor);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(44, 90, 160, 0.1);
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    .filter-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    
+    .tag {
+      padding: 8px 16px;
+      background: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+    
+    .tag:hover {
+      background: #e0e0e0;
+      transform: translateY(-2px);
+    }
+    
+    .tag.active {
+      background: var(--accentColor);
+      color: white;
+      border-color: var(--accentColor);
+      transform: scale(1.05);
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .action-button {
+      padding: 10px 20px;
+      background: var(--primaryColor);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+    
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 90, 160, 0.3);
+    }
+    
+    .action-button:active {
+      transform: translateY(0);
+    }
+    
+    .view-toggle {
+      background: white;
+      color: var(--primaryColor);
+      border: 2px solid var(--primaryColor);
+    }
+    
+    .stats-banner {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 24px;
+      animation: slideUp 0.6s var(--ease-out-expo) 0.4s backwards;
+    }
+    
+    .stat-card {
+      text-align: center;
+    }
+    
+    .stat-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--primaryColor);
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+      margin-top: 4px;
+    }
+    
+    .content-area {
+      animation: fadeIn 0.6s var(--ease-out-expo) 0.6s backwards;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    
+    .empty-state,
+    .error-state {
+      text-align: center;
+      padding: 80px 20px;
+    }
+    
+    .state-icon {
+      font-size: 80px;
+      margin-bottom: 24px;
+      animation: bounce 1s ease-out;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+      }
+      40% {
+        transform: translateY(-20px);
+      }
+      60% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .state-title {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 12px;
+    }
+    
+    .state-message {
+      color: #666;
+      margin-bottom: 24px;
+    }
+    
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 14px;
+      opacity: 0;
+      transition: all 0.3s var(--ease-out-expo);
+      pointer-events: none;
+      z-index: 1000;
+    }
+    
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    
+    .floating-actions {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 100;
+    }
+    
+    .fab {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primaryColor);
+      color: white;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .fab.secondary {
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      background: white;
+      color: var(--primaryColor);
+      border: 2px solid var(--primaryColor);
+    }
+    
+    @media (max-width: 768px) {
+      .smart-bar {
+        padding: 12px 16px;
+      }
+      
+      .search-box {
+        width: 100%;
+      }
+      
+      .filter-tags {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .action-buttons {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+  
+  <div class="ultimate-container">
+    <div class="header">
+      <h1>✨ Instagram告知投稿</h1>
+      <p class="subtitle">最新のイベント・ワークショップ情報をスマートにお届け</p>
+    </div>
+    
+    {rssUrl && !error && (
+      <>
+        <div class="smart-bar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              class="search-input" 
+              placeholder="イベントを検索..."
+              data-search-input
+            />
+          </div>
+          
+          <div class="filter-tags" data-filter-tags>
+            <button class="tag active" data-category="all">
+              すべて
+            </button>
+            <button class="tag" data-category="workshop">
+              ワークショップ
+            </button>
+            <button class="tag" data-category="event">
+              イベント
+            </button>
+            <button class="tag" data-category="news">
+              お知らせ
+            </button>
+          </div>
+          
+          <div class="action-buttons">
+            <button class="action-button view-toggle" data-view-toggle>
+              <span data-view-icon>📱</span>
+              <span data-view-text>表示</span>
+            </button>
+            <button class="action-button" data-refresh>
+              <span>🔄</span>
+              <span>更新</span>
+            </button>
+          </div>
+        </div>
+        
+        {announcements.length > 0 && (
+          <div class="stats-banner">
+            <div class="stat-card">
+              <div class="stat-icon">📢</div>
+              <div class="stat-value">{announcements.length}</div>
+              <div class="stat-label">告知投稿</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📅</div>
+              <div class="stat-value">{announcements.filter(a => a.eventDate).length}</div>
+              <div class="stat-label">開催予定</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">📍</div>
+              <div class="stat-value">{announcements.filter(a => a.location).length}</div>
+              <div class="stat-label">場所あり</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">⚡</div>
+              <div class="stat-value">{cacheStats?.l1HitRate ? Math.round(cacheStats.l1HitRate) : 0}%</div>
+              <div class="stat-label">キャッシュ効率</div>
+            </div>
+          </div>
+        )}
+      </>
+    )}
+    
+    <div class="content-area">
+      {!rssUrl ? (
+        <div class="empty-state">
+          <div class="state-icon">🚀</div>
+          <h2 class="state-title">セットアップしてスタート！</h2>
+          <p class="state-message">環境変数を設定して、Instagram投稿を表示しましょう</p>
+        </div>
+      ) : error ? (
+        <div class="error-state">
+          <div class="state-icon">😢</div>
+          <h2 class="state-title">おっと、エラーが発生しました</h2>
+          <p class="state-message">しばらく待ってからもう一度お試しください</p>
+          <button class="action-button" onclick="location.reload()">
+            再読み込み
+          </button>
+        </div>
+      ) : (
+        <AnnouncementGrid 
+          announcements={announcements} 
+          enablePullToRefresh={true}
+          enableInfiniteScroll={true}
+        />
+      )}
+    </div>
+  </div>
+  
+  <div class="floating-actions">
+    <button class="fab secondary" data-scroll-top title="トップへ">
+      ↑
+    </button>
+    <button class="fab" data-compose title="新規投稿">
+      ✏️
+    </button>
+  </div>
+  
+  <div class="toast" data-toast></div>
+  
+  <script>
+    // トースト通知
+    function showToast(message) {
+      const toast = document.querySelector('[data-toast]');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+    
+    // 検索機能
+    const searchInput = document.querySelector('[data-search-input]');
+    const announcements = document.querySelectorAll('[data-category]');
+    
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        let visibleCount = 0;
+        
+        announcements.forEach(item => {
+          const card = item.querySelector('.card-title');
+          const text = card?.textContent.toLowerCase() || '';
+          
+          if (text.includes(query)) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        
+        if (visibleCount === 0) {
+          showToast('検索結果が見つかりません');
+        }
+      });
+    }
+    
+    // フィルター機能
+    const filterTags = document.querySelectorAll('[data-filter-tags] .tag');
+    
+    filterTags.forEach(tag => {
+      tag.addEventListener('click', () => {
+        filterTags.forEach(t => t.classList.remove('active'));
+        tag.classList.add('active');
+        
+        const category = tag.dataset.category;
+        let visibleCount = 0;
+        
+        announcements.forEach(item => {
+          if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        
+        showToast(`${visibleCount}件の投稿を表示中`);
+      });
+    });
+    
+    // 表示切り替え
+    const viewToggle = document.querySelector('[data-view-toggle]');
+    const grid = document.querySelector('[data-announcements-grid]');
+    let isListView = false;
+    
+    if (viewToggle && grid) {
+      viewToggle.addEventListener('click', () => {
+        isListView = !isListView;
+        
+        if (isListView) {
+          grid.style.gridTemplateColumns = '1fr';
+          document.querySelector('[data-view-icon]').textContent = '📋';
+          document.querySelector('[data-view-text]').textContent = 'リスト';
+        } else {
+          grid.style.gridTemplateColumns = '';
+          document.querySelector('[data-view-icon]').textContent = '📱';
+          document.querySelector('[data-view-text]').textContent = 'グリッド';
+        }
+        
+        showToast(isListView ? 'リスト表示に切り替えました' : 'グリッド表示に切り替えました');
+      });
+    }
+    
+    // 更新ボタン
+    const refreshButton = document.querySelector('[data-refresh]');
+    if (refreshButton) {
+      refreshButton.addEventListener('click', () => {
+        refreshButton.style.animation = 'spin 1s';
+        showToast('更新中...');
+        
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      });
+    }
+    
+    // スクロールトップ
+    const scrollTopButton = document.querySelector('[data-scroll-top]');
+    if (scrollTopButton) {
+      scrollTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // スクロール位置に応じて表示/非表示
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollTopButton.style.opacity = '1';
+          scrollTopButton.style.transform = 'scale(1)';
+        } else {
+          scrollTopButton.style.opacity = '0';
+          scrollTopButton.style.transform = 'scale(0.8)';
+        }
+      });
+    }
+    
+    // 新規投稿ボタン（デモ）
+    const composeButton = document.querySelector('[data-compose]');
+    if (composeButton) {
+      composeButton.addEventListener('click', () => {
+        showToast('Instagram投稿画面を開きます（デモ）');
+      });
+    }
+    
+    // キーボードショートカット
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        searchInput?.focus();
+      }
+      
+      if (e.key === 'r' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault();
+        location.reload();
+      }
+    });
+    
+    // 初回アクセス時のウェルカムメッセージ
+    if (!localStorage.getItem('visited')) {
+      setTimeout(() => {
+        showToast('👋 Instagram告知投稿へようこそ！');
+        localStorage.setItem('visited', 'true');
+      }, 1000);
+    }
+  </script>
+</BaseLayout>

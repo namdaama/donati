@@ -1,0 +1,89 @@
+---
+import { UI_CONFIG } from '../config/constants';
+---
+
+<div class="loading-card">
+  <div class="skeleton skeleton-image"></div>
+  <div class="skeleton-content">
+    <div class="skeleton skeleton-category"></div>
+    <div class="skeleton skeleton-title"></div>
+    <div class="skeleton skeleton-meta"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text skeleton-text-short"></div>
+  </div>
+</div>
+
+<style define:vars={{ 
+  cardBg: UI_CONFIG.COLORS.CARD_BG,
+  imageHeight: `${UI_CONFIG.CARD.IMAGE_HEIGHT}px`,
+  borderRadius: `${UI_CONFIG.CARD.BORDER_RADIUS}px`,
+  shadow: UI_CONFIG.CARD.SHADOW,
+}}>
+  .loading-card {
+    background: var(--cardBg);
+    border-radius: var(--borderRadius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 25%,
+      #e0e0e0 50%,
+      #f0f0f0 75%
+    );
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  .skeleton-image {
+    width: 100%;
+    height: var(--imageHeight);
+  }
+  
+  .skeleton-content {
+    padding: 20px;
+  }
+  
+  .skeleton-category {
+    width: 60px;
+    height: 20px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .skeleton-title {
+    width: 100%;
+    height: 24px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .skeleton-meta {
+    width: 180px;
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  .skeleton-text {
+    width: 100%;
+    height: 16px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  .skeleton-text-short {
+    width: 70%;
+  }
+</style>

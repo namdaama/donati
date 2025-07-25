@@ -1,0 +1,409 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AnnouncementCard from '../components/AnnouncementCard.astro';
+import LoadingCard from '../components/LoadingCard.astro';
+import { fetchInstagramPostsCached } from '../lib/instagram-rss-cached';
+import { filterAnnouncementPosts } from '../lib/announcement-parser';
+import { ANNOUNCEMENT_CONFIG, UI_CONFIG } from '../config/constants';
+
+const rssUrl = import.meta.env.INSTAGRAM_RSS_URL || '';
+const announcementHashtag = import.meta.env.ANNOUNCEMENT_HASHTAG || ANNOUNCEMENT_CONFIG.DEFAULT_HASHTAG;
+const enableHashtagFilter = import.meta.env.ENABLE_HASHTAG_FILTER !== 'false';
+
+let announcements = [];
+let error = null;
+
+if (rssUrl) {
+  try {
+    const posts = await fetchInstagramPostsCached(rssUrl);
+    
+    if (enableHashtagFilter) {
+      announcements = filterAnnouncementPosts(posts, announcementHashtag);
+    } else {
+      announcements = posts.map(post => ({
+        ...post,
+        category: 'news' as const,
+        eventDate: undefined,
+        location: undefined
+      }));
+    }
+    
+    announcements = announcements.slice(0, ANNOUNCEMENT_CONFIG.MAX_DISPLAY_POSTS);
+  } catch (e) {
+    error = e;
+    console.error('Error fetching posts:', e);
+  }
+}
+---
+
+<BaseLayout title="Instagram告知投稿 | DONATI">
+  <style define:vars={{ 
+    primaryColor: UI_CONFIG.COLORS.PRIMARY,
+    accentColor: UI_CONFIG.COLORS.ACCENT,
+  }}>
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    
+    h1 {
+      color: var(--primaryColor);
+      margin-bottom: 16px;
+      font-size: clamp(24px, 5vw, 36px);
+    }
+    
+    .subtitle {
+      color: #666;
+      font-size: 16px;
+    }
+    
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    
+    .filter-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .chip {
+      padding: 8px 16px;
+      background: #f0f0f0;
+      border: 2px solid transparent;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .chip:hover {
+      background: #e0e0e0;
+    }
+    
+    .chip.active {
+      background: var(--accentColor);
+      color: white;
+      border-color: var(--accentColor);
+    }
+    
+    .refresh-button {
+      padding: 8px 16px;
+      background: var(--primaryColor);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .refresh-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(44, 90, 160, 0.3);
+    }
+    
+    .refresh-button:active {
+      transform: scale(0.95);
+    }
+    
+    .refresh-icon {
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    
+    .refresh-button.loading .refresh-icon {
+      display: inline-block;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .announcement-item {
+      animation: slideIn 0.4s ease-out backwards;
+    }
+    
+    .announcement-item:nth-child(1) { animation-delay: 0.1s; }
+    .announcement-item:nth-child(2) { animation-delay: 0.2s; }
+    .announcement-item:nth-child(3) { animation-delay: 0.3s; }
+    .announcement-item:nth-child(4) { animation-delay: 0.4s; }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .error-container {
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    .error-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+    }
+    
+    .error-title {
+      color: #d32f2f;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    
+    .error-message {
+      color: #666;
+      margin-bottom: 24px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+    
+    .empty-title {
+      color: #666;
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    
+    .empty-message {
+      color: #999;
+    }
+    
+    .setup-info {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffe0a6 100%);
+      padding: 32px;
+      border-radius: 16px;
+      margin-bottom: 40px;
+      box-shadow: 0 4px 20px rgba(255, 193, 7, 0.2);
+      animation: fadeIn 0.6s ease-out;
+    }
+    
+    .setup-info h2 {
+      color: #856404;
+      margin-bottom: 16px;
+    }
+    
+    .setup-info ol {
+      color: #856404;
+      margin-left: 20px;
+    }
+    
+    .setup-info li {
+      margin-bottom: 8px;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--primaryColor);
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    @media (max-width: 640px) {
+      .container {
+        padding: 20px 16px;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+  
+  <div class="container">
+    <div class="header">
+      <h1>✨ Instagram告知投稿</h1>
+      <p class="subtitle">最新のイベント・ワークショップ情報をお届け</p>
+    </div>
+    
+    {!rssUrl ? (
+      <div class="setup-info">
+        <h2>🚀 セットアップ方法</h2>
+        <ol>
+          <li>📋 .env.exampleを.envにコピー</li>
+          <li>🔗 INSTAGRAM_RSS_URLにRSSフィードURLを設定（RSS.appなどで取得）</li>
+          <li>🏷️ ANNOUNCEMENT_HASHTAGに告知投稿を識別するハッシュタグを設定</li>
+          <li>📦 npm installを実行</li>
+          <li>🎯 npm run devで開発サーバーを起動</li>
+        </ol>
+      </div>
+    ) : error ? (
+      <div class="error-container">
+        <div class="error-icon">😢</div>
+        <h2 class="error-title">読み込みエラー</h2>
+        <p class="error-message">投稿の取得中にエラーが発生しました</p>
+        <button class="refresh-button" onclick="location.reload()">
+          もう一度試す
+        </button>
+      </div>
+    ) : (
+      <>
+        <div class="controls">
+          <div class="filter-chips" data-filter-chips>
+            <button class="chip active" data-category="all">
+              すべて
+            </button>
+            <button class="chip" data-category="workshop">
+              ワークショップ
+            </button>
+            <button class="chip" data-category="event">
+              イベント
+            </button>
+            <button class="chip" data-category="news">
+              お知らせ
+            </button>
+          </div>
+          
+          <button class="refresh-button" data-refresh-button>
+            <span class="refresh-icon">🔄</span>
+            <span>更新</span>
+          </button>
+        </div>
+        
+        {announcements.length > 0 && (
+          <div class="stats">
+            <div class="stat-item">
+              <div class="stat-value">{announcements.length}</div>
+              <div class="stat-label">投稿数</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">{announcements.filter(a => a.eventDate).length}</div>
+              <div class="stat-label">イベント</div>
+            </div>
+          </div>
+        )}
+        
+        {announcements.length > 0 ? (
+          <div class="grid" data-announcements-grid>
+            {announcements.map((announcement) => (
+              <div class="announcement-item" data-category={announcement.category}>
+                <AnnouncementCard announcement={announcement} showLink={true} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h2 class="empty-title">投稿が見つかりません</h2>
+            <p class="empty-message">
+              {enableHashtagFilter 
+                ? `${announcementHashtag}を含む投稿がありません`
+                : 'まだ投稿がありません'}
+            </p>
+          </div>
+        )}
+      </>
+    )}
+  </div>
+  
+  <script>
+    // フィルター機能
+    const filterChips = document.querySelectorAll('[data-filter-chips] .chip');
+    const announcementsGrid = document.querySelector('[data-announcements-grid]');
+    const announcements = document.querySelectorAll('[data-category]');
+    
+    filterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        // アクティブ状態の切り替え
+        filterChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        
+        const category = chip.dataset.category;
+        
+        // フィルタリング
+        announcements.forEach(item => {
+          if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+            // アニメーション再生
+            item.style.animation = 'none';
+            setTimeout(() => {
+              item.style.animation = '';
+            }, 10);
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // 更新ボタン
+    const refreshButton = document.querySelector('[data-refresh-button]');
+    if (refreshButton) {
+      refreshButton.addEventListener('click', () => {
+        refreshButton.classList.add('loading');
+        location.reload();
+      });
+    }
+    
+    // 画像の遅延読み込みとエラーハンドリング
+    const images = document.querySelectorAll('.card-image');
+    images.forEach(img => {
+      img.addEventListener('error', () => {
+        img.style.display = 'none';
+      });
+    });
+  </script>
+</BaseLayout>
