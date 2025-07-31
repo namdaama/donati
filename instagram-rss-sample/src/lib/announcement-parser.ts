@@ -27,8 +27,14 @@ export function filterAnnouncementPosts(
 }
 
 function parseAnnouncementPost(post: InstagramPost): AnnouncementPost {
-  const announcement: AnnouncementPost = {
+  // pubDateがDate型でない場合の対処
+  const normalizedPost = {
     ...post,
+    pubDate: post.pubDate instanceof Date ? post.pubDate : new Date(post.pubDate),
+  };
+  
+  const announcement: AnnouncementPost = {
+    ...normalizedPost,
     category: determineCategory(post.hashtags),
   };
 
@@ -79,9 +85,13 @@ export function generateSlug(post: AnnouncementPost): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   
-  const dateStr = post.eventDate 
-    ? `${post.eventDate.getFullYear()}-${String(post.eventDate.getMonth() + 1).padStart(2, '0')}`
-    : `${post.pubDate.getFullYear()}-${String(post.pubDate.getMonth() + 1).padStart(2, '0')}`;
+  // pubDateがDate型でない場合の対処
+  const pubDate = post.pubDate instanceof Date ? post.pubDate : new Date(post.pubDate);
+  const eventDate = post.eventDate instanceof Date ? post.eventDate : post.eventDate ? new Date(post.eventDate) : null;
+  
+  const dateStr = eventDate 
+    ? `${eventDate.getFullYear()}-${String(eventDate.getMonth() + 1).padStart(2, '0')}`
+    : `${pubDate.getFullYear()}-${String(pubDate.getMonth() + 1).padStart(2, '0')}`;
   
   return `${dateStr}-${baseSlug}`.slice(0, ANNOUNCEMENT_CONFIG.SLUG_MAX_LENGTH);
 }

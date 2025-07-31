@@ -25,7 +25,7 @@ export const UI_CONFIG = {
     CARD_BG: 'white',
   },
   CARD: {
-    IMAGE_HEIGHT: 200,
+    IMAGE_HEIGHT: 180,
     EXCERPT_LINES: 3,
     BORDER_RADIUS: 8,
     SHADOW: '0 2px 8px rgba(0,0,0,0.1)',

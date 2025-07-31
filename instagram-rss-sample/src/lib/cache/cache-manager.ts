@@ -51,11 +51,6 @@ export class CacheManager<T> {
       updateAgeOnGet: config.updateAgeOnGet ?? false,
       // stale: config.staleWhileRevalidate, // LRU v11では未サポート
       
-      // カスタムサイズ計算（JSONサイズベース）
-      sizeCalculation: (value) => {
-        return JSON.stringify(value).length;
-      },
-      
       // 削除時のコールバック
       dispose: (value, key) => {
         this.cacheLogger.debug('キャッシュエントリを削除', {

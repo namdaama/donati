@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AnnouncementGrid from '../components/AnnouncementGrid.astro';
-import { fetchInstagramPostsCached, getCacheStats } from '../lib/instagram-rss-cached';
+import { fetchInstagramPostsCached } from '../lib/instagram-rss-cached';
 import { filterAnnouncementPosts } from '../lib/announcement-parser';
 import { ANNOUNCEMENT_CONFIG, UI_CONFIG } from '../config/constants';
 
@@ -11,12 +11,10 @@ const enableHashtagFilter = import.meta.env.ENABLE_HASHTAG_FILTER !== 'false';
 
 let announcements = [];
 let error = null;
-let cacheStats = null;
 
 if (rssUrl) {
   try {
     const posts = await fetchInstagramPostsCached(rssUrl);
-    cacheStats = await getCacheStats();
     
     if (enableHashtagFilter) {
       announcements = filterAnnouncementPosts(posts, announcementHashtag);
@@ -432,9 +430,9 @@ if (rssUrl) {
               <div class="stat-label">場所あり</div>
             </div>
             <div class="stat-card">
-              <div class="stat-icon">⚡</div>
-              <div class="stat-value">{cacheStats?.l1HitRate ? Math.round(cacheStats.l1HitRate) : 0}%</div>
-              <div class="stat-label">キャッシュ効率</div>
+              <div class="stat-icon">🎯</div>
+              <div class="stat-value">{announcements.filter(a => a.category === 'workshop').length}</div>
+              <div class="stat-label">ワークショップ</div>
             </div>
           </div>
         )}

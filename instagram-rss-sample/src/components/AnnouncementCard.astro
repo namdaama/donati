@@ -15,6 +15,23 @@ function getProxiedImageUrl(url: string) {
   return `${BASE_URL}?url=${encodeURIComponent(url)}&w=${DEFAULT_WIDTH}&h=${DEFAULT_HEIGHT}&fit=${FIT}`;
 }
 
+// 本文を要約して最大文字数に制限
+function truncateContent(content: string, maxLength: number = 80): string {
+  if (content.length <= maxLength) {
+    return content;
+  }
+  
+  // 文章の区切りで切る
+  const truncated = content.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf('。');
+  
+  if (lastSpace > maxLength * 0.7) {
+    return truncated.substring(0, lastSpace + 1);
+  }
+  
+  return truncated + '...';
+}
+
 const CardWrapper = showLink ? 'a' : 'div';
 const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement)}`, class: 'card-link' } : { class: 'card-wrapper' };
 ---
@@ -43,7 +60,7 @@ const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement
           <div>場所: {announcement.location}</div>
         )}
       </div>
-      <p class="card-excerpt">{announcement.content}</p>
+      <p class="card-excerpt">{truncateContent(announcement.content)}</p>
     </div>
   </article>
 </CardWrapper>
@@ -76,6 +93,9 @@ const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement
     overflow: hidden;
     box-shadow: var(--shadow);
     transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   
   .card-link:hover .card {
@@ -110,7 +130,10 @@ const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement
   }
   
   .card-content {
-    padding: 20px;
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
   
   .card-category {
@@ -125,9 +148,15 @@ const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement
   
   .card-title {
     margin: 0 0 10px 0;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 1.4;
     color: var(--textColor);
+    font-weight: 600;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.8em;
   }
   
   .card-meta {
@@ -145,5 +174,10 @@ const cardProps = showLink ? { href: `/announcements/${generateSlug(announcement
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin: 0;
+    flex: 1;
+  }
+  
+  .card-link {
+    height: 100%;
   }
 </style>
