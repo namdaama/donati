@@ -1,4 +1,6 @@
 ---
+import DonatiLogo from './DonatiLogo.astro';
+
 // OverViewページのメインヒーローセクション
 export interface Props {
   title: string;
@@ -45,17 +47,9 @@ const { title, subtitle, ctaText, ctaLink } = Astro.props;
       <!-- DONATIマスコット -->
       <div class="lg:w-1/2 flex justify-center">
         <div class="relative">
-          <!-- マスコットキャラクター（SVGまたは画像の代替） -->
-          <div class="w-64 h-64 md:w-80 md:h-80 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-overview-yellow/50">
-            <div class="text-center">
-              <!-- 宇宙飛行士風キャラクター（絵文字で代替） -->
-              <div class="text-8xl md:text-9xl mb-4 animate-bounce">
-                🚀
-              </div>
-              <div class="text-2xl md:text-3xl font-bold text-overview-dark-blue">
-                DONATI
-              </div>
-            </div>
+          <!-- マスコットキャラクター -->
+          <div class="w-64 h-64 md:w-80 md:h-80 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-overview-yellow/50 p-8">
+            <DonatiLogo size="large" class="animate-pulse" />
           </div>
           
           <!-- 浮遊する星の装飾 -->

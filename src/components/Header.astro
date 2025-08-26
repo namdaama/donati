@@ -1,4 +1,6 @@
 ---
+import DonatiLogo from './DonatiLogo.astro';
+
 // OverViewページ専用のヘッダー（アイコンナビゲーション）
 const navIcons = [
   { 
@@ -39,9 +41,7 @@ const navIcons = [
     <div class="flex justify-between items-center">
       <!-- ロゴ（左上） -->
       <a href="/" class="flex items-center group">
-        <h1 class="text-2xl font-bold text-overview-dark-blue group-hover:text-overview-sky transition-colors">
-          DONATI
-        </h1>
+        <DonatiLogo size="small" class="group-hover:opacity-80 transition-opacity" />
         <span class="text-sm text-gray-600 ml-2 hidden sm:block">
           サイエンス アンド スペース ラボ
         </span>
