@@ -45,6 +45,18 @@ npm run preview
 - **レスポンシブデザイン**: モバイル・タブレット・デスクトップ対応
 - **高速表示**: Astroの静的サイト生成による最適化
 
+### 実験的機能
+
+`experiments/instagram-rss-sample/` ディレクトリに、Instagram RSS連携の実験的実装があります：
+
+- **RSS.app連携**: InstagramフィードをRSSで取得
+- **自動お知らせ抽出**: 特定ハッシュタグ（#donati_eventなど）からイベント情報を抽出
+- **画像プロキシ**: weserv.nlを使用した安全な画像表示
+- **キャッシュ機能**: パフォーマンス向上のための多層キャッシュ
+- **エラーハンドリング**: 堅牢なエラー処理とフォールバック機能
+
+詳細は `experiments/instagram-rss-sample/README.md` を参照してください。
+
 ## 環境変数
 
 `.env.example` を `.env` にコピーして、必要な情報を設定してください：
@@ -84,6 +96,22 @@ public/
 │   ├── carousel/    # カルーセル用画像
 │   └── ...
 └── ...
+
+experiments/
+└── instagram-rss-sample/  # Instagram RSS連携の実験的実装
+    ├── src/
+    │   ├── lib/          # RSS取得・解析ロジック
+    │   ├── components/   # 表示コンポーネント
+    │   └── pages/        # サンプルページ
+    └── docs/             # 実装ドキュメント
+
+docs/                     # プロジェクトドキュメント
+├── 01-project-overview/  # プロジェクト概要
+├── 02-pricing-estimates/ # 価格・工数見積もり
+├── 03-technical-specs/   # 技術仕様
+├── 04-workflow-collaboration/ # ワークフロー
+├── 05-implementation-guides/  # 実装ガイド
+└── 06-quality-guidelines/     # 品質ガイドライン
 ```
 
 ## デプロイ
