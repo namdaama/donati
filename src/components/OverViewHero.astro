@@ -1,0 +1,136 @@
+---
+// OverViewページのメインヒーローセクション
+export interface Props {
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  ctaLink: string;
+}
+
+const { title, subtitle, ctaText, ctaLink } = Astro.props;
+---
+
+<section class="relative bg-transparent py-16 md:py-24 overflow-hidden">
+  <!-- 黄色の装飾的な枠 -->
+  <div class="absolute inset-4 border-4 border-overview-yellow rounded-3xl opacity-80"></div>
+  
+  <!-- 星の装飾 -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <div class="star star-1"></div>
+    <div class="star star-2"></div>
+    <div class="star star-3"></div>
+    <div class="star star-4"></div>
+    <div class="star star-5"></div>
+    <div class="star star-6"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="flex flex-col lg:flex-row items-center justify-between">
+      <!-- テキストコンテンツ -->
+      <div class="lg:w-1/2 text-center lg:text-left mb-8 lg:mb-0">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-overview-dark-blue mb-6">
+          {title}
+        </h1>
+        <p class="text-lg md:text-xl text-overview-dark-blue/80 mb-8 leading-relaxed">
+          {subtitle}
+        </p>
+        <a 
+          href={ctaLink} 
+          class="inline-block bg-overview-yellow hover:bg-overview-yellow/90 text-overview-dark-blue font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+        >
+          {ctaText}
+        </a>
+      </div>
+      
+      <!-- DONATIマスコット -->
+      <div class="lg:w-1/2 flex justify-center">
+        <div class="relative">
+          <!-- マスコットキャラクター（SVGまたは画像の代替） -->
+          <div class="w-64 h-64 md:w-80 md:h-80 bg-white rounded-full flex items-center justify-center shadow-2xl border-4 border-overview-yellow/50">
+            <div class="text-center">
+              <!-- 宇宙飛行士風キャラクター（絵文字で代替） -->
+              <div class="text-8xl md:text-9xl mb-4 animate-bounce">
+                🚀
+              </div>
+              <div class="text-2xl md:text-3xl font-bold text-overview-dark-blue">
+                DONATI
+              </div>
+            </div>
+          </div>
+          
+          <!-- 浮遊する星の装飾 -->
+          <div class="absolute -top-4 -right-4 text-3xl text-overview-yellow animate-pulse">⭐</div>
+          <div class="absolute -bottom-4 -left-4 text-2xl text-overview-yellow animate-pulse delay-300">✨</div>
+          <div class="absolute top-1/4 -left-8 text-xl text-overview-yellow animate-pulse delay-700">🌟</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 円形の装飾要素 -->
+  <div class="absolute top-10 left-10 w-16 h-16 bg-overview-yellow/30 rounded-full"></div>
+  <div class="absolute bottom-20 right-20 w-24 h-24 bg-overview-yellow/20 rounded-full"></div>
+  <div class="absolute top-1/3 left-1/4 w-8 h-8 bg-white/40 rounded-full"></div>
+</section>
+
+<style>
+  .star {
+    position: absolute;
+    background: #FFD700;
+    border-radius: 50%;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  
+  .star-1 {
+    width: 4px;
+    height: 4px;
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+  
+  .star-2 {
+    width: 6px;
+    height: 6px;
+    top: 30%;
+    right: 15%;
+    animation-delay: 1s;
+  }
+  
+  .star-3 {
+    width: 3px;
+    height: 3px;
+    bottom: 40%;
+    left: 20%;
+    animation-delay: 2s;
+  }
+  
+  .star-4 {
+    width: 5px;
+    height: 5px;
+    top: 60%;
+    right: 25%;
+    animation-delay: 0.5s;
+  }
+  
+  .star-5 {
+    width: 4px;
+    height: 4px;
+    bottom: 20%;
+    right: 10%;
+    animation-delay: 1.5s;
+  }
+  
+  .star-6 {
+    width: 7px;
+    height: 7px;
+    top: 10%;
+    right: 40%;
+    animation-delay: 2.5s;
+  }
+  
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.2); }
+  }
+</style>

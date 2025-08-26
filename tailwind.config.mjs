@@ -7,6 +7,10 @@ export default {
         // 技術仕様書に合わせた配色
         'primary-color': '#2c5aa0',      // メインブルー
         'secondary-color': '#f4a261',     // アクセントオレンジ
+        // OverViewページ専用配色
+        'overview-sky': '#87CEEB',        // 水色 (スカイブルー)
+        'overview-yellow': '#FFD700',     // 黄色 (ゴールド)
+        'overview-dark-blue': '#1e3a8a',  // ダークブルー
         // 既存の色も残す
         'deep-blue': '#1a237e',
         'space-blue': '#0d47a1',

@@ -1,163 +1,267 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
+import OverViewHeader from '../components/OverViewHeader.astro';
+import OverViewHero from '../components/OverViewHero.astro';
 import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import ServiceCard from '../components/ServiceCard.astro';
-import AchievementCard from '../components/AchievementCard.astro';
-import NewsCard from '../components/NewsCard.astro';
-import Carousel from '../components/Carousel.astro';
-import InstagramSection from '../components/InstagramSection.astro';
-import { carouselData, servicesData } from '@/config/site';
 
-const recentAchievements = [
+// お知らせデータ（4列グリッド用）
+const newsItems = [
   {
-    title: '○○小学校 科学実験ショー',
-    date: '2024年3月15日',
-    location: '東京都',
-    description: '全校児童300名を対象に、空気の力をテーマにした実験ショーを実施しました。'
+    id: 1,
+    thumbnail: '/images/news/event1.jpg',
+    date: '2025/01 [土]',
+    title: '1/18観察会～20:30時～',
+    location: '駅前プラザ（ROOM A）',
+    detail: '予約方法：Instagram DM',
+    link: '/news/event1'
   },
   {
-    title: '夏休み科学ワークショップ',
-    date: '2024年8月5日',
-    location: '神奈川県',
-    description: '親子30組が参加。スライム作りと化学反応について楽しく学びました。'
+    id: 2,
+    thumbnail: '/images/news/event2.jpg', 
+    date: '2025/02 [日]',
+    title: '2/15実験ショー～14:00時～',
+    location: '市民会館（大ホール）',
+    detail: '予約方法：Instagram DM',
+    link: '/news/event2'
   },
   {
-    title: '星空観望会 in ○○キャンプ場',
-    date: '2024年7月20日',
-    location: '山梨県',
-    description: '満天の星空の下、土星の環や月のクレーターを観察しました。'
+    id: 3,
+    thumbnail: '/images/news/event3.jpg',
+    date: '2025/02 [土]',
+    title: '2/22ワークショップ～10:00時～',
+    location: '科学館（実験室）',
+    detail: '予約方法：Instagram DM',
+    link: '/news/event3'
+  },
+  {
+    id: 4,
+    thumbnail: '/images/news/event4.jpg',
+    date: '2025/03 [日]',
+    title: '3/8星空観察～19:30時～',
+    location: '山頂公園（観望台）',
+    detail: '予約方法：Instagram DM',
+    link: '/news/event4'
   }
 ];
 
-const recentNews = [
+// スタッフ情報
+const staffMembers = [
   {
-    title: '2024年夏休み特別プログラムの受付開始',
-    date: '2024年5月1日',
-    category: 'お知らせ',
-    excerpt: '今年も夏休み期間中の特別科学教室を開催します。人気のプログラムは早めのご予約をお勧めします。',
-    link: '/news/summer-2024'
+    name: 'スタッフA',
+    role: 'サイエンスコミュニケーター',
+    description: '実験ショーと星空解説が得意です'
   },
   {
-    title: '新プログラム「探求学習コース」スタート',
-    date: '2024年4月15日',
-    category: 'お知らせ',
-    excerpt: '科学的思考力を育む新しいプログラムを開始しました。小学3年生から6年生が対象です。',
-    link: '/news/new-program'
-  },
-  {
-    title: '春の星空観望会レポート',
-    date: '2024年3月25日',
-    category: 'レポート',
-    excerpt: '春の大三角形と北斗七星を観察した観望会の様子をレポートします。',
-    link: '/news/spring-stargazing'
+    name: 'スタッフB', 
+    role: '宇宙教育スペシャリスト',
+    description: '宇宙の魅力をわかりやすくお伝えします'
   }
+];
+
+// お仕事情報
+const services = [
+  '実験ショー',
+  'ワークショップ',
+  '星空観察塾',
+  '星空の先生',
+  '出張授業',
+  '科学イベント企画'
 ];
 ---
 
-<Layout title="ホーム">
-  <Header />
+<Layout title="OverView - DONATI">
+  <OverViewHeader />
   
   <main class="flex-grow">
     <!-- Hero Section -->
-    <Hero 
-      title="科学の楽しさを伝え、世界をワクワクでいっぱいにする"
-      subtitle="サイエンス アンド スペース ラボ DONATIは、科学実験ショーや星空観望会を通じて、子どもから大人まで科学の魅力をお伝えします"
-      ctaText="事業内容を見る"
-      ctaLink="/services"
-      useAurora={true}
-      showStars={true}
+    <OverViewHero 
+      title="DONATIとは？"
+      subtitle="科学の楽しさと宇宙の神秘を、みんなで一緒に体験しませんか？子どもから大人まで、ワクワクする発見がここにあります。"
+      ctaText="詳しくはコチラ"
+      ctaLink="/about"
     />
     
-    <!-- Carousel Section -->
-    <Carousel slides={carouselData} />
-    
-    <!-- Services Section -->
-    <section class="py-16 md:py-24 bg-gray-50">
-      <div class="container-custom">
+    <!-- お知らせセクション -->
+    <section class="py-16 md:py-24 bg-transparent">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
         <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">事業紹介</h2>
-          <p class="text-lg text-text-gray max-w-2xl mx-auto">
-            科学の楽しさを体験できる様々なプログラムをご用意しています
-          </p>
+          <h2 class="text-4xl md:text-5xl font-bold text-overview-dark-blue mb-4">
+            お知らせ
+          </h2>
+          <div class="w-24 h-1 bg-overview-yellow mx-auto"></div>
         </div>
         
+        <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {servicesData.map((service) => (
-            <ServiceCard {...service} />
+          {newsItems.map((item) => (
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-overview-yellow/30">
+              <!-- サムネイル -->
+              <div class="h-40 bg-overview-sky/20 flex items-center justify-center">
+                <span class="text-4xl">📅</span>
+              </div>
+              
+              <!-- コンテンツ -->
+              <div class="p-4">
+                <div class="text-sm font-bold text-overview-yellow bg-overview-dark-blue px-3 py-1 rounded-full inline-block mb-3">
+                  {item.date}
+                </div>
+                <h3 class="font-bold text-overview-dark-blue mb-2 text-lg">
+                  {item.title}
+                </h3>
+                <p class="text-sm text-gray-600 mb-2">
+                  {item.location}
+                </p>
+                <p class="text-xs text-overview-sky font-medium">
+                  {item.detail}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
     
-    <!-- Achievements Section -->
-    <section class="py-16 md:py-24">
-      <div class="container-custom">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">活動実績</h2>
-          <p class="text-lg text-text-gray max-w-2xl mx-auto">
-            これまでに実施した科学実験ショーやワークショップの一部をご紹介します
-          </p>
+    <!-- 下部3列セクション -->
+    <section class="py-16 md:py-24 bg-transparent">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- 1. スタッフについて -->
+          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-sky">
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-overview-sky rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl">👥</span>
+              </div>
+              <h3 class="text-2xl font-bold text-overview-dark-blue">
+                スタッフについて
+              </h3>
+            </div>
+            
+            <div class="space-y-4 mb-6">
+              {staffMembers.map((staff) => (
+                <div class="bg-overview-sky/10 p-4 rounded-lg">
+                  <h4 class="font-bold text-overview-dark-blue mb-1">
+                    {staff.name}
+                  </h4>
+                  <p class="text-sm text-overview-sky font-medium mb-2">
+                    {staff.role}
+                  </p>
+                  <p class="text-sm text-gray-600">
+                    {staff.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+            
+            <div class="text-center">
+              <a href="/staff" class="inline-block bg-overview-sky hover:bg-overview-sky/90 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">
+                詳しくはコチラ
+              </a>
+            </div>
+          </div>
+          
+          <!-- 2. お仕事のこと -->
+          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-yellow">
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-overview-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl">⚗️</span>
+              </div>
+              <h3 class="text-2xl font-bold text-overview-dark-blue">
+                お仕事のこと
+              </h3>
+            </div>
+            
+            <ul class="space-y-3 mb-6">
+              {services.map((service) => (
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-overview-yellow rounded-full mr-3"></span>
+                  <span class="text-overview-dark-blue font-medium">{service}</span>
+                </li>
+              ))}
+            </ul>
+            
+            <div class="text-center">
+              <a href="/services" class="inline-block bg-overview-yellow hover:bg-overview-yellow/90 text-overview-dark-blue font-bold py-3 px-6 rounded-full transition-colors duration-300">
+                詳しくはコチラ
+              </a>
+            </div>
+          </div>
+          
+          <!-- 3. お問い合わせ -->
+          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-dark-blue">
+            <div class="text-center mb-6">
+              <div class="w-16 h-16 bg-overview-dark-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                <span class="text-2xl text-white">✉️</span>
+              </div>
+              <h3 class="text-2xl font-bold text-overview-dark-blue">
+                お問い合わせ
+              </h3>
+            </div>
+            
+            <div class="space-y-4 mb-6">
+              <div class="text-center">
+                <p class="text-sm text-gray-600 mb-2">電話番号</p>
+                <p class="text-xl font-bold text-overview-dark-blue">
+                  000-0000-0000
+                </p>
+              </div>
+              
+              <div class="text-center">
+                <p class="text-sm text-gray-600 mb-2">営業時間</p>
+                <p class="text-sm text-overview-dark-blue">
+                  平日・土日 9:00～18:00<br>
+                  年中無休（年末年始除く）
+                </p>
+              </div>
+              
+              <div class="bg-overview-sky/10 p-4 rounded-lg text-center">
+                <p class="text-sm text-overview-dark-blue font-medium">
+                  「組み合わせるのも楽しさに任せます！」
+                </p>
+              </div>
+            </div>
+            
+            <div class="text-center">
+              <a href="/contact" class="inline-block bg-overview-dark-blue hover:bg-overview-dark-blue/90 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">
+                お問い合せはコチラ
+              </a>
+            </div>
+          </div>
+          
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {recentAchievements.map((achievement) => (
-            <AchievementCard {...achievement} />
-          ))}
-        </div>
-        
-        <div class="text-center">
-          <a href="/achievements" class="btn-primary inline-block">
-            もっと見る
-          </a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- News Section -->
-    <section class="py-16 md:py-24 bg-gray-50">
-      <div class="container-custom">
-        <div class="text-center mb-12">
-          <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">お知らせ</h2>
-          <p class="text-lg text-text-gray max-w-2xl mx-auto">
-            最新の活動情報やイベントのお知らせをお届けします
-          </p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          {recentNews.map((news) => (
-            <NewsCard {...news} />
-          ))}
-        </div>
-        
-        <div class="text-center">
-          <a href="/news" class="btn-primary inline-block">
-            すべてのお知らせを見る
-          </a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- Instagram Section -->
-    <InstagramSection />
-    
-    <!-- CTA Section -->
-    <section class="py-16 md:py-24 bg-gradient-to-r from-space-blue to-deep-blue text-white">
-      <div class="container-custom text-center">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          科学の楽しさを一緒に体験しませんか？
-        </h2>
-        <p class="text-xl mb-8 max-w-2xl mx-auto">
-          科学実験ショー、ワークショップ、星空観望会など、<br class="hidden md:inline" />
-          ご要望に合わせたプログラムをご提案いたします
-        </p>
-        <a href="/contact" class="btn-secondary inline-block text-lg">
-          お問い合わせはこちら
-        </a>
       </div>
     </section>
   </main>
   
   <Footer />
 </Layout>
+
+<style>
+  /* 丸みを帯びた親しみやすいフォント調整 */
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+  }
+  
+  /* backGround.png を背景として使用 */
+  body {
+    background-image: url('/images/backGround.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  
+  /* 背景画像の上に軽いオーバーレイを追加 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(135, 206, 235, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
+    pointer-events: none;
+    z-index: -1;
+  }
+</style>
