@@ -7,5 +7,6 @@
       "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"]
     }
-  }
+  },
+  "exclude": ["node_modules", "dist", "experiments"]
 }

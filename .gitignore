@@ -23,4 +23,5 @@ pnpm-debug.log*
 .DS_Store
 
 # typescript
-*.tsbuildinfo
+*.tsbuildinfonode_modules/
+experiments/
