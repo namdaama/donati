@@ -2,159 +2,186 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
 
-const staff = [
+// スタッフ情報
+const staffMembers = [
   {
-    name: 'ふじ',
-    role: '代表・科学実験講師',
-    image: '/images/staff-fuji.jpg',
-    description: '元プラネタリウム解説員として、宇宙や科学の魅力を多くの人に伝えてきました。子どもたちの「なぜ？」を大切に、科学の楽しさを体験できるプログラムを提供しています。',
-    qualifications: [
-      'プラネタリウム解説員経験',
-      '理科教育指導員',
-      '科学コミュニケーター'
-    ],
-    message: '科学は身近なところにあふれています。日常の「不思議」を一緒に解き明かしていきましょう！'
+    name: 'ひでゆき',
+    role: '星の写真家',
+    description: '天体写真撮影の専門家として、宇宙の美しさを写真を通じて伝えています。星空観望会では撮影技術の指導も行い、参加者の方々に星空の魅力を身近に感じていただけるよう活動しています。「星空の感動を一人でも多くの人に」をモットーに、宇宙への興味の扉を開くお手伝いをしています。',
   },
   {
-    name: 'ご主人様',
-    role: '天文教育担当・星空写真家',
-    image: '/images/staff-master.jpg',
-    description: '大学非常勤講師として天文学を教えながら、星空写真家として活動。美しい星空の魅力と宇宙の神秘を、観望会や写真を通じて伝えています。',
-    qualifications: [
-      '大学非常勤講師（天文学）',
-      '天体写真家',
-      '天文教育普及員'
-    ],
-    message: '本物の星空を見上げる感動を、多くの人と共有したい。宇宙の壮大さを一緒に感じてみませんか？'
+    name: 'フジ',
+    role: 'サイエンスパフォーマー',
+    description: '宇宙と科学の魅力を楽しく伝えるサイエンスパフォーマーです。星空観望会では宇宙の神秘を、実験ショーでは科学の面白さを分かりやすく解説します。「科学は楽しい！」をモットーに、体験型の学習プログラムを企画・実施しています。みんなと一緒に新しい発見をすることが喜びです。',
   }
 ];
 ---
 
-<Layout title="スタッフ紹介">
+<Layout title="私たちについて - DONATI">
   <Header />
   
-  <main class="flex-grow">
-    <Hero 
-      title="スタッフ紹介"
-      subtitle="科学の楽しさを伝えるプロフェッショナル"
-      useAurora={true}
-      showStars={true}
-    />
+  <main class="flex-grow relative overflow-hidden">
+    <!-- 背景装飾 -->
+    <style>
+      /* backGround.png を背景として使用 */
+      body {
+        background-image: url('/images/backGround.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      
+      .star {
+        position: absolute;
+        background: white;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        opacity: 0.7;
+      }
+      
+      .circle-decoration {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.3;
+      }
+      
+      .wave-decoration {
+        background-image: repeating-linear-gradient(
+          45deg,
+          #FFD700,
+          #FFD700 10px,
+          transparent 10px,
+          transparent 20px
+        );
+        height: 5px;
+        width: 100%;
+        margin: 2rem 0;
+      }
+      
+      .yellow-circle {
+        background: #FFD700;
+        border-radius: 50%;
+        width: 300px;
+        height: 300px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      
+      .staff-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      .profile-circle {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: #E0E0E0;
+        margin: 0 auto 1rem;
+      }
+      
+      .name-badge {
+        background: #FFD700;
+        color: #333;
+        padding: 0.5rem 2rem;
+        border-radius: 2rem;
+        font-weight: bold;
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
+    </style>
     
-    <!-- Mission Section -->
-    <section class="py-16 md:py-24">
-      <div class="container-custom">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-          <h2 class="text-3xl font-bold text-text-dark mb-6">私たちの想い</h2>
-          <p class="text-lg text-text-gray leading-relaxed">
-            「科学の楽しさを伝え、世界をワクワクでいっぱいにする」<br /><br />
-            これが私たちサイエンス アンド スペース ラボ DONATIのミッションです。<br />
-            科学は難しいものではなく、身近で楽しいもの。<br />
-            子どもから大人まで、すべての人に科学の魅力を感じていただけるよう、<br />
-            情熱を持って活動しています。
-          </p>
+    <!-- 星の装飾 -->
+    <div class="star" style="width: 30px; height: 30px; top: 10%; left: 10%;"></div>
+    <div class="star" style="width: 20px; height: 20px; top: 20%; right: 15%;"></div>
+    <div class="star" style="width: 25px; height: 25px; bottom: 30%; left: 5%;"></div>
+    <div class="star" style="width: 35px; height: 35px; top: 60%; right: 10%;"></div>
+    
+    <!-- 円形装飾 -->
+    <div class="circle-decoration" style="width: 100px; height: 100px; top: 5%; right: 20%;"></div>
+    <div class="circle-decoration" style="width: 150px; height: 150px; bottom: 10%; left: -50px;"></div>
+    <div class="circle-decoration" style="width: 80px; height: 80px; top: 40%; left: 10%;"></div>
+    
+    <div class="container mx-auto px-4 py-12 relative z-10">
+      <!-- タイトルセクション -->
+      <section class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+          DONATI（ドナチ）とは
+        </h1>
+        <div class="wave-decoration max-w-md mx-auto"></div>
+      </section>
+      
+      <!-- 説明セクション -->
+      <section class="mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+          <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
+            <p class="text-gray-600 leading-relaxed">
+              科学実験ショーや星空観望会を通じて、子どもから大人まで幅広い年代の方々に科学の面白さと宇宙の神秘をお伝えしています。「なぜ？」という疑問を大切に、実際に手を動かして体験することで、科学への興味と理解を深めていただくことを目指しています。
+            </p>
+          </div>
+          
+          <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
+            <p class="text-gray-600 leading-relaxed">
+              私たちは、科学は身近で楽しいものだということを多くの人に知ってもらいたいと考えています。日常生活の中にある科学的な現象を分かりやすく解説し、宇宙の壮大さと美しさを感じていただける機会を提供しています。一緒に科学の世界を探検しましょう！
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
-    
-    <!-- Staff Profiles -->
-    <section class="py-16 bg-gray-50">
-      <div class="container-custom">
-        <h2 class="text-3xl font-bold text-center text-text-dark mb-12">スタッフプロフィール</h2>
         
-        <div class="space-y-16">
-          {staff.map((member, index) => (
-            <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-              <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
-                <div class="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-                  <span class="text-6xl">{index === 0 ? '👩‍🔬' : '👨‍🏫'}</span>
-                </div>
-              </div>
-              
-              <div class={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <h3 class="text-2xl font-bold text-text-dark mb-2">{member.name}</h3>
-                <p class="text-space-blue font-semibold mb-4">{member.role}</p>
-                <p class="text-text-gray mb-6 leading-relaxed">{member.description}</p>
-                
-                <div class="mb-6">
-                  <h4 class="font-semibold mb-3">資格・経歴</h4>
-                  <ul class="space-y-2">
-                    {member.qualifications.map((qualification) => (
-                      <li class="flex items-start">
-                        <svg class="w-5 h-5 text-accent-green mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                        </svg>
-                        <span class="text-text-gray">{qualification}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div class="bg-blue-50 border-l-4 border-space-blue p-4 rounded">
-                  <p class="text-text-dark italic">「{member.message}」</p>
-                </div>
+        <div class="wave-decoration max-w-4xl mx-auto mt-8"></div>
+      </section>
+      
+      <!-- DONATIキャラクターセクション -->
+      <section class="mb-16">
+        <div class="flex justify-end items-center max-w-6xl mx-auto">
+          <div class="yellow-circle">
+            <div class="text-6xl mb-4">🔬✨</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">
+              サイエンス＆スペースラボ
+            </h2>
+            <h1 class="text-3xl font-bold text-blue-600">
+              DONATI
+            </h1>
+            <p class="text-lg text-gray-700 mt-2">ドナチ</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- スタッフ紹介セクション -->
+      <section class="mb-16">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+            スタッフについて
+          </h2>
+          <div class="wave-decoration max-w-md mx-auto"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          {staffMembers.map((member) => (
+            <div class="staff-card">
+              <div class="profile-circle"></div>
+              <div class="text-center">
+                <div class="name-badge">{member.name}</div>
+                <p class="text-blue-600 font-semibold text-lg mb-4">{member.role}</p>
+                <p class="text-gray-600 leading-relaxed text-sm">
+                  {member.description}
+                </p>
               </div>
             </div>
           ))}
         </div>
-      </div>
-    </section>
-    
-    <!-- Values Section -->
-    <section class="py-16 md:py-24">
-      <div class="container-custom">
-        <h2 class="text-3xl font-bold text-center text-text-dark mb-12">大切にしていること</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <div class="text-center">
-            <div class="w-20 h-20 bg-accent-orange bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span class="text-3xl">💡</span>
-            </div>
-            <h3 class="text-xl font-bold mb-3">好奇心を育む</h3>
-            <p class="text-text-gray">
-              「なぜ？」「どうして？」という疑問を大切に、探求心を育てます
-            </p>
-          </div>
-          
-          <div class="text-center">
-            <div class="w-20 h-20 bg-accent-green bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span class="text-3xl">🤝</span>
-            </div>
-            <h3 class="text-xl font-bold mb-3">体験を重視</h3>
-            <p class="text-text-gray">
-              実際に見て、触れて、体験することで深い理解と感動を提供します
-            </p>
-          </div>
-          
-          <div class="text-center">
-            <div class="w-20 h-20 bg-space-blue bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span class="text-3xl">🌟</span>
-            </div>
-            <h3 class="text-xl font-bold mb-3">楽しく学ぶ</h3>
-            <p class="text-text-gray">
-              科学は楽しい！ワクワクする気持ちを大切に学びをサポートします
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- CTA -->
-    <section class="py-16 bg-gradient-to-r from-space-blue to-deep-blue text-white">
-      <div class="container-custom text-center">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">
-          私たちと一緒に科学の楽しさを体験しませんか？
-        </h2>
-        <p class="text-lg mb-8">
-          お気軽にお問い合わせください
-        </p>
-        <a href="/contact" class="btn-secondary inline-block">
-          お問い合わせはこちら
-        </a>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
   
   <Footer />

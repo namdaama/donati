@@ -155,6 +155,27 @@ npm run astro check  # Astroの組み込み型チェックを実行
 - Noto Sans JPフォントファミリーを使用
 - 設定の一元管理により保守性向上
 
+## ページデザイン統一方針
+
+### ヘッダーコンポーネント
+- **統一ヘッダー**: `src/components/Header.astro`を全ページで使用
+- **デザイン**: アイコンナビゲーション付き（旧OverViewHeader.astroの内容）
+- **背景**: 半透明白（`bg-white/10 backdrop-blur-sm`）
+- **ロゴ**: クリックでトップページ（/）へ戻る
+
+### 背景画像
+- **統一背景**: `/images/backGround.png`を全ページで使用
+- **実装方法**: 各ページの`<style>`タグ内でbodyに背景画像を設定
+```css
+body {
+  background-image: url('/images/backGround.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+```
+
 ## 実装予定機能
 
 ### 確定機能
@@ -162,11 +183,33 @@ npm run astro check  # Astroの組み込み型チェックを実行
 - [x] マウスカーソルカスタマイズ（ガイド作成済み）
 - [x] カルーセル/スライダー（ガイド作成済み）
 
-### Instagram RSS連携の統合方法
+### Instagram RSS連携の実装詳細
+
+#### 実験的実装の場所
+`experiments/instagram-rss-sample/` ディレクトリに完全に動作する実装があります。
+
+#### 主要コンポーネント
+- **基本実装**: `src/lib/instagram-rss.ts` - RSS取得とパース
+- **拡張版**: `src/lib/instagram-rss-enhanced.ts` - エラーハンドリング強化
+- **キャッシュ付き**: `src/lib/instagram-rss-cached.ts` - パフォーマンス最適化
+- **複数ソース対応**: `src/lib/instagram-multi-source.ts` - 複数アカウント/タグ対応
+
+#### サンプルページ
+- `src/pages/index.astro` - 基本的な表示
+- `src/pages/index-enhanced.astro` - エラーハンドリング付き
+- `src/pages/index-ultimate.astro` - 全機能統合版（ムートン・ショット）
+
+#### 統合方法
 1. `experiments/instagram-rss-sample`の実装を参考に本体に統合
 2. RSS.app（無料プラン）でInstagram → RSS変換
 3. 画像プロキシはweserv.nl（無料）を使用
 4. 特定ハッシュタグ（#donati_event等）でイベント告知を自動抽出
+
+#### 実装の特徴
+- **自動お知らせ抽出**: AIタイトル生成とパターンマッチング
+- **堅牢なエラー処理**: Result型によるエラーハンドリング
+- **多層キャッシュ**: メモリ・ファイルキャッシュによる高速化
+- **セキュリティ対策**: レート制限、画像プロキシ、XSS対策
 
 ## ドキュメント構成
 
