@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import DonatiLogo from '../components/DonatiLogo.astro';
 
 // スタッフ情報
 const staffMembers = [
@@ -144,15 +145,8 @@ const staffMembers = [
       <!-- DONATIキャラクターセクション -->
       <section class="mb-16">
         <div class="flex justify-end items-center max-w-6xl mx-auto">
-          <div class="yellow-circle">
-            <div class="text-6xl mb-4">🔬✨</div>
-            <h2 class="text-2xl font-bold text-gray-800 mb-2">
-              サイエンス＆スペースラボ
-            </h2>
-            <h1 class="text-3xl font-bold text-blue-600">
-              DONATI
-            </h1>
-            <p class="text-lg text-gray-700 mt-2">ドナチ</p>
+          <div class="yellow-circle p-8">
+            <DonatiLogo size="medium" />
           </div>
         </div>
       </section>

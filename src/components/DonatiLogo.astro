@@ -1,0 +1,46 @@
+---
+// DonatiLogoコンポーネント - 共通ロゴ
+export interface Props {
+  size?: 'small' | 'medium' | 'large' | 'xlarge';
+  width?: string;
+  height?: string;
+  class?: string;
+  alt?: string;
+}
+
+const { 
+  size = 'medium', 
+  width, 
+  height,
+  class: className = '',
+  alt = 'DONATI - サイエンス アンド スペース ラボ'
+} = Astro.props;
+
+// サイズ別のデフォルト設定
+const sizeMap = {
+  small: { w: '60px', h: 'auto' },
+  medium: { w: '120px', h: 'auto' },
+  large: { w: '200px', h: 'auto' },
+  xlarge: { w: '300px', h: 'auto' }
+};
+
+const defaultSize = sizeMap[size];
+const finalWidth = width || defaultSize.w;
+const finalHeight = height || defaultSize.h;
+---
+
+<img 
+  src="/images/DonatiLogo.png" 
+  alt={alt}
+  width={finalWidth}
+  height={finalHeight}
+  class={`donati-logo ${className}`}
+  style={`width: ${finalWidth}; height: ${finalHeight};`}
+/>
+
+<style>
+  .donati-logo {
+    display: inline-block;
+    object-fit: contain;
+  }
+</style>
