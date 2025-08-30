@@ -58,14 +58,50 @@ const staffMembers = [
   }
 ];
 
-// お仕事情報
-const services = [
-  '実験ショー',
-  'ワークショップ',
-  '星空観察塾',
-  '星空の先生',
-  '出張授業',
-  '科学イベント企画'
+// サービス情報（新構造）
+const serviceCategories = {
+  science: {
+    title: 'サイエンス（科学分野）',
+    icon: '⚗️',
+    services: [
+      { name: 'サイエンスショー', description: '科学実験の楽しさを体験' },
+      { name: '科学実験教室（探求学習）', description: '子どもの科学的思考を育む' },
+      { name: 'ワークショップ', description: '参加型の科学体験プログラム' }
+    ]
+  },
+  space: {
+    title: 'スペース（宇宙分野）',
+    icon: '🌟',
+    services: [
+      { name: '星空観望会／プラネタリウム解説／星空イベント', description: '宇宙の神秘を観察・解説' },
+      { name: '講演・大学講義（宇宙・天文教育）', description: '専門的な宇宙知識をお伝え' },
+      { name: '星空風景写真の提供・出版利用', description: '美しい星空写真の提供' }
+    ]
+  }
+};
+
+// ご依頼の流れ
+const requestFlow = [
+  { step: 1, title: 'お問い合わせ', description: 'まずはお気軽にご相談ください' },
+  { step: 2, title: 'ヒアリング', description: 'ご希望の内容や規模を詳しくお聞きします' },
+  { step: 3, title: '企画提案', description: 'お客様のニーズに合わせた企画をご提案' },
+  { step: 4, title: '実施', description: '準備万端でサービスを実施いたします' }
+];
+
+// FAQ
+const faqItems = [
+  { 
+    question: 'どのような規模のイベントに対応できますか？', 
+    answer: '少人数のワークショップから大規模な科学イベントまで、幅広く対応いたします。'
+  },
+  { 
+    question: '出張可能なエリアはどこまでですか？', 
+    answer: '基本的に全国対応可能です。詳細はお問い合わせください。'
+  },
+  { 
+    question: '費用はどのくらいかかりますか？', 
+    answer: '内容や規模によって異なります。まずはお気軽にご相談ください。'
+  }
 ];
 ---
 
@@ -172,14 +208,45 @@ const services = [
               </h3>
             </div>
             
-            <ul class="space-y-3 mb-6">
-              {services.map((service) => (
-                <li class="flex items-center">
-                  <span class="w-2 h-2 bg-overview-yellow rounded-full mr-3"></span>
-                  <span class="text-overview-dark-blue font-medium">{service}</span>
-                </li>
-              ))}
-            </ul>
+            <!-- サイエンス分野 -->
+            <div class="mb-6">
+              <h4 class="flex items-center text-lg font-bold text-overview-dark-blue mb-3">
+                <span class="text-xl mr-2">{serviceCategories.science.icon}</span>
+                {serviceCategories.science.title}
+              </h4>
+              <ul class="space-y-2 mb-4">
+                {serviceCategories.science.services.map((service) => (
+                  <li class="bg-overview-sky/10 p-3 rounded-lg">
+                    <div class="font-medium text-overview-dark-blue text-sm mb-1">
+                      {service.name}
+                    </div>
+                    <div class="text-xs text-gray-600">
+                      {service.description}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <!-- スペース分野 -->
+            <div class="mb-6">
+              <h4 class="flex items-center text-lg font-bold text-overview-dark-blue mb-3">
+                <span class="text-xl mr-2">{serviceCategories.space.icon}</span>
+                {serviceCategories.space.title}
+              </h4>
+              <ul class="space-y-2">
+                {serviceCategories.space.services.map((service) => (
+                  <li class="bg-overview-yellow/10 p-3 rounded-lg">
+                    <div class="font-medium text-overview-dark-blue text-sm mb-1">
+                      {service.name}
+                    </div>
+                    <div class="text-xs text-gray-600">
+                      {service.description}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
             
             <div class="text-center">
               <a href="/services" class="inline-block bg-overview-yellow hover:bg-overview-yellow/90 text-overview-dark-blue font-bold py-3 px-6 rounded-full transition-colors duration-300">
@@ -229,6 +296,103 @@ const services = [
             </div>
           </div>
           
+        </div>
+      </div>
+    </section>
+    
+    <!-- ご依頼の流れセクション -->
+    <section class="py-16 md:py-24 bg-transparent">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold text-overview-dark-blue mb-4">
+            ご依頼の流れ
+          </h2>
+          <div class="w-24 h-1 bg-overview-yellow mx-auto"></div>
+        </div>
+        
+        <!-- フローステップ -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {requestFlow.map((step, index) => (
+            <div class="relative">
+              <!-- ステップカード -->
+              <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg p-6 text-center border-2 border-overview-sky/30">
+                <!-- ステップ番号 -->
+                <div class="w-12 h-12 bg-overview-sky rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-white font-bold text-lg">{step.step}</span>
+                </div>
+                
+                <!-- ステップタイトル -->
+                <h3 class="text-lg font-bold text-overview-dark-blue mb-2">
+                  {step.title}
+                </h3>
+                
+                <!-- ステップ説明 -->
+                <p class="text-sm text-gray-600">
+                  {step.description}
+                </p>
+              </div>
+              
+              <!-- 矢印（最後のステップ以外） -->
+              {index < requestFlow.length - 1 && (
+                <div class="hidden lg:block absolute top-6 -right-3 transform translate-x-full">
+                  <span class="text-2xl text-overview-sky">→</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+    <!-- よくある質問（FAQ）セクション -->
+    <section class="py-16 md:py-24 bg-transparent">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-center mb-12">
+          <h2 class="text-4xl md:text-5xl font-bold text-overview-dark-blue mb-4">
+            よくある質問（FAQ）
+          </h2>
+          <div class="w-24 h-1 bg-overview-yellow mx-auto"></div>
+        </div>
+        
+        <!-- FAQ項目 -->
+        <div class="max-w-4xl mx-auto space-y-6">
+          {faqItems.map((faq, index) => (
+            <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg border-2 border-overview-yellow/30 overflow-hidden">
+              <!-- 質問 -->
+              <div class="bg-overview-yellow/20 p-6">
+                <h3 class="flex items-center text-lg font-bold text-overview-dark-blue">
+                  <span class="bg-overview-yellow text-overview-dark-blue w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4">
+                    Q{index + 1}
+                  </span>
+                  {faq.question}
+                </h3>
+              </div>
+              
+              <!-- 回答 -->
+              <div class="p-6">
+                <div class="flex items-start">
+                  <span class="bg-overview-sky text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1 flex-shrink-0">
+                    A
+                  </span>
+                  <p class="text-gray-700 leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- お問い合わせCTA -->
+        <div class="text-center mt-12">
+          <p class="text-lg text-overview-dark-blue mb-6">
+            その他ご不明な点がございましたら、お気軽にお問い合わせください。
+          </p>
+          <a href="/contact" class="inline-block bg-overview-yellow hover:bg-overview-yellow/90 text-overview-dark-blue font-bold py-3 px-8 rounded-full transition-colors duration-300">
+            お問い合せはコチラ
+          </a>
         </div>
       </div>
     </section>
