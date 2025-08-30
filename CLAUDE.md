@@ -99,10 +99,52 @@ npm run astro check  # Astroの組み込み型チェックを実行
 
 ## デプロイ
 
-### Vercelプレビューデプロイ
-- プレビューURL: `https://donati-git-master-namdaamas-projects.vercel.app/`
-- `master`ブランチへのプッシュで自動デプロイ
-- 環境変数はVercelダッシュボードで設定
+### Vercelホスティング概要
+DONATIウェブサイトはVercel上にホスティングされており、Git連携による自動デプロイが設定されています。
+
+### デプロイメント設定
+
+#### プレビュー環境
+- **プレビューURL**: `https://donati-git-master-namdaamas-projects.vercel.app/`
+- **自動デプロイ**: `master`ブランチへのプッシュで自動デプロイ
+- **認証**: Vercel Authentication有効（プロジェクトメンバーのみアクセス可能）
+- **アクセス方法**: Vercelアカウントでログイン後、プロジェクトメンバーとしてアクセス
+
+#### 本番環境
+- **本番URL**: カスタムドメイン設定要確認
+- **デプロイトリガー**: 本番デプロイの条件要確認
+
+### 環境変数管理
+- **設定場所**: Vercelダッシュボード → Project Settings → Environment Variables
+- **必須変数**:
+  - `MICROCMS_SERVICE_DOMAIN`: microCMSサービスドメイン（秘密情報）
+  - `MICROCMS_API_KEY`: microCMS APIキー（秘密情報）
+- **公開変数**:
+  - `PUBLIC_INSTAGRAM_URL`: InstagramプロフィールURL
+  - `PUBLIC_GOOGLE_FORM_ID`: Googleフォーム埋め込み用ID
+
+### Vercel Authentication
+- **現在の状態**: 有効
+- **適用範囲**: プレビュー環境（production以外）
+- **アクセス権限**: プロジェクトメンバー（Guest/Member/Owner）
+- **メンバー追加**: プロジェクトオーナー（namdaama）が管理
+
+#### API連携時の対応
+API連携でVercel Authenticationを迂回する場合：
+1. Vercelダッシュボードで「Protection Bypass for Automation」を有効化
+2. `VERCEL_AUTOMATION_BYPASS_SECRET`を生成
+3. APIリクエストヘッダーに`x-vercel-protection-bypass`を追加
+
+### デプロイフロー
+1. **開発**: ローカルで`npm run dev`
+2. **プレビュー**: 機能ブランチをpushしてプレビューURL確認
+3. **リリース**: `master`ブランチにマージで自動デプロイ
+4. **本番反映**: 本番環境への反映プロセス要確認
+
+### トラブルシューティング
+- **プレビュー環境にアクセスできない**: Vercelアカウントのプロジェクトメンバーシップを確認
+- **環境変数が反映されない**: Vercelダッシュボードの設定とローカル`.env`の同期確認
+- **ビルドエラー**: `npm run build`でローカル確認後、Vercelのビルドログを確認
 
 ## レスポンシブデザイン実装
 
