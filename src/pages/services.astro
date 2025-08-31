@@ -235,7 +235,9 @@ const faqItems = [
       <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
         サービス内容
       </h1>
-      <div class="wave-decoration max-w-md mx-auto"></div>
+      <div class="flex justify-center mb-6">
+        <div class="wave-decoration w-96"></div>
+      </div>
     </section>
     
     <div class="container mx-auto px-4 py-12 relative z-10">
@@ -248,7 +250,9 @@ const faqItems = [
             学校での授業、イベント、企業研修など、ご要望に応じてカスタマイズも可能です。
           </p>
         </div>
-        <div class="wave-decoration max-w-md mx-auto mt-8"></div>
+        <div class="flex justify-center mb-6">
+          <div class="wave-decoration w-96"></div>
+        </div>
       </section>
         
         <!-- サイエンス分野 -->
@@ -258,7 +262,9 @@ const faqItems = [
               <span class="text-4xl mr-4">{serviceCategories.science.icon}</span>
               <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.science.title}</h2>
             </div>
-            <div class="wave-decoration max-w-md mx-auto mb-6"></div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
             <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
               <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.science.subtitle}</p>
               <p class="text-lg text-gray-600 leading-relaxed">
@@ -269,7 +275,7 @@ const faqItems = [
           
           {serviceCategories.science.services.map((service, index) => (
             <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
-              <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
                   <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
@@ -307,7 +313,7 @@ const faqItems = [
               </div>
             </div>
           ))}
-        </div>
+        </section>
         
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
@@ -316,7 +322,9 @@ const faqItems = [
               <span class="text-4xl mr-4">{serviceCategories.space.icon}</span>
               <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.space.title}</h2>
             </div>
-            <div class="wave-decoration max-w-md mx-auto mb-6"></div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
             <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
               <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.space.subtitle}</p>
               <p class="text-lg text-gray-600 leading-relaxed">
@@ -327,7 +335,7 @@ const faqItems = [
           
           {serviceCategories.space.services.map((service, index) => (
             <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
-              <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
                   <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
@@ -371,7 +379,9 @@ const faqItems = [
         <section class="mb-24">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ご依頼の流れ</h2>
-            <div class="wave-decoration max-w-md mx-auto mb-6"></div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
             <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
               <p class="text-lg text-gray-600 leading-relaxed">
                 プログラムのご依頼から実施まで、以下の流れで進めさせていただきます。
@@ -380,7 +390,7 @@ const faqItems = [
           </div>
           
           <!-- フローステップ -->
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {requestFlow.map((step, index) => (
               <div class="relative">
                 <!-- ステップカード -->
@@ -401,12 +411,6 @@ const faqItems = [
                   </p>
                 </div>
                 
-                <!-- 矢印（最後のステップ以外） -->
-                {index < requestFlow.length - 1 && (
-                  <div class="hidden lg:block absolute top-8 -right-4 transform translate-x-full">
-                    <span class="text-3xl text-blue-600">→</span>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -416,7 +420,9 @@ const faqItems = [
         <section class="mb-24">
           <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">よくある質問（FAQ）</h2>
-            <div class="wave-decoration max-w-md mx-auto mb-6"></div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
             <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
               <p class="text-lg text-gray-600 leading-relaxed">
                 お客様からよくいただくご質問にお答えします。
@@ -460,7 +466,9 @@ const faqItems = [
             <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
               プログラムのご相談・お見積もりは無料です
             </h2>
-            <div class="wave-decoration max-w-md mx-auto mb-6"></div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
             <p class="text-lg text-gray-600 mb-8 leading-relaxed">
               ご要望に合わせてカスタマイズいたします。<br />
               まずはお気軽にお問い合わせください。
