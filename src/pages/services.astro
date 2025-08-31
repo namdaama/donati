@@ -2,160 +2,530 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
 
-const services = [
-  {
-    id: 'science-show',
-    title: '科学実験ショー',
-    subtitle: '驚きと発見の体験型サイエンスショー',
-    description: '身近な材料を使った迫力ある実験を通じて、科学の楽しさや不思議さを体感できるショー形式のプログラムです。',
-    features: [
-      '対象年齢：幼児〜中学生（内容により調整可能）',
-      '所要時間：45分〜90分',
-      '参加人数：10名〜300名程度',
-      '出張対応可能'
-    ],
-    programs: [
-      '空気の力を体感！大気圧実験ショー',
-      '光と色の不思議！虹を作ろう',
-      '化学反応マジック！色が変わる実験',
-      '静電気パワー！電気の実験ショー'
+// サービス情報（新構造：サイエンス・スペース分野）
+const serviceCategories = {
+  science: {
+    id: 'science',
+    title: 'サイエンス（科学分野）',
+    icon: '⚗️',
+    subtitle: '科学の楽しさと不思議を体験',
+    description: '実験やワークショップを通じて、科学の原理と楽しさを伝えます。',
+    services: [
+      {
+        id: 'science-show',
+        title: 'サイエンスショー',
+        description: '迫力ある科学実験を通じて、科学の楽しさや不思議さを体感できるショー形式のプログラムです。',
+        features: [
+          '対象年齢：幼児〜中学生（内容により調整可能）',
+          '所要時間：45分〜90分',
+          '参加人数：10名〜300名程度',
+          '出張対応可能'
+        ],
+        programs: [
+          '空気の力を体感！大気圧実験ショー',
+          '光と色の不思議！虹を作ろう',
+          '化学反応マジック！色が変わる実験',
+          '静電気パワー！電気の実験ショー'
+        ]
+      },
+      {
+        id: 'science-class',
+        title: '科学実験教室（探求学習）',
+        description: '「なぜ？」から始まる探求心を大切に、仮説・実験・考察のサイクルを通じて科学的思考力を育みます。',
+        features: [
+          '対象年齢：小学3年生〜6年生',
+          '期間：3ヶ月〜1年（月2回程度）',
+          '定員：10名程度',
+          '少人数制で個別指導'
+        ],
+        programs: [
+          '身の回りの科学を探求しよう',
+          '実験計画の立て方を学ぼう',
+          'データ分析と考察の方法',
+          '研究発表会への挑戦'
+        ]
+      },
+      {
+        id: 'workshop',
+        title: 'ワークショップ',
+        description: '実際に手を動かして実験や工作を行うことで、科学の原理を楽しく学べる参加型プログラムです。',
+        features: [
+          '対象年齢：小学生〜中学生',
+          '所要時間：60分〜120分',
+          '参加人数：5名〜30名程度',
+          '材料費別途'
+        ],
+        programs: [
+          'スライム作りで学ぶ高分子化学',
+          '顕微鏡で見る小さな世界',
+          'ロボットプログラミング入門',
+          '結晶作りで学ぶ化学反応'
+        ]
+      }
     ]
   },
-  {
-    id: 'workshop',
-    title: '科学ワークショップ',
-    subtitle: '手を動かして学ぶ体験型教室',
-    description: '実際に手を動かして実験や工作を行うことで、科学の原理を楽しく学べるプログラムです。',
-    features: [
-      '対象年齢：小学生〜中学生',
-      '所要時間：60分〜120分',
-      '参加人数：5名〜30名程度',
-      '材料費別途'
-    ],
-    programs: [
-      'スライム作りで学ぶ高分子化学',
-      '顕微鏡で見る小さな世界',
-      'ロボットプログラミング入門',
-      '天体望遠鏡を作ろう'
+  space: {
+    id: 'space',
+    title: 'スペース（宇宙分野）',
+    icon: '🌟',
+    subtitle: '宇宙の神秘と美しさを探求',
+    description: '天体観測や講演、写真を通じて宇宙の魅力をお伝えします。',
+    services: [
+      {
+        id: 'stargazing',
+        title: '星空観望会／プラネタリウム解説／星空イベント',
+        description: '天体望遠鏡を使った観望会や、プラネタリウム解説員の経験を活かした星空案内をお届けします。',
+        features: [
+          '対象：全年齢',
+          '所要時間：90分〜180分',
+          '参加人数：10名〜100名程度',
+          '天候により内容変更あり'
+        ],
+        programs: [
+          '季節の星座と天体観察',
+          '月のクレーター観察会',
+          '惑星観望会（木星・土星・火星）',
+          '流星群観察会'
+        ]
+      },
+      {
+        id: 'lecture',
+        title: '講演・大学講義（宇宙・天文教育）',
+        description: '専門的な天文知識をわかりやすく解説し、宇宙への関心と理解を深めるプログラムです。',
+        features: [
+          '対象：中学生〜一般',
+          '所要時間：60分〜120分',
+          '参加人数：20名〜500名',
+          'オンライン対応可能'
+        ],
+        programs: [
+          '宇宙の歴史と進化',
+          '太陽系の惑星たち',
+          '星の一生と恒星進化',
+          '最新の宇宙探査ミッション'
+        ]
+      },
+      {
+        id: 'photos',
+        title: '星空風景写真の提供・出版利用',
+        description: '美しい星空風景写真を各種媒体でご利用いただけます。商用利用も対応いたします。',
+        features: [
+          '高解像度デジタルデータ提供',
+          '商用利用ライセンス対応',
+          'カスタム撮影も承ります',
+          '全国各地の星空撮影地データ'
+        ],
+        programs: [
+          '天の川と風景のコラボレーション',
+          '星座と季節の風景写真',
+          '流星群・彗星などの天文現象',
+          '月・惑星と風景の合成写真'
+        ]
+      }
     ]
+  }
+};
+
+// ご依頼の流れ
+const requestFlow = [
+  { 
+    step: 1, 
+    title: 'お問い合わせ', 
+    description: 'まずはお気軽にご相談ください。お電話、メール、お問い合わせフォームからご連絡いただけます。' 
+  },
+  { 
+    step: 2, 
+    title: 'ヒアリング', 
+    description: 'ご希望の内容、規模、予算、日程などを詳しくお聞きし、最適なプログラムをご提案いたします。' 
+  },
+  { 
+    step: 3, 
+    title: '企画提案', 
+    description: 'お客様のニーズに合わせて具体的な企画書と見積もりをご提案いたします。' 
+  },
+  { 
+    step: 4, 
+    title: '実施', 
+    description: '万全の準備を整えて、楽しく学べるプログラムを実施いたします。' 
+  }
+];
+
+// FAQ
+const faqItems = [
+  { 
+    question: 'どのような規模のイベントに対応できますか？', 
+    answer: '少人数のワークショップ（5名程度）から大規模な科学イベント（300名以上）まで、幅広く対応いたします。内容や会場に応じて最適なプログラムをご提案します。'
+  },
+  { 
+    question: '出張可能なエリアはどこまでですか？', 
+    answer: '基本的に全国対応可能です。交通費や宿泊費が発生する場合は別途ご相談させていただきます。オンライン講演も承っております。'
+  },
+  { 
+    question: '費用はどのくらいかかりますか？', 
+    answer: '内容、時間、参加人数、開催場所によって異なります。まずはお気軽にお見積もりをご依頼ください。予算に応じてプログラム内容の調整も可能です。'
   },
   {
-    id: 'inquiry',
-    title: '探求学習プログラム',
-    subtitle: '科学的思考力を育む特別カリキュラム',
-    description: '「なぜ？」から始まる探求心を大切に、仮説・実験・考察のサイクルを通じて科学的思考力を育みます。',
-    features: [
-      '対象年齢：小学3年生〜6年生',
-      '期間：3ヶ月〜1年（月2回程度）',
-      '定員：10名程度',
-      '少人数制で個別指導'
-    ],
-    programs: [
-      '身の回りの科学を探求しよう',
-      '実験計画の立て方を学ぼう',
-      'データ分析と考察の方法',
-      '研究発表会への挑戦'
-    ]
+    question: '天候が悪い場合はどうなりますか？',
+    answer: '星空観望会の場合、曇天・雨天時は室内でのプラネタリウム解説や天文講座に変更いたします。事前に悪天候の対応についてもご相談させていただきます。'
   },
   {
-    id: 'stargazing',
-    title: '星空観望会・天文教室',
-    subtitle: '本物の星空で学ぶ宇宙の神秘',
-    description: '天体望遠鏡を使った観望会や、プラネタリウム解説員の経験を活かした星空案内をお届けします。',
-    features: [
-      '対象：全年齢',
-      '所要時間：90分〜180分',
-      '参加人数：10名〜100名程度',
-      '天候により内容変更あり'
-    ],
-    programs: [
-      '季節の星座と天体観察',
-      '月のクレーター観察会',
-      '惑星観望会（木星・土星・火星）',
-      '流星群観察会'
-    ]
+    question: '機材や会場の準備はどうすればよいですか？',
+    answer: '基本的な実験器具や天体望遠鏡は当方で準備いたします。会場設営や必要な設備については事前打ち合わせで詳しくご説明いたします。'
   }
 ];
 ---
 
-<Layout title="事業紹介">
+<Layout title="サービス内容">
   <Header />
   
-  <main class="flex-grow">
-    <Hero 
-      title="事業紹介"
-      subtitle="科学の楽しさを伝える多彩なプログラム"
-    />
+  <main class="flex-grow relative overflow-hidden">
+    <!-- 背景装飾とスタイル -->
+    <style>
+      /* backGround.png を背景として使用 */
+      body {
+        background-image: url('/images/backGround.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      
+      .star {
+        position: absolute;
+        background: white;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        opacity: 0.7;
+      }
+      
+      .circle-decoration {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.3;
+      }
+      
+      .wave-decoration {
+        background-image: repeating-linear-gradient(
+          45deg,
+          #FFD700,
+          #FFD700 10px,
+          transparent 10px,
+          transparent 20px
+        );
+        height: 5px;
+        width: 100%;
+        margin: 2rem 0;
+      }
+    </style>
     
-    <section class="py-16 md:py-24">
-      <div class="container-custom">
-        <div class="max-w-4xl mx-auto mb-16 text-center">
-          <p class="text-lg text-text-gray">
+    <!-- 星の装飾 -->
+    <div class="star" style="width: 30px; height: 30px; top: 10%; left: 10%;"></div>
+    <div class="star" style="width: 20px; height: 20px; top: 20%; right: 15%;"></div>
+    <div class="star" style="width: 25px; height: 25px; bottom: 30%; left: 5%;"></div>
+    <div class="star" style="width: 35px; height: 35px; top: 60%; right: 10%;"></div>
+    
+    <!-- 円形装飾 -->
+    <div class="circle-decoration" style="width: 100px; height: 100px; top: 5%; right: 20%;"></div>
+    <div class="circle-decoration" style="width: 150px; height: 150px; bottom: 10%; left: -50px;"></div>
+    <div class="circle-decoration" style="width: 80px; height: 80px; top: 40%; left: 10%;"></div>
+    
+    <!-- タイトルセクション -->
+    <section class="text-center py-12 relative z-10">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+        サービス内容
+      </h1>
+      <div class="flex justify-center mb-6">
+        <div class="wave-decoration w-96"></div>
+      </div>
+    </section>
+    
+    <div class="container mx-auto px-4 py-12 relative z-10">
+      <!-- 紹介文セクション -->
+      <section class="mb-16">
+        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-4xl mx-auto text-center">
+          <p class="text-lg text-gray-600 leading-relaxed">
             サイエンス アンド スペース ラボ DONATIでは、<br class="hidden md:inline" />
-            年齢や目的に合わせた様々な科学教育プログラムをご提供しています。<br />
+            科学と宇宙の2つの分野で様々な教育プログラムをご提供しています。<br />
             学校での授業、イベント、企業研修など、ご要望に応じてカスタマイズも可能です。
           </p>
         </div>
+        <div class="flex justify-center mb-6">
+          <div class="wave-decoration w-96"></div>
+        </div>
+      </section>
         
-        {services.map((service, index) => (
-          <div id={service.id} class={`${index !== 0 ? 'mt-24' : ''}`}>
-            <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}>
-              <div class={index % 2 === 1 ? 'lg:order-2' : ''}>
-                <h2 class="text-3xl font-bold text-text-dark mb-3">{service.title}</h2>
-                <p class="text-xl text-space-blue mb-6">{service.subtitle}</p>
-                <p class="text-text-gray mb-8">{service.description}</p>
-                
-                <div class="mb-8">
-                  <h3 class="text-lg font-semibold mb-4">実施要項</h3>
-                  <ul class="space-y-2">
-                    {service.features.map((feature) => (
-                      <li class="flex items-start">
-                        <svg class="w-5 h-5 text-accent-green mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                        </svg>
-                        <span class="text-text-gray">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <div>
-                  <h3 class="text-lg font-semibold mb-4">プログラム例</h3>
-                  <ul class="space-y-2">
-                    {service.programs.map((program) => (
-                      <li class="flex items-start">
-                        <span class="text-accent-orange mr-2">▶</span>
-                        <span class="text-text-gray">{program}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              
-              <div class={`bg-gray-100 rounded-lg h-96 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                <span class="text-6xl">{service.id === 'science-show' ? '🧪' : service.id === 'workshop' ? '🔬' : service.id === 'inquiry' ? '🧠' : '🔭'}</span>
-              </div>
+        <!-- サイエンス分野 -->
+        <section id="science" class="mb-24">
+          <div class="text-center mb-16">
+            <div class="flex items-center justify-center mb-4">
+              <span class="text-4xl mr-4">{serviceCategories.science.icon}</span>
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.science.title}</h2>
+            </div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
+              <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.science.subtitle}</p>
+              <p class="text-lg text-gray-600 leading-relaxed">
+                {serviceCategories.science.description}
+              </p>
             </div>
           </div>
-        ))}
+          
+          {serviceCategories.science.services.map((service, index) => (
+            <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
+                  <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
+                  
+                  <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">実施要項</h4>
+                    <ul class="space-y-2">
+                      {service.features.map((feature) => (
+                        <li class="flex items-start">
+                          <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                          </svg>
+                          <span class="text-gray-600">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">プログラム例</h4>
+                    <ul class="space-y-2">
+                      {service.programs.map((program) => (
+                        <li class="flex items-start">
+                          <span class="text-orange-600 mr-2">▶</span>
+                          <span class="text-gray-600">{program}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class={`bg-white/50 backdrop-blur-sm rounded-lg h-80 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <span class="text-6xl">{service.id === 'science-show' ? '🧪' : service.id === 'science-class' ? '🧠' : '🔬'}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
         
-        <div class="mt-24 bg-gradient-to-r from-space-blue to-deep-blue text-white rounded-2xl p-8 md:p-12 text-center">
-          <h2 class="text-2xl md:text-3xl font-bold mb-4">
-            プログラムのご相談・お見積もりは無料です
-          </h2>
-          <p class="text-lg mb-8 max-w-2xl mx-auto">
-            ご要望に合わせてカスタマイズいたします。<br />
-            まずはお気軽にお問い合わせください。
-          </p>
-          <a href="/contact" class="btn-secondary inline-block">
-            お問い合わせ・ご相談はこちら
-          </a>
-        </div>
-      </div>
-    </section>
+        <!-- スペース分野 -->
+        <section id="space" class="mb-24">
+          <div class="text-center mb-16">
+            <div class="flex items-center justify-center mb-4">
+              <span class="text-4xl mr-4">{serviceCategories.space.icon}</span>
+              <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.space.title}</h2>
+            </div>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
+              <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.space.subtitle}</p>
+              <p class="text-lg text-gray-600 leading-relaxed">
+                {serviceCategories.space.description}
+              </p>
+            </div>
+          </div>
+          
+          {serviceCategories.space.services.map((service, index) => (
+            <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
+                  <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
+                  
+                  <div class="mb-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">実施要項</h4>
+                    <ul class="space-y-2">
+                      {service.features.map((feature) => (
+                        <li class="flex items-start">
+                          <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                          </svg>
+                          <span class="text-gray-600">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 class="text-lg font-semibold text-gray-800 mb-3">プログラム例</h4>
+                    <ul class="space-y-2">
+                      {service.programs.map((program) => (
+                        <li class="flex items-start">
+                          <span class="text-orange-600 mr-2">▶</span>
+                          <span class="text-gray-600">{program}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div class={`bg-white/50 backdrop-blur-sm rounded-lg h-80 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                  <span class="text-6xl">{service.id === 'stargazing' ? '🔭' : service.id === 'lecture' ? '🎓' : '📷'}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </section>
+        
+        <!-- ご依頼の流れセクション -->
+        <section class="mb-24">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ご依頼の流れ</h2>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
+              <p class="text-lg text-gray-600 leading-relaxed">
+                プログラムのご依頼から実施まで、以下の流れで進めさせていただきます。
+              </p>
+            </div>
+          </div>
+          
+          <!-- フローステップ -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {requestFlow.map((step) => (
+              <div class="relative">
+                <!-- ステップカード -->
+                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 text-center h-full">
+                  <!-- ステップ番号 -->
+                  <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white font-bold text-xl">{step.step}</span>
+                  </div>
+                  
+                  <!-- ステップタイトル -->
+                  <h3 class="text-xl font-bold text-gray-800 mb-3">
+                    {step.title}
+                  </h3>
+                  
+                  <!-- ステップ説明 -->
+                  <p class="text-sm text-gray-600 leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+                
+              </div>
+            ))}
+          </div>
+        </section>
+        
+        <!-- FAQ セクション -->
+        <section class="mb-24">
+          <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
+              <p class="text-lg text-gray-600 leading-relaxed">
+                お客様からよくいただくご質問にお答えします。
+              </p>
+            </div>
+          </div>
+          
+          <!-- FAQ項目（アコーディオン形式） -->
+          <div class="max-w-4xl mx-auto space-y-4">
+            {faqItems.map((faq, index) => (
+              <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
+                <!-- 質問（クリック可能） -->
+                <button class="faq-toggle w-full text-left bg-white/50 hover:bg-white/70 transition-colors duration-200 p-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        data-index={index}>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-start flex-1">
+                      <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
+                        Q{index + 1}
+                      </span>
+                      <h3 class="text-lg font-bold text-gray-800 flex-1 pr-4">{faq.question}</h3>
+                    </div>
+                    <!-- 展開/折りたたみアイコン -->
+                    <svg class="faq-icon w-6 h-6 text-blue-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </button>
+                
+                <!-- 回答（初期状態は非表示） -->
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                  <div class="p-6 border-t border-gray-200/30">
+                    <div class="flex items-start">
+                      <span class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
+                        A
+                      </span>
+                      <p class="text-gray-600 leading-relaxed flex-1">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        
+        <!-- お問い合わせCTA -->
+        <section class="mb-16">
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+              プログラムのご相談・お見積もりは無料です
+            </h2>
+            <div class="flex justify-center mb-6">
+              <div class="wave-decoration w-96"></div>
+            </div>
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+              ご要望に合わせてカスタマイズいたします。<br />
+              まずはお気軽にお問い合わせください。
+            </p>
+            <a href="/contact" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
+              お問い合わせ・ご相談はこちら
+            </a>
+          </div>
+        </section>
+    </div>
   </main>
   
   <Footer />
 </Layout>
+
+<script>
+  // DOM読み込み完了後にイベントリスナーを設定
+  document.addEventListener('DOMContentLoaded', function() {
+    // すべてのFAQトグルボタンにクリックイベントを追加
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    
+    faqToggles.forEach(button => {
+      button.addEventListener('click', function(this: HTMLElement) {
+        const answer = this.parentElement?.querySelector('.faq-answer') as HTMLElement;
+        const icon = this.querySelector('.faq-icon') as HTMLElement;
+        
+        if (answer && icon) {
+          if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
+            // 開く - 滑らかなアニメーション
+            answer.style.maxHeight = answer.scrollHeight + 'px';
+            answer.style.opacity = '1';
+            icon.style.transform = 'rotate(180deg)';
+          } else {
+            // 閉じる - 滑らかなアニメーション
+            answer.style.maxHeight = '0px';
+            answer.style.opacity = '0';
+            icon.style.transform = 'rotate(0deg)';
+          }
+        }
+      });
+    });
+    
+    // 初期状態を設定
+    const faqAnswers = document.querySelectorAll('.faq-answer');
+    faqAnswers.forEach(answer => {
+      const answerElement = answer as HTMLElement;
+      answerElement.style.maxHeight = '0px';
+      answerElement.style.opacity = '0';
+    });
+  });
+</script>
