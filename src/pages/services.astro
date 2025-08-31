@@ -430,29 +430,38 @@ const faqItems = [
             </div>
           </div>
           
-          <!-- FAQ項目 -->
-          <div class="max-w-4xl mx-auto space-y-6">
+          <!-- FAQ項目（アコーディオン形式） -->
+          <div class="max-w-4xl mx-auto space-y-4">
             {faqItems.map((faq, index) => (
               <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-                <!-- 質問 -->
-                <div class="bg-white/50 p-6">
-                  <h3 class="flex items-start text-lg font-bold text-gray-800">
-                    <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                      Q{index + 1}
-                    </span>
-                    <span class="flex-1">{faq.question}</span>
-                  </h3>
-                </div>
+                <!-- 質問（クリック可能） -->
+                <button class="faq-toggle w-full text-left bg-white/50 hover:bg-white/70 transition-colors duration-200 p-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        data-index={index}>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-start flex-1">
+                      <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
+                        Q{index + 1}
+                      </span>
+                      <h3 class="text-lg font-bold text-gray-800 flex-1 pr-4">{faq.question}</h3>
+                    </div>
+                    <!-- 展開/折りたたみアイコン -->
+                    <svg class="faq-icon w-6 h-6 text-blue-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                  </div>
+                </button>
                 
-                <!-- 回答 -->
-                <div class="p-6">
-                  <div class="flex items-start">
-                    <span class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                      A
-                    </span>
-                    <p class="text-gray-600 leading-relaxed flex-1">
-                      {faq.answer}
-                    </p>
+                <!-- 回答（初期状態は非表示） -->
+                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+                  <div class="p-6 border-t border-gray-200/30">
+                    <div class="flex items-start">
+                      <span class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
+                        A
+                      </span>
+                      <p class="text-gray-600 leading-relaxed flex-1">
+                        {faq.answer}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -483,3 +492,37 @@ const faqItems = [
   
   <Footer />
 </Layout>
+
+<script>
+  // DOM読み込み完了後にイベントリスナーを設定
+  document.addEventListener('DOMContentLoaded', function() {
+    // すべてのFAQトグルボタンにクリックイベントを追加
+    const faqToggles = document.querySelectorAll('.faq-toggle');
+    
+    faqToggles.forEach(button => {
+      button.addEventListener('click', function() {
+        const answer = this.parentElement.querySelector('.faq-answer');
+        const icon = this.querySelector('.faq-icon');
+        
+        if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
+          // 開く - 滑らかなアニメーション
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          answer.style.opacity = '1';
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          // 閉じる - 滑らかなアニメーション
+          answer.style.maxHeight = '0px';
+          answer.style.opacity = '0';
+          icon.style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+    
+    // 初期状態を設定
+    const faqAnswers = document.querySelectorAll('.faq-answer');
+    faqAnswers.forEach(answer => {
+      answer.style.maxHeight = '0px';
+      answer.style.opacity = '0';
+    });
+  });
+</script>
