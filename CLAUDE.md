@@ -14,9 +14,15 @@
 ### 開発方針
 - **実装方針**: Astro優先 + HTML/CSS最大限活用
 - **ワークフロー**: スクリーンショットベース開発（Figma不要）
-- **役割分担**: 
+- **役割分担**:
   - HTML/CSS（静的デザイン）: ひさな
   - TypeScript（動的機能のみ）: なむ
+
+### 最新の開発状況（2025年9月現在）
+- **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
+- **コア機能実装済み**: カルーセル、Instagram連携、Googleフォーム統合
+- **ページ構成完成**: index, about, services, achievements, contact, staff
+- **現在のブランチ**: feature/soften-tone-issue-19（マージ済み）
 
 ## 必須コマンド
 
@@ -36,7 +42,19 @@ npm run astro check  # Astroの組み込み型チェックを実行
 
 ### フレームワーク: Astro (静的サイト生成)
 - **ページ**: `src/pages/`に配置 - ファイルベースルーティング
+  - `index.astro` (トップページ)
+  - `about.astro` (概要)
+  - `services.astro` (サービス)
+  - `achievements.astro` (実績)
+  - `contact.astro` (お問い合わせ)
+  - `staff.astro` (スタッフ)
 - **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`
+  - `Header.astro` (統一ヘッダー)
+  - `Footer.astro` (フッター)
+  - `Carousel.astro` (カルーセル機能)
+  - `InstagramSection.astro` (Instagram連携)
+  - `CustomCursor.astro` / `CustomCursor-StarTheme.astro` (カーソルカスタマイズ)
+  - `AuroraBackground.astro` / `Stars.astro` (宇宙テーマエフェクト)
 - **レイアウト**: ページテンプレートは`src/layouts/` (現在はLayout.astroのみ)
 - **スタイル**: TailwindCSSを使用、カスタムテーマカラーは`tailwind.config.mjs`で定義
 
@@ -57,28 +75,33 @@ npm run astro check  # Astroの組み込み型チェックを実行
 2. **ビジュアルエフェクト**: `AuroraBackground.astro`や`Stars.astro`などの宇宙テーマのカスタムコンポーネント
 3. **データ取得**: microCMSのデータはビルド時にページコンポーネントで取得
 
-## 新機能（2025年1月実装）
+## 実装済み機能（コア機能）
 
-### 1. カルーセル機能
+### 1. カルーセル機能 ✅実装完了
 - **コンポーネント**: `src/components/Carousel.astro`
 - **機能**: 自動スライド（4秒間隔）、ドットナビゲーション、ホバーで一時停止
 - **画像配置**: `public/images/carousel/`ディレクトリ
 - **データ管理**: `src/config/site.ts`の`carouselData`
 
-### 2. Instagram埋め込み
+### 2. Instagram埋め込み ✅実装完了
 - **コンポーネント**: `src/components/InstagramSection.astro`
 - **URL設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理
 - **表示場所**: トップページの「最新の活動」セクション
 
-### 3. Googleフォーム統合
+### 3. Googleフォーム統合 ✅実装完了
 - **実装場所**: `src/pages/contact.astro`
 - **フォームID**: 環境変数`PUBLIC_GOOGLE_FORM_ID`で管理
 - **レスポンシブ対応**: モバイルで高さ600px、デスクトップで800px
 
-### 4. 設定の一元管理
+### 4. 設定の一元管理 ✅実装完了
 - **設定ファイル**: `src/config/site.ts`
 - **管理内容**: サイト基本情報、ソーシャルメディアURL、カルーセルデータ、サービス一覧
 - **型安全**: TypeScriptによる型定義
+
+### 5. FAQアコーディオン機能 ✅実装完了
+- **実装時期**: Issue #11で追加
+- **機能**: 質問クリックで回答の表示/非表示切り替え
+- **TypeScriptエラー修正済み**: 型安全な実装
 
 ## 環境設定
 
@@ -165,6 +188,28 @@ API連携でVercel Authenticationを迂回する場合：
 - **カード系コンポーネント**: グリッドによる自動レイアウト調整
 - **Footer**: モバイルで縦積み、デスクトップで3カラム
 
+## 文言・コミュニケーション方針
+
+### Issue #19実装済み: 柔らかく親しみやすい表現への統一
+DONATIサイト全体で「柔らかく親しみやすい表現」を採用し、ユーザーとの距離感を縮める文言設計を実装済み。
+
+### 基本方針
+1. **親しみやすさ**: 硬い表現を避け、温かみのある言葉選びを心がける
+2. **わかりやすさ**: 専門用語は最小限にし、誰にでも理解しやすい表現を使用
+3. **ワクワク感**: 科学の楽しさ・興味深さが伝わる表現を重視
+4. **安心感**: 気軽に参加・問い合わせできる雰囲気作りを意識
+
+### 文言例
+- **ボタンテキスト**: 「お申し込みはこちら」→「参加してみる」
+- **サービス紹介**: 「提供いたします」→「お届けします」
+- **お問い合わせ**: 「ご不明な点は」→「気になることがあれば」
+- **実績紹介**: 「実施しました」→「みんなで楽しみました」
+
+### 継続的な改善
+- 新規コンテンツ作成時は本方針に基づいた文言を使用
+- ユーザーフィードバックに基づく文言の継続的改善
+- 科学の専門性を保ちつつ親近感のバランスを維持
+
 ## 配色管理
 
 ### 技術仕様書の配色（2025年1月追加）
@@ -218,14 +263,20 @@ body {
 }
 ```
 
-## 実装予定機能
+## 実装状況と今後の計画
 
-### 確定機能
-- [x] Instagram RSS連携（実験実装済み - experiments/instagram-rss-sample）
-- [x] マウスカーソルカスタマイズ（ガイド作成済み）
-- [x] カルーセル/スライダー（ガイド作成済み）
+### ✅ 実装完了機能
+- **カルーセル/スライダー**: 本体に統合済み（`src/components/Carousel.astro`）
+- **Googleフォーム統合**: contactページに実装済み
+- **Instagram埋め込み**: 基本的な埋め込み実装済み
+- **FAQアコーディオン**: servicesページに実装済み
+- **レスポンシブデザイン**: 全ページで実装済み
 
-### Instagram RSS連携の実装詳細
+### 🔬 実験実装済み（統合検討中）
+- **Instagram RSS連携**: `experiments/instagram-rss-sample/`で完全実装済み
+- **マウスカーソルカスタマイズ**: `src/components/CustomCursor.astro`と`CustomCursor-StarTheme.astro`
+
+### Instagram RSS連携の実装詳細（実験済み）
 
 #### 実験的実装の場所
 `experiments/instagram-rss-sample/` ディレクトリに完全に動作する実装があります。
@@ -236,22 +287,23 @@ body {
 - **キャッシュ付き**: `src/lib/instagram-rss-cached.ts` - パフォーマンス最適化
 - **複数ソース対応**: `src/lib/instagram-multi-source.ts` - 複数アカウント/タグ対応
 
-#### サンプルページ
-- `src/pages/index.astro` - 基本的な表示
-- `src/pages/index-enhanced.astro` - エラーハンドリング付き
-- `src/pages/index-ultimate.astro` - 全機能統合版（ムートン・ショット）
-
-#### 統合方法
-1. `experiments/instagram-rss-sample`の実装を参考に本体に統合
-2. RSS.app（無料プラン）でInstagram → RSS変換
-3. 画像プロキシはweserv.nl（無料）を使用
-4. 特定ハッシュタグ（#donati_event等）でイベント告知を自動抽出
+#### 統合時の検討事項
+1. RSS.app（無料プラン）でInstagram → RSS変換の導入
+2. 画像プロキシはweserv.nl（無料）の活用
+3. 特定ハッシュタグ（#donati_event等）でイベント告知の自動抽出
+4. 既存のInstagramSectionとの置き換え方針
 
 #### 実装の特徴
 - **自動お知らせ抽出**: AIタイトル生成とパターンマッチング
 - **堅牢なエラー処理**: Result型によるエラーハンドリング
 - **多層キャッシュ**: メモリ・ファイルキャッシュによる高速化
 - **セキュリティ対策**: レート制限、画像プロキシ、XSS対策
+
+### 🎯 今後の検討事項
+- Instagram RSS連携の本体統合
+- マウスカーソルカスタマイズの本体統合
+- パフォーマンス最適化
+- SEO対策強化
 
 ## ドキュメント構成
 
