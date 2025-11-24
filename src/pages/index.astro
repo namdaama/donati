@@ -3,46 +3,31 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import OverViewHero from '../components/OverViewHero.astro';
 import Footer from '../components/Footer.astro';
+import AnnouncementCard from '../components/AnnouncementCard.astro';
+import { fetchInstagramPosts } from '../lib/instagram-graph-api';
+import { filterAnnouncementPosts } from '../lib/announcement-parser';
+import { instagramConfig } from '../config/instagram';
 
-// お知らせデータ（4列グリッド用）
-const newsItems = [
-  {
-    id: 1,
-    thumbnail: '/images/news/event1.jpg',
-    date: '2025/01 [土]',
-    title: '1/18観察会～20:30時～',
-    location: '駅前プラザ（ROOM A）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event1'
-  },
-  {
-    id: 2,
-    thumbnail: '/images/news/event2.jpg', 
-    date: '2025/02 [日]',
-    title: '2/15実験ショー～14:00時～',
-    location: '市民会館（大ホール）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event2'
-  },
-  {
-    id: 3,
-    thumbnail: '/images/news/event3.jpg',
-    date: '2025/02 [土]',
-    title: '2/22ワークショップ～10:00時～',
-    location: '科学館（実験室）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event3'
-  },
-  {
-    id: 4,
-    thumbnail: '/images/news/event4.jpg',
-    date: '2025/03 [日]',
-    title: '3/8星空観察～19:30時～',
-    location: '山頂公園（観望台）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event4'
-  }
-];
+// Instagram Graph APIからお知らせを取得
+import type { AnnouncementPost } from '../types/instagram';
+
+let announcements: AnnouncementPost[] = [];
+const posts = await fetchInstagramPosts();
+
+if (instagramConfig.enableHashtagFilter) {
+  announcements = filterAnnouncementPosts(posts, instagramConfig.announcementHashtag);
+} else {
+  // ハッシュタグフィルター無効の場合、すべての投稿を表示
+  announcements = posts.map(post => ({
+    ...post,
+    category: 'news' as const,
+    eventDate: undefined,
+    location: undefined
+  }));
+}
+
+// 最新4投稿のみ表示
+announcements = announcements.slice(0, instagramConfig.maxDisplayPosts);
 
 // スタッフ情報
 const staffMembers = [
@@ -94,30 +79,20 @@ const services = [
         
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {newsItems.map((item) => (
-            <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-overview-yellow/30">
-              <!-- サムネイル -->
-              <div class="h-40 bg-overview-sky/20 flex items-center justify-center">
-                <span class="text-4xl">📅</span>
-              </div>
-              
-              <!-- コンテンツ -->
-              <div class="p-4">
-                <div class="text-sm font-bold text-overview-yellow bg-overview-dark-blue px-3 py-1 rounded-full inline-block mb-3">
-                  {item.date}
-                </div>
-                <h3 class="font-bold text-overview-dark-blue mb-2 text-lg">
-                  {item.title}
-                </h3>
-                <p class="text-sm text-gray-600 mb-2">
-                  {item.location}
-                </p>
-                <p class="text-xs text-overview-sky font-medium">
-                  {item.detail}
-                </p>
-              </div>
+          {announcements.length > 0 ? (
+            announcements.map((announcement) => (
+              <AnnouncementCard announcement={announcement} />
+            ))
+          ) : (
+            <div class="col-span-4 text-center py-12">
+              <p class="text-overview-dark-blue text-lg">
+                お知らせを読み込み中です...
+              </p>
+              <p class="text-gray-600 text-sm mt-2">
+                Instagramの投稿が表示されます
+              </p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>
