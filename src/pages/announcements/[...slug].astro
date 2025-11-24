@@ -2,18 +2,13 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { fetchInstagramPosts } from '../../lib/instagram-rss';
+import { fetchInstagramPosts } from '../../lib/instagram-graph-api';
 import { filterAnnouncementPosts, generateSlug } from '../../lib/announcement-parser';
 import { instagramConfig, getProxiedImageUrl } from '../../config/instagram';
 import type { AnnouncementPost } from '../../types/instagram';
 
 export async function getStaticPaths() {
-  if (!instagramConfig.rssUrl) {
-    console.warn('INSTAGRAM_RSS_URL not set');
-    return [];
-  }
-
-  const posts = await fetchInstagramPosts(instagramConfig.rssUrl);
+  const posts = await fetchInstagramPosts();
 
   let announcements;
   if (instagramConfig.enableHashtagFilter) {

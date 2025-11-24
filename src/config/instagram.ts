@@ -1,7 +1,6 @@
-// Instagram RSS連携の設定
+// Instagram Graph API連携の設定
 export const instagramConfig = {
-  // RSS設定
-  rssUrl: import.meta.env.INSTAGRAM_RSS_URL || '',
+  // ハッシュタグフィルター設定
   announcementHashtag: import.meta.env.ANNOUNCEMENT_HASHTAG || '#こみかる',
   enableHashtagFilter: import.meta.env.ENABLE_HASHTAG_FILTER !== 'false',
 

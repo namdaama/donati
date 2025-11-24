@@ -4,32 +4,30 @@ import Header from '../components/Header.astro';
 import OverViewHero from '../components/OverViewHero.astro';
 import Footer from '../components/Footer.astro';
 import AnnouncementCard from '../components/AnnouncementCard.astro';
-import { fetchInstagramPosts } from '../lib/instagram-rss';
+import { fetchInstagramPosts } from '../lib/instagram-graph-api';
 import { filterAnnouncementPosts } from '../lib/announcement-parser';
 import { instagramConfig } from '../config/instagram';
 
-// Instagram RSSからお知らせを取得
+// Instagram Graph APIからお知らせを取得
 import type { AnnouncementPost } from '../types/instagram';
 
 let announcements: AnnouncementPost[] = [];
-if (instagramConfig.rssUrl) {
-  const posts = await fetchInstagramPosts(instagramConfig.rssUrl);
+const posts = await fetchInstagramPosts();
 
-  if (instagramConfig.enableHashtagFilter) {
-    announcements = filterAnnouncementPosts(posts, instagramConfig.announcementHashtag);
-  } else {
-    // ハッシュタグフィルター無効の場合、すべての投稿を表示
-    announcements = posts.map(post => ({
-      ...post,
-      category: 'news' as const,
-      eventDate: undefined,
-      location: undefined
-    }));
-  }
-
-  // 最新4投稿のみ表示
-  announcements = announcements.slice(0, instagramConfig.maxDisplayPosts);
+if (instagramConfig.enableHashtagFilter) {
+  announcements = filterAnnouncementPosts(posts, instagramConfig.announcementHashtag);
+} else {
+  // ハッシュタグフィルター無効の場合、すべての投稿を表示
+  announcements = posts.map(post => ({
+    ...post,
+    category: 'news' as const,
+    eventDate: undefined,
+    location: undefined
+  }));
 }
+
+// 最新4投稿のみ表示
+announcements = announcements.slice(0, instagramConfig.maxDisplayPosts);
 
 // スタッフ情報
 const staffMembers = [
