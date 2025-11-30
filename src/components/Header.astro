@@ -1,75 +1,258 @@
 ---
-import DonatiLogo from './DonatiLogo.astro';
-
 // OverViewページ専用のヘッダー（アイコンナビゲーション）
 const navIcons = [
-  { 
-    icon: '⭐', 
-    label: 'DONATIとは？', 
+  {
+    iconSvg: '/images/svg/Parts/icon_AboutDonati.svg',
+    label: 'DONATIとは？',
     href: '/about',
     description: 'DONATIについて'
   },
-  { 
-    icon: '🔬', 
-    label: '私たちについて', 
+  {
+    iconSvg: '/images/svg/Parts/icon_AboutUs.svg',
+    label: '私たちについて',
     href: '/staff',
     description: 'スタッフ紹介'
   },
-  { 
-    icon: '📖', 
-    label: 'お知らせ', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Info.svg',
+    label: 'お知らせ',
     href: '/news',
     description: 'お知らせ'
   },
-  { 
-    icon: '⚗️', 
-    label: 'サービス内容', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Services.svg',
+    label: 'サービス内容',
     href: '/services',
     description: 'お仕事について'
   },
-  { 
-    icon: '✉️', 
-    label: 'お問合せ', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Contact.svg',
+    label: 'お問合せ',
     href: '/contact',
     description: 'お問い合わせ'
   }
 ];
 ---
 
-<header class="bg-white/10 backdrop-blur-sm shadow-md">
-  <div class="container mx-auto px-4 py-6">
+<header class="bg-white/10 backdrop-blur-sm shadow-md relative z-10">
+  <div class="container mx-auto px-4 py-4 md:py-6 lg:py-8">
     <div class="flex justify-between items-center">
-      <!-- ロゴ（左上） -->
+      <!-- ロゴ（左上） - SVG + SEO対応 -->
       <a href="/" class="flex items-center group">
-        <DonatiLogo size="small" class="group-hover:opacity-80 transition-opacity" />
-        <span class="text-sm text-gray-600 ml-2 hidden sm:block">
-          サイエンス アンド スペース ラボ
-        </span>
+        <img
+          src="/images/svg/Parts/homeLogo.svg"
+          alt="サイエンス&スペースラボ DONATI"
+          class="h-10 sm:h-12 md:h-16 lg:h-20 group-hover:opacity-80 transition-opacity"
+        />
+        <span class="sr-only">サイエンス&スペースラボ DONATI - ホームへ戻る</span>
       </a>
-      
-      <!-- アイコンナビゲーション（右上） -->
-      <nav class="flex items-center space-x-4 md:space-x-6">
+
+      <!-- モバイル用ハンバーガーメニューボタン -->
+      <button
+        id="mobile-menu-button"
+        class="lg:hidden p-2 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200 relative z-20"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+      >
+        <svg
+          class="w-8 h-8 text-overview-sky"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            id="menu-icon-open"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+          <path
+            id="menu-icon-close"
+            class="hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+
+      <!-- デスクトップ用アイコンナビゲーション（lg以上で表示） -->
+      <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6">
         {navIcons.map((item) => (
-          <a 
-            href={item.href} 
-            class="group flex flex-col items-center p-2 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
+          <a
+            href={item.href}
+            class="group flex items-center justify-center p-2 xl:p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
             title={item.description}
           >
-            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform duration-200">
-              {item.icon}
-            </span>
-            <span class="text-xs text-overview-dark-blue font-medium hidden md:block">
-              {item.label}
-            </span>
+            <img
+              src={item.iconSvg}
+              alt={item.label}
+              class="h-12 xl:h-14 2xl:h-[68px] w-auto group-hover:scale-110 transition-transform duration-200"
+            />
           </a>
         ))}
       </nav>
     </div>
   </div>
-  
-  <!-- 装飾的な波 -->
-  <div class="h-2 bg-gradient-to-r from-overview-sky to-overview-yellow"></div>
+
+  <!-- 装飾的な波線（レスポンシブ対応） -->
+  <div class="w-full overflow-hidden flex justify-center">
+    <!-- モバイル: 2つ -->
+    <div class="flex sm:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+    </div>
+    <!-- タブレット: 3つ -->
+    <div class="hidden sm:flex md:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+    </div>
+    <!-- デスクトップ: 5つ -->
+    <div class="hidden md:flex">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    </div>
+  </div>
 </header>
+
+<!-- モバイル用ドロワーメニュー（header外に配置してz-index問題を回避） -->
+<div
+  id="mobile-menu"
+  class="lg:hidden fixed inset-0 hidden"
+  style="z-index: 9999;"
+>
+  <!-- オーバーレイ背景 -->
+  <div
+    id="mobile-menu-overlay"
+    class="absolute inset-0 bg-black/50 backdrop-blur-sm"
+  ></div>
+
+  <!-- ドロワーコンテンツ -->
+  <div
+    id="mobile-menu-drawer"
+    class="absolute right-0 top-0 h-full w-72 sm:w-80 bg-gradient-to-b from-[#d4eaf7] to-[#b8ddf2] shadow-xl transform translate-x-full transition-transform duration-300 ease-out"
+  >
+    <!-- ドロワーヘッダー -->
+    <div class="flex justify-between items-center p-4 border-b border-overview-sky/20">
+      <span class="text-overview-dark-blue font-medium">メニュー</span>
+      <button
+        id="mobile-menu-close"
+        class="p-2 rounded-lg hover:bg-overview-sky/10 transition-colors"
+        aria-label="メニューを閉じる"
+      >
+        <svg class="w-6 h-6 text-overview-dark-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- ナビゲーションリンク -->
+    <nav class="p-4 space-y-2">
+      {navIcons.map((item) => (
+        <a
+          href={item.href}
+          class="flex items-center gap-4 p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200 group"
+        >
+          <img
+            src={item.iconSvg}
+            alt=""
+            class="h-10 w-auto group-hover:scale-110 transition-transform duration-200"
+          />
+          <div class="flex flex-col">
+            <span class="text-overview-dark-blue font-medium">{item.label}</span>
+            <span class="text-overview-dark-blue/60 text-sm">{item.description}</span>
+          </div>
+        </a>
+      ))}
+    </nav>
+
+    <!-- ホームへ戻るリンク -->
+    <div class="absolute bottom-8 left-0 right-0 px-4">
+      <a
+        href="/"
+        class="flex items-center justify-center gap-2 p-3 rounded-lg bg-overview-sky/30 hover:bg-overview-sky/40 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 text-overview-dark-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+        <span class="text-overview-dark-blue font-medium">ホームへ戻る</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // モバイルメニューの開閉制御
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuOverlay = document.getElementById('mobile-menu-overlay');
+    const menuDrawer = document.getElementById('mobile-menu-drawer');
+    const menuClose = document.getElementById('mobile-menu-close');
+    const menuIconOpen = document.getElementById('menu-icon-open');
+    const menuIconClose = document.getElementById('menu-icon-close');
+
+    function openMenu() {
+      mobileMenu?.classList.remove('hidden');
+      // アニメーション開始のために少し遅延
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          menuDrawer?.classList.remove('translate-x-full');
+        });
+      });
+      menuButton?.setAttribute('aria-expanded', 'true');
+      menuIconOpen?.classList.add('hidden');
+      menuIconClose?.classList.remove('hidden');
+      // スクロール禁止
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      menuDrawer?.classList.add('translate-x-full');
+      menuButton?.setAttribute('aria-expanded', 'false');
+      menuIconOpen?.classList.remove('hidden');
+      menuIconClose?.classList.add('hidden');
+      // アニメーション終了後に非表示
+      setTimeout(() => {
+        mobileMenu?.classList.add('hidden');
+      }, 300);
+      // スクロール許可
+      document.body.style.overflow = '';
+    }
+
+    menuButton?.addEventListener('click', () => {
+      const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+      if (isExpanded) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    menuOverlay?.addEventListener('click', closeMenu);
+    menuClose?.addEventListener('click', closeMenu);
+
+    // ESCキーでメニューを閉じる
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !mobileMenu?.classList.contains('hidden')) {
+        closeMenu();
+      }
+    });
+
+    // 画面リサイズ時にメニューを閉じる（lg以上になったとき）
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1024 && !mobileMenu?.classList.contains('hidden')) {
+        closeMenu();
+      }
+    });
+  });
+</script>
 
 <style>
   /* 星の装飾アニメーション */
@@ -77,7 +260,7 @@ const navIcons = [
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
   }
-  
+
   .group:hover span:first-child {
     animation: twinkle 1s ease-in-out;
   }
