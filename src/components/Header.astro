@@ -1,35 +1,33 @@
 ---
-import DonatiLogo from './DonatiLogo.astro';
-
 // OverViewページ専用のヘッダー（アイコンナビゲーション）
 const navIcons = [
-  { 
-    icon: '⭐', 
-    label: 'DONATIとは？', 
+  {
+    iconSvg: '/images/svg/Parts/icon_AboutDonati.svg',
+    label: 'DONATIとは？',
     href: '/about',
     description: 'DONATIについて'
   },
-  { 
-    icon: '🔬', 
-    label: '私たちについて', 
+  {
+    iconSvg: '/images/svg/Parts/icon_AboutUs.svg',
+    label: '私たちについて',
     href: '/staff',
     description: 'スタッフ紹介'
   },
-  { 
-    icon: '📖', 
-    label: 'お知らせ', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Info.svg',
+    label: 'お知らせ',
     href: '/news',
     description: 'お知らせ'
   },
-  { 
-    icon: '⚗️', 
-    label: 'サービス内容', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Services.svg',
+    label: 'サービス内容',
     href: '/services',
     description: 'お仕事について'
   },
-  { 
-    icon: '✉️', 
-    label: 'お問合せ', 
+  {
+    iconSvg: '/images/svg/Parts/icon_Contact.svg',
+    label: 'お問合せ',
     href: '/contact',
     description: 'お問い合わせ'
   }
@@ -37,38 +35,45 @@ const navIcons = [
 ---
 
 <header class="bg-white/10 backdrop-blur-sm shadow-md">
-  <div class="container mx-auto px-4 py-6">
+  <div class="container mx-auto px-4 py-8">
     <div class="flex justify-between items-center">
-      <!-- ロゴ（左上） -->
+      <!-- ロゴ（左上） - SVG + SEO対応 -->
       <a href="/" class="flex items-center group">
-        <DonatiLogo size="small" class="group-hover:opacity-80 transition-opacity" />
-        <span class="text-sm text-gray-600 ml-2 hidden sm:block">
-          サイエンス アンド スペース ラボ
-        </span>
+        <img
+          src="/images/svg/Parts/homeLogo.svg"
+          alt="サイエンス&スペースラボ DONATI"
+          class="h-16 md:h-20 group-hover:opacity-80 transition-opacity"
+        />
+        <span class="sr-only">サイエンス&スペースラボ DONATI - ホームへ戻る</span>
       </a>
-      
+
       <!-- アイコンナビゲーション（右上） -->
-      <nav class="flex items-center space-x-4 md:space-x-6">
+      <nav class="flex items-center space-x-6 md:space-x-8">
         {navIcons.map((item) => (
-          <a 
-            href={item.href} 
-            class="group flex flex-col items-center p-2 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
+          <a
+            href={item.href}
+            class="group flex items-center justify-center p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
             title={item.description}
           >
-            <span class="text-2xl mb-1 group-hover:scale-110 transition-transform duration-200">
-              {item.icon}
-            </span>
-            <span class="text-xs text-overview-dark-blue font-medium hidden md:block">
-              {item.label}
-            </span>
+            <img
+              src={item.iconSvg}
+              alt={item.label}
+              class="h-12 md:h-14 w-auto group-hover:scale-110 transition-transform duration-200"
+            />
           </a>
         ))}
       </nav>
     </div>
   </div>
-  
-  <!-- 装飾的な波 -->
-  <div class="h-2 bg-gradient-to-r from-overview-sky to-overview-yellow"></div>
+
+  <!-- 装飾的な波線（複数並べて自然なパターンに） -->
+  <div class="w-full overflow-hidden flex justify-center">
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+  </div>
 </header>
 
 <style>
