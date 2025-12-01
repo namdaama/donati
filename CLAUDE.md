@@ -235,9 +235,12 @@ DONATIサイト全体で「柔らかく親しみやすい表現」を採用し�
 1. **Export**: Figmaから画像・SVGアセットをExport
    - 画像: PNG/JPG（@1x、@2xなど）
    - アイコン: SVG
-2. **配置**: `design/exports/`に一時保存
-3. **最適化**: 必要に応じて圧縮・最適化
-4. **本番配置**: `public/images/`に移動してGit管理
+2. **最適化**: 必要に応じて圧縮・最適化
+3. **配置**: `public/images/`の適切なサブディレクトリに直接配置
+   - 背景 → `backgrounds/`（今後整理予定）
+   - SVGアイコン → `svg/Parts/`
+   - 写真 → `photos/`（今後整理予定）
+4. **Gitコミット**: 最適化済みファイルをコミット
 
 ### 運用のポイント
 - **参照用途**: Figmaは正確な数値取得とアセット管理に活用
@@ -274,10 +277,28 @@ Figmaで新しい色を追加・変更した場合：
 
 ## 画像管理
 
+### 基本方針
+- **全ての画像を`public/images/`で一元管理**
+- Figma書き出しも直接このディレクトリに配置
+- 中間ファイル用の別ディレクトリは使用しない
+
 ### public/images/
-- 直接URLでアクセスする画像
-- 最適化不要な画像（ファビコン、OGP画像など）
-- カルーセル画像: `/images/carousel/`
+- 本番配信用の画像（最適化済み）
+- 現在の構造:
+  - ルート: 各ページ用画像（AboutUs.jpg、OverView.jpg等）、背景画像（backGround.png等）
+  - `svg/Carousel/`: カルーセル用SVG
+  - `svg/Parts/`: UI用SVGパーツ（アイコン、装飾等）
+  - `svg/Screen/`: デザインモックアップSVG
+
+### 運用ルール
+1. Figmaから書き出したファイルは必要に応じて最適化
+2. 最適化済みファイルを`public/images/`の適切な場所に配置
+3. ファイル配置後、Gitコミット
+4. 旧バージョンファイルは削除（Git履歴から復元可能）
+
+### Figmaリンク管理
+Figma共有リンクはLINEまたはプロジェクトドキュメント（`docs/`）で管理。
+専用の`design/`ディレクトリは作成しない。
 
 ### src/assets/images/（将来的に推奨）
 - Astroで最適化する画像
@@ -356,16 +377,19 @@ body {
 
 ## ディレクトリ構成
 
-### デザイン関連
-Figma導入に伴い、デザイン関連ファイルを整理するディレクトリ構成：
+### 画像・アセット管理
+全ての画像は`public/images/`で一元管理。Figma書き出しも直接このディレクトリに配置。
 
 ```
-design/
-├── figma/
-│   └── README.md         # Figmaリンク集
-└── exports/              # Figma Export済みアセット
-    ├── images/          # 画像アセット（PNG/JPG）
-    └── graphics/        # ベクターグラフィック（SVG）
+public/images/
+├── backgrounds/          # 背景画像（今後整理予定）
+├── carousel/            # カルーセル用画像（今後整理予定）
+├── photos/              # 写真素材（今後整理予定）
+├── staff/               # スタッフ写真（今後追加予定）
+└── svg/
+    ├── Carousel/        # カルーセル用SVG
+    ├── Parts/           # UI用SVGパーツ
+    └── Screen/          # デザインモックアップSVG
 ```
 
 ### プロジェクト全体
@@ -380,8 +404,7 @@ donati/
 │   ├── lib/             # ユーティリティ・API
 │   └── config/          # 設定ファイル
 ├── public/
-│   └── images/          # 本番画像アセット
-├── design/              # デザイン関連（Figma）
+│   └── images/          # 画像アセット（一元管理）
 ├── docs/                # プロジェクトドキュメント
 └── experiments/         # 実験実装
 ```
