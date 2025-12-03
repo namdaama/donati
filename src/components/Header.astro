@@ -98,7 +98,8 @@ const navIcons = [
   </div>
 
   <!-- 装飾的な波線（レスポンシブ対応） -->
-  <div class="w-full overflow-hidden flex justify-center">
+  <div class="waveline-wrapper">
+    <div class="w-full overflow-hidden flex justify-center">
     <!-- モバイル: 2つ -->
     <div class="flex sm:hidden">
       <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
@@ -117,6 +118,7 @@ const navIcons = [
       <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
       <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
       <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    </div>
     </div>
   </div>
 </header>
@@ -263,5 +265,12 @@ const navIcons = [
 
   .group:hover span:first-child {
     animation: twinkle 1s ease-in-out;
+  }
+
+  /* ウェーブライン幅調整 */
+  .waveline-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 </style>
