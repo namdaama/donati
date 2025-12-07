@@ -1,8 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
-import OverViewHero from '../components/OverViewHero.astro';
+import Carousel from '../components/Carousel.astro';
 import Footer from '../components/Footer.astro';
+import { heroCarouselData } from '../config/site';
 
 // お知らせデータ（4列グリッド用）
 const newsItems = [
@@ -80,14 +81,11 @@ const rightColumnLinks = [
   <Header />
   
   <main class="flex-grow">
-    <!-- Hero Section -->
-    <OverViewHero 
-      title="DONATIとは？"
-      subtitle="科学の楽しさと宇宙の神秘を、みんなで一緒に体験しませんか？子どもから大人まで、ワクワクする発見がここにあります。"
-      ctaText="詳しくはコチラ"
-      ctaLink="/about"
-    />
-    
+    <!-- Hero Carousel Section -->
+    <div class="hero-carousel-wrapper">
+      <Carousel slides={heroCarouselData} />
+    </div>
+
     <!-- お知らせセクション -->
     <section class="py-16 md:py-24 bg-transparent">
       <div class="container mx-auto px-4">
@@ -96,14 +94,19 @@ const rightColumnLinks = [
           <h2 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-4" style="color: #65b7ec;">
             お知らせ
           </h2>
-          <div class="flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          </div>
         </div>
+      </div>
+
+      <!-- ウェーブライン（containerの外） -->
+      <div class="waveline-wrapper">
+        <div class="flex justify-center">
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        </div>
+      </div>
+
+      <div class="container mx-auto px-4">
         
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -136,12 +139,14 @@ const rightColumnLinks = [
     </section>
 
     <!-- 波線装飾（複数並べて中央寄せ） -->
-    <div class="w-full overflow-hidden py-4 flex justify-center">
-      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+    <div class="waveline-wrapper">
+      <div class="overflow-hidden py-4 flex justify-center">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      </div>
     </div>
 
     <!-- 下部3列セクション -->
@@ -272,5 +277,74 @@ const rightColumnLinks = [
     background: linear-gradient(45deg, rgba(135, 206, 235, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
     pointer-events: none;
     z-index: -1;
+  }
+
+  /* Heroカルーセル専用スタイル */
+  .hero-carousel-wrapper {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+
+  .hero-carousel-wrapper .carousel-section {
+    padding: 0;
+    width: 100%;
+  }
+
+  .hero-carousel-wrapper .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .hero-carousel-wrapper .carousel-wrapper {
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  /* レスポンシブ画像高さ */
+  .hero-carousel-wrapper .carousel-slide img {
+    height: 400px;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .hero-carousel-wrapper .carousel-slide img {
+      height: 500px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-carousel-wrapper .carousel-slide img {
+      height: 600px;
+    }
+  }
+
+  /* カルーセルコンテンツを非表示 */
+  .hero-carousel-wrapper .carousel-content {
+    display: none;
+  }
+
+  /* アクティブドットの配色調整 */
+  .hero-carousel-wrapper .dot.active {
+    background: #f4a261;
+  }
+
+  /* ウェーブライン幅調整 */
+  .waveline-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* ホバーエフェクト */
+  .hero-carousel-wrapper .carousel-slide {
+    cursor: pointer;
   }
 </style>
