@@ -10,7 +10,18 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs9539" />
+     id="defs9539">
+    <style>
+      .cls-17 { fill: #65b7ec; stroke: #65b7ec; stroke-width: 0.862542px; stroke-linecap: round; stroke-linejoin: round; }
+      .cls-18 { fill: #65b7ec; stroke: #65b7ec; stroke-width: 0.862542px; stroke-miterlimit: 10; }
+      .cls-19 { fill: #f6ed36; stroke: #65b7ec; stroke-width: 0.378354px; stroke-miterlimit: 10; }
+      .cls-23 { fill: #ffffff; fill-rule: evenodd; stroke-width: 0.264583; }
+      .cls-24 { fill: #65b7ec; fill-rule: evenodd; stroke-width: 0.264583; }
+      .cls-30 { fill: #65b7ec; stroke-width: 0.264583; }
+      .cls-31 { fill: #f6ed36; stroke-width: 0.264583; }
+      .cls-32 { fill: #f5e3dd; stroke-width: 0.264583; }
+    </style>
+  </defs>
   <g
      id="layer1"
      transform="translate(-4.3072675,-1.8055642)">

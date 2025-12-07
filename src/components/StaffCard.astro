@@ -1,0 +1,64 @@
+---
+import AboutUsButton from './AboutUsButton.astro';
+
+export interface Props {
+  name: string;
+  nameImage: string;
+  image: string;
+  description: string;
+  achievements: string[];
+  achievementsLink?: string;
+  servicesLink?: string;
+}
+
+const {
+  name,
+  nameImage,
+  image,
+  description,
+  achievements,
+  achievementsLink = '/achievements',
+  servicesLink = '/services'
+} = Astro.props;
+---
+
+<div class="staff-card-transparent">
+  <!-- アイコンと名前を横並び -->
+  <div class="flex items-center gap-4 mb-4">
+    <!-- キャラクターイラスト（左）: W:130px, H:200px -->
+    <img src={image} alt={name} class="flex-shrink-0" style="width: 130px; height: 200px;" />
+
+    <!-- 名前（右）: W:310px, H:200px -->
+    <img src={nameImage} alt={name} style="width: 310px; height: 200px;" />
+  </div>
+
+  <!-- 説明文 -->
+  <p class="text-gray-600 leading-relaxed text-sm mb-4">
+    {description}
+  </p>
+
+  <!-- 活動履歴 -->
+  <div class="mb-4">
+    <h4 class="text-gray-800 font-semibold text-sm mb-2">活動履歴</h4>
+    <ul class="list-disc list-inside text-gray-600 text-sm space-y-1">
+      {achievements.map((achievement) => (
+        <li>{achievement}</li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- ボタン -->
+  <div class="flex gap-4 justify-center">
+    <AboutUsButton text="詳しい活動履歴" href={achievementsLink} size="medium" />
+    <AboutUsButton text="サービス内容" href={servicesLink} size="medium" />
+  </div>
+</div>
+
+<style>
+  .staff-card-transparent {
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+</style>
