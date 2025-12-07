@@ -21,14 +21,13 @@ const {
 ---
 
 <div class="staff-card-transparent">
-  <!-- キャラクターイラスト -->
-  <div class="flex justify-center mb-4">
-    <img src={image} alt={name} class="w-32 h-auto" />
-  </div>
+  <!-- アイコンと名前を横並び -->
+  <div class="flex items-center gap-4 mb-4">
+    <!-- キャラクターイラスト（左）: W:130px, H:200px -->
+    <img src={image} alt={name} class="flex-shrink-0" style="width: 130px; height: 200px;" />
 
-  <!-- 名前（SVG） -->
-  <div class="flex justify-center mb-4">
-    <img src={nameImage} alt={name} class="h-12 w-auto" />
+    <!-- 名前（右）: W:310px, H:200px -->
+    <img src={nameImage} alt={name} style="width: 310px; height: 200px;" />
   </div>
 
   <!-- 説明文 -->
