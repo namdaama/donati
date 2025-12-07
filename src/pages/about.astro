@@ -7,14 +7,30 @@ import DonatiLogo from '../components/DonatiLogo.astro';
 // スタッフ情報
 const staffMembers = [
   {
-    name: 'ひでゆき',
-    role: '星の写真家',
-    description: '星空の素敵な写真を撮って、みんなに宇宙の美しさをお届けしています！星空観望会では写真の撮り方も楽しく教えちゃいますよ。「星空の感動をみんなで分かち合いたい！」そんな想いで、宇宙を好きになるきっかけ作りをお手伝いしています！',
+    name: 'フジ',
+    nameImage: '/images/svg/Parts/fuji_name.svg',
+    role: 'サイエンスパフォーマー',
+    image: '/images/svg/Parts/fuji_pict.svg',
+    description: 'ジョージ文字で、広島に生まれ、11歳でサックスを始める。音楽の高校、音楽の専門学校で音楽理論を学ぶ、20歳の時、バルーンアートに出会い、独学で習得。地域活動の音楽教育用にバンドメンバーとして教育現場、ソロパフォーマーとして、障害を中心に全国各地のイベントで活躍中',
+    achievements: [
+      'ライブパートナーエルパ',
+      'イオンモール',
+      '六合朝霧園',
+      '学校、幼稚園、老人ホーム'
+    ]
   },
   {
-    name: 'フジ',
-    role: 'サイエンスパフォーマー',
-    description: '宇宙や科学のワクワクを、みんなと一緒に楽しむサイエンスパフォーマーです！星空観望会では宇宙の不思議を、実験ショーでは科学の面白さを、とっても分かりやすくお話しします。「科学ってめちゃくちゃ楽しい！」って感じてもらえるような、体験たっぷりのプログラムをお届けします。みんなでワイワイ発見するのが大好きです！',
+    name: 'ひでゆき',
+    nameImage: '/images/svg/Parts/hide_name.svg',
+    role: '星の写真家',
+    image: '/images/svg/Parts/hide_pict.svg',
+    description: 'ジョージ文字で、広島に生まれ、11歳でサックスを始める。音楽の高校、音楽の専門学校で音楽理論を学ぶ、20歳の時、バルーンアートに出会い、独学で習得。地域活動の音楽教育用にバンドメンバーとして教育現場、ソロパフォーマーとして、障害を中心に全国各地のイベントで活躍中',
+    achievements: [
+      'ライブパートナーエルパ',
+      'イオンモール',
+      '六合朝霧園',
+      '学校、幼稚園、老人ホーム'
+    ]
   }
 ];
 ---
@@ -78,24 +94,8 @@ const staffMembers = [
         border-radius: 1rem;
         padding: 2rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      
-      .profile-circle {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background: #E0E0E0;
-        margin: 0 auto 1rem;
-      }
-      
-      .name-badge {
-        background: #FFD700;
-        color: #333;
-        padding: 0.5rem 2rem;
-        border-radius: 2rem;
-        font-weight: bold;
-        display: inline-block;
-        margin-bottom: 0.5rem;
+        display: flex;
+        flex-direction: column;
       }
     </style>
     
@@ -122,35 +122,34 @@ const staffMembers = [
       <!-- 説明セクション -->
       <section class="mb-16">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
-            <p class="text-gray-600 leading-relaxed">
-              科学実験ショーや星空観望会で、小さいお子さんから大人の方まで、みんなで科学の面白さや宇宙の不思議を一緒に楽しんでいます！「なんでだろう？」って思ったことを大切にして、実際に手を動かして体験してもらうことで、「科学って楽しい！」って感じてもらえたら嬉しいです！
-            </p>
+          <!-- 左側: テキストエリア -->
+          <div class="space-y-6">
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">サイエンスとスペースの楽しさを</h3>
+              <p class="text-gray-600 leading-relaxed">
+                科学実験ショーや星空観望会で、小さいお子さんから大人の方まで、みんなで科学の面白さや宇宙の不思議を一緒に楽しんでいます！「なんでだろう？」って思ったことを大切にして、実際に手を動かして体験してもらうことで、「科学って楽しい！」って感じてもらえたら嬉しいです！
+              </p>
+            </div>
+
+            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">みんなで冒険しよう</h3>
+              <p class="text-gray-600 leading-relaxed">
+                科学って実はとっても身近で、すごく楽しいんですよ！それをみんなに伝えたくて、毎日ワクワクしながら活動しています。身の回りにある不思議を一緒に見つけたり、宇宙のすごさや綺麗さを感じたり、一緒に科学の冒険に出かけましょう！
+              </p>
+            </div>
           </div>
-          
-          <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
-            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
-            <h3 class="text-xl font-bold text-gray-800 mb-4">あいうえおあいうえおあいうえ</h3>
-            <p class="text-gray-600 leading-relaxed">
-              科学って実はとっても身近で、すごく楽しいんですよ！それをみんなに伝えたくて、毎日ワクワクしながら活動しています。身の回りにある不思議を一緒に見つけたり、宇宙のすごさや綺麗さを感じたり、一緒に科学の冒険に出かけましょう！
-            </p>
+
+          <!-- 右側: DONATIロゴ -->
+          <div class="flex justify-center items-center">
+            <div class="yellow-circle p-8" style="width: 400px; height: 400px;">
+              <DonatiLogo size="large" />
+            </div>
           </div>
         </div>
         
         <div class="wave-decoration max-w-4xl mx-auto mt-8"></div>
       </section>
-      
-      <!-- DONATIキャラクターセクション -->
-      <section class="mb-16">
-        <div class="flex justify-end items-center max-w-6xl mx-auto">
-          <div class="yellow-circle p-8">
-            <DonatiLogo size="medium" />
-          </div>
-        </div>
-      </section>
-      
+
       <!-- スタッフ紹介セクション -->
       <section class="mb-16">
         <div class="text-center mb-12">
@@ -163,13 +162,42 @@ const staffMembers = [
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {staffMembers.map((member) => (
             <div class="staff-card">
-              <div class="profile-circle"></div>
-              <div class="text-center">
-                <div class="name-badge">{member.name}</div>
-                <p class="text-blue-600 font-semibold text-lg mb-4">{member.role}</p>
-                <p class="text-gray-600 leading-relaxed text-sm">
-                  {member.description}
-                </p>
+              <!-- キャラクターイラスト -->
+              <div class="flex justify-center mb-4">
+                <img src={member.image} alt={member.name} class="w-32 h-auto" />
+              </div>
+
+              <!-- 名前（SVG） -->
+              <div class="flex justify-center mb-2">
+                <img src={member.nameImage} alt={member.name} class="h-12 w-auto" />
+              </div>
+
+              <!-- 役職 -->
+              <p class="text-blue-600 font-semibold text-center text-sm mb-4">{member.role}</p>
+
+              <!-- 説明文 -->
+              <p class="text-gray-600 leading-relaxed text-sm mb-4">
+                {member.description}
+              </p>
+
+              <!-- 活動履歴 -->
+              <div class="mb-4">
+                <h4 class="text-gray-800 font-semibold text-sm mb-2">活動履歴</h4>
+                <ul class="list-disc list-inside text-gray-600 text-sm space-y-1">
+                  {member.achievements.map((achievement) => (
+                    <li>{achievement}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- ボタン -->
+              <div class="flex gap-2 justify-center">
+                <a href="/achievements" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
+                  詳しい活動履歴
+                </a>
+                <a href="/services" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
+                  サービス内容
+                </a>
               </div>
             </div>
           ))}
