@@ -1,4 +1,6 @@
 ---
+import AboutUsButton from './AboutUsButton.astro';
+
 export interface Props {
   name: string;
   nameImage: string;
@@ -46,13 +48,9 @@ const {
   </div>
 
   <!-- ボタン -->
-  <div class="flex gap-2 justify-center">
-    <a href={achievementsLink} class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
-      詳しい活動履歴
-    </a>
-    <a href={servicesLink} class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
-      サービス内容
-    </a>
+  <div class="flex gap-4 justify-center">
+    <AboutUsButton text="詳しい活動履歴" href={achievementsLink} size="medium" />
+    <AboutUsButton text="サービス内容" href={servicesLink} size="medium" />
   </div>
 </div>
 
