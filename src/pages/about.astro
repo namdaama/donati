@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import DonatiLogo from '../components/DonatiLogo.astro';
+import StaffCard from '../components/StaffCard.astro';
 
 // スタッフ情報
 const staffMembers = [
@@ -90,22 +91,6 @@ const staffMembers = [
         justify-content: center;
         flex-direction: column;
       }
-      
-      .staff-card {
-        background: white;
-        border-radius: 1rem;
-        padding: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        display: flex;
-        flex-direction: column;
-      }
-
-      .staff-card-transparent {
-        background: transparent;
-        display: flex;
-        flex-direction: column;
-        padding: 0;
-      }
     </style>
     
     <!-- 星の装飾 -->
@@ -176,42 +161,7 @@ const staffMembers = [
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {staffMembers.map((member) => (
-            <div class="staff-card-transparent">
-              <!-- キャラクターイラスト -->
-              <div class="flex justify-center mb-4">
-                <img src={member.image} alt={member.name} class="w-32 h-auto" />
-              </div>
-
-              <!-- 名前（SVG） -->
-              <div class="flex justify-center mb-4">
-                <img src={member.nameImage} alt={member.name} class="h-12 w-auto" />
-              </div>
-
-              <!-- 説明文 -->
-              <p class="text-gray-600 leading-relaxed text-sm mb-4">
-                {member.description}
-              </p>
-
-              <!-- 活動履歴 -->
-              <div class="mb-4">
-                <h4 class="text-gray-800 font-semibold text-sm mb-2">活動履歴</h4>
-                <ul class="list-disc list-inside text-gray-600 text-sm space-y-1">
-                  {member.achievements.map((achievement) => (
-                    <li>{achievement}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <!-- ボタン -->
-              <div class="flex gap-2 justify-center">
-                <a href="/achievements" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
-                  詳しい活動履歴
-                </a>
-                <a href="/services" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition text-sm">
-                  サービス内容
-                </a>
-              </div>
-            </div>
+            <StaffCard {...member} />
           ))}
         </div>
       </section>
