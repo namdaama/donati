@@ -1,0 +1,87 @@
+---
+import OverViewAboutSection from './OverViewAboutSection.astro';
+import OverViewServiceSection from './OverViewServiceSection.astro';
+import OverViewLinkCard from './OverViewLinkCard.astro';
+
+interface StaffMember {
+  name: string;
+  role: string;
+  pictSvg: string;
+  nameSvg: string;
+}
+
+interface LinkItem {
+  textSvg: string;
+  href: string;
+  altText: string;
+}
+
+interface Props {
+  staffMembers?: StaffMember[];
+  services?: string[];
+  links: LinkItem[];
+  // 左列のカスタマイズ
+  leftTitle?: string;
+  leftIcon?: string;
+  leftStaff?: StaffMember[];
+  leftLink?: string;
+  // 中列のカスタマイズ
+  middleTitle?: string;
+  middleIcon?: string;
+  middleStaff?: StaffMember[];
+  middleServices?: string[];
+  middleLink?: string;
+  hideMiddleIcon?: boolean;
+}
+
+const {
+  staffMembers = [],
+  services = [],
+  links,
+  leftTitle = '私たちについて',
+  leftIcon,
+  leftStaff,
+  leftLink = '/staff',
+  middleTitle = 'サービス内容',
+  middleIcon,
+  middleStaff,
+  middleServices,
+  middleLink = '/services',
+  hideMiddleIcon = false
+} = Astro.props;
+
+// データの優先順位を設定
+const displayLeftStaff = leftStaff ?? staffMembers;
+const displayMiddleStaff = middleStaff;
+const displayMiddleServices = middleServices ?? services;
+---
+
+<section class="py-16 md:py-24 bg-transparent">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <OverViewAboutSection
+        staffMembers={displayLeftStaff}
+        staffLink={leftLink}
+        title={leftTitle}
+        icon={leftIcon}
+      />
+      {displayMiddleStaff ? (
+        <OverViewAboutSection
+          staffMembers={displayMiddleStaff}
+          staffLink={middleLink}
+          title={middleTitle}
+          icon={middleIcon}
+        />
+      ) : (
+        <OverViewServiceSection
+          services={displayMiddleServices}
+          servicesLink={middleLink}
+          title={middleTitle}
+          icon={middleIcon}
+          hideIcon={hideMiddleIcon}
+        />
+      )}
+      <OverViewLinkCard {links} />
+    </div>
+  </div>
+</section>

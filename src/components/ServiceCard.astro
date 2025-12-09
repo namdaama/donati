@@ -1,31 +1,62 @@
 ---
-export interface Props {
+interface Service {
+  id: string;
   title: string;
   description: string;
-  icon?: string;
-  link?: string;
-  color?: string;
+  features: string[];
+  programs: string[];
 }
 
-const { title, description, icon, link, color = 'space-blue' } = Astro.props;
+interface Props {
+  service: Service;
+  index: number;
+}
+
+const { service, index } = Astro.props;
 ---
 
-<div class="card group hover:scale-105 transition-transform duration-200">
-  {icon && (
-    <div class={`w-16 h-16 bg-${color} bg-opacity-10 rounded-full flex items-center justify-center mb-4 group-hover:bg-opacity-20 transition-colors`}>
-      <span class={`text-${color} text-3xl`}>{icon}</span>
+<div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="bg-white/50 backdrop-blur-sm rounded-lg h-80 flex items-center justify-center">
+      <span class="text-6xl">
+        {service.id === 'science-show' && '🧪'}
+        {service.id === 'science-class' && '🧠'}
+        {service.id === 'workshop' && '🔬'}
+        {service.id === 'stargazing' && '🔭'}
+        {service.id === 'lecture' && '🎓'}
+        {service.id === 'photos' && '📷'}
+      </span>
     </div>
-  )}
-  
-  <h3 class="text-xl font-bold mb-3 text-text-dark">{title}</h3>
-  <p class="text-text-gray mb-4">{description}</p>
-  
-  {link && (
-    <a href={link} class={`text-${color} font-medium hover:underline inline-flex items-center`}>
-      詳しく見る
-      <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-      </svg>
-    </a>
-  )}
+
+    <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
+      <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
+
+      <div class="mb-6">
+        <h4 class="text-lg font-semibold text-gray-800 mb-3">実施要項</h4>
+        <ul class="space-y-2">
+          {service.features.map((feature) => (
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+              </svg>
+              <span class="text-gray-600">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold text-gray-800 mb-3">プログラム例</h4>
+        <ul class="space-y-2">
+          {service.programs.map((program) => (
+            <li class="flex items-start">
+              <span class="text-orange-600 mr-2">▶</span>
+              <span class="text-gray-600">{program}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,47 @@
+---
+interface Props {
+  services: string[];
+  servicesLink?: string;
+  title?: string;
+  icon?: string;
+  hideIcon?: boolean;
+}
+
+const { services, servicesLink = '/services', title = 'サービス内容', icon, hideIcon = false } = Astro.props;
+---
+
+<div class="bg-white/95 rounded-2xl shadow-lg p-6 overflow-hidden flex flex-col">
+  <!-- セクションタイトル -->
+  <div class="text-center mb-4">
+    {icon ? (
+      <div class="mb-2">
+        <span class="text-3xl">{icon}</span>
+      </div>
+    ) : (
+      <img src="/images/svg/Parts/text_service.svg" alt={title} class="h-7 mx-auto mb-2" />
+    )}
+    <h3 class="text-lg font-bold text-gray-800 mb-2">{title}</h3>
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
+  </div>
+
+  <!-- サービスアイコンとリスト -->
+  <div class={`flex ${hideIcon ? 'justify-center' : 'items-center justify-center'} gap-4 mb-4 flex-grow`}>
+    {!hideIcon && (
+      <img src="/images/svg/Parts/icon_Services.svg" alt="" class="w-16 h-16 flex-shrink-0" />
+    )}
+    <ul class={`space-y-1 ${hideIcon ? 'w-full text-center' : 'text-left'}`}>
+      {services.map((service) => (
+        <li class={`flex items-center ${hideIcon ? 'justify-center' : ''}`}>
+          <span class="w-1.5 h-1.5 bg-overview-yellow rounded-full mr-2"></span>
+          <span class="text-overview-dark-blue text-sm font-medium">{service}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="text-center mt-auto">
+    <a href={servicesLink} class="inline-block">
+      <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
+    </a>
+  </div>
+</div>

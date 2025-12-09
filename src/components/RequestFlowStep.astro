@@ -1,0 +1,50 @@
+---
+interface Props {
+  step: number;
+  title: string;
+  description: string;
+}
+
+const { step, title, description } = Astro.props;
+---
+
+<div class="flex items-start gap-6 mb-12">
+  {/* Yellow Star Icon */}
+  <div class="yellow-star-icon w-24 h-24 flex-shrink-0">
+    <div class="flex flex-col items-center justify-center h-full text-black font-bold text-center">
+      <span class="text-xs">STEP</span>
+      <span class="text-2xl">{step}</span>
+    </div>
+  </div>
+
+  {/* Content */}
+  <div class="flex-1 pt-2">
+    <h3 class="text-xl font-bold text-gray-800 mb-2">
+      {title}
+    </h3>
+    <p class="text-gray-600 leading-relaxed mb-4">
+      {description}
+    </p>
+    {/* Slot for special content like government services */}
+    <slot />
+  </div>
+</div>
+
+<style>
+  .yellow-star-icon {
+    background: #FFD700;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+    flex-shrink: 0;
+  }
+</style>

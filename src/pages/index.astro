@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Carousel from '../components/Carousel.astro';
 import Footer from '../components/Footer.astro';
+import OverViewSection from '../components/OverViewSection.astro';
 import { heroCarouselData } from '../config/site';
 
 // お知らせデータ（4列グリッド用）
@@ -69,11 +70,11 @@ const services = [
   '星空の写真　など'
 ];
 
-// 右カラムのリンク情報
-const rightColumnLinks = [
-  { title: '依頼の流れ', href: '/services', icon: '📋' },
-  { title: 'よくある質問', href: '/services#faq', icon: '❓' },
-  { title: '活動経歴', href: '/achievements', icon: '🏆' }
+// OverViewセクション用のリンク情報
+const overviewLinks = [
+  { textSvg: '/images/svg/Parts/text_Offer.svg', href: '/services', altText: '依頼の流れ' },
+  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/services#faq', altText: 'よくある質問' },
+  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/achievements', altText: '活動経歴' }
 ];
 ---
 
@@ -149,88 +150,7 @@ const rightColumnLinks = [
       </div>
     </div>
 
-    <!-- 下部3列セクション -->
-    <section class="py-16 md:py-24 bg-transparent">
-      <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          <!-- 1. 私たちについて -->
-          <div class="bg-white/95 rounded-2xl shadow-lg p-6 overflow-hidden flex flex-col">
-            <!-- セクションタイトル（SVG使用） -->
-            <div class="text-center mb-4">
-              <img src="/images/svg/Parts/text_AboutUs.svg" alt="私たちについて" class="h-7 mx-auto mb-2" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
-            </div>
-
-            <!-- スタッフ紹介（横並び） -->
-            <div class="flex justify-center gap-6 mb-4 flex-grow">
-              {staffMembers.map((staff) => (
-                <div class="text-center">
-                  <img src={staff.pictSvg} alt={staff.name} class="w-24 h-24 mx-auto mb-2" />
-                  <img src={staff.nameSvg} alt={staff.name} class="h-5 mx-auto" />
-                </div>
-              ))}
-            </div>
-
-            <div class="text-center mt-auto">
-              <a href="/staff" class="inline-block">
-                <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
-              </a>
-            </div>
-          </div>
-
-          <!-- 2. サービス内容 -->
-          <div class="bg-white/95 rounded-2xl shadow-lg p-6 overflow-hidden flex flex-col">
-            <!-- セクションタイトル（SVG使用） -->
-            <div class="text-center mb-4">
-              <img src="/images/svg/Parts/text_service.svg" alt="サービス内容" class="h-7 mx-auto mb-2" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
-            </div>
-
-            <!-- サービスアイコンとリスト -->
-            <div class="flex items-center justify-center gap-4 mb-4 flex-grow">
-              <img src="/images/svg/Parts/icon_Services.svg" alt="" class="w-16 h-16 flex-shrink-0" />
-              <ul class="space-y-1 text-left">
-                {services.map((service) => (
-                  <li class="flex items-center">
-                    <span class="w-1.5 h-1.5 bg-overview-yellow rounded-full mr-2"></span>
-                    <span class="text-overview-dark-blue text-sm font-medium">{service}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div class="text-center mt-auto">
-              <a href="/services" class="inline-block">
-                <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
-              </a>
-            </div>
-          </div>
-
-          <!-- 3. リンクカード（依頼の流れ/よくある質問/活動経歴） -->
-          <div class="space-y-3">
-            <!-- 依頼の流れ -->
-            <a href="/services" class="block bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <img src="/images/svg/Parts/text_Offer.svg" alt="依頼の流れ" class="h-7 mx-auto mb-3" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
-            </a>
-
-            <!-- よくある質問 -->
-            <a href="/services#faq" class="block bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <img src="/images/svg/Parts/text_QA.svg" alt="よくある質問" class="h-7 mx-auto mb-3" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
-            </a>
-
-            <!-- 活動経歴 -->
-            <a href="/achievements" class="block bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
-              <img src="/images/svg/Parts/text_Carrer.svg" alt="活動経歴" class="h-7 mx-auto mb-3" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
-            </a>
-          </div>
-
-        </div>
-      </div>
-    </section>
+    <OverViewSection {staffMembers} {services} links={overviewLinks} />
 
     <!-- CTAバナー（QA画像） -->
     <section class="py-12 md:py-16">

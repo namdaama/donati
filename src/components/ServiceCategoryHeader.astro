@@ -1,0 +1,30 @@
+---
+interface Props {
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+
+const { icon, title, subtitle, description } = Astro.props;
+---
+
+<div class="text-center mb-16">
+  <div class="flex items-center justify-center mb-4">
+    <span class="text-4xl mr-4">{icon}</span>
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{title}</h2>
+  </div>
+  <div class="waveline-wrapper">
+    <div class="flex justify-center">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+    </div>
+  </div>
+  <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
+    <p class="text-xl text-blue-600 font-semibold mb-2">{subtitle}</p>
+    <p class="text-lg text-gray-600 leading-relaxed">
+      {description}
+    </p>
+  </div>
+</div>
