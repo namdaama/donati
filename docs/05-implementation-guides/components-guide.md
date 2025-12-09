@@ -1,0 +1,195 @@
+# Astroコンポーネントガイド
+
+DONATIプロジェクトで使用されている全Astroコンポーネントの詳細リファレンス。
+
+## コンポーネント一覧（複雑度別）
+
+### 高複雑度コンポーネント（実装時要注意）
+
+#### Carousel.astro
+- **ファイル**: [src/components/Carousel.astro](src/components/Carousel.astro)
+- **行数**: 295行
+- **目的**: 自動スライドショー機能
+- **Props**: `slides: Array<{image, alt, title, description, link?}>`
+- **主要機能**:
+  - 自動スライド（4秒間隔、ホバーで一時停止）
+  - キーボード操作（矢印キー、Tabキー）
+  - ドットナビゲーション
+  - アクセシビリティ対応（ARIA属性）
+- **技術実装**:
+  - TypeScriptクラスベース（CarouselManagerクラス）
+  - 複数のイベントリスナー管理（click, keydown, mouseenter, mouseleave）
+  - setInterval/clearIntervalによる自動再生制御
+- **データ管理**: `src/config/site.ts`の`carouselData`
+- **修正時の注意**:
+  - イベントリスナーのクリーンアップ処理確認
+  - インターバルタイマーのメモリリーク対策
+  - アクセシビリティ属性（role, aria-label等）の維持
+
+#### Header.astro
+- **ファイル**: [src/components/Header.astro](src/components/Header.astro)
+- **行数**: 277行
+- **目的**: 全ページ共通ナビゲーション
+- **実装方式**: アイコンベースナビゲーション + ハンバーガーメニュー
+- **レスポンシブ対応**:
+  - デスクトップ（lg:以上）: 水平ナビゲーション
+  - モバイル: ハンバーガーメニュー + ドロワー
+- **主要機能**:
+  - モバイルドロワーのトグル（JavaScript）
+  - ESCキーでドロワー閉じる
+  - ロゴクリックでトップページ遷移
+- **スタイル**: 半透明白背景（`bg-white/10 backdrop-blur-sm`）
+- **使用場所**: 全ページで`<Header />`として共通使用
+
+#### CustomCursor.astro
+- **ファイル**: [src/components/CustomCursor.astro](src/components/CustomCursor.astro)
+- **行数**: 211行
+- **目的**: カスタムマウスカーソル（実験的実装）
+- **実装方式**: クラスベース設計
+- **主要機能**:
+  - カーソル追従アニメーション
+  - 複数ホバーエフェクト（ボタン、リンク、カード等）
+  - requestAnimationFrame使用
+- **注意**: 本番統合検討中（CustomCursor-StarTheme.astroも存在）
+
+#### InstagramSection.astro
+- **ファイル**: [src/components/InstagramSection.astro](src/components/InstagramSection.astro)
+- **行数**: 111行
+- **目的**: Instagram投稿の埋め込み表示
+- **設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理
+- **実装方式**: Instagram公式埋め込みAPI使用
+- **外部スクリプト**: `//www.instagram.com/embed.js`を非同期ロード
+- **表示場所**: トップページの「最新の活動」セクション
+- **レスポンシブ**: `max-w-4xl`で最大幅制限
+
+### 中複雑度コンポーネント
+
+#### Hero.astro
+- **ファイル**: [src/components/Hero.astro](src/components/Hero.astro)
+- **行数**: 66行
+- **Props**: 7個（title, subtitle, ctaText, ctaLink, backgroundImage, useAurora, showStars）
+- **特徴**: Aurora/Stars効果の条件付きレンダリング
+- **用途**: ページのヒーロー/フィーチャーセクション
+
+#### StaffCard.astro
+- **ファイル**: [src/components/StaffCard.astro](src/components/StaffCard.astro)
+- **行数**: 65行
+- **Props**: 7個（name, nameImage, image, description, achievements, achievementsLink, servicesLink）
+- **依存**: AboutUsButtonコンポーネント使用（複数ボタン配置）
+- **最終更新**: Issue #44（2025年12月7日）
+
+#### OverViewHero.astro
+- **ファイル**: [src/components/OverViewHero.astro](src/components/OverViewHero.astro)
+- **行数**: 62行
+- **目的**: About用ヒーロー
+- **特徴**: 複数画像レイアウト、ロゴ配置、SVG波線装飾
+
+#### AuroraBackground.astro
+- **ファイル**: [src/components/AuroraBackground.astro](src/components/AuroraBackground.astro)
+- **行数**: 65行
+- **目的**: オーロラエフェクト背景
+- **技術**: SVG + CSS @keyframesアニメーション（60秒）
+- **用途**: Hero等で条件付きで使用
+
+#### Stars.astro
+- **ファイル**: [src/components/Stars.astro](src/components/Stars.astro)
+- **行数**: 103行
+- **目的**: ランダム星生成と瞬きアニメーション
+- **Props**: quantity（デフォルト50個）、size（大きさ指定）
+- **技術**: SVG + CSS @keyframesアニメーション（複数パターン）
+
+#### CustomCursor-StarTheme.astro
+- **ファイル**: [src/components/CustomCursor-StarTheme.astro](src/components/CustomCursor-StarTheme.astro)
+- **行数**: 144行
+- **目的**: 星型カーソル（代替案）
+- **特徴**: 軌跡エフェクト、requestAnimationFrame使用
+
+### 低複雑度コンポーネント
+
+#### カード系
+
+**AchievementCard.astro**
+- **ファイル**: [src/components/AchievementCard.astro](src/components/AchievementCard.astro)
+- **行数**: 47行
+- **目的**: 実績カード表示
+- **Props**: image, date, location, description
+- **用途**: achievementsページでグリッド表示
+
+**NewsCard.astro**
+- **ファイル**: [src/components/NewsCard.astro](src/components/NewsCard.astro)
+- **行数**: 44行
+- **目的**: ニュース記事カード
+- **Props**: category, title, description, date
+- **特徴**: カテゴリータグ付き
+
+**ServiceCard.astro**
+- **ファイル**: [src/components/ServiceCard.astro](src/components/ServiceCard.astro)
+- **行数**: 31行
+- **目的**: サービス説明カード
+- **Props**: icon, title, description
+- **用途**: servicesページでグリッド表示
+
+#### UI部品
+
+**AboutUsButton.astro**
+- **ファイル**: [src/components/AboutUsButton.astro](src/components/AboutUsButton.astro)
+- **行数**: 52行
+- **目的**: カスタムボタンコンポーネント
+- **特徴**: SVG背景 + テキストオーバーレイ
+- **使用箇所**: StaffCard内で複数ボタン表示
+
+**DonatiLogo.astro**
+- **ファイル**: [src/components/DonatiLogo.astro](src/components/DonatiLogo.astro)
+- **行数**: 46行
+- **目的**: ロゴ表示
+- **Props**: size（サイズ可変：sm, md, lg）
+- **使用箇所**: Header、OverViewHero等
+
+**Footer.astro**
+- **ファイル**: [src/components/Footer.astro](src/components/Footer.astro)
+- **行数**: 41行
+- **目的**: ページフッター
+- **内容**: リンク、会社情報、ソーシャルメディアURL
+- **使用場所**: 全ページ共通
+
+#### セクション系
+
+**StarrySection.astro**
+- **ファイル**: [src/components/StarrySection.astro](src/components/StarrySection.astro)
+- **行数**: 31行
+- **目的**: 星背景セクション
+- **依存**: Stars.astroを埋め込み
+- **用途**: ビジュアル効果強化が必要なセクション
+
+## コンポーネント依存関係
+
+```
+Header.astro
+├─ DonatiLogo (SVG直接使用)
+
+OverViewHero.astro
+├─ DonatiLogo.astro
+
+StaffCard.astro
+├─ AboutUsButton.astro (複数使用)
+
+Hero.astro
+├─ AuroraBackground.astro (条件付き)
+└─ Stars.astro (条件付き)
+
+StarrySection.astro
+└─ Stars.astro
+```
+
+## コンポーネント統計
+
+| 区分 | 数 | 行数 | 平均行数 |
+|------|-----|------|---------|
+| 高複雑度 | 4 | 794 | 199 |
+| 中複雑度 | 7 | 496 | 71 |
+| 低複雑度 | 7 | 246 | 35 |
+| **合計** | **17** | **1,583** | **93** |
+
+## 更新履歴
+
+- 2025年12月9日: 初版作成（17コンポーネント、1,583行の詳細分析）

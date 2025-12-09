@@ -50,13 +50,14 @@ npm run astro check  # Astroの組み込み型チェックを実行
   - `achievements.astro` (実績)
   - `contact.astro` (お問い合わせ)
   - `staff.astro` (スタッフ)
-- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`
-  - `Header.astro` (統一ヘッダー)
-  - `Footer.astro` (フッター)
-  - `Carousel.astro` (カルーセル機能)
-  - `InstagramSection.astro` (Instagram連携)
-  - `CustomCursor.astro` / `CustomCursor-StarTheme.astro` (カーソルカスタマイズ)
-  - `AuroraBackground.astro` / `Stars.astro` (宇宙テーマエフェクト)
+- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（17個、詳細は[docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照）
+  - 主要コンポーネント:
+    - `Carousel.astro` - 自動スライドショー（295行、TypeScriptクラスベース）
+    - `Header.astro` - 全ページ共通ナビゲーション（277行、モバイルドロワー対応）
+    - `InstagramSection.astro` - Instagram埋め込み（111行、公式API使用）
+    - `Hero.astro` - ヒーロー（Aurora/Stars効果オプション）
+    - `StaffCard.astro` - スタッフカード（AboutUsButton依存）
+  - その他: カード系（Achievement/News/Service）、UI部品（DonatiLogo/AboutUsButton/Footer）、視覚効果（AuroraBackground/Stars）等
 - **レイアウト**: ページテンプレートは`src/layouts/` (現在はLayout.astroのみ)
 - **スタイル**: TailwindCSSを使用、カスタムテーマカラーは`tailwind.config.mjs`で定義
 
@@ -479,3 +480,13 @@ donati/
 - エラーは解決してから次へ進む
 - エラーを無視して次のステップに進まない
 - 指示にない機能を勝手に追加しない
+
+## コンポーネント更新ルール
+
+コンポーネントの追加・変更時は`docs/05-implementation-guides/components-guide.md`を同期更新:
+- **新規コンポーネント追加時**: 複雑度に応じたセクション（高/中/低）に記載
+- **既存コンポーネント変更時**（Issue完了時）: 説明内容を更新
+- **Props変更時**: 該当コンポーネントのProps定義を更新
+- **依存関係変更時**: 「コンポーネント依存関係」セクションを更新
+
+詳細なコンポーネントリファレンス: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)
