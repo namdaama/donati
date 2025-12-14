@@ -272,26 +272,6 @@ const overviewLinks = [
         margin: 0 auto;
         padding: 0 1rem;
       }
-
-      .blue-star-icon {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-        clip-path: polygon(
-          50% 0%,
-          61% 35%,
-          98% 35%,
-          68% 57%,
-          79% 91%,
-          50% 70%,
-          21% 91%,
-          32% 57%,
-          2% 35%,
-          39% 35%
-        );
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
     </style>
     
     <!-- 星の装飾 -->
@@ -424,9 +404,7 @@ const overviewLinks = [
         <!-- 最終メッセージセクション（青い星） -->
         <section class="mb-24">
           <div class="flex items-start gap-6 max-w-4xl mx-auto">
-            <div class="blue-star-icon w-24 h-24 flex-shrink-0">
-              <span class="text-white text-4xl">★</span>
-            </div>
+            <img src="/images/svg/Parts/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
 
             <div class="flex-1 bg-white/70 backdrop-blur-sm rounded-lg p-6">
               <h3 class="text-xl font-bold text-gray-800 mb-3">実施後まで丁寧にサポート</h3>

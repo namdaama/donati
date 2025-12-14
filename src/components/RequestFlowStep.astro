@@ -6,16 +6,12 @@ interface Props {
 }
 
 const { step, title, description } = Astro.props;
+const starSvg = `/images/svg/Parts/step_star${step}.svg`;
 ---
 
 <div class="flex items-start gap-6 mb-12">
-  {/* Yellow Star Icon */}
-  <div class="yellow-star-icon w-24 h-24 flex-shrink-0">
-    <div class="flex flex-col items-center justify-center h-full text-black font-bold text-center">
-      <span class="text-xs">STEP</span>
-      <span class="text-2xl">{step}</span>
-    </div>
-  </div>
+  {/* Star Icon SVG */}
+  <img src={starSvg} alt={`STEP ${step}`} class="w-56 h-52 flex-shrink-0" />
 
   {/* Content */}
   <div class="flex-1 pt-2">
@@ -29,22 +25,3 @@ const { step, title, description } = Astro.props;
     <slot />
   </div>
 </div>
-
-<style>
-  .yellow-star-icon {
-    background: #FFD700;
-    clip-path: polygon(
-      50% 0%,
-      61% 35%,
-      98% 35%,
-      68% 57%,
-      79% 91%,
-      50% 70%,
-      21% 91%,
-      32% 57%,
-      2% 35%,
-      39% 35%
-    );
-    flex-shrink: 0;
-  }
-</style>
