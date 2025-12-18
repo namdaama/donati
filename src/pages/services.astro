@@ -13,6 +13,7 @@ const serviceCategories = {
     id: 'science',
     title: 'サイエンス（科学分野）',
     icon: '⚗️',
+    characterIconUrl: '/images/svg/Parts/fuji_pict.svg',
     subtitle: '科学の楽しさと不思議を体験',
     description: '実験やワークショップで、科学の不思議とワクワクを一緒に楽しみましょう！',
     services: [
@@ -73,6 +74,7 @@ const serviceCategories = {
     id: 'space',
     title: 'スペース（宇宙分野）',
     icon: '🌟',
+    characterIconUrl: '/images/svg/Parts/hide_pict.svg',
     subtitle: '宇宙の神秘と美しさを探求',
     description: '天体観測やお話、写真で、宇宙の素敵さをみんなで体験しましょう！',
     services: [
@@ -287,7 +289,7 @@ const overviewLinks = [
     
     <!-- タイトルセクション -->
     <section class="text-center py-12 relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+      <h1 class="section-title-news">
         サービス内容
       </h1>
       <div class="waveline-wrapper">
@@ -336,6 +338,7 @@ const overviewLinks = [
             title={serviceCategories.science.title}
             subtitle={serviceCategories.science.subtitle}
             description={serviceCategories.science.description}
+            characterIconUrl={serviceCategories.science.characterIconUrl}
           />
 
           {serviceCategories.science.services.map((service, index) => (
@@ -350,6 +353,7 @@ const overviewLinks = [
             title={serviceCategories.space.title}
             subtitle={serviceCategories.space.subtitle}
             description={serviceCategories.space.description}
+            characterIconUrl={serviceCategories.space.characterIconUrl}
           />
 
           {serviceCategories.space.services.map((service, index) => (
@@ -360,7 +364,7 @@ const overviewLinks = [
         <!-- ご依頼の流れセクション -->
         <section class="mb-24">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ご依頼の流れ</h2>
+            <h2 class="section-title-news">ご依頼の流れ</h2>
             <div class="waveline-wrapper">
               <div class="flex justify-center">
                 <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
@@ -420,7 +424,7 @@ const overviewLinks = [
         <!-- FAQ セクション -->
         <section class="mb-24">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">よくある質問（FAQ）</h2>
+            <h2 class="section-title-news">よくある質問（FAQ）</h2>
             <div class="waveline-wrapper">
               <div class="flex justify-center">
                 <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
