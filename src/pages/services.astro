@@ -5,7 +5,8 @@ import Footer from '../components/Footer.astro';
 import ServiceCategoryHeader from '../components/ServiceCategoryHeader.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import RequestFlowStep from '../components/RequestFlowStep.astro';
-import OverViewSection from '../components/OverViewSection.astro';
+import ServicesSection from '../components/ServicesSection.astro';
+
 
 // サービス情報（新構造：サイエンス・スペース分野）
 const serviceCategories = {
@@ -20,7 +21,7 @@ const serviceCategories = {
       {
         id: 'science-show',
         title: 'サイエンスショー',
-        description: '迫力満点の科学実験で、ワクワクドキドキのショーをみんなで楽しみましょう！',
+        description: '目の前で起こる不思議な現象に驚き、科学の楽しさを発見できるショーです！',
         features: [
           '対象年齢：幼児〜中学生（内容により調整可能）',
           '所要時間：45分〜90分',
@@ -75,8 +76,8 @@ const serviceCategories = {
     title: 'スペース（宇宙分野）',
     icon: '🌟',
     characterIconUrl: '/images/svg/Parts/hide_pict.svg',
-    subtitle: '宇宙の神秘と美しさを探求',
-    description: '天体観測やお話、写真で、宇宙の素敵さをみんなで体験しましょう！',
+    subtitle: '宇宙の不思議を一緒に探検',
+    description: '望遠鏡で星を観たり、宇宙のお話をしたり、一緒に宇宙を旅しましょう！',
     services: [
       {
         id: 'stargazing',
@@ -142,48 +143,56 @@ const requestFlow = [
   },
   {
     step: 2,
-    title: 'ヒアリング',
-    description: 'どんなことをしたいか、いつどこで、予算はどれくらいかなど、じっくりお話を聞かせてください。'
+    title: 'ご予算に応じた提案',
+    description: 'ご要望をお聞きし、ご予算に合ったお考えのプランを提案します。'
   },
   {
     step: 3,
-    title: 'お見積もり・ご提案',
-    description: 'みなさんのご希望にぴったりの企画を作って、お見積もりもお渡しします。'
+    title: 'お見積り提出・ご確認',
+    description: 'お客様のご希望の内容が決まりましたら、お見積書を作成いたします。沖縄県外のご依頼の場合、交通費・宿泊費を別途ご請求させて頂きます。'
   },
   {
     step: 4,
-    title: '実施前打ち合わせ',
-    description: 'しっかり準備して、みんなで楽しい時間を過ごしましょう！'
+    title: 'ご依頼確定',
+    description: '内容をしっかり確認して、ご準備を整えさせていただいたり、ご準備のサポートさせていただきます。'
   },
   {
     step: 5,
-    title: 'ご実施',
-    description: 'ワクワクするようなプログラムをお届けします！'
+    title: '出演当日',
+    description: 'パフォーマーやイベント運営をさせていただきます！'
   },
   {
     step: 6,
-    title: 'ご実施後',
-    description: 'ご不明な点やフォローアップについてはお気軽にお問い合わせください。'
+    title: '支払い方法',
+    description: '出演料金は、後日ご請求させていただきます。'
   }
 ];
 
-// 行政向け事業
-const governmentServices = [
+// 打ち合わせ内容
+const consultationTopics = [
   {
-    title: '学校教育支援',
-    description: '理科実験授業や出張サイエンスショーなど'
+    number: 1,
+    question: '内容？',
+    description: '目的や参加者を考えて予算や時間に合わせたプランを企画します',
+    svg: '/images/svg/Parts/conference_thing1.svg'
   },
   {
-    title: '生涯学習事業',
-    description: '公民館や図書館での科学イベント'
+    number: 2,
+    question: '時間？',
+    description: '基本的00分です実験の組み合わせで調整できます',
+    svg: '/images/svg/Parts/conference_thing2.svg'
   },
   {
-    title: '観光・地域振興',
-    description: '星空観光や天文イベントの企画運営'
+    number: 3,
+    question: '予算？',
+    description: '基本料金あり予算にできるだけお応えします',
+    svg: '/images/svg/Parts/conference_thing3.svg'
   },
   {
-    title: '人材育成',
-    description: '教員研修や指導者養成プログラム'
+    number: 4,
+    question: '準備？',
+    description: '特にありません設備は事前に確認します',
+    svg: '/images/svg/Parts/conference_thing4.svg'
   }
 ];
 
@@ -208,27 +217,6 @@ const faqItems = [
   {
     question: '機材や会場の準備はどうすればよいですか？',
     answer: '実験道具や望遠鏡などはこちらで用意しますのでご安心ください！会場のことや必要なものは、事前にしっかり打ち合わせしましょうね！'
-  }
-];
-
-// OverViewセクション用のデータ
-// 左列：フジのスタッフ情報
-const fujiStaff = [
-  {
-    name: 'フジ',
-    role: 'サイエンスコミュニケーター',
-    pictSvg: '/images/svg/Parts/fuji_pict.svg',
-    nameSvg: '/images/svg/Parts/fuji_name.svg'
-  }
-];
-
-// 中列：ひでゆきのスタッフ情報
-const hideyukiStaff = [
-  {
-    name: 'ひでゆき',
-    role: '星空案内人',
-    pictSvg: '/images/svg/Parts/hide_pict.svg',
-    nameSvg: '/images/svg/Parts/hide_name.svg'
   }
 ];
 
@@ -275,41 +263,15 @@ const overviewLinks = [
         padding: 0 1rem;
       }
     </style>
-    
-    <!-- 星の装飾 -->
-    <div class="star" style="width: 30px; height: 30px; top: 10%; left: 10%;"></div>
-    <div class="star" style="width: 20px; height: 20px; top: 20%; right: 15%;"></div>
-    <div class="star" style="width: 25px; height: 25px; bottom: 30%; left: 5%;"></div>
-    <div class="star" style="width: 35px; height: 35px; top: 60%; right: 10%;"></div>
-    
-    <!-- 円形装飾 -->
-    <div class="circle-decoration" style="width: 100px; height: 100px; top: 5%; right: 20%;"></div>
-    <div class="circle-decoration" style="width: 150px; height: 150px; bottom: 10%; left: -50px;"></div>
-    <div class="circle-decoration" style="width: 80px; height: 80px; top: 40%; left: 10%;"></div>
-    
+        
     <!-- タイトルセクション -->
     <section class="text-center py-12 relative z-10">
-      <h1 class="section-title-news">
-        サービス内容
-      </h1>
-      <div class="waveline-wrapper">
-        <div class="flex justify-center">
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        </div>
-      </div>
-    </section>
-
-    <div class="container mx-auto px-4 py-12 relative z-10">
-      <!-- 紹介文セクション -->
-      <section class="mb-16">
-        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-4xl mx-auto text-center">
-          <p class="text-lg text-gray-600 leading-relaxed">
-            サイエンス アンド スペース ラボ DONATIでは、<br class="hidden md:inline" />
-            科学と宇宙、どちらも楽しく体験できるプログラムをご用意しています！<br />
-            学校でもイベントでも企業研修でも、お気軽にご相談ください。みなさんのご希望にぴったり合うプログラムを一緒に作りましょう！
-          </p>
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-left mb-12">
+          <h2 class="section-title-news">
+            サービス内容
+          </h2>
         </div>
         <div class="waveline-wrapper">
           <div class="flex justify-center">
@@ -318,16 +280,11 @@ const overviewLinks = [
             <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
           </div>
         </div>
-      </section>
+      </div>
 
+    <div class="container mx-auto px-4 py-12 relative z-10">
       <!-- サービス分類セクション（OverViewセクション） -->
-      <OverViewSection
-        leftStaff={fujiStaff}
-        leftTitle="フジ"
-        leftLink="#science"
-        middleStaff={hideyukiStaff}
-        middleTitle="ひでゆき"
-        middleLink="#space"
+      <ServicesSection
         links={overviewLinks}
       />
 
@@ -372,11 +329,6 @@ const overviewLinks = [
                 <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
               </div>
             </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-lg text-gray-600 leading-relaxed">
-                プログラムを始めるまでの流れをご紹介しますね！一緒に楽しいプログラムを作っていきましょう！
-              </p>
-            </div>
           </div>
 
           <!-- フローステップ -->
@@ -389,12 +341,18 @@ const overviewLinks = [
               >
                 {step.step === 1 && (
                   <div class="mt-6">
-                    <h4 class="text-lg font-bold text-gray-800 mb-4">行政向け事業</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {governmentServices.map((service) => (
-                        <div class="bg-blue-600 text-white rounded-lg p-4">
-                          <h5 class="font-bold mb-2">{service.title}</h5>
-                          <p class="text-sm">{service.description}</p>
+                    <h4 class="text-lg font-bold mb-4" style="color: #58778D;">打ち合わせ内容</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {consultationTopics.map((topic) => (
+                        <div class="flex flex-col items-center text-center">
+                          <img
+                            src={topic.svg}
+                            alt={topic.question}
+                            class="w-32 h-16 mb-2"
+                          />
+                          <p class="text-xs leading-relaxed" style="color: #58778D;">
+                            {topic.description}
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -410,9 +368,9 @@ const overviewLinks = [
           <div class="flex items-start gap-6 max-w-4xl mx-auto">
             <img src="/images/svg/Parts/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
 
-            <div class="flex-1 bg-white/70 backdrop-blur-sm rounded-lg p-6">
-              <h3 class="text-xl font-bold text-gray-800 mb-3">実施後まで丁寧にサポート</h3>
-              <p class="text-gray-600 leading-relaxed">
+            <div class="flex-1 backdrop-blur-sm rounded-lg p-6 text-left">
+              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">実施後まで丁寧にサポート</h3>
+              <p class="leading-relaxed" style="color: #58778D;">
                 イベント実施後のアンケート集計や報告書作成、次回に向けた改善提案など、
                 実施後のフォローアップも充実しています。長期的なパートナーとして、
                 皆様の科学教育・普及活動をサポートいたします。
@@ -421,86 +379,12 @@ const overviewLinks = [
           </div>
         </section>
         
-        <!-- FAQ セクション -->
-        <section class="mb-24">
-          <div class="text-center mb-16">
-            <h2 class="section-title-news">よくある質問（FAQ）</h2>
-            <div class="waveline-wrapper">
-              <div class="flex justify-center">
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              </div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-lg text-gray-600 leading-relaxed">
-                よくある質問にお答えしますね！気になることがあったら、遠慮なく聞いてください！
-              </p>
-            </div>
-          </div>
-          
-          <!-- FAQ項目（アコーディオン形式） -->
-          <div class="max-w-4xl mx-auto space-y-4">
-            {faqItems.map((faq, index) => (
-              <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-                <!-- 質問（クリック可能） -->
-                <button class="faq-toggle w-full text-left bg-white/50 hover:bg-white/70 transition-colors duration-200 p-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        data-index={index}>
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-start flex-1">
-                      <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                        Q{index + 1}
-                      </span>
-                      <h3 class="text-lg font-bold text-gray-800 flex-1 pr-4">{faq.question}</h3>
-                    </div>
-                    <!-- 展開/折りたたみアイコン -->
-                    <svg class="faq-icon w-6 h-6 text-blue-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                  </div>
-                </button>
-                
-                <!-- 回答（初期状態は非表示） -->
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
-                  <div class="p-6 border-t border-gray-200/30">
-                    <div class="flex items-start">
-                      <span class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                        A
-                      </span>
-                      <p class="text-gray-600 leading-relaxed flex-1">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <!-- お問い合わせCTA -->
-        <section class="mb-16">
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-              お話を聞いたり、お見積もりを作ったりするのは無料です！
-            </h2>
-            <div class="waveline-wrapper">
-              <div class="flex justify-center">
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              </div>
-            </div>
-            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-              みなさんのやりたいことに合わせて、ぴったりのプログラムを一緒に作りましょう！<br />
-              まずはお気軽に連絡してくださいね！
-            </p>
-            <a href="/contact" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
-              お問い合わせ・ご相談はこちら
-            </a>
-          </div>
-        </section>
+    <!-- 区切り線とコピーライト -->
+    <div class="py-8">
+      <hr class="border-t border-overview-dark-blue/20 mb-4" />
+      <p class="text-center text-overview-dark-blue/60 text-sm">© サイエンス＆スペース ラボ DONATI</p>
     </div>
+
   </main>
   
   <Footer />
