@@ -1,0 +1,27 @@
+---
+interface Props {
+  step: number;
+  title: string;
+  description: string;
+}
+
+const { step, title, description } = Astro.props;
+const starSvg = `/images/svg/Parts/step_star${step}.svg`;
+---
+
+<div class="flex items-start gap-6 mb-12">
+  {/* Star Icon SVG */}
+  <img src={starSvg} alt={`STEP ${step}`} class="w-56 h-52 flex-shrink-0" />
+
+  {/* Content */}
+  <div class="flex-1 pt-2 text-left">
+    <h3 class="text-xl font-bold mb-2" style="color: #58778D;">
+      {title}
+    </h3>
+    <p class="leading-relaxed mb-4" style="color: #58778D;">
+      {description}
+    </p>
+    {/* Slot for special content like government services */}
+    <slot />
+  </div>
+</div>
