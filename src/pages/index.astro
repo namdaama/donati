@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Carousel from '../components/Carousel.astro';
 import Footer from '../components/Footer.astro';
+import FooterDivider from '../components/FooterDivider.astro';
 import OverViewSection from '../components/OverViewSection.astro';
 import { heroCarouselData } from '../config/site';
 
@@ -161,11 +162,7 @@ const overviewLinks = [
       </div>
     </section>
 
-    <!-- 区切り線とコピーライト -->
-    <div class="py-8">
-      <hr class="border-t border-overview-dark-blue/20 mb-4" />
-      <p class="text-center text-overview-dark-blue/60 text-sm">© サイエンス＆スペース ラボ DONATI</p>
-    </div>
+    <FooterDivider />
   </main>
 
   <Footer />

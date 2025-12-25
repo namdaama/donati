@@ -152,6 +152,18 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 - **内容**: リンク、会社情報、ソーシャルメディアURL
 - **使用場所**: 全ページ共通
 
+**FooterDivider.astro**
+- **ファイル**: [src/components/FooterDivider.astro](src/components/FooterDivider.astro)
+- **行数**: 12行
+- **目的**: ページ本文末尾の軽量な区切り線とコピーライト表示
+- **Props**:
+  - `copyText?: string` - コピーライトテキスト（デフォルト: '© サイエンス＆スペース ラボ DONATI'）
+  - `showDivider?: boolean` - 区切り線の表示/非表示（デフォルト: true）
+- **使用箇所**: index.astro、services.astro（mainタグ内、Footerコンポーネントの前）
+- **スタイル**: `border-overview-dark-blue/20`, `text-overview-dark-blue/60`, 透明背景
+- **実装日**: 2025年12月25日（Issue #46）
+- **注意**: Footer.astroとは別物（役割・デザインが異なる）
+
 #### セクション系
 
 **StarrySection.astro**
@@ -187,9 +199,10 @@ StarrySection.astro
 |------|-----|------|---------|
 | 高複雑度 | 4 | 794 | 199 |
 | 中複雑度 | 7 | 496 | 71 |
-| 低複雑度 | 7 | 246 | 35 |
-| **合計** | **17** | **1,583** | **93** |
+| 低複雑度 | 8 | 258 | 32 |
+| **合計** | **18** | **1,595** | **89** |
 
 ## 更新履歴
 
+- 2025年12月25日: FooterDivider.astro追加（Issue #46、18コンポーネント、1,595行）
 - 2025年12月9日: 初版作成（17コンポーネント、1,583行の詳細分析）
