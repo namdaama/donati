@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProfessionalExperienceSection from '../components/ProfessionalExperienceSection.astro';
+import MediaCoverageSection from '../components/MediaCoverageSection.astro';
+
+// フジの活動経歴
+const fujiExperiences = [
+  {
+    year: '1998年 3月',
+    eventName: '○○○○○大学○○学科',
+    location: '(○○○○○○○大学○○)',
+    description: '○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○',
+    imagePlaceholder: true
+  },
+  {
+    year: '2000年 6月',
+    eventName: '科学実験ショー講師活動開始',
+    location: '(全国各地)',
+    description: '様々な施設でのサイエンスショーの開催・講師活動を開始。子どもたちに科学の楽しさを伝えている。',
+    imagePlaceholder: true
+  },
+  {
+    year: '2010年 9月',
+    eventName: 'DONATI設立',
+    location: '(沖縄県)',
+    description: 'サイエンス&スペース ラボ DONATIを設立。より多くの子どもたちに科学教育を提供するための活動を開始。',
+    imagePlaceholder: true
+  }
+];
+
+// フジの全国紙掲載
+const fujiMediaCoverage = [
+  '大丈夫天文学科 1999年 9月 「科学教育の未来」誌',
+  '○○○新聞 2005年 3月 「子どもたちに伝わる科学」',
+  '××××雑誌 2012年 6月 「DONATI設立特集」'
+];
+
+// ひでの活動経歴
+const hideExperiences = [
+  {
+    year: '1995年 4月',
+    eventName: '○○○○○大学○○学科',
+    location: '(○○○○○○○大学○○)',
+    description: '○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○',
+    imagePlaceholder: true
+  },
+  {
+    year: '2002年 5月',
+    eventName: 'プラネタリウム解説員デビュー',
+    location: '(全国各地)',
+    description: 'プラネタリウムでの星空解説と天文教育活動を開始。美しい宇宙の物語を多くの人に伝えている。',
+    imagePlaceholder: true
+  },
+  {
+    year: '2015年 1月',
+    eventName: 'DONATI宇宙部門リーダー就任',
+    location: '(沖縄県)',
+    description: 'DONATIの宇宙部門のリーダーとして、より充実した宇宙教育プログラムの開発に従事。',
+    imagePlaceholder: true
+  }
+];
+
+// ひでの全国紙掲載
+const hideMediaCoverage = [
+  '星空新聞 2003年 2月 「プラネタリウムの魅力」',
+  '○○○雑誌 2008年 11月 「宇宙教育の最前線」',
+  '××××新聞 2016年 7月 「DONATI宇宙部門活動」'
+];
+---
+
+<Layout title="活動経歴">
+  <Header />
+
+  <main class="flex-grow relative overflow-hidden">
+    <div class="container mx-auto px-4 py-12 relative z-10">
+
+      <!-- ページタイトルセクション -->
+      <section class="text-left mb-16">
+        <h1 class="section-title-news">活動経歴</h1>
+        <div class="waveline-wrapper">
+          <div class="flex justify-start">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          </div>
+        </div>
+      </section>
+
+      <!-- フジの活動経歴セクション -->
+      <section class="mb-24">
+        <ProfessionalExperienceSection
+          name="フジ"
+          title="活動経歴 サイエンスパフォーマー フジ"
+          characterIcon="/images/svg/Parts/fuji_pict.svg"
+          experiences={fujiExperiences}
+        />
+        <MediaCoverageSection
+          title="全国紙掲載"
+          items={fujiMediaCoverage}
+        />
+      </section>
+
+      <!-- ひでの活動経歴セクション -->
+      <section class="mb-24">
+        <ProfessionalExperienceSection
+          name="ひでゆき"
+          title="活動経歴 虚空先生 ひでゆき"
+          characterIcon="/images/svg/Parts/hide_pict.svg"
+          experiences={hideExperiences}
+        />
+        <MediaCoverageSection
+          title="全国紙掲載"
+          items={hideMediaCoverage}
+        />
+      </section>
+
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
