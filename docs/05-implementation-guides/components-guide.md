@@ -161,6 +161,30 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 - **依存**: Stars.astroを埋め込み
 - **用途**: ビジュアル効果強化が必要なセクション
 
+**ProfessionalExperienceFujiCard.astro**
+- **ファイル**: [src/components/ProfessionalExperienceFujiCard.astro](src/components/ProfessionalExperienceFujiCard.astro)
+- **行数**: 約38行
+- **目的**: professional-experienceページのフジ活動経歴カード
+- **Props**: link?: string（デフォルト: '#fuji-section'）
+- **依存**: なし（SVG画像のみ）
+- **特徴**: `bg-white/95 rounded-2xl shadow-lg`カードスタイル
+
+**ProfessionalExperienceHideCard.astro**
+- **ファイル**: [src/components/ProfessionalExperienceHideCard.astro](src/components/ProfessionalExperienceHideCard.astro)
+- **行数**: 約38行
+- **目的**: professional-experienceページのひでゆき活動経歴カード
+- **Props**: link?: string（デフォルト: '#hide-section'）
+- **依存**: なし（SVG画像のみ）
+- **特徴**: `bg-white/95 rounded-2xl shadow-lg`カードスタイル
+
+**ProfessionalExperienceServicesCard.astro**
+- **ファイル**: [src/components/ProfessionalExperienceServicesCard.astro](src/components/ProfessionalExperienceServicesCard.astro)
+- **行数**: 約45行
+- **目的**: professional-experienceページのサービス内容カード
+- **Props**: listItems: ListItem[], link?: string（デフォルト: '/services'）
+- **依存**: なし（SVG画像のみ）
+- **特徴**: リストアイテム表示機能付きカード
+
 ## コンポーネント依存関係
 
 ```
@@ -187,9 +211,10 @@ StarrySection.astro
 |------|-----|------|---------|
 | 高複雑度 | 4 | 794 | 199 |
 | 中複雑度 | 7 | 496 | 71 |
-| 低複雑度 | 7 | 246 | 35 |
-| **合計** | **17** | **1,583** | **93** |
+| 低複雑度 | 10 | 367 | 37 |
+| **合計** | **20** | **1,704** | **85** |
 
 ## 更新履歴
 
+- 2025年12月25日: professional-experienceページのナビゲーションカード3つを追加（20コンポーネント、1,704行）
 - 2025年12月9日: 初版作成（17コンポーネント、1,583行の詳細分析）
