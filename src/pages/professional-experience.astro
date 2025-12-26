@@ -4,6 +4,9 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProfessionalExperienceSection from '../components/ProfessionalExperienceSection.astro';
 import MediaCoverageSection from '../components/MediaCoverageSection.astro';
+import ProfessionalExperienceFujiCard from '../components/ProfessionalExperienceFujiCard.astro';
+import ProfessionalExperienceHideCard from '../components/ProfessionalExperienceHideCard.astro';
+import ProfessionalExperienceServicesCard from '../components/ProfessionalExperienceServicesCard.astro';
 
 // フジの活動経歴
 const fujiExperiences = [
@@ -68,6 +71,12 @@ const hideMediaCoverage = [
   '○○○雑誌 2008年 11月 「宇宙教育の最前線」',
   '××××新聞 2016年 7月 「DONATI宇宙部門活動」'
 ];
+
+// サービスカード用のリストアイテム
+const servicesListItems = [
+  { text: '依頼の流れ', href: '/services#request-flow' },
+  { text: 'よくある質問', href: '/services#faq' }
+];
 ---
 
 <Layout title="活動経歴">
@@ -88,8 +97,17 @@ const hideMediaCoverage = [
         </div>
       </section>
 
+      <!-- ナビゲーションカード -->
+      <section class="mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <ProfessionalExperienceFujiCard link="#fuji-section" />
+          <ProfessionalExperienceHideCard link="#hide-section" />
+          <ProfessionalExperienceServicesCard listItems={servicesListItems} link="/services" />
+        </div>
+      </section>
+
       <!-- フジの活動経歴セクション -->
-      <section class="mb-24">
+      <section id="fuji-section" class="mb-24">
         <ProfessionalExperienceSection
           name="フジ"
           title="活動経歴 サイエンスパフォーマー フジ"
@@ -103,7 +121,7 @@ const hideMediaCoverage = [
       </section>
 
       <!-- ひでの活動経歴セクション -->
-      <section class="mb-24">
+      <section id="hide-section" class="mb-24">
         <ProfessionalExperienceSection
           name="ひでゆき"
           title="活動経歴 虚空先生 ひでゆき"
@@ -121,3 +139,17 @@ const hideMediaCoverage = [
 
   <Footer />
 </Layout>
+
+<style>
+  body {
+    background-image: url('/images/backGround.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
