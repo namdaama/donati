@@ -1,0 +1,13 @@
+---
+interface Props {
+  copyText?: string;
+  showDivider?: boolean;
+}
+
+const { copyText = '© サイエンス＆スペース ラボ DONATI', showDivider = true } = Astro.props;
+---
+
+<div class="py-8">
+  {showDivider && <hr class="border-t border-overview-dark-blue/20 mb-4" />}
+  <p class="text-center text-overview-dark-blue/60 text-sm">{copyText}</p>
+</div>
