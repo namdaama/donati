@@ -2,6 +2,55 @@
 
 DONATIプロジェクトで使用されている全Astroコンポーネントの詳細リファレンス。
 
+## フォルダ構成 (Issue #57で再編成)
+
+```
+src/components/
+├── common/          # 共通コンポーネント (6個)
+│   ├── Header.astro
+│   ├── Footer.astro
+│   ├── DonatiLogo.astro
+│   ├── Hero.astro
+│   ├── Carousel.astro
+│   └── InstagramSection.astro
+├── overview/        # トップページ専用 (6個)
+│   ├── OverViewSection.astro
+│   ├── OverViewHero.astro
+│   ├── OverViewAboutSection.astro
+│   ├── OverViewServiceSection.astro
+│   ├── OverViewLinkCard.astro
+│   └── FooterDivider.astro
+├── services/        # サービスページ専用 (6個)
+│   ├── ServicesSection.astro
+│   ├── ServicesFujiSection.astro
+│   ├── ServicesHideSection.astro
+│   ├── ServiceCategoryHeader.astro
+│   ├── ServiceCategoryCard.astro
+│   └── RequestFlowStep.astro
+├── professional-experience/  # 活動経歴ページ専用 (5個)
+│   ├── ProfessionalExperienceSection.astro
+│   ├── ProfessionalExperienceFujiCard.astro
+│   ├── ProfessionalExperienceHideCard.astro
+│   ├── ProfessionalExperienceServicesCard.astro
+│   └── MediaCoverageSection.astro
+├── cards/           # 再利用可能カード (1個)
+│   └── ServiceCard.astro
+└── effects/         # 視覚効果 (5個)
+    ├── CustomCursor.astro
+    ├── CustomCursor-StarTheme.astro
+    ├── AuroraBackground.astro
+    ├── Stars.astro
+    └── StarrySection.astro
+```
+
+**総コンポーネント数**: 29個（削除前: 33個）
+
+**削除されたコンポーネント**:
+- AchievementCard.astro - achievements.astroのみで使用
+- NewsCard.astro - news/index.astroのみで使用
+- StaffCard.astro - about/staff.astroのみで使用
+- AboutUsButton.astro - StaffCard内のみで使用
+
 ## コンポーネント一覧（複雑度別）
 
 ### 高複雑度コンポーネント（実装時要注意）
@@ -219,20 +268,37 @@ StarrySection.astro
 
 ## コンポーネント統計
 
-| 区分 | 数 | 行数 | 平均行数 |
-|------|-----|------|---------|
-| 高複雑度 | 4 | 794 | 199 |
-| 中複雑度 | 7 | 496 | 71 |
-| 低複雑度 | 8 | 258 | 32 |
-| **合計** | **18** | **1,595** | **89** |
+### フォルダ別内訳
+| フォルダ | コンポーネント数 | 用途 |
+|---------|-----------------|------|
+| common/ | 6 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection） |
+| overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
+| services/ | 6 | services.astro専用（Services*, ServiceCategory*, RequestFlowStep） |
+| professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
+| cards/ | 1 | 汎用カード（ServiceCard） |
+| effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
+| **合計** | **29** | **6フォルダ** |
+
+### ページ別import統計
+| ページ | import数 | 主要コンポーネント |
+|--------|----------|-------------------|
+| index.astro | 5 | Header, Carousel, Footer, FooterDivider, OverViewSection |
+| services.astro | 7 | Header, Footer, FooterDivider, ServiceCategoryHeader, ServiceCard, RequestFlowStep, ServicesSection |
+| contact.astro | 3 | Header, Footer, Hero |
+| professional-experience.astro | 7 | Header, Footer, ProfessionalExperience*(3), MediaCoverageSection |
+| Layout.astro | 1 | CustomCursorStarTheme |
+
+### 削除されたコンポーネント（Issue #57）
+- **ページ（4個）**: about.astro, achievements.astro, staff.astro, news/index.astro
+- **コンポーネント（4個）**: AchievementCard.astro, NewsCard.astro, StaffCard.astro, AboutUsButton.astro
 
 ## 更新履歴
 
-- 2025年12月25日: FooterDivider.astro追加（Issue #46、18コンポーネント、1,595行）
-| 低複雑度 | 10 | 367 | 37 |
-| **合計** | **20** | **1,704** | **85** |
-
-## 更新履歴
-
+- **2025年12月27日**: Issue #57完了 - フォルダ構造化リファクタリング
+  - 33個のフラット構造から6フォルダ構造へ再編成
+  - 4ページ削除、4コンポーネント削除（29個に整理）
+  - 全29コンポーネントのパス更新
+  - 5ページ、20 import文を更新
+  - CustomCursor-StarTheme.astroバグ修正（astro:after-swapリスナー追加）
 - 2025年12月25日: professional-experienceページのナビゲーションカード3つを追加（20コンポーネント、1,704行）
 - 2025年12月9日: 初版作成（17コンポーネント、1,583行の詳細分析）
