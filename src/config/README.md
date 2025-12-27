@@ -8,7 +8,7 @@
 ### site.ts
 - サイトの基本情報（名前、URL、説明文など）
 - ソーシャルメディアのURL
-- 外部サービスの設定（GoogleフォームIDなど）
+- 外部サービスの設定（Web3Forms Access Keyなど）
 - 共通で使用する画像パス
 - カルーセルやサービス一覧などの静的データ
 
@@ -17,7 +17,7 @@
 ### 1. 公開情報（PUBLIC_プレフィックス付き）
 クライアント側でも使用できる情報：
 - `PUBLIC_INSTAGRAM_URL` - InstagramプロフィールのURL
-- `PUBLIC_GOOGLE_FORM_ID` - GoogleフォームのID
+- `PUBLIC_WEB3FORMS_ACCESS_KEY` - Web3Forms Access Key
 - `PUBLIC_TWITTER_URL` - TwitterプロフィールのURL
 - `PUBLIC_FACEBOOK_URL` - FacebookページのURL
 

@@ -14,7 +14,7 @@ export const siteConfig = {
   
   // 外部サービス
   external: {
-    googleFormId: import.meta.env.PUBLIC_GOOGLE_FORM_ID || '1FAIpQLSfwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    web3formsAccessKey: import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY || 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd'
   },
   
   // 画像パス設定

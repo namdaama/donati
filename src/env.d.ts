@@ -7,7 +7,7 @@ interface ImportMetaEnv {
   
   // 公開情報（クライアント側でも使用可能）
   readonly PUBLIC_INSTAGRAM_URL?: string;
-  readonly PUBLIC_GOOGLE_FORM_ID?: string;
+  readonly PUBLIC_WEB3FORMS_ACCESS_KEY?: string;
   readonly PUBLIC_TWITTER_URL?: string;
   readonly PUBLIC_FACEBOOK_URL?: string;
 }
