@@ -46,19 +46,21 @@ npm run astro check  # Astroの組み込み型チェックを実行
 ### フレームワーク: Astro (静的サイト生成)
 - **ページ**: `src/pages/`に配置 - ファイルベースルーティング
   - `index.astro` (トップページ)
-  - `about.astro` (概要)
   - `services.astro` (サービス)
-  - `achievements.astro` (実績)
   - `contact.astro` (お問い合わせ)
-  - `staff.astro` (スタッフ)
-- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（17個、詳細は[docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照）
-  - 主要コンポーネント:
-    - `Carousel.astro` - 自動スライドショー（295行、TypeScriptクラスベース）
-    - `Header.astro` - 全ページ共通ナビゲーション（277行、モバイルドロワー対応）
-    - `InstagramSection.astro` - Instagram埋め込み（111行、公式API使用）
-    - `Hero.astro` - ヒーロー（Aurora/Stars効果オプション）
-    - `StaffCard.astro` - スタッフカード（AboutUsButton依存）
-  - その他: カード系（Achievement/News/Service）、UI部品（DonatiLogo/AboutUsButton/Footer）、視覚効果（AuroraBackground/Stars）等
+  - `professional-experience.astro` (活動経歴)
+- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（29個、フォルダベース構造）
+  - **構成**: 6フォルダ（common, overview, services, professional-experience, cards, effects）
+  - **詳細**: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照
+  - **主要コンポーネント**:
+    - `common/Carousel.astro` - 自動スライドショー（295行、TypeScriptクラスベース）
+    - `common/Header.astro` - 全ページ共通ナビゲーション（277行、モバイルドロワー対応）
+    - `common/InstagramSection.astro` - Instagram埋め込み（111行、公式API使用）
+    - `common/Hero.astro` - ヒーロー（Aurora/Stars効果オプション）
+    - `overview/OverViewSection.astro` - トップページセクション統合
+    - `services/ServicesSection.astro` - サービスページセクション統合
+    - `professional-experience/ProfessionalExperienceSection.astro` - 活動経歴セクション
+  - **削除済み** (Issue #57): AchievementCard, NewsCard, StaffCard, AboutUsButton（不要ページとともに削除）
 - **レイアウト**: ページテンプレートは`src/layouts/` (現在はLayout.astroのみ)
 - **スタイル**: TailwindCSSを使用、カスタムテーマカラーは`tailwind.config.mjs`で定義
 
@@ -486,9 +488,20 @@ donati/
 ## コンポーネント更新ルール
 
 コンポーネントの追加・変更時は`docs/05-implementation-guides/components-guide.md`を同期更新:
-- **新規コンポーネント追加時**: 複雑度に応じたセクション（高/中/低）に記載
+- **新規コンポーネント追加時**:
+  - 適切なフォルダに配置（common, overview, services, professional-experience, cards, effects）
+  - `components-guide.md`に追加（複雑度に応じたセクション）
 - **既存コンポーネント変更時**（Issue完了時）: 説明内容を更新
 - **Props変更時**: 該当コンポーネントのProps定義を更新
-- **依存関係変更時**: 「コンポーネント依存関係」セクションを更新
+- **依存関係変更時**: 「フォルダ間の依存関係」セクションを更新
+- **フォルダ移動時**: 全てのimport文を更新（ページ + コンポーネント間）
+
+### フォルダ配置ガイドライン
+- **common/**: 複数ページで使用、または基本インフラ（Header, Footer等）
+- **overview/**: index.astroページ専用コンポーネント
+- **services/**: services.astroページ専用コンポーネント
+- **professional-experience/**: professional-experience.astroページ専用コンポーネント
+- **cards/**: 汎用カード（ページ非依存）
+- **effects/**: 視覚効果、カーソルカスタマイズ
 
 詳細なコンポーネントリファレンス: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)
