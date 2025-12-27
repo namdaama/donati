@@ -84,13 +84,13 @@ const overviewLinks = [
   
   <main class="flex-grow">
     <!-- Hero Carousel Section -->
-    <div class="hero-carousel-wrapper">
+    <div class="carousel-wrapper-standard mb-8">
       <Carousel slides={heroCarouselData} />
     </div>
 
     <!-- お知らせセクション -->
     <section class="py-16 md:py-24 bg-transparent">
-      <div class="container mx-auto px-4">
+      <div class="container-custom">
         <!-- セクションタイトル -->
         <div class="text-left mb-12">
           <h2 class="section-title-news">
@@ -108,8 +108,8 @@ const overviewLinks = [
         </div>
       </div>
 
-      <div class="container mx-auto px-4">
-        
+      <div class="container-custom">
+
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {newsItems.map((item) => (
@@ -155,7 +155,7 @@ const overviewLinks = [
 
     <!-- CTAバナー（QA画像） -->
     <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4">
+      <div class="container-custom">
         <a href="/contact" class="block hover:opacity-90 transition-opacity duration-300">
           <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full max-w-4xl mx-auto" />
         </a>
@@ -196,29 +196,20 @@ const overviewLinks = [
     z-index: -1;
   }
 
-  /* Heroカルーセル専用スタイル */
-  .hero-carousel-wrapper {
-    margin-top: 0;
-    margin-bottom: 2rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 1rem;
-  }
-
-  .hero-carousel-wrapper .carousel-section {
+  /* Carouselコンポーネント内の上書きスタイル */
+  .carousel-wrapper-standard .carousel-section {
     padding: 0;
     width: 100%;
   }
 
-  .hero-carousel-wrapper .container {
+  .carousel-wrapper-standard .container {
     max-width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     width: 100% !important;
   }
 
-  .hero-carousel-wrapper .carousel-wrapper {
+  .carousel-wrapper-standard .carousel-wrapper {
     border-radius: 0;
     margin: 0;
     width: 100%;
@@ -226,42 +217,35 @@ const overviewLinks = [
   }
 
   /* レスポンシブ画像高さ */
-  .hero-carousel-wrapper .carousel-slide img {
+  .carousel-wrapper-standard .carousel-slide img {
     height: 400px;
     object-fit: cover;
   }
 
   @media (min-width: 768px) {
-    .hero-carousel-wrapper .carousel-slide img {
+    .carousel-wrapper-standard .carousel-slide img {
       height: 500px;
     }
   }
 
   @media (min-width: 1024px) {
-    .hero-carousel-wrapper .carousel-slide img {
+    .carousel-wrapper-standard .carousel-slide img {
       height: 600px;
     }
   }
 
   /* カルーセルコンテンツを非表示 */
-  .hero-carousel-wrapper .carousel-content {
+  .carousel-wrapper-standard .carousel-content {
     display: none;
   }
 
   /* アクティブドットの配色調整 */
-  .hero-carousel-wrapper .dot.active {
+  .carousel-wrapper-standard .dot.active {
     background: #f4a261;
   }
 
-  /* ウェーブライン幅調整 */
-  .waveline-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-
   /* ホバーエフェクト */
-  .hero-carousel-wrapper .carousel-slide {
+  .carousel-wrapper-standard .carousel-slide {
     cursor: pointer;
   }
 </style>
