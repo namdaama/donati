@@ -3,7 +3,6 @@ interface Props {
   name: string;
   nameSvg: string;
   pictSvg: string;
-  role: string;
   description: string;
   achievements: string[];
   professionalExperienceLink: string;
@@ -14,7 +13,6 @@ const {
   name,
   nameSvg,
   pictSvg,
-  role,
   description,
   achievements,
   professionalExperienceLink,
@@ -44,21 +42,16 @@ const {
     </div>
   </div>
 
-  <!-- 役職 -->
-  <p class="text-overview-dark-blue font-medium mb-2">
-    {role}
-  </p>
-
   <!-- 説明文 -->
   <div class="mb-2 flex-grow">
-    <p class="text-gray-700 leading-relaxed text-sm">
+    <p class="leading-relaxed text-sm" style="color: #58778D;">
       {description}
     </p>
   </div>
 
   <!-- 活動実績リスト -->
   <div class="mb-4">
-    <h4 class="text-sm font-bold text-overview-dark-blue mb-2">活動実績</h4>
+    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">活動実績</h4>
     <ul class="space-y-1">
       {achievements.map((achievement) => (
         <li class="flex items-start">
