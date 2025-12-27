@@ -141,4 +141,9 @@
   document.addEventListener('DOMContentLoaded', () => {
     new StarCursor();
   });
+
+  // Re-initialize after View Transitions swap
+  document.addEventListener('astro:after-swap', () => {
+    new StarCursor();
+  });
 </script>
