@@ -13,14 +13,17 @@
 
 ### 開発方針
 - **実装方針**: Astro優先 + HTML/CSS最大限活用
-- **ワークフロー**: スクリーンショットベース開発（Figma不要）
+- **開発優先度の決定**: `docs/00-manufacturing-strategy/`内の情報をもとに開発タスクの優先度を決定
+- **ワークフロー**: Figmaベース開発（参照のみ）
+  - Figma Dev Modeでフォントサイズ、色、余白などの正確な数値を取得
+  - スクリーンショットでの指示も引き続きサポート
 - **役割分担**:
   - HTML/CSS（静的デザイン）: ひさな
   - TypeScript（動的機能のみ）: なむ
 
 ### 最新の開発状況（2025年9月現在）
 - **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
-- **コア機能実装済み**: カルーセル、Instagram連携、Googleフォーム統合
+- **コア機能実装済み**: カルーセル、Instagram連携、Web3Forms統合
 - **ページ構成完成**: index, about, services, achievements, contact, staff
 - **現在のブランチ**: feature/soften-tone-issue-19（マージ済み）
 
@@ -43,18 +46,21 @@ npm run astro check  # Astroの組み込み型チェックを実行
 ### フレームワーク: Astro (静的サイト生成)
 - **ページ**: `src/pages/`に配置 - ファイルベースルーティング
   - `index.astro` (トップページ)
-  - `about.astro` (概要)
   - `services.astro` (サービス)
-  - `achievements.astro` (実績)
   - `contact.astro` (お問い合わせ)
-  - `staff.astro` (スタッフ)
-- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`
-  - `Header.astro` (統一ヘッダー)
-  - `Footer.astro` (フッター)
-  - `Carousel.astro` (カルーセル機能)
-  - `InstagramSection.astro` (Instagram連携)
-  - `CustomCursor.astro` / `CustomCursor-StarTheme.astro` (カーソルカスタマイズ)
-  - `AuroraBackground.astro` / `Stars.astro` (宇宙テーマエフェクト)
+  - `professional-experience.astro` (活動経歴)
+- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（29個、フォルダベース構造）
+  - **構成**: 6フォルダ（common, overview, services, professional-experience, cards, effects）
+  - **詳細**: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照
+  - **主要コンポーネント**:
+    - `common/Carousel.astro` - 自動スライドショー（295行、TypeScriptクラスベース）
+    - `common/Header.astro` - 全ページ共通ナビゲーション（277行、モバイルドロワー対応）
+    - `common/InstagramSection.astro` - Instagram埋め込み（111行、公式API使用）
+    - `common/Hero.astro` - ヒーロー（Aurora/Stars効果オプション）
+    - `overview/OverViewSection.astro` - トップページセクション統合
+    - `services/ServicesSection.astro` - サービスページセクション統合
+    - `professional-experience/ProfessionalExperienceSection.astro` - 活動経歴セクション
+  - **削除済み** (Issue #57): AchievementCard, NewsCard, StaffCard, AboutUsButton（不要ページとともに削除）
 - **レイアウト**: ページテンプレートは`src/layouts/` (現在はLayout.astroのみ)
 - **スタイル**: TailwindCSSを使用、カスタムテーマカラーは`tailwind.config.mjs`で定義
 
@@ -88,9 +94,9 @@ npm run astro check  # Astroの組み込み型チェックを実行
 - **URL設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理
 - **表示場所**: トップページの「最新の活動」セクション
 
-### 3. Googleフォーム統合 ✅実装完了
+### 3. Web3Forms統合 ✅実装完了
 - **実装場所**: `src/pages/contact.astro`
-- **フォームID**: 環境変数`PUBLIC_GOOGLE_FORM_ID`で管理
+- **Access Key**: 環境変数`PUBLIC_WEB3FORMS_ACCESS_KEY`で管理
 - **レスポンシブ対応**: モバイルで高さ600px、デスクトップで800px
 
 ### 4. 設定の一元管理 ✅実装完了
@@ -115,7 +121,7 @@ npm run astro check  # Astroの組み込み型チェックを実行
    
    # 公開情報
    PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
-   PUBLIC_GOOGLE_FORM_ID=your-google-form-id
+   PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
    PUBLIC_TWITTER_URL=
    PUBLIC_FACEBOOK_URL=
    ```
@@ -144,7 +150,7 @@ DONATIウェブサイトはVercel上にホスティングされており、Git�
   - `MICROCMS_API_KEY`: microCMS APIキー（秘密情報）
 - **公開変数**:
   - `PUBLIC_INSTAGRAM_URL`: InstagramプロフィールURL
-  - `PUBLIC_GOOGLE_FORM_ID`: Googleフォーム埋め込み用ID
+  - `PUBLIC_WEB3FORMS_ACCESS_KEY`: Web3Forms Access Key
 
 ### Vercel Authentication
 - **現在の状態**: 有効
@@ -210,25 +216,93 @@ DONATIサイト全体で「柔らかく親しみやすい表現」を採用し�
 - ユーザーフィードバックに基づく文言の継続的改善
 - 科学の専門性を保ちつつ親近感のバランスを維持
 
+## Figmaワークフロー
+
+### デザインフェーズ
+1. **デザイン作成**: デザイナーがFigmaでデザインを作成
+2. **共有**: Figma共有リンクをLINEまたは`design/figma/README.md`で共有
+3. **確認**: エンジニアがFigma Dev Modeで仕様確認
+4. **フィードバック**: 必要に応じてコメント機能で調整依頼
+5. **承認**: 最終デザイン確定
+
+### 実装フェーズ
+1. **数値取得**: Figma Dev Modeから以下の正確な値を取得
+   - フォントサイズ、行高、フォントウェイト
+   - カラーコード（HEX、RGB）
+   - 余白（padding、margin）、要素サイズ
+   - 角丸（border-radius）、影（box-shadow）
+2. **実装**: 取得した数値をTailwind classesで実装
+3. **プレビュー**: ローカル or Vercelプレビューで確認
+4. **デザイナーレビュー**: デザイナーが最終チェック
+
+### アセット書き出しフェーズ
+1. **Export**: Figmaから画像・SVGアセットをExport
+   - 画像: PNG/JPG（@1x、@2xなど）
+   - アイコン: SVG
+2. **最適化**: 必要に応じて圧縮・最適化
+3. **配置**: `public/images/`の適切なサブディレクトリに直接配置
+   - 背景 → `backgrounds/`（今後整理予定）
+   - SVGアイコン → `svg/Parts/`
+   - 写真 → `photos/`（今後整理予定）
+4. **Gitコミット**: 最適化済みファイルをコミット
+
+### 運用のポイント
+- **参照用途**: Figmaは正確な数値取得とアセット管理に活用
+- **柔軟性**: スクリーンショットベースの指示も継続可能
+- **コミュニケーション**: LINEでの迅速なやり取りは維持
+- **段階的導入**: 必要な機能から徐々に活用範囲を拡大
+
 ## 配色管理
 
-### 技術仕様書の配色（2025年1月追加）
+### Figma Color Styles（デザイナー管理）
+デザイナーがFigmaでColor Stylesとして定義・管理。
+実装時はFigma Dev Modeから正確なカラーコードを取得可能。
+
+### Tailwind設定（エンジニア同期）
+`tailwind.config.mjs`で一元管理。Figmaでの変更時は手動同期が必要。
+
+#### 技術仕様書の配色（2025年1月追加）
 - **primary-color**: `#2c5aa0` - メインブルー
 - **secondary-color**: `#f4a261` - アクセントオレンジ
 
-### 既存の配色（維持）
+#### 既存の配色（維持）
 - **deep-blue**: `#1a237e`
 - **space-blue**: `#0d47a1`
 - **light-blue**: `#1976d2`
 - **accent-orange**: `#ff6f00`
 - **accent-green**: `#00c853`
 
+### 同期手順
+Figmaで新しい色を追加・変更した場合：
+1. Figma Dev Modeから正確なカラーコード（HEX）を取得
+2. `tailwind.config.mjs`の`colors`セクションに追加/更新
+3. `npm run build`で型チェックとビルドを実行
+4. デザイナーにプレビューURLを共有して色味を確認
+
 ## 画像管理
 
+### 基本方針
+- **全ての画像を`public/images/`で一元管理**
+- Figma書き出しも直接このディレクトリに配置
+- 中間ファイル用の別ディレクトリは使用しない
+
 ### public/images/
-- 直接URLでアクセスする画像
-- 最適化不要な画像（ファビコン、OGP画像など）
-- カルーセル画像: `/images/carousel/`
+- 本番配信用の画像（最適化済み）
+- 現在の構造:
+  - ルート: 各ページ用画像（AboutUs.jpg、OverView.jpg等）、背景画像（backGround.png等）
+  - `svg/Carousel/`: カルーセル用SVG
+  - `svg/Parts/`: UI用SVGパーツ（アイコン、装飾等）
+  - `svg/Screen/`: デザインモックアップSVG
+
+### 運用ルール
+1. Figmaから書き出したファイルは必要に応じて最適化
+2. 最適化済みファイルを`public/images/`の適切な場所に配置
+3. ファイル配置後、Gitコミット
+4. 旧バージョンファイルは削除（Git履歴から復元可能）
+
+### Figmaリンク管理
+Figma共有リンクはLINEまたはプロジェクトドキュメント（`docs/`）で管理。
+専用の`design/`ディレクトリは作成しない。
 
 ### src/assets/images/（将来的に推奨）
 - Astroで最適化する画像
@@ -267,7 +341,7 @@ body {
 
 ### ✅ 実装完了機能
 - **カルーセル/スライダー**: 本体に統合済み（`src/components/Carousel.astro`）
-- **Googleフォーム統合**: contactページに実装済み
+- **Web3Forms統合**: contactページに実装済み
 - **Instagram埋め込み**: 基本的な埋め込み実装済み
 - **FAQアコーディオン**: servicesページに実装済み
 - **レスポンシブデザイン**: 全ページで実装済み
@@ -305,13 +379,50 @@ body {
 - パフォーマンス最適化
 - SEO対策強化
 
+## ディレクトリ構成
+
+### 画像・アセット管理
+全ての画像は`public/images/`で一元管理。Figma書き出しも直接このディレクトリに配置。
+
+```
+public/images/
+├── backgrounds/          # 背景画像（今後整理予定）
+├── carousel/            # カルーセル用画像（今後整理予定）
+├── photos/              # 写真素材（今後整理予定）
+├── staff/               # スタッフ写真（今後追加予定）
+└── svg/
+    ├── Carousel/        # カルーセル用SVG
+    ├── Parts/           # UI用SVGパーツ
+    └── Screen/          # デザインモックアップSVG
+```
+
+### プロジェクト全体
+主要なディレクトリ構成：
+
+```
+donati/
+├── src/
+│   ├── pages/           # Astroページ
+│   ├── components/      # Astroコンポーネント
+│   ├── layouts/         # レイアウトコンポーネント
+│   ├── lib/             # ユーティリティ・API
+│   └── config/          # 設定ファイル
+├── public/
+│   └── images/          # 画像アセット（一元管理）
+├── docs/                # プロジェクトドキュメント
+└── experiments/         # 実験実装
+```
+
 ## ドキュメント構成
 
 プロジェクトドキュメントは`docs/`ディレクトリに整理：
+- `00-manufacturing-strategy/`: **おおまかな製造戦略** - 開発の優先度と方針を決定する最重要情報
 - `01-project-overview/`: プロジェクト概要・決定事項
 - `02-pricing-estimates/`: 価格・工数見積もり
 - `03-technical-specs/`: 技術仕様・実装方針
 - `04-workflow-collaboration/`: ワークフロー・協業方法
+  - `画像からFigma作成ガイド.md`: Figma導入ガイド
+  - `デザイナーとの協業ガイド_ソース管理編_2025.md`: ソース管理方針
 - `05-implementation-guides/`: 機能実装ガイド
 - `06-quality-guidelines/`: 品質管理ガイドライン
 
@@ -320,7 +431,8 @@ body {
 ### 必須サービス
 - **microCMS**: コンテンツ管理（無料プラン: API 3個、転送量10GB/月）
 - **Vercel**: ホスティング（無料枠: 帯域幅100GB/月）
-- **Googleフォーム**: お問い合わせ（完全無料）
+- **Web3Forms**: お問い合わせフォーム（無料プラン: 月250件まで）
+- **Figma**: デザインツール（無料プラン: 3ファイル、無制限ビューワー）
 
 ### オプションサービス
 - **RSS.app**: Instagram RSS変換（無料プラン: 5フィード、6時間更新）
@@ -329,6 +441,7 @@ body {
 ### 将来的な課金見込み
 - 初期運用: 0円/月（すべて無料プラン）
 - 成長時: 約2,650円/月（microCMS Hobby + RSS.app Personal）
+- Figmaは無料プランで継続可能（参照用途のため）
 
 ## タスク実行の4段階フロー
 
@@ -371,3 +484,24 @@ body {
 - エラーは解決してから次へ進む
 - エラーを無視して次のステップに進まない
 - 指示にない機能を勝手に追加しない
+
+## コンポーネント更新ルール
+
+コンポーネントの追加・変更時は`docs/05-implementation-guides/components-guide.md`を同期更新:
+- **新規コンポーネント追加時**:
+  - 適切なフォルダに配置（common, overview, services, professional-experience, cards, effects）
+  - `components-guide.md`に追加（複雑度に応じたセクション）
+- **既存コンポーネント変更時**（Issue完了時）: 説明内容を更新
+- **Props変更時**: 該当コンポーネントのProps定義を更新
+- **依存関係変更時**: 「フォルダ間の依存関係」セクションを更新
+- **フォルダ移動時**: 全てのimport文を更新（ページ + コンポーネント間）
+
+### フォルダ配置ガイドライン
+- **common/**: 複数ページで使用、または基本インフラ（Header, Footer等）
+- **overview/**: index.astroページ専用コンポーネント
+- **services/**: services.astroページ専用コンポーネント
+- **professional-experience/**: professional-experience.astroページ専用コンポーネント
+- **cards/**: 汎用カード（ページ非依存）
+- **effects/**: 視覚効果、カーソルカスタマイズ
+
+詳細なコンポーネントリファレンス: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)

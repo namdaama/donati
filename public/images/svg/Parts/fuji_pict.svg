@@ -10,7 +10,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs7850" />
+     id="defs7850">
+    <style>
+      .cls-23 { fill: #ffffff; fill-rule: evenodd; stroke-width: 0.264583; }
+      .cls-25 { fill: #f5e3dd; fill-rule: evenodd; stroke-width: 0.264583; }
+      .cls-27 { fill: #f6ed36; fill-rule: evenodd; stroke-width: 0.264583; }
+    </style>
+  </defs>
   <g
      id="layer1"
      transform="translate(-7.164802,-2.2459623)">

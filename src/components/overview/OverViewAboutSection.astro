@@ -1,0 +1,47 @@
+---
+interface StaffMember {
+  name: string;
+  role: string;
+  pictSvg: string;
+  nameSvg: string;
+}
+
+interface Props {
+  staffMembers: StaffMember[];
+  staffLink?: string;
+  title?: string;
+  icon?: string;
+}
+
+const { staffMembers, staffLink = '/staff', title = '私たちについて', icon } = Astro.props;
+---
+
+<div class="bg-white/95 rounded-2xl shadow-lg p-6 overflow-hidden flex flex-col">
+  <!-- セクションタイトル -->
+  <div class="text-center mb-4">
+    {icon ? (
+      <div class="mb-2">
+        <span class="text-3xl">{icon}</span>
+      </div>
+    ) : (
+      <img src="/images/svg/Parts/text_AboutUs.svg" alt={title} class="h-7 mx-auto mb-2" />
+    )}
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
+  </div>
+
+  <!-- スタッフ紹介（横並び） -->
+  <div class="flex justify-center gap-6 mb-4 flex-grow">
+    {staffMembers.map((staff) => (
+      <div class="text-center">
+        <img src={staff.pictSvg} alt={staff.name} class="w-24 h-24 mx-auto mb-2" />
+        <img src={staff.nameSvg} alt={staff.name} class="h-5 mx-auto" />
+      </div>
+    ))}
+  </div>
+
+  <div class="text-center mt-auto">
+    <a href={staffLink} class="inline-block">
+      <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
+    </a>
+  </div>
+</div>

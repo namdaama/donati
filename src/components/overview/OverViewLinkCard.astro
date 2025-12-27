@@ -1,0 +1,22 @@
+---
+interface LinkItem {
+  textSvg: string;
+  href: string;
+  altText: string;
+}
+
+interface Props {
+  links: LinkItem[];
+}
+
+const { links } = Astro.props;
+---
+
+<div class="space-y-3">
+  {links.map((link) => (
+    <a href={link.href} class="block bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow text-center">
+      <img src={link.textSvg} alt={link.altText} class="h-7 mx-auto mb-3" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
+    </a>
+  ))}
+</div>

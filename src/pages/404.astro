@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import DonatiLogo from '../components/common/DonatiLogo.astro';
+import Footer from '../components/common/Footer.astro';
+
+const pageTitle = '準備中 - DONATI';
+---
+
+<Layout title={pageTitle}>
+  <Header />
+  <main class="flex-grow flex items-center justify-center min-h-screen">
+    <div class="container mx-auto px-4 py-16">
+      <div class="max-w-2xl mx-auto text-center">
+        <!-- ロゴ -->
+        <div class="mb-8 flex justify-center">
+          <a href="/" class="inline-block">
+            <DonatiLogo size="lg" />
+          </a>
+        </div>
+
+        <!-- メッセージ -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-8 md:p-12">
+          <h1 class="text-4xl md:text-5xl font-bold text-[#65b7ec] mb-6">
+            準備中です
+          </h1>
+
+          <p class="text-lg text-gray-600 mb-8">
+            このページはただいま準備中です。<br />
+            もうしばらくお待ちください。
+          </p>
+
+          <!-- ホームに戻るボタン -->
+          <a
+            href="/"
+            class="inline-block bg-[#65b7ec] text-white px-8 py-3 rounded-full font-semibold hover:bg-[#4a9fd9] transition-colors duration-300"
+          >
+            トップページに戻る
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  body {
+    background-image: url('/images/backGround.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  /* 軽いアニメーション */
+  h1 {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+</style>

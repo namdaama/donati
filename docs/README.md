@@ -34,6 +34,7 @@
 機能実装ガイド
 - カルーセル実装ガイド.md
 - マウスカーソルカスタマイズガイド.md
+- components-guide.md - Astroコンポーネント詳細リファレンス
 
 ### 📁 06-quality-guidelines/
 品質管理ガイドライン
