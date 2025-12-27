@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
 import DonatiLogo from '../components/common/DonatiLogo.astro';
 import Footer from '../components/common/Footer.astro';
 
@@ -7,6 +8,7 @@ const pageTitle = '準備中 - DONATI';
 ---
 
 <Layout title={pageTitle}>
+  <Header />
   <main class="flex-grow flex items-center justify-center min-h-screen">
     <div class="container mx-auto px-4 py-16">
       <div class="max-w-2xl mx-auto text-center">
