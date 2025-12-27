@@ -23,7 +23,7 @@
 
 ### 最新の開発状況（2025年9月現在）
 - **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
-- **コア機能実装済み**: カルーセル、Instagram連携、Googleフォーム統合
+- **コア機能実装済み**: カルーセル、Instagram連携、Web3Forms統合
 - **ページ構成完成**: index, about, services, achievements, contact, staff
 - **現在のブランチ**: feature/soften-tone-issue-19（マージ済み）
 
@@ -94,9 +94,9 @@ npm run astro check  # Astroの組み込み型チェックを実行
 - **URL設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理
 - **表示場所**: トップページの「最新の活動」セクション
 
-### 3. Googleフォーム統合 ✅実装完了
+### 3. Web3Forms統合 ✅実装完了
 - **実装場所**: `src/pages/contact.astro`
-- **フォームID**: 環境変数`PUBLIC_GOOGLE_FORM_ID`で管理
+- **Access Key**: 環境変数`PUBLIC_WEB3FORMS_ACCESS_KEY`で管理
 - **レスポンシブ対応**: モバイルで高さ600px、デスクトップで800px
 
 ### 4. 設定の一元管理 ✅実装完了
@@ -121,7 +121,7 @@ npm run astro check  # Astroの組み込み型チェックを実行
    
    # 公開情報
    PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
-   PUBLIC_GOOGLE_FORM_ID=your-google-form-id
+   PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
    PUBLIC_TWITTER_URL=
    PUBLIC_FACEBOOK_URL=
    ```
@@ -150,7 +150,7 @@ DONATIウェブサイトはVercel上にホスティングされており、Git�
   - `MICROCMS_API_KEY`: microCMS APIキー（秘密情報）
 - **公開変数**:
   - `PUBLIC_INSTAGRAM_URL`: InstagramプロフィールURL
-  - `PUBLIC_GOOGLE_FORM_ID`: Googleフォーム埋め込み用ID
+  - `PUBLIC_WEB3FORMS_ACCESS_KEY`: Web3Forms Access Key
 
 ### Vercel Authentication
 - **現在の状態**: 有効
@@ -341,7 +341,7 @@ body {
 
 ### ✅ 実装完了機能
 - **カルーセル/スライダー**: 本体に統合済み（`src/components/Carousel.astro`）
-- **Googleフォーム統合**: contactページに実装済み
+- **Web3Forms統合**: contactページに実装済み
 - **Instagram埋め込み**: 基本的な埋め込み実装済み
 - **FAQアコーディオン**: servicesページに実装済み
 - **レスポンシブデザイン**: 全ページで実装済み
@@ -431,7 +431,7 @@ donati/
 ### 必須サービス
 - **microCMS**: コンテンツ管理（無料プラン: API 3個、転送量10GB/月）
 - **Vercel**: ホスティング（無料枠: 帯域幅100GB/月）
-- **Googleフォーム**: お問い合わせ（完全無料）
+- **Web3Forms**: お問い合わせフォーム（無料プラン: 月250件まで）
 - **Figma**: デザインツール（無料プラン: 3ファイル、無制限ビューワー）
 
 ### オプションサービス

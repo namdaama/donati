@@ -9,7 +9,7 @@
 - **CMS**: microCMS (準備済み)
 - **Language**: TypeScript
 - **画像管理**: 静的ファイル（public/images）
-- **外部連携**: Instagram埋め込み、Googleフォーム
+- **外部連携**: Instagram埋め込み、Web3Forms
 
 ## スマホ対応
 
@@ -41,7 +41,7 @@ npm run preview
 
 - **トップページカルーセル**: 自動スライド機能付きの画像カルーセル
 - **Instagram連携**: 最新の活動を表示
-- **お問い合わせフォーム**: Googleフォーム埋め込み
+- **お問い合わせフォーム**: Web3Formsフォーム
 - **レスポンシブデザイン**: モバイル・タブレット・デスクトップ対応
 - **高速表示**: Astroの静的サイト生成による最適化
 
@@ -68,7 +68,7 @@ MICROCMS_API_KEY=your-api-key
 
 # 公開情報（PUBLIC_プレフィックス付き）
 PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
-PUBLIC_GOOGLE_FORM_ID=your-google-form-id
+PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
 PUBLIC_TWITTER_URL=
 PUBLIC_FACEBOOK_URL=
 ```
@@ -86,7 +86,7 @@ src/
 ├── layouts/          # ページレイアウト
 ├── pages/            # ページファイル
 │   ├── index.astro  # トップページ
-│   ├── contact.astro # お問い合わせ（Googleフォーム）
+│   ├── contact.astro # お問い合わせ（Web3Forms）
 │   └── ...
 ├── styles/           # グローバルスタイル
 └── lib/             # ユーティリティとAPI連携
@@ -125,7 +125,7 @@ docs/                     # プロジェクトドキュメント
    - `MICROCMS_SERVICE_DOMAIN`: microCMSのサービスドメイン
    - `MICROCMS_API_KEY`: microCMSのAPIキー
    - `PUBLIC_INSTAGRAM_URL`: InstagramプロフィールURL
-   - `PUBLIC_GOOGLE_FORM_ID`: GoogleフォームID
+   - `PUBLIC_WEB3FORMS_ACCESS_KEY`: Web3Forms Access Key
 5. 「Deploy」をクリック
 
 以降、`main`ブランチへのプッシュで自動的にデプロイされます。
