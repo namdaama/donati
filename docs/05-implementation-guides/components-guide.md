@@ -33,8 +33,9 @@ src/components/
 │   ├── ProfessionalExperienceHideCard.astro
 │   ├── ProfessionalExperienceServicesCard.astro
 │   └── MediaCoverageSection.astro
-├── cards/           # 再利用可能カード (1個)
-│   └── ServiceCard.astro
+├── cards/           # 再利用可能カード (2個)
+│   ├── ServiceCard.astro
+│   └── StaffProfileCard.astro
 └── effects/         # 視覚効果 (5個)
     ├── CustomCursor.astro
     ├── CustomCursor-StarTheme.astro
@@ -43,7 +44,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 29個（削除前: 33個）
+**総コンポーネント数**: 30個（削除前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -275,9 +276,9 @@ StarrySection.astro
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 6 | services.astro専用（Services*, ServiceCategory*, RequestFlowStep） |
 | professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
-| cards/ | 1 | 汎用カード（ServiceCard） |
+| cards/ | 2 | 汎用カード（ServiceCard, StaffProfileCard） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **29** | **6フォルダ** |
+| **合計** | **30** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -286,14 +287,20 @@ StarrySection.astro
 | services.astro | 7 | Header, Footer, FooterDivider, ServiceCategoryHeader, ServiceCard, RequestFlowStep, ServicesSection |
 | contact.astro | 3 | Header, Footer, Hero |
 | professional-experience.astro | 7 | Header, Footer, ProfessionalExperience*(3), MediaCoverageSection |
+| about.astro | 5 | Header, Footer, DonatiLogo, StaffProfileCard, FooterDivider |
 | Layout.astro | 1 | CustomCursorStarTheme |
 
 ### 削除されたコンポーネント（Issue #57）
-- **ページ（4個）**: about.astro, achievements.astro, staff.astro, news/index.astro
+- **ページ（3個）**: achievements.astro, staff.astro, news/index.astro
 - **コンポーネント（4個）**: AchievementCard.astro, NewsCard.astro, StaffCard.astro, AboutUsButton.astro
+- **再構築**: about.astro - Issue #72で新規実装（StaffProfileCard+カード2枚型）
 
 ## 更新履歴
 
+- **2025年12月27日**: Issue #72完了 - AboutUsページ実装
+  - StaffProfileCard.astro (新規)
+  - about.astro ページ (新規)
+  - 総コンポーネント数：29個 → 30個
 - **2025年12月27日**: Issue #57完了 - フォルダ構造化リファクタリング
   - 33個のフラット構造から6フォルダ構造へ再編成
   - 4ページ削除、4コンポーネント削除（29個に整理）
