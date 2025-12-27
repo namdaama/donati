@@ -71,14 +71,14 @@ export const heroCarouselData = [
     alt: '私たちについて - スタッフ紹介',
     title: '私たちについて',
     description: 'サイエンスパフォーマー フジと星の写真家 ひでゆきがお届けします',
-    link: '/staff'
+    link: '/about'
   },
   {
     image: '/images/svg/Carousel/Carousel_Career.svg',
     alt: '活動経歴 - これまでの実績',
     title: '活動経歴',
     description: '200名以上が参加した実験ショーなど、みんなで楽しんだ活動の記録です',
-    link: '/achievements'
+    link: '/professional-experience'
   },
   {
     image: '/images/svg/Carousel/Carousel_Contact.svg',
