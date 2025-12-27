@@ -1,0 +1,135 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
+import DonatiLogo from '../components/common/DonatiLogo.astro';
+import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
+
+// スタッフ情報定義
+const staffMembers = [
+  {
+    name: 'フジ',
+    nameSvg: '/images/svg/Parts/fuji_name.svg',
+    pictSvg: '/images/svg/Parts/fuji_pict.svg',
+    role: 'サイエンスコミュニケーター',
+    description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+    achievements: [
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお'
+    ],
+    professionalExperienceLink: '/professional-experience#fuji-section',
+    servicesLink: '/services'
+  },
+  {
+    name: 'ひでゆき',
+    nameSvg: '/images/svg/Parts/hide_name.svg',
+    pictSvg: '/images/svg/Parts/hide_pict.svg',
+    role: '星空案内人',
+    description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+    achievements: [
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
+      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお'
+    ],
+    professionalExperienceLink: '/professional-experience#hide-section',
+    servicesLink: '/services'
+  }
+];
+---
+
+<Layout title="DONATIとは">
+  <Header />
+
+  <main class="flex-grow relative overflow-hidden">
+    <!-- DONATIとは セクション -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-center mb-12">
+          <img src="/images/svg/Parts/text_AboutDonati.svg" alt="DONATIとは" class="h-12 mx-auto mb-4" />
+          <div class="waveline-wrapper">
+            <div class="flex justify-center">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- コンテンツグリッド（左：テキスト、右：ロゴ） -->
+        <div class="grid grid-cols-2 gap-12 items-center">
+          <!-- 左：説明文 -->
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+            <p class="text-gray-700 leading-relaxed text-sm">
+              {staffMembers[0].description}
+            </p>
+          </div>
+
+          <!-- 右：DonatiLogo -->
+          <div class="flex justify-center items-center">
+            <DonatiLogo size="xlarge" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 波線装飾 -->
+    <div class="waveline-wrapper">
+      <div class="flex justify-center py-4">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      </div>
+    </div>
+
+    <!-- 私たちについて セクション -->
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-center mb-12">
+          <img src="/images/svg/Parts/text_AboutUs.svg" alt="私たちについて" class="h-12 mx-auto mb-4" />
+          <div class="waveline-wrapper">
+            <div class="flex justify-center">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- スタッフカードグリッド -->
+        <div class="grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+          {staffMembers.map((staff) => (
+            <StaffProfileCard {...staff} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <FooterDivider />
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  /* backGround.png を背景として使用 */
+  body {
+    background-image: url('/images/backGround.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+
+  /* ウェーブライン幅調整 */
+  .waveline-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+</style>

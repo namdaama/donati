@@ -1,0 +1,89 @@
+---
+interface Props {
+  name: string;
+  nameSvg: string;
+  pictSvg: string;
+  role: string;
+  description: string;
+  achievements: string[];
+  professionalExperienceLink: string;
+  servicesLink: string;
+}
+
+const {
+  name,
+  nameSvg,
+  pictSvg,
+  role,
+  description,
+  achievements,
+  professionalExperienceLink,
+  servicesLink
+} = Astro.props;
+---
+
+<div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg p-6 flex flex-col h-full">
+  <!-- キャラクターイラスト -->
+  <div class="flex justify-center mb-4">
+    <img
+      src={pictSvg}
+      alt={name}
+      class="w-32 h-32 object-contain"
+    />
+  </div>
+
+  <!-- 名前SVG -->
+  <div class="text-center mb-2">
+    <img
+      src={nameSvg}
+      alt={name}
+      class="h-6 mx-auto"
+    />
+  </div>
+
+  <!-- 役職 -->
+  <p class="text-center text-overview-dark-blue font-medium mb-4">
+    {role}
+  </p>
+
+  <!-- 説明文 -->
+  <div class="mb-4 flex-grow">
+    <p class="text-gray-700 leading-relaxed text-sm">
+      {description}
+    </p>
+  </div>
+
+  <!-- 活動実績リスト -->
+  <div class="mb-6">
+    <h4 class="text-sm font-bold text-overview-dark-blue mb-2">活動実績</h4>
+    <ul class="space-y-1">
+      {achievements.map((achievement) => (
+        <li class="flex items-start">
+          <span class="text-overview-yellow mr-2 text-xs mt-0.5">●</span>
+          <span class="text-gray-600 text-xs leading-relaxed">{achievement}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <!-- ボタン2つ（横並び） -->
+  <div class="flex gap-3 mt-auto">
+    <!-- 詳しい活動履歴ボタン -->
+    <a
+      href={professionalExperienceLink}
+      class="flex-1 bg-overview-sky hover:bg-overview-sky/80 text-white font-bold py-2 px-3 rounded-lg
+             transition-all duration-300 hover:scale-105 text-center text-sm shadow-md"
+    >
+      詳しい活動履歴
+    </a>
+
+    <!-- サービス内容ボタン -->
+    <a
+      href={servicesLink}
+      class="flex-1 bg-overview-yellow hover:bg-overview-yellow/80 text-overview-dark-blue font-bold py-2 px-3 rounded-lg
+             transition-all duration-300 hover:scale-105 text-center text-sm shadow-md"
+    >
+      サービス内容
+    </a>
+  </div>
+</div>
