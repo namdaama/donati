@@ -7,6 +7,7 @@ export default {
         // 技術仕様書に合わせた配色
         'primary-color': '#2c5aa0',      // メインブルー
         'secondary-color': '#f4a261',     // アクセントオレンジ
+        'hover-pink': '#ff69b4',          // ホバー時のピンク
         // OverViewページ専用配色
         'overview-sky': '#87CEEB',        // 水色 (スカイブルー)
         'overview-yellow': '#FFD700',     // 黄色 (ゴールド)

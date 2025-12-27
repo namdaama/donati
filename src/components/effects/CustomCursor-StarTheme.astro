@@ -1,0 +1,149 @@
+---
+// 星テーマのカスタムカーソル（別案）
+---
+
+<div class="star-cursor" id="star-cursor">
+  <svg width="20" height="20" viewBox="0 0 20 20">
+    <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z" 
+          fill="currentColor" />
+  </svg>
+</div>
+<div class="star-trail" id="star-trail"></div>
+
+<style>
+  /* 星型カーソル */
+  .star-cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    color: var(--color-primary, #2c5aa0);
+    transition: transform 0.1s ease-out, color 0.2s ease;
+    animation: twinkle 2s infinite;
+  }
+
+  /* きらめきアニメーション */
+  @keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.7; transform: scale(0.8) rotate(180deg); }
+  }
+
+  /* 星の軌跡エフェクト */
+  .star-trail {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--color-primary, #2c5aa0);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+  }
+
+  /* ホバー時 */
+  .star-cursor.hover {
+    color: #ff69b4;
+    transform: scale(1.5);
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: scale(1.5) rotate(0deg); }
+    to { transform: scale(1.5) rotate(360deg); }
+  }
+
+  /* タッチデバイスでは非表示 */
+  @media (hover: none) and (pointer: coarse) {
+    .star-cursor,
+    .star-trail {
+      display: none;
+    }
+  }
+
+  /* デフォルトカーソルを非表示 */
+  body.star-cursor-active {
+    cursor: none;
+  }
+
+  body.star-cursor-active * {
+    cursor: none !important;
+  }
+</style>
+
+<script>
+  class StarCursor {
+    private cursor: HTMLElement;
+    private trail: HTMLElement;
+    private trails: HTMLElement[] = [];
+    private mousePos = { x: 0, y: 0 };
+
+    constructor() {
+      this.cursor = document.getElementById('star-cursor')!;
+      this.trail = document.getElementById('star-trail')!;
+      
+      if (!('ontouchstart' in window)) {
+        this.init();
+      }
+    }
+
+    init() {
+      document.body.classList.add('star-cursor-active');
+      
+      // 軌跡用の要素を作成
+      for (let i = 0; i < 5; i++) {
+        const trail = this.trail.cloneNode(true) as HTMLElement;
+        trail.id = `star-trail-${i}`;
+        document.body.appendChild(trail);
+        this.trails.push(trail);
+      }
+
+      // マウス移動
+      document.addEventListener('mousemove', (e) => {
+        this.mousePos.x = e.clientX;
+        this.mousePos.y = e.clientY;
+        
+        // カーソル位置更新
+        this.cursor.style.left = `${this.mousePos.x - 10}px`;
+        this.cursor.style.top = `${this.mousePos.y - 10}px`;
+        
+        // 軌跡エフェクト
+        this.createTrail();
+      });
+
+      // ホバーエフェクト
+      const interactives = document.querySelectorAll('a, button');
+      interactives.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          this.cursor.classList.add('hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+          this.cursor.classList.remove('hover');
+        });
+      });
+    }
+
+    createTrail() {
+      const trail = this.trails.shift()!;
+      trail.style.left = `${this.mousePos.x - 2}px`;
+      trail.style.top = `${this.mousePos.y - 2}px`;
+      trail.style.opacity = '1';
+      
+      setTimeout(() => {
+        trail.style.opacity = '0';
+      }, 100);
+      
+      this.trails.push(trail);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    new StarCursor();
+  });
+
+  // Re-initialize after View Transitions swap
+  document.addEventListener('astro:after-swap', () => {
+    new StarCursor();
+  });
+</script>

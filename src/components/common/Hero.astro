@@ -1,0 +1,66 @@
+---
+import AuroraBackground from '../effects/AuroraBackground.astro';
+import Stars from '../effects/Stars.astro';
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaLink?: string;
+  backgroundImage?: string;
+  useAurora?: boolean;
+  showStars?: boolean;
+}
+
+const { title, subtitle, ctaText, ctaLink, backgroundImage, useAurora = false, showStars = false } = Astro.props;
+---
+
+<section class="relative bg-gradient-to-br from-deep-blue to-space-blue text-white overflow-hidden">
+  {useAurora ? (
+    <AuroraBackground className="absolute inset-0" showRadialGradient={true}>
+      <div class="absolute inset-0 bg-gradient-to-br from-deep-blue/90 to-space-blue/90"></div>
+    </AuroraBackground>
+  ) : (
+    backgroundImage && (
+      <>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <img 
+          src={backgroundImage} 
+          alt="" 
+          class="absolute inset-0 w-full h-full object-cover mix-blend-overlay"
+        />
+      </>
+    )
+  )}
+  
+  {showStars && (
+    <Stars className="absolute inset-0 z-0" quantity={150} size={0.5} />
+  )}
+  
+  <div class="relative container-custom py-24 md:py-32 z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+        {title}
+      </h1>
+      
+      {subtitle && (
+        <p class="text-xl md:text-2xl mb-8 text-gray-200">
+          {subtitle}
+        </p>
+      )}
+      
+      {ctaText && ctaLink && (
+        <a href={ctaLink} class="btn-secondary inline-block text-lg">
+          {ctaText}
+        </a>
+      )}
+    </div>
+  </div>
+  
+  <!-- Decorative wave -->
+  <div class="absolute bottom-0 left-0 right-0">
+    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
+    </svg>
+  </div>
+</section>

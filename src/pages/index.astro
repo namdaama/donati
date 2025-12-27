@@ -1,12 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import OverViewHero from '../components/OverViewHero.astro';
-import Footer from '../components/Footer.astro';
-import AnnouncementCard from '../components/AnnouncementCard.astro';
-import { fetchInstagramPosts } from '../lib/instagram-graph-api';
-import { filterAnnouncementPosts } from '../lib/announcement-parser';
-import { instagramConfig } from '../config/instagram';
+import Header from '../components/common/Header.astro';
+import Carousel from '../components/common/Carousel.astro';
+import Footer from '../components/common/Footer.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
+import OverViewSection from '../components/overview/OverViewSection.astro';
+import { heroCarouselData } from '../config/site';
 
 // Instagram Graph APIからお知らせを取得
 import type { AnnouncementPost } from '../types/instagram';
@@ -29,28 +28,35 @@ if (instagramConfig.enableHashtagFilter) {
 // 最新4投稿のみ表示
 announcements = announcements.slice(0, instagramConfig.maxDisplayPosts);
 
-// スタッフ情報
+// スタッフ情報（OverView.jpgデザインに合わせて更新）
 const staffMembers = [
   {
-    name: 'スタッフA',
+    name: 'フジ',
     role: 'サイエンスコミュニケーター',
-    description: '実験ショーと星空のお話で、みんなと一緒に楽しみます！'
+    pictSvg: '/images/svg/Parts/fuji_pict.svg',
+    nameSvg: '/images/svg/Parts/fuji_name.svg'
   },
   {
-    name: 'スタッフB', 
-    role: '宇宙教育スペシャリスト',
-    description: '宇宙の素敵なところを、みんなに楽しくお話しします！'
+    name: 'ひでゆき',
+    role: '星空案内人',
+    pictSvg: '/images/svg/Parts/hide_pict.svg',
+    nameSvg: '/images/svg/Parts/hide_name.svg'
   }
 ];
 
-// お仕事情報
+// サービス内容（OverView.jpgデザインに合わせて更新）
 const services = [
-  '実験ショー',
+  'わくわく実験教室',
   'ワークショップ',
-  '星空観察塾',
-  '星空の先生',
-  '出張授業',
-  '科学イベント企画'
+  '星空イベント',
+  '星空の写真　など'
+];
+
+// OverViewセクション用のリンク情報
+const overviewLinks = [
+  { textSvg: '/images/svg/Parts/text_Offer.svg', href: '/services', altText: '依頼の流れ' },
+  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/services#faq', altText: 'よくある質問' },
+  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '活動経歴' }
 ];
 ---
 
@@ -58,24 +64,32 @@ const services = [
   <Header />
   
   <main class="flex-grow">
-    <!-- Hero Section -->
-    <OverViewHero 
-      title="DONATIとは？"
-      subtitle="科学の楽しさと宇宙の神秘を、みんなで一緒に体験しませんか？子どもから大人まで、ワクワクする発見がここにあります。"
-      ctaText="詳しくはコチラ"
-      ctaLink="/about"
-    />
-    
+    <!-- Hero Carousel Section -->
+    <div class="hero-carousel-wrapper">
+      <Carousel slides={heroCarouselData} />
+    </div>
+
     <!-- お知らせセクション -->
     <section class="py-16 md:py-24 bg-transparent">
       <div class="container mx-auto px-4">
         <!-- セクションタイトル -->
-        <div class="text-center mb-12">
-          <h2 class="text-4xl md:text-5xl font-bold text-overview-dark-blue mb-4">
+        <div class="text-left mb-12">
+          <h2 class="section-title-news">
             お知らせ
           </h2>
-          <div class="w-24 h-1 bg-overview-yellow mx-auto"></div>
         </div>
+      </div>
+
+      <!-- ウェーブライン（containerの外） -->
+      <div class="waveline-wrapper">
+        <div class="flex justify-center">
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        </div>
+      </div>
+
+      <div class="container mx-auto px-4">
         
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -96,119 +110,32 @@ const services = [
         </div>
       </div>
     </section>
-    
-    <!-- 下部3列セクション -->
-    <section class="py-16 md:py-24 bg-transparent">
+
+    <!-- 波線装飾（複数並べて中央寄せ） -->
+    <div class="waveline-wrapper">
+      <div class="overflow-hidden py-4 flex justify-center">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      </div>
+    </div>
+
+    <OverViewSection {staffMembers} {services} links={overviewLinks} />
+
+    <!-- CTAバナー（QA画像） -->
+    <section class="py-12 md:py-16">
       <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
-          <!-- 1. スタッフについて -->
-          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-sky">
-            <div class="text-center mb-6">
-              <div class="w-16 h-16 bg-overview-sky rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="text-2xl">👥</span>
-              </div>
-              <h3 class="text-2xl font-bold text-overview-dark-blue">
-                スタッフについて
-              </h3>
-            </div>
-            
-            <div class="space-y-4 mb-6">
-              {staffMembers.map((staff) => (
-                <div class="bg-overview-sky/10 p-4 rounded-lg">
-                  <h4 class="font-bold text-overview-dark-blue mb-1">
-                    {staff.name}
-                  </h4>
-                  <p class="text-sm text-overview-sky font-medium mb-2">
-                    {staff.role}
-                  </p>
-                  <p class="text-sm text-gray-600">
-                    {staff.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-            
-            <div class="text-center">
-              <a href="/staff" class="inline-block bg-overview-sky hover:bg-overview-sky/90 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">
-                詳しくはコチラ
-              </a>
-            </div>
-          </div>
-          
-          <!-- 2. お仕事のこと -->
-          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-yellow">
-            <div class="text-center mb-6">
-              <div class="w-16 h-16 bg-overview-yellow rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="text-2xl">⚗️</span>
-              </div>
-              <h3 class="text-2xl font-bold text-overview-dark-blue">
-                お仕事のこと
-              </h3>
-            </div>
-            
-            <ul class="space-y-3 mb-6">
-              {services.map((service) => (
-                <li class="flex items-center">
-                  <span class="w-2 h-2 bg-overview-yellow rounded-full mr-3"></span>
-                  <span class="text-overview-dark-blue font-medium">{service}</span>
-                </li>
-              ))}
-            </ul>
-            
-            <div class="text-center">
-              <a href="/services" class="inline-block bg-overview-yellow hover:bg-overview-yellow/90 text-overview-dark-blue font-bold py-3 px-6 rounded-full transition-colors duration-300">
-                詳しくはコチラ
-              </a>
-            </div>
-          </div>
-          
-          <!-- 3. お問い合わせ -->
-          <div class="bg-white/15 backdrop-blur-sm rounded-2xl shadow-lg p-8 border-t-4 border-overview-dark-blue">
-            <div class="text-center mb-6">
-              <div class="w-16 h-16 bg-overview-dark-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <span class="text-2xl text-white">✉️</span>
-              </div>
-              <h3 class="text-2xl font-bold text-overview-dark-blue">
-                お問い合わせ
-              </h3>
-            </div>
-            
-            <div class="space-y-4 mb-6">
-              <div class="text-center">
-                <p class="text-sm text-gray-600 mb-2">電話番号</p>
-                <p class="text-xl font-bold text-overview-dark-blue">
-                  000-0000-0000
-                </p>
-              </div>
-              
-              <div class="text-center">
-                <p class="text-sm text-gray-600 mb-2">営業時間</p>
-                <p class="text-sm text-overview-dark-blue">
-                  平日・土日 9:00～18:00<br>
-                  年中無休（年末年始除く）
-                </p>
-              </div>
-              
-              <div class="bg-overview-sky/10 p-4 rounded-lg text-center">
-                <p class="text-sm text-overview-dark-blue font-medium">
-                  「どんな組み合わせでも、楽しく対応させていただきます！」
-                </p>
-              </div>
-            </div>
-            
-            <div class="text-center">
-              <a href="/contact" class="inline-block bg-overview-dark-blue hover:bg-overview-dark-blue/90 text-white font-bold py-3 px-6 rounded-full transition-colors duration-300">
-                お問い合せはコチラ
-              </a>
-            </div>
-          </div>
-          
-        </div>
+        <a href="/contact" class="block hover:opacity-90 transition-opacity duration-300">
+          <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full max-w-4xl mx-auto" />
+        </a>
       </div>
     </section>
+
+    <FooterDivider />
   </main>
-  
+
   <Footer />
 </Layout>
 
@@ -238,5 +165,74 @@ const services = [
     background: linear-gradient(45deg, rgba(135, 206, 235, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
     pointer-events: none;
     z-index: -1;
+  }
+
+  /* Heroカルーセル専用スタイル */
+  .hero-carousel-wrapper {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+  }
+
+  .hero-carousel-wrapper .carousel-section {
+    padding: 0;
+    width: 100%;
+  }
+
+  .hero-carousel-wrapper .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .hero-carousel-wrapper .carousel-wrapper {
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+
+  /* レスポンシブ画像高さ */
+  .hero-carousel-wrapper .carousel-slide img {
+    height: 400px;
+    object-fit: cover;
+  }
+
+  @media (min-width: 768px) {
+    .hero-carousel-wrapper .carousel-slide img {
+      height: 500px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-carousel-wrapper .carousel-slide img {
+      height: 600px;
+    }
+  }
+
+  /* カルーセルコンテンツを非表示 */
+  .hero-carousel-wrapper .carousel-content {
+    display: none;
+  }
+
+  /* アクティブドットの配色調整 */
+  .hero-carousel-wrapper .dot.active {
+    background: #f4a261;
+  }
+
+  /* ウェーブライン幅調整 */
+  .waveline-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* ホバーエフェクト */
+  .hero-carousel-wrapper .carousel-slide {
+    cursor: pointer;
   }
 </style>

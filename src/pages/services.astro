@@ -1,7 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
+import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
+import ServiceCard from '../components/cards/ServiceCard.astro';
+import RequestFlowStep from '../components/services/RequestFlowStep.astro';
+import ServicesSection from '../components/services/ServicesSection.astro';
+
 
 // サービス情報（新構造：サイエンス・スペース分野）
 const serviceCategories = {
@@ -9,13 +15,14 @@ const serviceCategories = {
     id: 'science',
     title: 'サイエンス（科学分野）',
     icon: '⚗️',
+    characterIconUrl: '/images/svg/Parts/fuji_pict.svg',
     subtitle: '科学の楽しさと不思議を体験',
     description: '実験やワークショップで、科学の不思議とワクワクを一緒に楽しみましょう！',
     services: [
       {
         id: 'science-show',
         title: 'サイエンスショー',
-        description: '迫力満点の科学実験で、ワクワクドキドキのショーをみんなで楽しみましょう！',
+        description: '目の前で起こる不思議な現象に驚き、科学の楽しさを発見できるショーです！',
         features: [
           '対象年齢：幼児〜中学生（内容により調整可能）',
           '所要時間：45分〜90分',
@@ -69,8 +76,9 @@ const serviceCategories = {
     id: 'space',
     title: 'スペース（宇宙分野）',
     icon: '🌟',
-    subtitle: '宇宙の神秘と美しさを探求',
-    description: '天体観測やお話、写真で、宇宙の素敵さをみんなで体験しましょう！',
+    characterIconUrl: '/images/svg/Parts/hide_pict.svg',
+    subtitle: '宇宙の不思議を一緒に探検',
+    description: '望遠鏡で星を観たり、宇宙のお話をしたり、一緒に宇宙を旅しましょう！',
     services: [
       {
         id: 'stargazing',
@@ -129,40 +137,78 @@ const serviceCategories = {
 
 // ご依頼の流れ
 const requestFlow = [
-  { 
-    step: 1, 
-    title: 'お問い合わせ', 
-    description: 'まずはお気軽にご相談くださいね！お電話でもメールでもフォームでも、どれでも大丈夫です！' 
+  {
+    step: 1,
+    title: 'お問い合わせ',
+    description: 'お問い合わせフォームからご相談ください'
   },
-  { 
-    step: 2, 
-    title: 'ヒアリング', 
-    description: 'どんなことをしたいか、いつどこで、予算はどれくらいかなど、じっくりお話を聞かせてください。一番楽しいプログラムを一緒に考えましょう！' 
+  {
+    step: 2,
+    title: 'ご予算に応じた提案',
+    description: 'ご要望をお聞きし、ご予算に合ったお考えのプランを提案します。'
   },
-  { 
-    step: 3, 
-    title: '企画提案', 
-    description: 'みなさんのご希望にぴったりの企画を作って、お見積もりもお渡しします。楽しみにしていてくださいね！' 
+  {
+    step: 3,
+    title: 'お見積り提出・ご確認',
+    description: 'お客様のご希望の内容が決まりましたら、お見積書を作成いたします。沖縄県外のご依頼の場合、交通費・宿泊費を別途ご請求させて頂きます。'
   },
-  { 
-    step: 4, 
-    title: '実施', 
-    description: 'しっかり準備して、みんなで楽しい時間を過ごしましょう！ワクワクするようなプログラムをお届けします！' 
+  {
+    step: 4,
+    title: 'ご依頼確定',
+    description: '内容をしっかり確認して、ご準備を整えさせていただいたり、ご準備のサポートさせていただきます。'
+  },
+  {
+    step: 5,
+    title: '出演当日',
+    description: 'パフォーマーやイベント運営をさせていただきます！'
+  },
+  {
+    step: 6,
+    title: '支払い方法',
+    description: '出演料金は、後日ご請求させていただきます。'
+  }
+];
+
+// 打ち合わせ内容
+const consultationTopics = [
+  {
+    number: 1,
+    question: '内容？',
+    description: '目的や参加者を考えて予算や時間に合わせたプランを企画します',
+    svg: '/images/svg/Parts/conference_thing1.svg'
+  },
+  {
+    number: 2,
+    question: '時間？',
+    description: '基本的00分です実験の組み合わせで調整できます',
+    svg: '/images/svg/Parts/conference_thing2.svg'
+  },
+  {
+    number: 3,
+    question: '予算？',
+    description: '基本料金あり予算にできるだけお応えします',
+    svg: '/images/svg/Parts/conference_thing3.svg'
+  },
+  {
+    number: 4,
+    question: '準備？',
+    description: '特にありません設備は事前に確認します',
+    svg: '/images/svg/Parts/conference_thing4.svg'
   }
 ];
 
 // FAQ
 const faqItems = [
-  { 
-    question: 'どのような規模のイベントに対応できますか？', 
+  {
+    question: 'どのような規模のイベントに対応できますか？',
     answer: '5人くらいの小さなワークショップから300人以上の大きなイベントまで、どんな規模でも大丈夫です！みなさんにぴったりのプログラムを一緒に考えましょうね！'
   },
-  { 
-    question: '出張可能なエリアはどこまでですか？', 
+  {
+    question: '出張可能なエリアはどこまでですか？',
     answer: '全国どこでもお伺いします！遠くの場合は交通費や宿泊費について相談させてくださいね。オンラインでも楽しくお話しできますよ！'
   },
-  { 
-    question: '費用はどのくらいかかりますか？', 
+  {
+    question: '費用はどのくらいかかりますか？',
     answer: 'どんな内容にするか、時間や人数、場所によって変わります。まずはお気軽にお見積もりをお願いします！予算に合わせてプログラムを一緒に考えましょうね！'
   },
   {
@@ -173,6 +219,13 @@ const faqItems = [
     question: '機材や会場の準備はどうすればよいですか？',
     answer: '実験道具や望遠鏡などはこちらで用意しますのでご安心ください！会場のことや必要なものは、事前にしっかり打ち合わせしましょうね！'
   }
+];
+
+// 右列：リンク情報
+const overviewLinks = [
+  { textSvg: '/images/svg/Parts/text_Offer.svg', href: '#request-flow', altText: 'ご依頼の流れ' },
+  { textSvg: '/images/svg/Parts/text_QA.svg', href: '#faq', altText: 'よくある質問' },
+  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '活動経歴' }
 ];
 ---
 
@@ -205,289 +258,129 @@ const faqItems = [
         opacity: 0.3;
       }
       
-      .wave-decoration {
-        background-image: repeating-linear-gradient(
-          45deg,
-          #FFD700,
-          #FFD700 10px,
-          transparent 10px,
-          transparent 20px
-        );
-        height: 5px;
-        width: 100%;
-        margin: 2rem 0;
+      .waveline-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1rem;
       }
     </style>
-    
-    <!-- 星の装飾 -->
-    <div class="star" style="width: 30px; height: 30px; top: 10%; left: 10%;"></div>
-    <div class="star" style="width: 20px; height: 20px; top: 20%; right: 15%;"></div>
-    <div class="star" style="width: 25px; height: 25px; bottom: 30%; left: 5%;"></div>
-    <div class="star" style="width: 35px; height: 35px; top: 60%; right: 10%;"></div>
-    
-    <!-- 円形装飾 -->
-    <div class="circle-decoration" style="width: 100px; height: 100px; top: 5%; right: 20%;"></div>
-    <div class="circle-decoration" style="width: 150px; height: 150px; bottom: 10%; left: -50px;"></div>
-    <div class="circle-decoration" style="width: 80px; height: 80px; top: 40%; left: 10%;"></div>
-    
+        
     <!-- タイトルセクション -->
     <section class="text-center py-12 relative z-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
-        サービス内容
-      </h1>
-      <div class="flex justify-center mb-6">
-        <div class="wave-decoration w-96"></div>
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-left mb-12">
+          <h2 class="section-title-news">
+            サービス内容
+          </h2>
+        </div>
+        <div class="waveline-wrapper">
+          <div class="flex justify-center">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          </div>
+        </div>
       </div>
-    </section>
-    
+
     <div class="container mx-auto px-4 py-12 relative z-10">
-      <!-- 紹介文セクション -->
-      <section class="mb-16">
-        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-4xl mx-auto text-center">
-          <p class="text-lg text-gray-600 leading-relaxed">
-            サイエンス アンド スペース ラボ DONATIでは、<br class="hidden md:inline" />
-            科学と宇宙、どちらも楽しく体験できるプログラムをご用意しています！<br />
-            学校でもイベントでも企業研修でも、お気軽にご相談ください。みなさんのご希望にぴったり合うプログラムを一緒に作りましょう！
-          </p>
-        </div>
-        <div class="flex justify-center mb-6">
-          <div class="wave-decoration w-96"></div>
-        </div>
-      </section>
-        
+      <!-- サービス分類セクション（OverViewセクション） -->
+      <ServicesSection
+        links={overviewLinks}
+      />
+
         <!-- サイエンス分野 -->
         <section id="science" class="mb-24">
-          <div class="text-center mb-16">
-            <div class="flex items-center justify-center mb-4">
-              <span class="text-4xl mr-4">{serviceCategories.science.icon}</span>
-              <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.science.title}</h2>
-            </div>
-            <div class="flex justify-center mb-6">
-              <div class="wave-decoration w-96"></div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.science.subtitle}</p>
-              <p class="text-lg text-gray-600 leading-relaxed">
-                {serviceCategories.science.description}
-              </p>
-            </div>
-          </div>
-          
+          <ServiceCategoryHeader
+            icon={serviceCategories.science.icon}
+            title={serviceCategories.science.title}
+            subtitle={serviceCategories.science.subtitle}
+            description={serviceCategories.science.description}
+            characterIconUrl={serviceCategories.science.characterIconUrl}
+          />
+
           {serviceCategories.science.services.map((service, index) => (
-            <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
-                  <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
-                  
-                  <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3">実施要項</h4>
-                    <ul class="space-y-2">
-                      {service.features.map((feature) => (
-                        <li class="flex items-start">
-                          <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                          </svg>
-                          <span class="text-gray-600">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3">プログラム例</h4>
-                    <ul class="space-y-2">
-                      {service.programs.map((program) => (
-                        <li class="flex items-start">
-                          <span class="text-orange-600 mr-2">▶</span>
-                          <span class="text-gray-600">{program}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                
-                <div class={`bg-white/50 backdrop-blur-sm rounded-lg h-80 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <span class="text-6xl">{service.id === 'science-show' ? '🧪' : service.id === 'science-class' ? '🧠' : '🔬'}</span>
-                </div>
-              </div>
-            </div>
+            <ServiceCard service={service} index={index} />
           ))}
         </section>
         
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
-          <div class="text-center mb-16">
-            <div class="flex items-center justify-center mb-4">
-              <span class="text-4xl mr-4">{serviceCategories.space.icon}</span>
-              <h2 class="text-3xl md:text-4xl font-bold text-gray-800">{serviceCategories.space.title}</h2>
-            </div>
-            <div class="flex justify-center mb-6">
-              <div class="wave-decoration w-96"></div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-xl text-blue-600 font-semibold mb-2">{serviceCategories.space.subtitle}</p>
-              <p class="text-lg text-gray-600 leading-relaxed">
-                {serviceCategories.space.description}
-              </p>
-            </div>
-          </div>
-          
+          <ServiceCategoryHeader
+            icon={serviceCategories.space.icon}
+            title={serviceCategories.space.title}
+            subtitle={serviceCategories.space.subtitle}
+            description={serviceCategories.space.description}
+            characterIconUrl={serviceCategories.space.characterIconUrl}
+          />
+
           {serviceCategories.space.services.map((service, index) => (
-            <div id={service.id} class={`${index !== 0 ? 'mt-16' : ''}`}>
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div class={`bg-white/70 backdrop-blur-sm rounded-lg p-6 ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <h3 class="text-2xl font-bold text-gray-800 mb-4">{service.title}</h3>
-                  <p class="text-gray-600 leading-relaxed mb-6">{service.description}</p>
-                  
-                  <div class="mb-6">
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3">実施要項</h4>
-                    <ul class="space-y-2">
-                      {service.features.map((feature) => (
-                        <li class="flex items-start">
-                          <svg class="w-5 h-5 text-green-600 mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                          </svg>
-                          <span class="text-gray-600">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div>
-                    <h4 class="text-lg font-semibold text-gray-800 mb-3">プログラム例</h4>
-                    <ul class="space-y-2">
-                      {service.programs.map((program) => (
-                        <li class="flex items-start">
-                          <span class="text-orange-600 mr-2">▶</span>
-                          <span class="text-gray-600">{program}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-                
-                <div class={`bg-white/50 backdrop-blur-sm rounded-lg h-80 flex items-center justify-center ${index % 2 === 1 ? 'lg:order-1' : ''}`}>
-                  <span class="text-6xl">{service.id === 'stargazing' ? '🔭' : service.id === 'lecture' ? '🎓' : '📷'}</span>
-                </div>
-              </div>
-            </div>
+            <ServiceCard service={service} index={index} />
           ))}
         </section>
         
         <!-- ご依頼の流れセクション -->
-        <section class="mb-24">
+        <section id="request-flow" class="mb-24">
           <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">ご依頼の流れ</h2>
-            <div class="flex justify-center mb-6">
-              <div class="wave-decoration w-96"></div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-lg text-gray-600 leading-relaxed">
-                プログラムを始めるまでの流れをご紹介しますね！一緒に楽しいプログラムを作っていきましょう！
-              </p>
+            <h2 class="section-title-news">ご依頼の流れ</h2>
+            <div class="waveline-wrapper">
+              <div class="flex justify-center">
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              </div>
             </div>
           </div>
-          
+
           <!-- フローステップ -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="max-w-4xl mx-auto">
             {requestFlow.map((step) => (
-              <div class="relative">
-                <!-- ステップカード -->
-                <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 text-center h-full">
-                  <!-- ステップ番号 -->
-                  <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span class="text-white font-bold text-xl">{step.step}</span>
+              <RequestFlowStep
+                step={step.step}
+                title={step.title}
+                description={step.description}
+              >
+                {step.step === 1 && (
+                  <div class="mt-6">
+                    <h4 class="text-lg font-bold mb-4" style="color: #58778D;">打ち合わせ内容</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {consultationTopics.map((topic) => (
+                        <div class="flex flex-col items-center text-center">
+                          <img
+                            src={topic.svg}
+                            alt={topic.question}
+                            class="w-32 h-16 mb-2"
+                          />
+                          <p class="text-xs leading-relaxed" style="color: #58778D;">
+                            {topic.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  
-                  <!-- ステップタイトル -->
-                  <h3 class="text-xl font-bold text-gray-800 mb-3">
-                    {step.title}
-                  </h3>
-                  
-                  <!-- ステップ説明 -->
-                  <p class="text-sm text-gray-600 leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-                
-              </div>
+                )}
+              </RequestFlowStep>
             ))}
           </div>
         </section>
-        
-        <!-- FAQ セクション -->
+
+        <!-- 最終メッセージセクション（青い星） -->
         <section class="mb-24">
-          <div class="text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">よくある質問（FAQ）</h2>
-            <div class="flex justify-center mb-6">
-              <div class="wave-decoration w-96"></div>
-            </div>
-            <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 max-w-3xl mx-auto">
-              <p class="text-lg text-gray-600 leading-relaxed">
-                よくある質問にお答えしますね！気になることがあったら、遠慮なく聞いてください！
+          <div class="flex items-start gap-6 max-w-4xl mx-auto">
+            <img src="/images/svg/Parts/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
+
+            <div class="flex-1 backdrop-blur-sm rounded-lg p-6 text-left">
+              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">実施後まで丁寧にサポート</h3>
+              <p class="leading-relaxed" style="color: #58778D;">
+                イベント実施後のアンケート集計や報告書作成、次回に向けた改善提案など、
+                実施後のフォローアップも充実しています。長期的なパートナーとして、
+                皆様の科学教育・普及活動をサポートいたします。
               </p>
             </div>
           </div>
-          
-          <!-- FAQ項目（アコーディオン形式） -->
-          <div class="max-w-4xl mx-auto space-y-4">
-            {faqItems.map((faq, index) => (
-              <div class="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden">
-                <!-- 質問（クリック可能） -->
-                <button class="faq-toggle w-full text-left bg-white/50 hover:bg-white/70 transition-colors duration-200 p-6 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        data-index={index}>
-                  <div class="flex items-center justify-between">
-                    <div class="flex items-start flex-1">
-                      <span class="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                        Q{index + 1}
-                      </span>
-                      <h3 class="text-lg font-bold text-gray-800 flex-1 pr-4">{faq.question}</h3>
-                    </div>
-                    <!-- 展開/折りたたみアイコン -->
-                    <svg class="faq-icon w-6 h-6 text-blue-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                  </div>
-                </button>
-                
-                <!-- 回答（初期状態は非表示） -->
-                <div class="faq-answer max-h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
-                  <div class="p-6 border-t border-gray-200/30">
-                    <div class="flex items-start">
-                      <span class="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0 mt-0.5">
-                        A
-                      </span>
-                      <p class="text-gray-600 leading-relaxed flex-1">
-                        {faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
         </section>
-        
-        <!-- お問い合わせCTA -->
-        <section class="mb-16">
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-              お話を聞いたり、お見積もりを作ったりするのは無料です！
-            </h2>
-            <div class="flex justify-center mb-6">
-              <div class="wave-decoration w-96"></div>
-            </div>
-            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-              みなさんのやりたいことに合わせて、ぴったりのプログラムを一緒に作りましょう！<br />
-              まずはお気軽に連絡してくださいね！
-            </p>
-            <a href="/contact" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300 shadow-lg">
-              お問い合わせ・ご相談はこちら
-            </a>
-          </div>
-        </section>
-    </div>
+
+    <FooterDivider />
   </main>
   
   <Footer />
