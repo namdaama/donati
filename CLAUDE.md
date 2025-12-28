@@ -25,7 +25,7 @@
 - **Issue #77完了**: サイエンス・天文事業の専用ページを作成済み（`service-fuji.astro`, `service-hide.astro`）
 - **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
 - **コア機能実装済み**: カルーセル、Instagram連携、Web3Forms統合
-- **ページ構成**: index, about, services, service-fuji, service-hide, professional-experience, contact
+- **ページ構成**: index, about, services, service-fuji, service-hide, professional-experience, contact, 404
 - **現在のブランチ**: feature/split-service-pages-issue-77
 
 ## 必須コマンド
@@ -53,18 +53,12 @@ npm run astro check  # Astroの組み込み型チェックを実行
   - `service-hide.astro` (天文専用ページ - Issue #77)
   - `contact.astro` (お問い合わせ)
   - `professional-experience.astro` (活動経歴)
-- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（29個、フォルダベース構造）
+- **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（30個、フォルダベース構造）
   - **構成**: 6フォルダ（common, overview, services, professional-experience, cards, effects）
-  - **詳細**: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照
-  - **主要コンポーネント**:
-    - `common/Carousel.astro` - 自動スライドショー（295行、TypeScriptクラスベース）
-    - `common/Header.astro` - 全ページ共通ナビゲーション（277行、モバイルドロワー対応）
-    - `common/InstagramSection.astro` - Instagram埋め込み（111行、公式API使用）
-    - `common/Hero.astro` - ヒーロー（Aurora/Stars効果オプション）
-    - `overview/OverViewSection.astro` - トップページセクション統合
-    - `services/ServicesSection.astro` - サービスページセクション統合
-    - `professional-experience/ProfessionalExperienceSection.astro` - 活動経歴セクション
-  - **削除済み** (Issue #57): AchievementCard, NewsCard, StaffCard, AboutUsButton（不要ページとともに削除）
+  - **詳細リファレンス**: [docs/05-implementation-guides/components-guide.md](docs/05-implementation-guides/components-guide.md)参照
+    - 全30コンポーネントの詳細（Props、行数、複雑度）
+    - フォルダ間の依存関係図
+    - コンポーネント更新ルール
 - **レイアウト**: ページテンプレートは`src/layouts/` (現在はLayout.astroのみ)
 - **スタイル**: TailwindCSSを使用、カスタムテーマカラーは`tailwind.config.mjs`で定義
 
@@ -90,7 +84,7 @@ npm run astro check  # Astroの組み込み型チェックを実行
 ### 1. カルーセル機能 ✅実装完了
 - **コンポーネント**: `src/components/Carousel.astro`
 - **機能**: 自動スライド（4秒間隔）、ドットナビゲーション、ホバーで一時停止
-- **画像配置**: `public/images/carousel/`ディレクトリ
+- **画像配置**: `public/images/svg/Carousel/`ディレクトリ（SVGファイル）
 - **データ管理**: `src/config/site.ts`の`carouselData`
 
 ### 2. Instagram埋め込み ✅実装完了
@@ -105,8 +99,15 @@ npm run astro check  # Astroの組み込み型チェックを実行
 
 ### 4. 設定の一元管理 ✅実装完了
 - **設定ファイル**: `src/config/site.ts`
-- **管理内容**: サイト基本情報、ソーシャルメディアURL、カルーセルデータ、サービス一覧
-- **型安全**: TypeScriptによる型定義
+- **管理内容**:
+  - `siteConfig`: サイト基本情報、ソーシャルメディアURL、外部サービス設定、画像パス
+  - `carouselData`: カルーセル画像データ（3枚）
+  - `heroCarouselData`: トップページHeroカルーセルデータ（5枚）
+  - `servicesData`: サービス一覧カード用データ（4サービス）
+  - `serviceCategories`: サイエンス・スペース分野の詳細サービス定義
+  - `requestFlow`: ご依頼の流れ（6ステップ）
+  - `consultationTopics`: 打ち合わせ内容（4項目）
+- **型安全**: TypeScript型定義完備（ServiceItem, ServiceCategory, RequestFlowStep, ConsultationTopic）
 
 ### 5. FAQアコーディオン機能 ✅実装完了
 - **実装時期**: Issue #11で追加
@@ -257,10 +258,10 @@ DONATIサイト全体で「柔らかく親しみやすい表現」を採用し�
    - 画像: PNG/JPG（@1x、@2xなど）
    - アイコン: SVG
 2. **最適化**: 必要に応じて圧縮・最適化
-3. **配置**: `public/images/`の適切なサブディレクトリに直接配置
-   - 背景 → `backgrounds/`（今後整理予定）
-   - SVGアイコン → `svg/Parts/`
-   - 写真 → `photos/`（今後整理予定）
+3. **配置**: `public/images/`に直接配置
+   - SVGアイコン・キャラクター → `svg/Parts/`
+   - SVGカルーセル → `svg/Carousel/`
+   - ページ用画像・背景画像 → ルート直下（整理は今後検討）
 4. **Gitコミット**: 最適化済みファイルをコミット
 
 ### 運用のポイント
@@ -306,10 +307,11 @@ Figmaで新しい色を追加・変更した場合：
 ### public/images/
 - 本番配信用の画像（最適化済み）
 - 現在の構造:
-  - ルート: 各ページ用画像（AboutUs.jpg、OverView.jpg等）、背景画像（backGround.png等）
-  - `svg/Carousel/`: カルーセル用SVG
-  - `svg/Parts/`: UI用SVGパーツ（アイコン、装飾等）
+  - ルート直下: 各ページ用画像（AboutUs.jpg、OverView.jpg、ProfessionalExperience.jpg等）、背景画像（backGround.png、logoBackGround.png）
+  - `svg/Carousel/`: カルーセル用SVG（5枚）
+  - `svg/Parts/`: UI用SVGパーツ（アイコン、キャラクター画像、装飾等）
   - `svg/Screen/`: デザインモックアップSVG
+- **注意**: 当初計画の`backgrounds/`, `carousel/`, `photos/`, `staff/`フォルダは未作成。画像は直接ルートに配置。
 
 ### 運用ルール
 1. Figmaから書き出したファイルは必要に応じて最適化
@@ -403,14 +405,14 @@ body {
 
 ```
 public/images/
-├── backgrounds/          # 背景画像（今後整理予定）
-├── carousel/            # カルーセル用画像（今後整理予定）
-├── photos/              # 写真素材（今後整理予定）
-├── staff/               # スタッフ写真（今後追加予定）
+├── (ルート直下)         # ページ用画像、背景画像（AboutUs.jpg, backGround.png等）
 └── svg/
-    ├── Carousel/        # カルーセル用SVG
-    ├── Parts/           # UI用SVGパーツ
+    ├── Carousel/        # カルーセル用SVG（5枚）
+    ├── Parts/           # UI用SVGパーツ、キャラクター画像
     └── Screen/          # デザインモックアップSVG
+
+注意: 当初計画の backgrounds/, carousel/, photos/, staff/ フォルダは未作成。
+将来的な整理を検討する場合は、全ページのパス参照更新が必要。
 ```
 
 ### プロジェクト全体

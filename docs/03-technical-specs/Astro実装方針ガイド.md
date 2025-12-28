@@ -61,18 +61,18 @@ graph TD
     A[新機能実装] --> B{静的コンテンツ？}
     B -->|Yes| C[Astroコンポーネント]
     B -->|No| D{インタラクティブ？}
-    
+
     D -->|少し| E[Astro + script]
-    D -->|かなり| F{フレームワーク必要？}
-    
-    F -->|No| G[Vanilla JS]
-    F -->|Yes| H[React/Vue/Svelte]
-    
+    D -->|かなり| F[Vanilla JS]
+
     C --> I[後方互換性不要]
     E --> J[基本的な互換性]
-    G --> K[Polyfill検討]
-    H --> L[フレームワーク依存]
+    F --> K[Polyfill検討]
+
+    Note[⚠️ 現在React/Vue/Svelteは<br/>本番で未使用]
 ```
+
+**注記**: 当プロジェクトでは React/Vue/Svelte などのフレームワークは本番環境では一切使用していません。複雑なインタラクティブ機能は Vanilla JavaScript で実装しています。
 
 ## 具体的な実装例
 
@@ -96,6 +96,8 @@ import Carousel from '../components/Carousel.astro';
   </div>
 </noscript>
 ```
+
+**注記**: 現在、Carousel.astro の noscript フォールバック実装は検討段階です。
 
 ### 2. マウスカーソルの場合
 

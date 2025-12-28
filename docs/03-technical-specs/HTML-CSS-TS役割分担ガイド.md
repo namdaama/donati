@@ -50,7 +50,7 @@
 ---
 export async function getStaticPaths() {
   const posts = await fetchNewsFromMicroCMS();
-  
+
   return posts.map(post => ({
     params: { slug: post.slug },
     props: { post }
@@ -64,6 +64,8 @@ const { post } = Astro.props;
 <div>{post.content}</div>
 ```
 
+**注記**: 現在、動的ルーティングは未使用です。ニュースページは static な実装に向けて計画中です。
+
 #### 2. Instagram連携
 ```typescript
 // src/lib/instagram-rss.ts
@@ -72,10 +74,10 @@ export async function fetchInstagramPosts() {
     const response = await fetch(RSS_URL);
     const xml = await response.text();
     const posts = parseXML(xml);
-    
+
     // キャッシュ処理
     await cache.set('instagram_posts', posts);
-    
+
     return posts;
   } catch (error) {
     // エラーハンドリング
@@ -83,6 +85,8 @@ export async function fetchInstagramPosts() {
   }
 }
 ```
+
+**現状**: InstagramSectionコンポーネントは Instagram 公式ウィジェットを使用しています。RSS 連携は `experiments/instagram-rss-sample/` に実装済みですが、本番統合は保留中です。
 
 #### 3. 状態管理・インタラクション
 ```typescript
