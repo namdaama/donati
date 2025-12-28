@@ -1,0 +1,152 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/common/Header.astro';
+import Footer from '../components/common/Footer.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
+import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
+import ServiceCard from '../components/cards/ServiceCard.astro';
+import RequestFlowStep from '../components/services/RequestFlowStep.astro';
+import { serviceCategories, requestFlow, consultationTopics } from '../config/site';
+
+const spaceCategory = serviceCategories.space;
+---
+
+<Layout
+  title="スペース（宇宙分野）"
+  description="星空観望会、プラネタリウム解説、講演、星空写真提供など、宇宙の不思議を探検するサービスをご提供します"
+>
+  <Header />
+
+  <main class="flex-grow relative overflow-hidden">
+    <!-- 背景装飾とスタイル -->
+    <style>
+      /* backGround.png を背景として使用 */
+      body {
+        background-image: url('/images/backGround.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+
+      .star {
+        position: absolute;
+        background: white;
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        opacity: 0.7;
+      }
+
+      .circle-decoration {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.3;
+      }
+
+      .waveline-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+    </style>
+
+    <!-- タイトルセクション -->
+    <section class="text-center py-12 relative z-10">
+      <div class="container mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="text-left mb-12">
+          <h2 class="section-title-news">
+            スペース（宇宙分野）
+          </h2>
+        </div>
+        <div class="waveline-wrapper">
+          <div class="flex justify-center">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          </div>
+        </div>
+      </div>
+
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <!-- スペース分野 -->
+        <section id="space" class="mb-24">
+          <ServiceCategoryHeader
+            icon={spaceCategory.icon}
+            title={spaceCategory.title}
+            subtitle={spaceCategory.subtitle}
+            description={spaceCategory.description}
+            characterIconUrl={spaceCategory.characterIconUrl}
+          />
+
+          {spaceCategory.services.map((service, index) => (
+            <ServiceCard service={service} index={index} />
+          ))}
+        </section>
+
+        <!-- ご依頼の流れセクション -->
+        <section id="request-flow" class="mb-24">
+          <div class="text-center mb-16">
+            <h2 class="section-title-news">ご依頼の流れ</h2>
+            <div class="waveline-wrapper">
+              <div class="flex justify-center">
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              </div>
+            </div>
+          </div>
+
+          <!-- フローステップ -->
+          <div class="max-w-4xl mx-auto">
+            {requestFlow.map((step) => (
+              <RequestFlowStep
+                step={step.step}
+                title={step.title}
+                description={step.description}
+              >
+                {step.step === 1 && (
+                  <div class="mt-6">
+                    <h4 class="text-lg font-bold mb-4" style="color: #58778D;">打ち合わせ内容</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      {consultationTopics.map((topic) => (
+                        <div class="flex flex-col items-center text-center">
+                          <img
+                            src={topic.svg}
+                            alt={topic.question}
+                            class="w-32 h-16 mb-2"
+                          />
+                          <p class="text-xs leading-relaxed" style="color: #58778D;">
+                            {topic.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </RequestFlowStep>
+            ))}
+          </div>
+        </section>
+
+        <!-- 最終メッセージセクション（青い星） -->
+        <section class="mb-24">
+          <div class="flex items-start gap-6 max-w-4xl mx-auto">
+            <img src="/images/svg/Parts/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
+
+            <div class="flex-1 backdrop-blur-sm rounded-lg p-6 text-left">
+              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">実施後まで丁寧にサポート</h3>
+              <p class="leading-relaxed" style="color: #58778D;">
+                イベント実施後のアンケート集計や報告書作成、次回に向けた改善提案など、
+                実施後のフォローアップも充実しています。長期的なパートナーとして、
+                皆様の科学教育・普及活動をサポートいたします。
+              </p>
+            </div>
+          </div>
+        </section>
+
+    <FooterDivider />
+  </main>
+
+  <Footer />
+</Layout>
