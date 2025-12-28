@@ -121,13 +121,6 @@ src/components/
 - **特徴**: Aurora/Stars効果の条件付きレンダリング
 - **用途**: ページのヒーロー/フィーチャーセクション
 
-#### StaffCard.astro
-- **ファイル**: [src/components/StaffCard.astro](src/components/StaffCard.astro)
-- **行数**: 65行
-- **Props**: 7個（name, nameImage, image, description, achievements, achievementsLink, servicesLink）
-- **依存**: AboutUsButtonコンポーネント使用（複数ボタン配置）
-- **最終更新**: Issue #44（2025年12月7日）
-
 #### OverViewHero.astro
 - **ファイル**: [src/components/OverViewHero.astro](src/components/OverViewHero.astro)
 - **行数**: 62行
@@ -158,20 +151,6 @@ src/components/
 
 #### カード系
 
-**AchievementCard.astro**
-- **ファイル**: [src/components/AchievementCard.astro](src/components/AchievementCard.astro)
-- **行数**: 47行
-- **目的**: 実績カード表示
-- **Props**: image, date, location, description
-- **用途**: achievementsページでグリッド表示
-
-**NewsCard.astro**
-- **ファイル**: [src/components/NewsCard.astro](src/components/NewsCard.astro)
-- **行数**: 44行
-- **目的**: ニュース記事カード
-- **Props**: category, title, description, date
-- **特徴**: カテゴリータグ付き
-
 **ServiceCard.astro**
 - **ファイル**: [src/components/ServiceCard.astro](src/components/ServiceCard.astro)
 - **行数**: 31行
@@ -180,13 +159,6 @@ src/components/
 - **用途**: servicesページでグリッド表示
 
 #### UI部品
-
-**AboutUsButton.astro**
-- **ファイル**: [src/components/AboutUsButton.astro](src/components/AboutUsButton.astro)
-- **行数**: 52行
-- **目的**: カスタムボタンコンポーネント
-- **特徴**: SVG背景 + テキストオーバーレイ
-- **使用箇所**: StaffCard内で複数ボタン表示
 
 **DonatiLogo.astro**
 - **ファイル**: [src/components/DonatiLogo.astro](src/components/DonatiLogo.astro)
