@@ -3,15 +3,15 @@
 const navIcons = [
   {
     iconSvg: '/images/svg/Parts/icon_AboutDonati.svg',
-    label: 'DONATIとは？',
+    label: 'Donatiとは？',
     href: '/about',
-    description: 'DONATIについて'
+    description: 'DONATIの活動について'
   },
   {
     iconSvg: '/images/svg/Parts/icon_AboutUs.svg',
     label: '私たちについて',
     href: '/about',
-    description: 'スタッフ紹介'
+    description: '私たちの紹介'
   },
   {
     iconSvg: '/images/svg/Parts/icon_Info.svg',
@@ -23,13 +23,13 @@ const navIcons = [
     iconSvg: '/images/svg/Parts/icon_Services.svg',
     label: 'サービス内容',
     href: '/services',
-    description: 'お仕事について'
+    description: '提供するサービス'
   },
   {
     iconSvg: '/images/svg/Parts/icon_Contact.svg',
     label: 'お問合せ',
     href: '/contact',
-    description: 'お問い合わせ'
+    description: 'お問合せフォーム'
   }
 ];
 ---
@@ -85,10 +85,11 @@ const navIcons = [
             href={item.href}
             class="group flex items-center justify-center p-2 xl:p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
             title={item.description}
+            aria-label={item.label}
           >
             <img
               src={item.iconSvg}
-              alt={item.label}
+              alt=""
               class="h-16 xl:h-20 2xl:h-24 w-auto group-hover:scale-110 transition-transform duration-200"
             />
           </a>
@@ -160,6 +161,7 @@ const navIcons = [
         <a
           href={item.href}
           class="flex items-center gap-4 p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200 group"
+          aria-label={item.label}
         >
           <img
             src={item.iconSvg}
