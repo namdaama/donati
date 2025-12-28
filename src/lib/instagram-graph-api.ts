@@ -154,3 +154,179 @@ function extractFirstLine(text: string): string {
   const lines = text.split('\n');
   return lines[0]?.trim() || 'Instagram Post';
 }
+
+/**
+ * トークン有効期限情報
+ */
+export interface TokenExpiryInfo {
+  isValid: boolean;
+  daysRemaining: number;
+  expiryDate: Date;
+  expiresAt: number;
+}
+
+/**
+ * トークン有効期限を確認
+ * @param token - アクセストークン
+ * @param appId - Meta App ID（オプション）
+ * @param appSecret - Meta App Secret（オプション）
+ * @returns TokenExpiryInfo - トークン有効期限情報
+ */
+export async function checkTokenExpiry(
+  token: string,
+  appId?: string,
+  appSecret?: string
+): Promise<TokenExpiryInfo> {
+  const fbAppId = appId || import.meta.env.FACEBOOK_APP_ID;
+  const fbAppSecret = appSecret || import.meta.env.FACEBOOK_APP_SECRET;
+
+  if (!fbAppId || !fbAppSecret) {
+    console.warn('⚠️ App ID/Secret not provided. Cannot check token expiry.');
+    return {
+      isValid: true,
+      daysRemaining: 60,
+      expiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+      expiresAt: Math.floor((Date.now() + 60 * 24 * 60 * 60 * 1000) / 1000)
+    };
+  }
+
+  try {
+    const url = `${GRAPH_API_BASE}/debug_token?input_token=${token}&access_token=${fbAppId}|${fbAppSecret}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(`Token debug error: ${data.error.message}`);
+    }
+
+    const expiresAt = data.data?.expires_at || 0;
+    const expiryDate = new Date(expiresAt * 1000);
+    const daysRemaining = Math.floor(
+      (expiresAt * 1000 - Date.now()) / (1000 * 60 * 60 * 24)
+    );
+
+    return {
+      isValid: data.data?.is_valid === true && daysRemaining > 0,
+      daysRemaining: Math.max(0, daysRemaining),
+      expiryDate,
+      expiresAt
+    };
+  } catch (error) {
+    console.error('Token expiry check error:', error);
+    // デフォルト値を返す（チェック失敗時も処理を続行）
+    return {
+      isValid: true,
+      daysRemaining: 60,
+      expiryDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000),
+      expiresAt: Math.floor((Date.now() + 60 * 24 * 60 * 60 * 1000) / 1000)
+    };
+  }
+}
+
+/**
+ * トークンリフレッシュ結果
+ */
+export interface TokenRefreshResult {
+  success: boolean;
+  token?: string;
+  expiresIn?: number;
+  expiryDate?: Date;
+  error?: string;
+}
+
+/**
+ * 長期トークンをリフレッシュ
+ * @param token - 現在の長期アクセストークン
+ * @returns TokenRefreshResult - リフレッシュ結果
+ *
+ * 使用例:
+ * ```typescript
+ * const result = await refreshInstagramToken(currentToken);
+ * if (result.success) {
+ *   console.log('新しいトークン:', result.token);
+ *   console.log('有効期限:', result.expiryDate);
+ * } else {
+ *   console.error('リフレッシュ失敗:', result.error);
+ * }
+ * ```
+ */
+export async function refreshInstagramToken(
+  token: string
+): Promise<TokenRefreshResult> {
+  try {
+    const url = `${GRAPH_API_BASE}/refresh_access_token?grant_type=ig_refresh_token&access_token=${token}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      return {
+        success: false,
+        error: `HTTP Error: ${response.status} ${response.statusText}`
+      };
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+      return {
+        success: false,
+        error: data.error.message || JSON.stringify(data.error)
+      };
+    }
+
+    if (data.access_token && data.expires_in) {
+      const expiryDate = new Date();
+      expiryDate.setSeconds(expiryDate.getSeconds() + data.expires_in);
+
+      return {
+        success: true,
+        token: data.access_token,
+        expiresIn: data.expires_in,
+        expiryDate
+      };
+    }
+
+    return {
+      success: false,
+      error: 'No token in response'
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+}
+
+/**
+ * トークン有効期限をチェックし、必要に応じて警告をログ出力
+ * @param token - アクセストークン
+ * @param appId - Meta App ID（オプション）
+ * @param appSecret - Meta App Secret（オプション）
+ */
+export async function logTokenExpiryWarning(
+  token: string,
+  appId?: string,
+  appSecret?: string
+): Promise<void> {
+  try {
+    const expiry = await checkTokenExpiry(token, appId, appSecret);
+
+    if (expiry.daysRemaining < 7) {
+      console.warn(
+        `⚠️ Instagram トークンが ${expiry.daysRemaining} 日で失効します`
+      );
+      console.warn(`失効予定日: ${expiry.expiryDate.toISOString()}`);
+      console.warn(
+        'トークンをリフレッシュしてください: https://developers.facebook.com/docs/instagram-api/getting-started'
+      );
+    } else if (expiry.daysRemaining < 1) {
+      console.error('🚨 Instagram トークンが本日中に失効します！');
+      console.error('すぐにトークンをリフレッシュしてください');
+    } else {
+      console.log(`✓ Instagram トークンは有効です(${expiry.daysRemaining}日残り)`);
+    }
+  } catch (error) {
+    console.error('トークン有効期限チェックエラー:', error);
+  }
+}
