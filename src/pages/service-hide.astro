@@ -6,27 +6,17 @@ import FooterDivider from '../components/overview/FooterDivider.astro';
 import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
 import ServiceCard from '../components/cards/ServiceCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
-import ServicesSection from '../components/services/ServicesSection.astro';
 import { serviceCategories, requestFlow, consultationTopics } from '../config/site';
 
-
-// サービス情報は src/config/site.ts で一元管理
-// - serviceCategories: サイエンス・スペース分野のサービス定義
-// - requestFlow: ご依頼の流れ（6ステップ）
-// - consultationTopics: 打ち合わせ内容（4項目）
-// 上記をimportして使用（重複排除）
-
-// 右列：リンク情報
-const overviewLinks = [
-  { textSvg: '/images/svg/Parts/text_Offer.svg', href: '#request-flow', altText: 'ご依頼の流れ' },
-  { textSvg: '/images/svg/Parts/text_QA.svg', href: '#faq', altText: 'よくある質問' },
-  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '活動経歴' }
-];
+const spaceCategory = serviceCategories.space;
 ---
 
-<Layout title="サービス内容">
+<Layout
+  title="スペース（宇宙分野）"
+  description="星空観望会、プラネタリウム解説、講演、星空写真提供など、宇宙の不思議を探検するサービスをご提供します"
+>
   <Header />
-  
+
   <main class="flex-grow relative overflow-hidden">
     <!-- 背景装飾とスタイル -->
     <style>
@@ -38,82 +28,46 @@ const overviewLinks = [
         background-repeat: no-repeat;
         background-attachment: fixed;
       }
-      
+
       .star {
         position: absolute;
         background: white;
         clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
         opacity: 0.7;
       }
-      
+
       .circle-decoration {
         position: absolute;
         background: white;
         border-radius: 50%;
         opacity: 0.3;
       }
-      
+
       .waveline-wrapper {
         max-width: 1000px;
         margin: 0 auto;
         padding: 0 1rem;
       }
     </style>
-        
+
     <!-- タイトルセクション -->
     <section class="text-center py-12 relative z-10">
-      <div class="container mx-auto px-4">
-        <!-- セクションタイトル -->
-        <div class="text-left mb-12">
-          <h2 class="section-title-news">
-            サービス内容
-          </h2>
-        </div>
-        <div class="waveline-wrapper">
-          <div class="flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          </div>
-        </div>
-      </div>
-
     <div class="container mx-auto px-4 py-12 relative z-10">
-      <!-- サービス分類セクション（OverViewセクション） -->
-      <ServicesSection
-        links={overviewLinks}
-      />
-
-        <!-- サイエンス分野 -->
-        <section id="science" class="mb-24">
-          <ServiceCategoryHeader
-            icon={serviceCategories.science.icon}
-            title={serviceCategories.science.title}
-            subtitle={serviceCategories.science.subtitle}
-            description={serviceCategories.science.description}
-            characterIconUrl={serviceCategories.science.characterIconUrl}
-          />
-
-          {serviceCategories.science.services.map((service, index) => (
-            <ServiceCard service={service} index={index} />
-          ))}
-        </section>
-        
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
           <ServiceCategoryHeader
-            icon={serviceCategories.space.icon}
-            title={serviceCategories.space.title}
-            subtitle={serviceCategories.space.subtitle}
-            description={serviceCategories.space.description}
-            characterIconUrl={serviceCategories.space.characterIconUrl}
+            icon={spaceCategory.icon}
+            title={spaceCategory.title}
+            subtitle={spaceCategory.subtitle}
+            description={spaceCategory.description}
+            characterIconUrl={spaceCategory.characterIconUrl}
           />
 
-          {serviceCategories.space.services.map((service, index) => (
+          {spaceCategory.services.map((service, index) => (
             <ServiceCard service={service} index={index} />
           ))}
         </section>
-        
+
         <!-- ご依頼の流れセクション -->
         <section id="request-flow" class="mb-24">
           <div class="text-center mb-16">
@@ -177,43 +131,6 @@ const overviewLinks = [
 
     <FooterDivider />
   </main>
-  
+
   <Footer />
 </Layout>
-
-<script>
-  // DOM読み込み完了後にイベントリスナーを設定
-  document.addEventListener('DOMContentLoaded', function() {
-    // すべてのFAQトグルボタンにクリックイベントを追加
-    const faqToggles = document.querySelectorAll('.faq-toggle');
-    
-    faqToggles.forEach(button => {
-      button.addEventListener('click', function(this: HTMLElement) {
-        const answer = this.parentElement?.querySelector('.faq-answer') as HTMLElement;
-        const icon = this.querySelector('.faq-icon') as HTMLElement;
-        
-        if (answer && icon) {
-          if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
-            // 開く - 滑らかなアニメーション
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-            answer.style.opacity = '1';
-            icon.style.transform = 'rotate(180deg)';
-          } else {
-            // 閉じる - 滑らかなアニメーション
-            answer.style.maxHeight = '0px';
-            answer.style.opacity = '0';
-            icon.style.transform = 'rotate(0deg)';
-          }
-        }
-      });
-    });
-    
-    // 初期状態を設定
-    const faqAnswers = document.querySelectorAll('.faq-answer');
-    faqAnswers.forEach(answer => {
-      const answerElement = answer as HTMLElement;
-      answerElement.style.maxHeight = '0px';
-      answerElement.style.opacity = '0';
-    });
-  });
-</script>

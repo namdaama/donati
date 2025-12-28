@@ -21,11 +21,12 @@
   - HTML/CSS（静的デザイン）: ひさな
   - TypeScript（動的機能のみ）: なむ
 
-### 最新の開発状況（2025年9月現在）
+### 最新の開発状況（2025年12月現在）
+- **Issue #77完了**: サイエンス・天文事業の専用ページを作成済み（`service-fuji.astro`, `service-hide.astro`）
 - **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
 - **コア機能実装済み**: カルーセル、Instagram連携、Web3Forms統合
-- **ページ構成完成**: index, about, services, achievements, contact, staff
-- **現在のブランチ**: feature/soften-tone-issue-19（マージ済み）
+- **ページ構成**: index, about, services, service-fuji, service-hide, professional-experience, contact
+- **現在のブランチ**: feature/split-service-pages-issue-77
 
 ## 必須コマンド
 
@@ -46,7 +47,10 @@ npm run astro check  # Astroの組み込み型チェックを実行
 ### フレームワーク: Astro (静的サイト生成)
 - **ページ**: `src/pages/`に配置 - ファイルベースルーティング
   - `index.astro` (トップページ)
-  - `services.astro` (サービス)
+  - `about.astro` (私たちについて)
+  - `services.astro` (サービス統合ページ)
+  - `service-fuji.astro` (サイエンス専用ページ - Issue #77)
+  - `service-hide.astro` (天文専用ページ - Issue #77)
   - `contact.astro` (お問い合わせ)
   - `professional-experience.astro` (活動経歴)
 - **コンポーネント**: 再利用可能な`.astro`コンポーネントは`src/components/`（29個、フォルダベース構造）
@@ -108,6 +112,19 @@ npm run astro check  # Astroの組み込み型チェックを実行
 - **実装時期**: Issue #11で追加
 - **機能**: 質問クリックで回答の表示/非表示切り替え
 - **TypeScriptエラー修正済み**: 型安全な実装
+
+### 6. サービスページの分割 ✅実装完了
+- **実装時期**: Issue #77
+- **分割内容**:
+  - `/service-fuji.astro` - サイエンス（科学分野）専用ページ
+    - サイエンスショー、科学実験教室、ワークショップを掲載
+  - `/service-hide.astro` - スペース（宇宙分野）専用ページ
+    - 星空観望会、講演、星空写真提供を掲載
+- **データ管理**: `src/config/site.ts`で統一管理
+  - `serviceCategories`: サイエンス・スペース分野のサービス定義
+  - `requestFlow`: ご依頼の流れ（6ステップ）
+  - `consultationTopics`: 打ち合わせ内容（4項目）
+- **既存ページ保持**: `services.astro`は完全保持（統合ページとして機能）
 
 ## 環境設定
 
