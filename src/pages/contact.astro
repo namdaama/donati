@@ -6,14 +6,6 @@ import Hero from '../components/common/Hero.astro';
 
 // Web3Forms Access Key（ハードコード）
 const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
-
-const contactTypes = [
-  '科学実験ショーのご依頼',
-  'ワークショップのご依頼',
-  '星空観望会のご依頼',
-  '探求学習プログラムのご相談',
-  'その他のお問い合わせ'
-];
 ---
 
 <Layout title="お問い合わせ">
@@ -98,16 +90,38 @@ const contactTypes = [
             <h2 class="text-2xl font-bold text-text-dark mb-6">お問い合わせフォーム</h2>
 
             <div class="mb-8">
-              <h3 class="text-lg font-semibold mb-4">お問い合わせ種別</h3>
+              <h3 class="text-lg font-semibold mb-4">選べるプラン</h3>
               <ul class="space-y-2">
-                {contactTypes.map((type) => (
-                  <li class="flex items-center">
-                    <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-                    </svg>
-                    <span class="text-text-gray">{type}</span>
-                  </li>
-                ))}
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-text-gray">サイエンスパフォーマンスショー</span>
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-text-gray">わくわく科学実験室！</span>
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-text-gray">ワークショップ</span>
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-text-gray">星空・天文イベント</span>
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-space-blue mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                  </svg>
+                  <span class="text-text-gray">まだ決まっていない(相談したい)</span>
+                </li>
               </ul>
             </div>
 
@@ -128,7 +142,7 @@ const contactTypes = [
                   <!-- Name -->
                   <div>
                     <label for="name" class="block text-lg font-medium text-text-dark mb-2">
-                      お名前 <span class="text-red-500">*</span>
+                      お名前（担当者名） <span class="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -139,6 +153,24 @@ const contactTypes = [
                       maxlength="100"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
                       placeholder="山田 太郎"
+                    >
+                    <p class="error-message hidden text-sm text-red-600 mt-1"></p>
+                  </div>
+
+                  <!-- Organization -->
+                  <div>
+                    <label for="organization" class="block text-lg font-medium text-text-dark mb-2">
+                      団体名・貴社名 <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="organization"
+                      name="organization"
+                      required
+                      minlength="2"
+                      maxlength="100"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
+                      placeholder="株式会社〇〇 / 〇〇小学校"
                     >
                     <p class="error-message hidden text-sm text-red-600 mt-1"></p>
                   </div>
@@ -160,46 +192,116 @@ const contactTypes = [
                     <p class="error-message hidden text-sm text-red-600 mt-1"></p>
                   </div>
 
-                  <!-- Phone (optional) -->
+                  <!-- Phone (required) -->
                   <div>
                     <label for="phone" class="block text-lg font-medium text-text-dark mb-2">
-                      お電話番号 <span class="text-text-gray text-sm">(任意)</span>
+                      お電話番号 <span class="text-red-500">*</span>
                     </label>
                     <input
                       type="tel"
                       id="phone"
                       name="phone"
+                      required
                       pattern="[0-9\-\(\)\s]*"
+                      minlength="10"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
                       placeholder="090-1234-5678"
                     >
-                    <p class="text-sm text-text-gray mt-1">お急ぎの場合はご記入ください</p>
                     <p class="error-message hidden text-sm text-red-600 mt-1"></p>
                   </div>
 
-                  <!-- Inquiry Type -->
+                  <!-- Plan (Checkbox Group) -->
                   <div>
-                    <label for="inquiry-type" class="block text-lg font-medium text-text-dark mb-2">
-                      お問い合わせ種別 <span class="text-red-500">*</span>
+                    <label class="block text-lg font-medium text-text-dark mb-2">
+                      ご検討中のプラン <span class="text-red-500">*</span>
                     </label>
-                    <select
-                      id="inquiry-type"
-                      name="inquiry_type"
-                      required
+                    <p class="text-sm text-text-gray mb-3">複数選択可能です</p>
+                    <div class="space-y-3">
+                      <label class="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="plan"
+                          value="サイエンスパフォーマンスショー"
+                          class="w-5 h-5 text-primary-color border-gray-300 rounded focus:ring-primary-color focus:ring-2"
+                        >
+                        <span class="ml-3 text-text-dark">サイエンスパフォーマンスショー</span>
+                      </label>
+                      <label class="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="plan"
+                          value="わくわく科学実験室！"
+                          class="w-5 h-5 text-primary-color border-gray-300 rounded focus:ring-primary-color focus:ring-2"
+                        >
+                        <span class="ml-3 text-text-dark">わくわく科学実験室！</span>
+                      </label>
+                      <label class="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="plan"
+                          value="ワークショップ"
+                          class="w-5 h-5 text-primary-color border-gray-300 rounded focus:ring-primary-color focus:ring-2"
+                        >
+                        <span class="ml-3 text-text-dark">ワークショップ</span>
+                      </label>
+                      <label class="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="plan"
+                          value="星空・天文イベント"
+                          class="w-5 h-5 text-primary-color border-gray-300 rounded focus:ring-primary-color focus:ring-2"
+                        >
+                        <span class="ml-3 text-text-dark">星空・天文イベント</span>
+                      </label>
+                      <label class="flex items-center cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="plan"
+                          value="まだ決まっていない(相談したい)"
+                          class="w-5 h-5 text-primary-color border-gray-300 rounded focus:ring-primary-color focus:ring-2"
+                        >
+                        <span class="ml-3 text-text-dark">まだ決まっていない(相談したい)</span>
+                      </label>
+                    </div>
+                    <p id="plan-error" class="error-message hidden text-sm text-red-600 mt-1"></p>
+                  </div>
+
+                  <!-- Preferred Date -->
+                  <div>
+                    <label for="preferred-date" class="block text-lg font-medium text-text-dark mb-2">
+                      実施希望時期 <span class="text-text-gray text-sm">(任意)</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="preferred-date"
+                      name="preferred_date"
+                      maxlength="100"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
+                      placeholder="例: 2025年3月頃 / 夏休み期間中 / 未定"
                     >
-                      <option value="">選択してください</option>
-                      {contactTypes.map((type) => (
-                        <option value={type}>{type}</option>
-                      ))}
-                    </select>
-                    <p class="error-message hidden text-sm text-red-600 mt-1"></p>
+                    <p class="text-sm text-text-gray mt-1">おおよその時期をご記入ください(未定の場合はその旨をご記入ください)</p>
+                  </div>
+
+                  <!-- Venue -->
+                  <div>
+                    <label for="venue" class="block text-lg font-medium text-text-dark mb-2">
+                      開催予定場所(市町村名・施設名など／わかる範囲で) <span class="text-text-gray text-sm">(任意)</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="venue"
+                      name="venue"
+                      maxlength="200"
+                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
+                      placeholder="例: 東京都渋谷区 / 〇〇市民ホール / 未定"
+                    >
+                    <p class="text-sm text-text-gray mt-1">おおよその場所をご記入ください(未定の場合はその旨をご記入ください)</p>
                   </div>
 
                   <!-- Message -->
                   <div>
                     <label for="message" class="block text-lg font-medium text-text-dark mb-2">
-                      お問い合わせ内容 <span class="text-red-500">*</span>
+                      お問い合わせ内容・ご要望 <span class="text-red-500">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -209,9 +311,9 @@ const contactTypes = [
                       maxlength="1000"
                       rows="6"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all resize-vertical"
-                      placeholder="ご質問やご要望を詳しくお聞かせください"
+                      placeholder="まだ内容が固まっていない場合でも、ご相談ベースで問題ありません"
                     ></textarea>
-                    <p class="text-sm text-text-gray mt-1">ご質問やご要望を詳しくお聞かせください（10文字以上）</p>
+                    <p class="text-sm text-text-gray mt-1">目的や会場条件など、わかる範囲でご記入ください(10文字以上)</p>
                     <p class="error-message hidden text-sm text-red-600 mt-1"></p>
                   </div>
 
@@ -351,6 +453,36 @@ const contactTypes = [
     return true;
   }
 
+  // Checkbox group validation
+  function validateCheckboxGroup(): boolean {
+    const checkboxes = form.querySelectorAll('input[name="plan"]:checked') as NodeListOf<HTMLInputElement>;
+    const errorMsg = document.getElementById('plan-error') as HTMLElement;
+
+    if (checkboxes.length === 0) {
+      if (errorMsg) {
+        errorMsg.textContent = '少なくとも1つ選択してください';
+        errorMsg.classList.remove('hidden');
+      }
+      return false;
+    }
+
+    if (errorMsg) {
+      errorMsg.classList.add('hidden');
+    }
+    return true;
+  }
+
+  // Checkbox change listener for real-time validation
+  const planCheckboxes = form.querySelectorAll('input[name="plan"]');
+  planCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+      const errorMsg = document.getElementById('plan-error');
+      if (errorMsg && !errorMsg.classList.contains('hidden')) {
+        validateCheckboxGroup();
+      }
+    });
+  });
+
   // Form submission
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -360,9 +492,12 @@ const contactTypes = [
       if (!validateField(input as HTMLInputElement)) isValid = false;
     });
 
+    // Validate checkbox group
+    if (!validateCheckboxGroup()) isValid = false;
+
     if (!isValid) {
-      const firstError = form.querySelector('.border-red-500') as HTMLElement;
-      firstError?.focus();
+      const firstError = form.querySelector('.border-red-500, #plan-error:not(.hidden)') as HTMLElement;
+      firstError?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -370,6 +505,18 @@ const contactTypes = [
     submitButton.textContent = '送信中...';
 
     const formData = new FormData(form);
+
+    // Handle checkbox group - collect all checked values
+    const planCheckboxes = form.querySelectorAll('input[name="plan"]:checked') as NodeListOf<HTMLInputElement>;
+    const planValues: string[] = [];
+    planCheckboxes.forEach(checkbox => {
+      planValues.push(checkbox.value);
+    });
+
+    // Set the plan field with comma-separated values
+    if (planValues.length > 0) {
+      formData.set('plan', planValues.join(', '));
+    }
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
@@ -383,7 +530,7 @@ const contactTypes = [
 
       if (result.success) {
         showMessage('success', '送信完了',
-          'お問い合わせありがとうございます。\n通常2〜3営業日以内にご返信いたします。\nお急ぎの場合は、その旨をご記入いただければ優先的に対応させていただきます。');
+          'お問い合わせありがとうございます。\n内容を確認の上、2〜3営業日以内に担当者よりご連絡いたします。\nまだ内容が固まっていない場合でも、ご相談ベースで問題ありません。\n目的や会場条件に合わせて、最適な形をご提案させていただきます。\n\n※数日経っても返信がない場合は、迷惑メールフォルダをご確認の上、\nお手数ですが再度ご連絡ください。');
         form.reset();
       } else {
         console.error('Form submission failed:', result);
