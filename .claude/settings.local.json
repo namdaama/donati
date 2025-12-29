@@ -3,7 +3,10 @@
     "allow": [
       "Bash(ls:*)",
       "Bash(mkdir:*)",
-      "Bash(npm install)"
+      "Bash(npm install)",
+      "Bash(gh issue list:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nstyle: index.astroのセクション間余白を統一 \\(#83\\)\n\n- セクション上下の余白をpy-12 md:py-20で統一\n  - お知らせセクション: py-16 md:py-24 → py-12 md:py-20\n  - CTAバナーセクション: py-12 md:py-16 → py-12 md:py-20\n- セクション全体で一貫性のあるスペーシング\n\n影響範囲: トップページ（index.astro）のセクション間隔\nEOF\n\\)\")"
     ],
     "deny": []
   }

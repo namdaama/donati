@@ -89,8 +89,8 @@ const overviewLinks = [
     </div>
 
     <!-- お知らせセクション -->
-    <section class="py-16 md:py-24 bg-transparent">
-      <div class="container mx-auto px-4">
+    <section class="py-12 md:py-20 bg-transparent">
+      <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="text-left mb-12">
           <h2 class="section-title-news">
@@ -101,38 +101,58 @@ const overviewLinks = [
 
       <!-- ウェーブライン（containerの外） -->
       <div class="waveline-wrapper">
-        <div class="flex justify-center">
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+        <div class="waveline-container py-6">
+          <!-- モバイル: 2つ -->
+          <div class="flex sm:hidden">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          </div>
+          <!-- タブレット: 3つ -->
+          <div class="hidden sm:flex md:hidden">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          </div>
+          <!-- デスクトップ: 5つ -->
+          <div class="hidden md:flex">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          </div>
         </div>
       </div>
 
-      <div class="container mx-auto px-4">
-        
+      <div class="max-w-4xl mx-auto px-4 mt-8">
+
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {newsItems.map((item) => (
-            <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden border-2 border-overview-yellow/30">
-              <!-- サムネイル -->
-              <div class="h-40 bg-overview-sky/20 flex items-center justify-center">
-                <span class="text-4xl">📅</span>
+            <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+              <!-- サムネイル（後でInstagram画像に差し替え予定） -->
+              <div class="relative h-48 bg-gray-50 overflow-hidden flex items-center justify-center">
+                <span class="text-6xl">📅</span>
               </div>
-              
+
               <!-- コンテンツ -->
-              <div class="p-4">
-                <div class="text-sm font-bold text-overview-yellow bg-overview-dark-blue px-3 py-1 rounded-full inline-block mb-3">
-                  {item.date}
+              <div class="p-5">
+                <!-- イベントタグ -->
+                <div class="inline-block mb-3">
+                  <span class="bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded">
+                    イベント
+                  </span>
                 </div>
-                <h3 class="font-bold text-overview-dark-blue mb-2 text-lg">
+
+                <!-- 日付 -->
+                <p class="text-sm text-gray-600 mb-2 font-medium">
+                  {item.date}
+                </p>
+
+                <!-- タイトル -->
+                <h3 class="font-bold text-gray-800 mb-2 text-base leading-snug">
                   {item.title}
                 </h3>
-                <p class="text-sm text-gray-600 mb-2">
-                  {item.location}
-                </p>
-                <p class="text-xs text-overview-sky font-medium">
-                  {item.detail}
-                </p>
               </div>
             </div>
           ))}
@@ -142,22 +162,36 @@ const overviewLinks = [
 
     <!-- 波線装飾（複数並べて中央寄せ） -->
     <div class="waveline-wrapper">
-      <div class="overflow-hidden py-4 flex justify-center">
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <div class="waveline-container py-4">
+        <!-- モバイル: 2つ -->
+        <div class="flex sm:hidden">
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        </div>
+        <!-- タブレット: 3つ -->
+        <div class="hidden sm:flex md:hidden">
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        </div>
+        <!-- デスクトップ: 5つ -->
+        <div class="hidden md:flex">
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        </div>
       </div>
     </div>
 
     <OverViewSection {staffMembers} {services} links={overviewLinks} />
 
     <!-- CTAバナー（QA画像） -->
-    <section class="py-12 md:py-16">
-      <div class="container mx-auto px-4">
+    <section class="py-12 md:py-20">
+      <div class="max-w-4xl mx-auto px-4">
         <a href="/contact" class="block hover:opacity-90 transition-opacity duration-300">
-          <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full max-w-4xl mx-auto" />
+          <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full" />
         </a>
       </div>
     </section>
@@ -198,11 +232,8 @@ const overviewLinks = [
 
   /* Heroカルーセル専用スタイル */
   .hero-carousel-wrapper {
-    margin-top: 0;
-    margin-bottom: 2rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 1024px;
+    margin: 0 auto 2rem auto;
     padding: 0 1rem;
   }
 
@@ -251,13 +282,6 @@ const overviewLinks = [
   /* アクティブドットの配色調整 */
   .hero-carousel-wrapper .dot.active {
     background: #f4a261;
-  }
-
-  /* ウェーブライン幅調整 */
-  .waveline-wrapper {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
   }
 
   /* ホバーエフェクト */

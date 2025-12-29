@@ -28,7 +28,7 @@
   }
 
   body {
-    @apply text-text-dark;
+    @apply text-text-dark overflow-x-hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -38,7 +38,16 @@
 
 @layer components {
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .waveline-wrapper {
+    @apply max-w-4xl mx-auto px-4;
+  }
+
+  /* Prevent horizontal overflow from waveline decorations */
+  .waveline-container {
+    @apply w-full overflow-x-hidden flex justify-center;
   }
 
   .btn-primary {
