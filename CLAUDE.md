@@ -22,11 +22,15 @@
   - TypeScript（動的機能のみ）: なむ
 
 ### 最新の開発状況（2025年12月現在）
+- **Issue #83完了**: サイト全体の横幅を1024pxに統一、横スクロール問題を解決済み
+  - ウェーブライン装飾をレスポンシブ対応（モバイル2枚→タブレット3枚→デスクトップ5枚）
+  - Hero Carouselを max-w-4xl で中央寄せに統一
+  - body に `overflow-x-hidden` を追加してグローバル横スクロール防止
 - **Issue #77完了**: サイエンス・天文事業の専用ページを作成済み（`service-fuji.astro`, `service-hide.astro`）
 - **Issue #19完了**: サイト全体の文言を柔らかく親しみやすい表現に変更済み
 - **コア機能実装済み**: カルーセル、Instagram連携、Web3Forms統合
 - **ページ構成**: index, about, services, service-fuji, service-hide, professional-experience, contact, 404
-- **現在のブランチ**: feature/split-service-pages-issue-77
+- **現在のブランチ**: feature/unify-width-issue-83（PR #86）
 
 ## 必須コマンド
 
@@ -355,6 +359,110 @@ body {
   background-attachment: fixed;
 }
 ```
+
+### レスポンシブ幅設定（Issue #83完了）
+
+#### 幅統一方針
+全セクションを **最大幅1024px（max-w-4xl）で中央寄せ** に統一。横スクロール問題を完全排除。
+
+**統一された幅の一覧:**
+- Header: `max-w-4xl mx-auto px-4`（Header.astro:38）
+- Hero Carousel: `max-width: 1024px; margin: 0 auto`（各ページのスタイル）
+- セクションコンテナ: `max-w-4xl mx-auto px-4`（すべてのセクション）
+- ウェーブライン装飾: `max-w-4xl mx-auto px-4`（.waveline-wrapper）
+- Footer: `max-w-4xl mx-auto px-4`（Footer.astro）
+
+**効果:**
+- すべての主要要素が1024px以内に収まる
+- 大画面でも左右に余白が保たれて見栄えが良い
+- モバイル～デスクトップで一貫した配置
+- 横スクロールバーが完全に排除される
+
+#### グローバル設定（src/styles/global.css）
+
+**1. body要素**
+```css
+body {
+  @apply text-text-dark overflow-x-hidden;
+}
+```
+- サイト全体で横スクロール防止
+
+**2. ユーティリティクラス**
+```css
+.waveline-container {
+  @apply w-full overflow-x-hidden flex justify-center;
+}
+```
+- 装飾要素（waveLine.svg等）の幅オーバーフロー防止
+
+**3. セクション制約**
+```css
+.container-custom {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.waveline-wrapper {
+  @apply max-w-4xl mx-auto px-4;
+}
+```
+
+#### ページ別実装パターン
+
+**Hero Carousel（各ページ）**
+```css
+.hero-carousel-wrapper {
+  max-width: 1024px;
+  margin: 0 auto 2rem auto;
+  padding: 0 1rem;
+}
+```
+- Carouselも最大幅を1024pxに制限
+- 他セクションと同じ配置を実現
+
+**ウェーブライン装飾（複数画像の場合）**
+```html
+<div class="waveline-wrapper">
+  <div class="waveline-container py-6">
+    <!-- モバイル: 2つ -->
+    <div class="flex sm:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+    </div>
+    <!-- タブレット: 3つ -->
+    <div class="hidden sm:flex md:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+    </div>
+    <!-- デスクトップ: 5つ -->
+    <div class="hidden md:flex">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+    </div>
+  </div>
+</div>
+```
+- レスポンシブ枚数調整で各ブレークポイントで最適な表示
+- `flex-shrink-0`を使用しない（自動調整を許可）
+
+#### 問題発生時のチェックリスト
+
+❓ 横スクロールバーが表示されている場合：
+- [ ] `body`に`overflow-x-hidden`が設定されているか確認
+- [ ] セクション内の要素が`max-w-4xl mx-auto px-4`で制約されているか確認
+- [ ] ウェーブラインなど装飾SVGが`waveline-container`クラスで制御されているか確認
+- [ ] 固定幅（`width: 1000px`等）が設定されていないか確認
+- [ ] `flex-shrink-0`で縮小禁止になっていないか確認
+
+❓ 新しいページ/セクションを追加する場合：
+- [ ] メインコンテナに`.container-custom`または`max-w-4xl mx-auto px-4`を適用
+- [ ] Heroセクションに`.hero-carousel-wrapper`スタイルを適用
+- [ ] 装飾SVG/画像は`waveline-container`で制御
+- [ ] `npm run build`で横スクロール問題がないか確認
 
 ## 実装状況と今後の計画
 
