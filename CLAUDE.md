@@ -158,8 +158,9 @@ DONATIウェブサイトはVercel上にホスティングされており、Git�
 - **アクセス方法**: Vercelアカウントでログイン後、プロジェクトメンバーとしてアクセス
 
 #### 本番環境
-- **本番URL**: カスタムドメイン設定要確認
-- **デプロイトリガー**: 本番デプロイの条件要確認
+- **本番URL**: `https://donati-science.jp`（Issue #84で設定）
+- **デプロイトリガー**: `master`ブランチへのマージで本番デプロイ
+- **ドメイン**: `donati-science.jp`（Vercel カスタムドメイン経由）
 
 ### 環境変数管理
 - **設定場所**: Vercelダッシュボード → Project Settings → Environment Variables
@@ -188,10 +189,48 @@ API連携でVercel Authenticationを迂回する場合：
 3. **リリース**: `master`ブランチにマージで自動デプロイ
 4. **本番反映**: 本番環境への反映プロセス要確認
 
+### Vercel カスタムドメイン設定（Issue #84）
+
+#### DNS設定手順（GCP Cloud DNS または一般的なDNS管理サービスの場合）
+1. **Vercelダッシュボード**で`donati-science.jp`をドメインとして追加
+   - Project Settings → Domains
+   - ドメイン `donati-science.jp` を入力
+2. **Vercelが提供する DNS レコード情報を確認**
+   - Vercel は NS レコードまたは CNAME レコードを提示
+3. **ドメイン管理者（フジまたはドメイン購入者）に連絡**
+   - DNS設定を Vercel が指示した値に更新
+   - 設定反映には数時間〜24時間要する
+4. **Vercel で確認**
+   - ドメイン認証が完了すると`https://donati-science.jp`でアクセス可能
+
+#### SSL証明書
+- Vercel は自動的に Let's Encrypt の SSL 証明書を発行・更新
+- 設定後、HTTPS でアクセス可能（自動リダイレクト）
+
+### QRコード生成（Issue #84）
+
+#### 推奨ツール
+- **Google Chart API**（無料、キャッシュ注意）
+  - URL: `https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=URL`
+- **QR Code Generator（https://www.qr-code-generator.com/）**（無料プラン利用可）
+  - ロゴ埋め込み、カスタムカラー対応
+- **快速 QR（https://qr.gs/）**（無料、シンプル）
+
+#### 生成方法（Google Chart API例）
+```
+https://chart.googleapis.com/chart?chs=300x300&chld=M|0&cht=qr&chl=https%3A%2F%2Fdonati-science.jp
+```
+
+#### 用途別推奨
+- **クライアント配布用**: QR Code Generator でロゴ埋め込みしたPNG形式
+- **メール/SNS**: Google Chart API の 200x200px
+- **印刷物**: 300x300px 以上推奨
+
 ### トラブルシューティング
 - **プレビュー環境にアクセスできない**: Vercelアカウントのプロジェクトメンバーシップを確認
 - **環境変数が反映されない**: Vercelダッシュボードの設定とローカル`.env`の同期確認
 - **ビルドエラー**: `npm run build`でローカル確認後、Vercelのビルドログを確認
+- **カスタムドメインが反映されない**: DNS設定の反映待機（24時間程度かかる場合あり）
 
 ## レスポンシブデザイン実装
 
