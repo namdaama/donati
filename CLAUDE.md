@@ -151,16 +151,24 @@ DONATIウェブサイトはVercel上にホスティングされており、Git�
 
 ### デプロイメント設定
 
-#### プレビュー環境
-- **プレビューURL**: `https://donati-git-master-namdaamas-projects.vercel.app/`
+#### ステージング環境
+- **ステージングURL**: `https://stg.donati-science.jp`（Issue #84で設定）
 - **自動デプロイ**: `master`ブランチへのプッシュで自動デプロイ
 - **認証**: Vercel Authentication有効（プロジェクトメンバーのみアクセス可能）
 - **アクセス方法**: Vercelアカウントでログイン後、プロジェクトメンバーとしてアクセス
+- **用途**: 本番前の動作確認、デザイナーレビュー、クライアント確認
+
+#### プレビュー環境（一時的なブランチ確認用）
+- **プレビューURL**: `https://donati-git-master-namdaamas-projects.vercel.app/`
+- **自動デプロイ**: 機能ブランチへのプッシュで自動デプロイ
+- **認証**: Vercel Authentication有効（プロジェクトメンバーのみアクセス可能）
+- **用途**: PR確認、機能テスト
 
 #### 本番環境
 - **本番URL**: `https://donati-science.jp`（Issue #84で設定）
 - **デプロイトリガー**: `master`ブランチへのマージで本番デプロイ
 - **ドメイン**: `donati-science.jp`（Vercel カスタムドメイン経由）
+- **用途**: クライアント（フジ）向けの公開サイト
 
 ### 環境変数管理
 - **設定場所**: Vercelダッシュボード → Project Settings → Environment Variables
@@ -191,46 +199,104 @@ API連携でVercel Authenticationを迂回する場合：
 
 ### Vercel カスタムドメイン設定（Issue #84）
 
-#### DNS設定手順（GCP Cloud DNS または一般的なDNS管理サービスの場合）
+#### 環境別ドメイン設定
+
+| 環境 | ドメイン | 用途 | DNS設定 |
+|------|---------|------|--------|
+| **本番** | `donati-science.jp` | クライアント向け公開 | 必須（ドメイン管理者が実施） |
+| **ステージング** | `stg.donati-science.jp` | 本番前確認 | CNAME で Vercel に向ける |
+| **プレビュー** | `donati-git-*.vercel.app` | PR確認用 | Vercel 自動管理 |
+
+#### 本番ドメイン `donati-science.jp` DNS設定手順
+
 1. **Vercelダッシュボード**で`donati-science.jp`をドメインとして追加
    - Project Settings → Domains
    - ドメイン `donati-science.jp` を入力
 2. **Vercelが提供する DNS レコード情報を確認**
-   - Vercel は NS レコードまたは CNAME レコードを提示
+   - Vercel が「CNAME レコード設定画面」を表示
+   - 例: `159884616d2e1142.vercel-dns-017.com.` など
 3. **ドメイン管理者（フジまたはドメイン購入者）に連絡**
-   - DNS設定を Vercel が指示した値に更新
+   - DNS設定内容: `CNAME @ → <Vercelが指示したレコード>`
    - 設定反映には数時間〜24時間要する
+   - **重要**: GCP Cloud DNS や他のプロバイダーの DNS コンソールで設定が必要
 4. **Vercel で確認**
-   - ドメイン認証が完了すると`https://donati-science.jp`でアクセス可能
+   - DNS設定完了後、Vercel ダッシュボードでドメイン認証が完了
+   - `https://donati-science.jp` でアクセス可能に
+
+#### ステージング環境 `stg.donati-science.jp` DNS設定手順
+
+1. **Vercelダッシュボード**で`stg.donati-science.jp`をドメインとして追加
+   - Project Settings → Domains
+   - ドメイン `stg.donati-science.jp` を入力
+2. **Vercelが提供する DNS レコード情報を確認**
+   - Vercel が CNAME レコード値を表示
+3. **ドメイン管理者に連絡**
+   - サブドメイン: `stg`
+   - DNS設定: CNAME で Vercel が指示した値に向ける
+4. **DNS反映確認**
+   - 反映後、`https://stg.donati-science.jp` でアクセス可能
 
 #### SSL証明書
 - Vercel は自動的に Let's Encrypt の SSL 証明書を発行・更新
 - 設定後、HTTPS でアクセス可能（自動リダイレクト）
+- 本番と同様のセキュアな環境が自動構築される
 
 ### QRコード生成（Issue #84）
 
 #### 推奨ツール
-- **Google Chart API**（無料、キャッシュ注意）
-  - URL: `https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=URL`
-- **QR Code Generator（https://www.qr-code-generator.com/）**（無料プラン利用可）
+- **Google Chart API**（無料、即時生成可能）
+  - URL: `https://chart.googleapis.com/chart?chs=300x300&chld=M|0&cht=qr&chl=<URLエンコード済みURL>`
+- **QR Code Generator**（https://www.qr-code-generator.com/ - 無料プラン）
   - ロゴ埋め込み、カスタムカラー対応
-- **快速 QR（https://qr.gs/）**（無料、シンプル）
+  - クライアント向け配布用に推奨
+- **快速 QR**（https://qr.gs/ - 無料）
+  - シンプルで高速
 
-#### 生成方法（Google Chart API例）
+#### 生成方法
+
+**本番サイト用（Google Chart API）**
 ```
 https://chart.googleapis.com/chart?chs=300x300&chld=M|0&cht=qr&chl=https%3A%2F%2Fdonati-science.jp
 ```
 
+**ステージング環境用（Google Chart API）**
+```
+https://chart.googleapis.com/chart?chs=300x300&chld=M|0&cht=qr&chl=https%3A%2F%2Fstg.donati-science.jp
+```
+
 #### 用途別推奨
-- **クライアント配布用**: QR Code Generator でロゴ埋め込みしたPNG形式
-- **メール/SNS**: Google Chart API の 200x200px
-- **印刷物**: 300x300px 以上推奨
+| 用途 | ツール | サイズ | 用例 |
+|------|--------|--------|------|
+| クライアント向け配布 | QR Code Generator | カスタム | ロゴ埋め込み、チラシ |
+| メール/SNS | Google Chart API | 200×200px | LINE、メール |
+| 印刷物（大判） | QR Code Generator | 1000px以上 | ポスター、看板 |
+| SNS（正方形） | Google Chart API | 300×300px | Instagram、Twitter |
 
 ### トラブルシューティング
+
+#### アクセス・ドメイン関連
 - **プレビュー環境にアクセスできない**: Vercelアカウントのプロジェクトメンバーシップを確認
+- **ステージング環境（stg.donati-science.jp）が「無効な設定」と表示**
+  - Vercel ダッシュボードで DNS レコード情報を確認
+  - ドメイン管理者に DNS 設定を依頼（CNAME レコード更新）
+  - DNS キャッシュ削除: `nslookup stg.donati-science.jp` で確認
+- **カスタムドメインが反映されない（本番・ステージング共通）**
+  - DNS設定の反映待機（24時間程度かかる場合あり）
+  - `dig donati-science.jp` で DNS レコード確認
+  - Vercel ダッシュボードでドメイン認証ステータスを確認
+
+#### デプロイ・ビルド関連
 - **環境変数が反映されない**: Vercelダッシュボードの設定とローカル`.env`の同期確認
 - **ビルドエラー**: `npm run build`でローカル確認後、Vercelのビルドログを確認
-- **カスタムドメインが反映されない**: DNS設定の反映待機（24時間程度かかる場合あり）
+- **CSS が適用されない**: Tailwind ビルドプロセスの確認、`npm run build` を再実行
+
+#### DNS設定確認（ドメイン管理者向け）
+```bash
+# 設定状況確認コマンド
+dig donati-science.jp CNAME
+nslookup donati-science.jp
+dig stg.donati-science.jp CNAME
+```
 
 ## レスポンシブデザイン実装
 
