@@ -2,7 +2,7 @@
 export const siteConfig = {
   // サイト基本情報
   name: 'サイエンス アンド スペース ラボ DONATI',
-  url: 'https://donati-science.com',
+  url: 'https://donati-science.jp',
   description: '科学実験ショーや星空観望会を通じて、科学の楽しさを伝えます',
   
   // ソーシャルメディア

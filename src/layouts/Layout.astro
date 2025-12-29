@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import CustomCursorStarTheme from '../components/effects/CustomCursor-StarTheme.astro';
+import { siteConfig } from '../config/site';
 
 export interface Props {
   title: string;
@@ -8,6 +9,7 @@ export interface Props {
 }
 
 const { title, description = 'サイエンス アンド スペース ラボ DONATI - 科学の楽しさを伝え、世界をワクワクでいっぱいにする' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteConfig.url);
 ---
 
 <!doctype html>
@@ -24,7 +26,11 @@ const { title, description = 'サイエンス アンド スペース ラボ DONA
     <meta property="og:title" content={`${title} | サイエンス アンド スペース ラボ DONATI`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl.toString()} />
     <meta property="og:locale" content="ja_JP" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalUrl.toString()} />
     
     <!-- Global Styles -->
   </head>
