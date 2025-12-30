@@ -12,9 +12,8 @@ export interface Props {
 const { slides } = Astro.props;
 ---
 
-<section class="carousel-section">
-  <div class="container">
-    <div class="carousel-wrapper" tabindex="0" role="region" aria-label="画像カルーセル" aria-roledescription="carousel">
+<div class="container max-w-4xl mx-auto px-4">
+  <div class="carousel-wrapper" tabindex="0" role="region" aria-label="画像カルーセル" aria-roledescription="carousel">
       <div class="carousel-container">
         {slides.map((slide, index) => (
           <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-target={slide.link} role="group" aria-roledescription="slide" aria-label={`${index + 1} / ${slides.length}`}>
@@ -40,11 +39,10 @@ const { slides } = Astro.props;
       </div>
       <div aria-live="polite" aria-atomic="true" class="sr-only"></div>
     </div>
-  </div>
-</section>
+</div>
 
 <style>
-  .carousel-section {
+  .container {
     padding: 3rem 0;
   }
 
