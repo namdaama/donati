@@ -43,7 +43,7 @@ const staffMembers = [
   <main class="flex-grow relative overflow-hidden">
     <!-- DONATIとは セクション -->
     <section class="py-16">
-      <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="mb-12">
           <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">DONATIとは？</h2>
@@ -75,7 +75,7 @@ const staffMembers = [
 
     <!-- 私たちについて セクション -->
     <section class="py-16">
-      <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="mb-12">
           <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">私たちについて</h2>
@@ -89,7 +89,7 @@ const staffMembers = [
         </div>
 
         <!-- スタッフカードグリッド -->
-        <div class="grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div class="grid grid-cols-2 gap-8">
           {staffMembers.map((staff) => (
             <StaffProfileCard {...staff} />
           ))}
@@ -115,7 +115,7 @@ const staffMembers = [
 
   /* ウェーブライン幅調整 */
   .waveline-wrapper {
-    max-width: 1000px;
+    max-width: 1024px;
     margin: 0 auto;
     padding: 0 1rem;
   }
