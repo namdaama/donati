@@ -84,9 +84,7 @@ const overviewLinks = [
   
   <main class="flex-grow">
     <!-- Hero Carousel Section -->
-    <div class="hero-carousel-wrapper">
-      <Carousel slides={heroCarouselData} />
-    </div>
+    <Carousel slides={heroCarouselData} />
 
     <!-- お知らせセクション -->
     <section class="py-12 md:py-20 bg-transparent">
@@ -231,61 +229,36 @@ const overviewLinks = [
   }
 
   /* Heroカルーセル専用スタイル */
-  .hero-carousel-wrapper {
-    max-width: 1024px;
-    margin: 0 auto 2rem auto;
-    padding: 0 1rem;
-  }
-
-  .hero-carousel-wrapper .carousel-section {
-    padding: 0;
-    width: 100%;
-  }
-
-  .hero-carousel-wrapper .container {
-    max-width: 100% !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    width: 100% !important;
-  }
-
-  .hero-carousel-wrapper .carousel-wrapper {
-    border-radius: 0;
-    margin: 0;
-    width: 100%;
-    box-shadow: none;
-  }
-
   /* レスポンシブ画像高さ */
-  .hero-carousel-wrapper .carousel-slide img {
+  main .carousel-slide img {
     height: 400px;
     object-fit: cover;
   }
 
   @media (min-width: 768px) {
-    .hero-carousel-wrapper .carousel-slide img {
+    main .carousel-slide img {
       height: 500px;
     }
   }
 
   @media (min-width: 1024px) {
-    .hero-carousel-wrapper .carousel-slide img {
+    main .carousel-slide img {
       height: 600px;
     }
   }
 
   /* カルーセルコンテンツを非表示 */
-  .hero-carousel-wrapper .carousel-content {
+  main .carousel-content {
     display: none;
   }
 
   /* アクティブドットの配色調整 */
-  .hero-carousel-wrapper .dot.active {
+  main .dot.active {
     background: #f4a261;
   }
 
   /* ホバーエフェクト */
-  .hero-carousel-wrapper .carousel-slide {
+  main .carousel-slide {
     cursor: pointer;
   }
 </style>
