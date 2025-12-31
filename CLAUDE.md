@@ -22,6 +22,12 @@
   - TypeScript（動的機能のみ）: なむ
 
 ### 最新の開発状況（2025年12月現在）
+- **Issue #96完了**: Carouselコンポーネントの幅を max-w-4xl に統一
+  - Carousel.astro で `max-w-4xl mx-auto px-4` を適用
+  - index.astro の大量のCSS overrideを削除
+- **Issue #96対応**: about.astro の waveLine を Header パターンに統一
+  - Waveline に `w-full overflow-hidden flex justify-center` を適用
+  - Header と同じ堅牢な実装パターンを採用（docs/05-implementation-guides/components-guide.md に実装ガイド追加）
 - **Issue #83完了**: サイト全体の横幅を1024pxに統一、横スクロール問題を解決済み
   - ウェーブライン装飾をレスポンシブ対応（モバイル2枚→タブレット3枚→デスクトップ5枚）
   - Hero Carouselを max-w-4xl で中央寄せに統一

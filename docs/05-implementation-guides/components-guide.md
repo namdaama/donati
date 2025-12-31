@@ -267,8 +267,80 @@ StarrySection.astro
 - **コンポーネント（4個）**: AchievementCard.astro, NewsCard.astro, StaffCard.astro, AboutUsButton.astro
 - **再構築**: about.astro - Issue #72で新規実装（StaffProfileCard+カード2枚型）
 
+## waveLine 装飾要素の実装ガイド
+
+waveLine.svg は複数箇所で使用される装飾要素です。適切に実装するために以下のパターンに従ってください。
+
+### 実装パターン（推奨）
+
+**Header と同じ堅牢な実装:**
+
+```html
+<div class="waveline-wrapper">
+  <div class="w-full overflow-hidden flex justify-center">
+    <!-- モバイル: 2つ -->
+    <div class="flex sm:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+    </div>
+    <!-- タブレット: 3つ -->
+    <div class="hidden sm:flex md:hidden">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+    </div>
+    <!-- デスクトップ: 5つ -->
+    <div class="hidden md:flex">
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+    </div>
+  </div>
+</div>
+```
+
+### 実装のポイント
+
+1. **`.waveline-wrapper`**: global.css で定義（`max-w-4xl mx-auto px-4`）
+   - 親要素の幅を最大1024pxに制限
+   - 中央寄せでレスポンシブ対応
+
+2. **`w-full overflow-hidden flex justify-center`**: 内側のコンテナ
+   - `w-full`: 親の幅を全て使用
+   - `overflow-hidden`: はみ出し部分を自動カット
+   - `flex justify-center`: 内部を中央寄せ
+
+3. **`flex-shrink-0`**: waveLine.svg に使用
+   - `overflow-hidden` と組み合わせることで、幅を超える部分を安全にカット
+   - 画像は元のサイズを保持
+
+4. **レスポンシブ枚数**:
+   - モバイル（sm未満）: 2つ
+   - タブレット（sm～md未満）: 3つ
+   - デスクトップ（md以上）: 5つ
+
+5. **高さの調整**:
+   - モバイル: `h-4` (16px)
+   - タブレット: `h-5` (20px)
+   - デスクトップ: `h-6` (24px)
+
+### 注意点
+
+- ❌ **避けるべき**: `max-width: 832px` などの個別スタイル上書き
+- ❌ **避けるべき**: `flex justify-start` で左寄せ（中央寄せが推奨）
+- ✅ **推奨**: `.waveline-wrapper` と `overflow-hidden` の組み合わせ
+
+### 使用実例
+
+- **Header**: `src/components/common/Header.astro` (102-124行目)
+- **about.astro**: `src/pages/about.astro` (50-56行目、82-88行目)
+- **index.astro**: `src/pages/index.astro` (101-123行目)
+
 ## 更新履歴
 
+- **2025年12月30日**: waveLine 実装ガイド追加（Issue #96対応）
 - **2025年12月27日**: Issue #72完了 - AboutUsページ実装
   - StaffProfileCard.astro (新規)
   - about.astro ページ (新規)
