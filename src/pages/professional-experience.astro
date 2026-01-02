@@ -83,16 +83,32 @@ const servicesListItems = [
   <Header />
 
   <main class="flex-grow relative overflow-hidden">
-    <div class="container mx-auto px-4 py-12 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
 
       <!-- ページタイトルセクション -->
       <section class="text-left mb-16">
         <h1 class="section-title-news">活動経歴</h1>
         <div class="waveline-wrapper">
-          <div class="flex justify-start">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          <div class="waveline-container py-6">
+            <!-- モバイル: 2つ -->
+            <div class="flex sm:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- タブレット: 3つ -->
+            <div class="hidden sm:flex md:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- デスクトップ: 5つ -->
+            <div class="hidden md:flex">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
           </div>
         </div>
       </section>
