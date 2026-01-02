@@ -179,12 +179,12 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '静電気パワー！電気の実験ショー'
         ],
         detailTable: {
-          effect: '科学への興味・関心を高める。驚きと発見の体験を提供。',
-          achievements: '学校のイベント、PTA主催の講演会、児童館、科学館など多数の施設で実績あり。',
-          overview: '実験やマジックを組み合わせた、子どもたちが驚き、ワクワクするショーです。',
-          scale: '幼児から中学生まで、10名〜300名の様々な規模に対応可能。',
-          duration: '45分〜90分程度（カスタマイズ可能）',
-          merit: '参加型の実験で、より深い科学理解が得られます。短時間で効果的な学習効果。'
+          effect: '会場の一体感と集客力の最大化',
+          achievements: '商業施設、地域イベント、学校の芸術鑑賞会、保育園・幼稚園のお祭りなど',
+          overview: '笑いと驚きのステージ型ショー。大規模イベント向き。',
+          scale: '100名～ / ホール、体育館',
+          duration: '30分〜45分',
+          merit: '盛り上がり保証！パフォーマーの熱量を直接お届け。'
         },
         photos: {
           photo1: '/images/placeholders/science-performance-1.jpg',
@@ -208,12 +208,12 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '研究発表会への挑戦'
         ],
         detailTable: {
-          effect: '科学的思考力と探究心を養う。自分で考える力を育成。',
-          achievements: 'オンライン講座、学習塾、学校での放課後プログラムなど、継続的な実績多数。',
-          overview: '各回のテーマに基づき、予想→実験→考察→発表という流れで深く学べる教室です。',
-          scale: '小学3〜6年生を対象。少人数制で一人ひとりに丁寧に対応（定員10名程度）',
-          duration: '月2回、90分程度の継続プログラム',
-          merit: '長期的な学習で、科学的思考の習慣づけが可能。友達と一緒に学べるコミュニティ。'
+          effect: '深い学び・探求心',
+          achievements: '小中学校 PTA 行事、中学・高校の探求学習。',
+          overview: '参加者自身がじっくり取り組む実験教室',
+          scale: '20名程度 / 教室、会議室',
+          duration: '60分～90分',
+          merit: '「なぜ？」を「わかった！」に変える深い体験。'
         },
         photos: {
           photo1: '/images/placeholders/experiment-room-1.jpg',
@@ -237,12 +237,12 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '結晶作りで学ぶ化学反応'
         ],
         detailTable: {
-          effect: '手を動かす体験を通じて、科学への実践的な理解を深める。',
-          achievements: 'ワークショップフェア、イベント会場、学童保育など、多様な場所で開催実績あり。',
-          overview: 'スライム作りや顕微鏡観察など、実際に手を動かして体験できるプログラムです。',
-          scale: '小学生〜中学生対象。5名〜30名の柔軟な規模に対応。',
-          duration: '60分〜120分（内容により調整可能）',
-          merit: 'その場で完成品が手に入り、持ち帰れる。親子でも参加可能な楽しい体験。'
+          effect: '短時間で楽しめる科学体験の提供と集客促進。',
+          achievements: '商業施設、住宅展示場（賑やかし）、マルシェイベントなど',
+          overview: '10分～15分で完結するライトな体験会。',
+          scale: '少人数～多数 / ブース、商業施設',
+          duration: '随時受付（回転率重視）',
+          merit: 'パフォーマンスショーとの相乗効果で集客力が高い。'
         },
         photos: {
           photo1: '/images/placeholders/workshop-1.jpg',
