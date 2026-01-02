@@ -35,17 +35,6 @@ const { service, index } = Astro.props;
     margin-bottom: 0.5rem;
   }
 
-  .waveline-decoration {
-    display: flex;
-    gap: 0.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .waveline-decoration img {
-    height: 0.75rem;
-    width: auto;
-    filter: hue-rotate(90deg) saturate(1.5);
-  }
 
   .content-wrapper {
     display: grid;
@@ -138,10 +127,14 @@ const { service, index } = Astro.props;
 <div class="service-section">
   <!-- サービスタイトル + 波線装飾 -->
   <h3 class="service-title">{service.title}</h3>
-  <div class="waveline-decoration">
-    <img src="/images/svg/Parts/waveLine.svg" alt="" />
-    <img src="/images/svg/Parts/waveLine.svg" alt="" />
-    <img src="/images/svg/Parts/waveLine.svg" alt="" />
+  <div class="waveline-wrapper">
+    <div class="waveline-container py-4">
+      <div class="flex justify-start gap-1">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+      </div>
+    </div>
   </div>
 
   <!-- メインコンテンツ: テーブル + 写真 -->
