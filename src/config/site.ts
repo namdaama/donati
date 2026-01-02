@@ -60,18 +60,18 @@ export const heroCarouselData = [
     link: '/about'
   },
   {
-    image: '/images/svg/Carousel/Carousel_Services.svg',
-    alt: 'サービス内容 - 実験ショーやワークショップ',
-    title: 'サービス内容',
-    description: '実験ショー・ワークショップ・星空観望会など、ワクワクする体験をお届けします',
-    link: '/services'
+    image: '/images/svg/Carousel/Carousel_Services_Science.svg',
+    alt: 'サイエンス分野 - 科学実験ショー・ワークショップ',
+    title: 'サイエンス分野',
+    description: '実験ショーやワークショップで、科学の楽しさをお届けします',
+    link: '/service-fuji'
   },
   {
-    image: '/images/svg/Carousel/Carousel_Staff.svg',
-    alt: '私たちについて - スタッフ紹介',
-    title: '私たちについて',
-    description: 'サイエンスパフォーマー フジと星の写真家 ひでゆきがお届けします',
-    link: '/about'
+    image: '/images/svg/Carousel/Carousel_Services_StarrySky.svg',
+    alt: 'スペース分野 - 星空観望会・天文講演',
+    title: 'スペース分野',
+    description: '星空観望会や講演で、宇宙の魅力をお伝えします',
+    link: '/service-hide'
   },
   {
     image: '/images/svg/Carousel/Carousel_Career.svg',
@@ -79,13 +79,6 @@ export const heroCarouselData = [
     title: '活動経歴',
     description: '200名以上が参加した実験ショーなど、みんなで楽しんだ活動の記録です',
     link: '/professional-experience'
-  },
-  {
-    image: '/images/svg/Carousel/Carousel_Contact.svg',
-    alt: 'お問い合わせ - 気軽にご相談ください',
-    title: 'お問い合わせ',
-    description: '時間・予算・内容、なんでも気軽にご相談ください！',
-    link: '/contact'
   }
 ];
 
