@@ -128,6 +128,18 @@ export interface ServiceItem {
   description: string;
   features: string[];
   programs: string[];
+  detailTable?: {
+    effect: string;           // 期待できる効果
+    achievements: string;     // 主な活動実績・利用場所
+    overview: string;         // 概要
+    scale: string;            // 規模 / 対象
+    duration: string;         // 時間目安
+    merit: string;            // メリット
+  };
+  photos?: {
+    photo1: string;        // 1枚目の写真パス
+    photo2: string;        // 2枚目の写真パス
+  };
 }
 
 export interface ServiceCategory {
@@ -151,8 +163,8 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
     description: '実験やワークショップで、科学の不思議とワクワクを一緒に楽しみましょう！',
     services: [
       {
-        id: 'science-show',
-        title: 'サイエンスショー',
+        id: 'science-performance-show',
+        title: 'サイエンスパフォーマンスショー',
         description: '目の前で起こる不思議な現象に驚き、科学の楽しさを発見できるショーです！',
         features: [
           '対象年齢：幼児〜中学生（内容により調整可能）',
@@ -165,11 +177,23 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '光と色の不思議！虹を作ろう',
           '化学反応マジック！色が変わる実験',
           '静電気パワー！電気の実験ショー'
-        ]
+        ],
+        detailTable: {
+          effect: '科学への興味・関心を高める。驚きと発見の体験を提供。',
+          achievements: '学校のイベント、PTA主催の講演会、児童館、科学館など多数の施設で実績あり。',
+          overview: '実験やマジックを組み合わせた、子どもたちが驚き、ワクワクするショーです。',
+          scale: '幼児から中学生まで、10名〜300名の様々な規模に対応可能。',
+          duration: '45分〜90分程度（カスタマイズ可能）',
+          merit: '参加型の実験で、より深い科学理解が得られます。短時間で効果的な学習効果。'
+        },
+        photos: {
+          photo1: '/images/placeholders/science-performance-1.jpg',
+          photo2: '/images/placeholders/science-performance-2.jpg'
+        }
       },
       {
-        id: 'science-class',
-        title: '科学実験教室（探求学習）',
+        id: 'science-experiment-room',
+        title: 'わくわく科学実験室',
         description: '「なんでだろう？」を大切にして、一緒に考えて実験して、科学的な考え方を一緒に育てていきましょう！',
         features: [
           '対象年齢：小学3年生〜6年生',
@@ -182,7 +206,19 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '実験計画の立て方を学ぼう',
           'データ分析と考察の方法',
           '研究発表会への挑戦'
-        ]
+        ],
+        detailTable: {
+          effect: '科学的思考力と探究心を養う。自分で考える力を育成。',
+          achievements: 'オンライン講座、学習塾、学校での放課後プログラムなど、継続的な実績多数。',
+          overview: '各回のテーマに基づき、予想→実験→考察→発表という流れで深く学べる教室です。',
+          scale: '小学3〜6年生を対象。少人数制で一人ひとりに丁寧に対応（定員10名程度）',
+          duration: '月2回、90分程度の継続プログラム',
+          merit: '長期的な学習で、科学的思考の習慣づけが可能。友達と一緒に学べるコミュニティ。'
+        },
+        photos: {
+          photo1: '/images/placeholders/experiment-room-1.jpg',
+          photo2: '/images/placeholders/experiment-room-2.jpg'
+        }
       },
       {
         id: 'workshop',
@@ -199,7 +235,19 @@ export const serviceCategories: Record<'science' | 'space', ServiceCategory> = {
           '顕微鏡で見る小さな世界',
           'ロボットプログラミング入門',
           '結晶作りで学ぶ化学反応'
-        ]
+        ],
+        detailTable: {
+          effect: '手を動かす体験を通じて、科学への実践的な理解を深める。',
+          achievements: 'ワークショップフェア、イベント会場、学童保育など、多様な場所で開催実績あり。',
+          overview: 'スライム作りや顕微鏡観察など、実際に手を動かして体験できるプログラムです。',
+          scale: '小学生〜中学生対象。5名〜30名の柔軟な規模に対応。',
+          duration: '60分〜120分（内容により調整可能）',
+          merit: 'その場で完成品が手に入り、持ち帰れる。親子でも参加可能な楽しい体験。'
+        },
+        photos: {
+          photo1: '/images/placeholders/workshop-1.jpg',
+          photo2: '/images/placeholders/workshop-2.jpg'
+        }
       }
     ]
   },

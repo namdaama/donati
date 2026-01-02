@@ -1,0 +1,223 @@
+---
+interface Props {
+  service: {
+    id: string;
+    title: string;
+    description: string;
+    detailTable?: {
+      effect: string;
+      achievements: string;
+      overview: string;
+      scale: string;
+      duration: string;
+      merit: string;
+    };
+    photos?: {
+      photo1: string;
+      photo2: string;
+    };
+  };
+  index: number;
+}
+
+const { service, index } = Astro.props;
+---
+
+<style>
+  .service-section {
+    margin-bottom: 3rem;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+  }
+
+  .waveline-decoration {
+    display: flex;
+    gap: 0.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .waveline-decoration img {
+    height: 0.75rem;
+    width: auto;
+    filter: hue-rotate(45deg) saturate(1.2);
+  }
+
+  .content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .content-wrapper {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .detail-table {
+    background: linear-gradient(135deg, #58778D 0%, #4A90E2 100%);
+    border-radius: 12px;
+    padding: 1.5rem;
+    color: white;
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .table-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+
+  .table-value {
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .photos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #e5e7eb;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+
+  .button-section {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+
+  .detail-button {
+    width: 100%;
+    max-width: 500px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .detail-button:hover {
+    opacity: 0.8;
+  }
+
+  .qa-section {
+    margin-top: 2rem;
+  }
+
+  .qa-banner {
+    width: 100%;
+  }
+</style>
+
+<div class="service-section">
+  <!-- サービスタイトル + 波線装飾 -->
+  <h3 class="service-title">{service.title}</h3>
+  <div class="waveline-decoration">
+    <img src="/images/svg/Parts/waveLine.svg" alt="" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" />
+    <img src="/images/svg/Parts/waveLine.svg" alt="" />
+  </div>
+
+  <!-- メインコンテンツ: テーブル + 写真 -->
+  <div class="content-wrapper">
+    <!-- 左: 青い詳細テーブル -->
+    {service.detailTable && (
+      <div class="detail-table">
+        <div class="table-row">
+          <div class="table-label">期待できる効果</div>
+          <div class="table-value">{service.detailTable.effect}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-label">主な活動実績</div>
+          <div class="table-value">{service.detailTable.achievements}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-label">概要</div>
+          <div class="table-value">{service.detailTable.overview}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-label">規模 / 対象</div>
+          <div class="table-value">{service.detailTable.scale}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-label">時間目安</div>
+          <div class="table-value">{service.detailTable.duration}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-label">メリット</div>
+          <div class="table-value">{service.detailTable.merit}</div>
+        </div>
+      </div>
+    )}
+
+    <!-- 右: 写真プレースホルダー -->
+    {service.photos && (
+      <div class="photos-container">
+        <div class="photo-placeholder">
+          <img
+            src={service.photos.photo1}
+            alt={`${service.title} 写真1`}
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"
+            onerror="this.style.display='none'"
+          />
+          {/* フォールバック表示 */}
+          <span style="display: none;">写真準備中</span>
+        </div>
+        <div class="photo-placeholder">
+          <img
+            src={service.photos.photo2}
+            alt={`${service.title} 写真2`}
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"
+            onerror="this.style.display='none'"
+          />
+          {/* フォールバック表示 */}
+          <span style="display: none;">写真準備中</span>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- DetailTableButton -->
+  <div class="button-section">
+    <img
+      src="/images/svg/Parts/DetailTableButton.svg"
+      alt="詳しくはこちら"
+      class="detail-button"
+    />
+  </div>
+
+  <!-- QA問い合わせバナー -->
+  <div class="qa-section">
+    <img
+      src="/images/svg/Parts/QA.svg"
+      alt="お気軽にご相談ください"
+      class="qa-banner"
+    />
+  </div>
+</div>
