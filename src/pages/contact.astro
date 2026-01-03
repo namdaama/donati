@@ -2,9 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
 
 // Web3Forms Access Key
-const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 ---
 
 <Layout title="お問い合わせ">
@@ -75,59 +76,34 @@ const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
       .error-message.hidden {
         display: none;
       }
-
-      /* Yellow header styling */
-      .header-yellow {
-        background-color: #FFD700;
-        padding: 3rem 1rem;
-        text-align: center;
-      }
-
-      .header-yellow h1 {
-        font-size: 2.25rem;
-        font-weight: bold;
-        color: #263238;
-        margin-bottom: 1rem;
-      }
-
-      .waveline-decoration {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 2rem;
-        overflow: hidden;
-      }
-
-      .waveline-decoration img {
-        height: 1rem;
-        width: auto;
-        flex-shrink: 0;
-      }
     </style>
-
-    <!-- Yellow Header Section -->
-    <div class="header-yellow">
-      <h1>お問い合わせ</h1>
-      <div class="waveline-decoration">
-        <img src="/images/svg/Parts/waveLine.svg" alt="" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" />
-      </div>
-    </div>
 
     <section class="py-16 md:py-24">
       <div class="max-w-4xl mx-auto px-4">
-        <!-- Introductory Text -->
-        <div class="text-center mb-12">
-          <p class="text-lg text-text-gray">
-            科学実験ショー、ワークショップ、星空観望会など、<br />
-            各種プログラムのご依頼・ご相談を承っております。<br />
-            まずはお気軽にお問い合わせください。
-          </p>
-        </div>
+        <!-- ヘッダー部分 -->
+        <div class="mb-12">
+          <h1 class="text-4xl font-bold text-[#58778D] mb-4">お問い合わせ</h1>
 
+          <!-- waveline -->
+          <div class="mb-6">
+            <div class="w-full overflow-hidden flex justify-center">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+          </div>
+
+          <!-- 説明文 -->
+          <div class="text-left mb-8">
+            <p class="text-lg text-text-gray">ご依頼・ご相談はこちらからお送りください。 </p>
+            <p class="text-lg text-text-gray">内容がまだ決まっていなくても問題ありません。 </p>
+            <p class="text-lg text-text-gray">「こんなことはできますか？」 </p>
+            <p class="text-lg text-text-gray">「このイベントに合う内容を相談したい」 </p>
+            <p class="text-lg text-text-gray">そんな段階からでも、お気軽にご相談ください。 </p>
+          </div>
+        </div>
         <!-- Cyan Form Card -->
         <div class="bg-contact-cyan rounded-lg shadow-lg p-4 sm:p-6 md:p-8 mb-12">
           <h2 class="text-2xl font-bold text-white mb-8">お問い合わせフォーム</h2>
@@ -267,19 +243,17 @@ const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
             <!-- Message -->
             <div>
               <label for="message" class="block text-lg font-medium text-white mb-2">
-                お問い合わせ内容・ご要望 <span class="text-red-500">*</span>
+                お問い合わせ内容・ご要望 <span class="text-white/70 text-sm">(任意)</span>
               </label>
               <textarea
                 id="message"
                 name="message"
-                required
-                minlength="10"
                 maxlength="1000"
                 rows="6"
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-text-dark focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all resize-vertical"
                 placeholder="まだ内容が固まっていない場合でも、ご相談ベースで問題ありません"
               ></textarea>
-              <p class="text-sm text-white/80 mt-1">目的や会場条件など、わかる範囲でご記入ください(10文字以上)</p>
+              <p class="text-sm text-white/80 mt-1">目的や会場条件など、わかる範囲でご記入ください</p>
               <p class="error-message hidden text-sm mt-1"></p>
             </div>
 
@@ -300,16 +274,9 @@ const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
           </form>
         </div>
 
-        <!-- Response Time -->
-        <div class="bg-blue-50 border-l-4 border-space-blue p-6 rounded-lg mb-12">
-          <h3 class="font-semibold text-text-dark mb-2">ご返信について</h3>
-          <p class="text-text-gray">
-            お問い合わせいただいた内容は、通常2〜3営業日以内にご返信いたします。<br />
-            お急ぎの場合は、その旨をフォームにご記入ください。
-          </p>
-        </div>
-
         <!-- FAQ -->
+        <!-- TODO: FAQページ作成後に移動予定。デザイン確定まで一時非表示 -->
+        <!--
         <div>
           <h2 class="text-2xl font-bold text-text-dark mb-6">よくあるご質問</h2>
 
@@ -343,6 +310,7 @@ const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
             </details>
           </div>
         </div>
+        -->
       </div>
     </section>
 
@@ -362,6 +330,8 @@ const WEB3FORMS_KEY = 'dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd';
         </button>
       </div>
     </div>
+
+    <FooterDivider />
   </main>
 
   <Footer />
