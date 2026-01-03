@@ -1,26 +1,34 @@
 ---
-interface Props {
-  service: {
-    id: string;
-    title: string;
-    description: string;
-    detailTable?: {
-      effect: string;
-      achievements: string;
-      overview: string;
-      scale: string;
-      duration: string;
-      merit: string;
-    };
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  detailTable?: {
+    effect: string;
+    achievements: string;
+    overview: string;
+    scale: string;
+    duration: string;
+    merit: string;
     photos?: {
       photo1: string;
       photo2: string;
     };
   };
-  index: number;
+  photos?: {
+    photo1: string;
+    photo2: string;
+  };
 }
 
-const { service, index } = Astro.props;
+interface Props {
+  service: Service;
+  index: number;
+  showServicePlans?: boolean;
+  services?: Service[];
+}
+
+const { service, index, showServicePlans = false, services = [] } = Astro.props;
 ---
 
 <style>
@@ -152,7 +160,7 @@ const { service, index } = Astro.props;
 
   .detail-button {
     width: 100%;
-    max-width: 500px;
+    max-width: 992px;
     cursor: pointer;
     transition: opacity 0.2s;
   }
@@ -168,9 +176,105 @@ const { service, index } = Astro.props;
   .qa-banner {
     width: 100%;
   }
+
+  .service-plans-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .service-plans-container > div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1024px;
+    flex-wrap: wrap;
+  }
+
+  .service-card {
+    width: 266px;
+    height: 421px;
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .service-card-title {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem 0 1rem;
+    background: transparent;
+  }
+
+  .service-card-title img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .service-card-waveline {
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+
+  .service-card-waveline img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .service-card-description {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    color: #58778D;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    flex-shrink: 0;
+    height: 54px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .service-card-image {
+    height: 200px;
+    overflow: hidden;
+    background: #e5e7eb;
+  }
+
+  .service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-card-button {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .service-card-button img {
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .service-card-button img:hover {
+    opacity: 0.8;
+  }
 </style>
 
-<div class="service-section">
+<div class="service-section" id={service.id}>
   <!-- サービスタイトル + 波線装飾 -->
   <h3 class="service-title">{service.title}</h3>
   <div class="waveline-wrapper">
@@ -242,21 +346,64 @@ const { service, index } = Astro.props;
     </div>
   )}
 
-  <!-- DetailTableButton -->
-  <div class="button-section">
-    <img
-      src="/images/svg/Parts/DetailTableButton.svg"
-      alt="詳しくはこちら"
-      class="detail-button"
-    />
-  </div>
-
   <!-- QA問い合わせバナー -->
   <div class="qa-section">
-    <img
-      src="/images/svg/Parts/QA.svg"
-      alt="お気軽にご相談ください"
-      class="qa-banner"
-    />
+    <a href="/contact">
+      <img
+        src="/images/svg/Parts/QA.svg"
+        alt="お気軽にご相談ください"
+        class="qa-banner cursor-pointer hover:opacity-80 transition-opacity"
+      />
+    </a>
   </div>
+
+  <!-- サービス3プランの紹介カード -->
+  {showServicePlans && services.length > 0 && (
+    <div class="service-plans-container">
+      <div>
+        {services.map((svc, idx) => {
+          const titleSvgs = [
+            '/images/svg/Parts/text_scienceParformShow.svg',
+            '/images/svg/Parts/text_wakuwakuScienceLab.svg',
+            '/images/svg/Parts/text_workShop.svg'
+          ];
+          return (
+            <div class="service-card">
+              <div class="service-card-title">
+                <img
+                  src={titleSvgs[idx]}
+                  alt={svc.title}
+                />
+              </div>
+              <div class="service-card-waveline">
+                <img
+                  src="/images/svg/Parts/waveLine_300px.svg"
+                  alt=""
+                />
+              </div>
+              <div class="service-card-description">
+                {svc.detailTable?.overview}
+              </div>
+              <div class="service-card-image">
+                {svc.photos?.photo1 && (
+                  <img
+                    src={svc.photos.photo1}
+                    alt={svc.title}
+                  />
+                )}
+              </div>
+              <div class="service-card-button">
+                <a href={`#${svc.id}`}>
+                  <img
+                    src="/images/svg/Parts/roundDetailButton.svg"
+                    alt="詳しくはこちら"
+                  />
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )}
 </div>
