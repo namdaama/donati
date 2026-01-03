@@ -22,6 +22,7 @@
 - HTML-CSS-TS役割分担ガイド.md
 - HTML-CSS-TS変換検討.md
 - 実験プロジェクトの配置ガイド.md
+- **color-management.md** (新規) - 配色管理・Figma同期ガイド
 
 ### 📁 04-workflow-collaboration/
 ワークフローと協業方法
@@ -29,16 +30,27 @@
 - デザイナーとの協業ガイド_ソース管理編_2025.md
 - デザイナー向け_GitHub未経験者のための協業ガイド.md
 - デザイナーHTML確認ガイド.md
+- **figma-workflow.md** (強化) - Figma Dev Mode活用ガイド
 
 ### 📁 05-implementation-guides/
 機能実装ガイド
 - カルーセル実装ガイド.md
 - マウスカーソルカスタマイズガイド.md
 - components-guide.md - Astroコンポーネント詳細リファレンス
+- **responsive-design-guide.md** (新規) - レスポンシブ実装（max-w-4xl）詳細
+- **experimental-features.md** (新規) - Instagram RSS連携等の実験実装ガイド
 
 ### 📁 06-quality-guidelines/
 品質管理ガイドライン
 - LP制作_品質確保のための指針_2025.md
+
+### 📁 07-deployment/ (新規)
+デプロイ・インフラガイド
+- **vercel-deployment.md** - Vercel設定、DNS、トラブルシューティング
+
+### 📁 08-operations/ (新規)
+運用・メンテナンスガイド
+- **content-guidelines.md** - コンテンツ文言ガイドライン（柔らかく親しみやすい表現）
 
 ## 主要な決定事項
 
