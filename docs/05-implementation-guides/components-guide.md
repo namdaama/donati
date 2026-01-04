@@ -786,10 +786,14 @@ import { aboutPageContent } from '../config/site';
 
 ## 更新履歴
 
-- **2025年1月4日**: StaffProfileCard.astro拡張（Issue #118対応）
-  - オプションプロパティ追加: `achievementsTitle`, `additionalSection`, `showButtons`
-  - about.astroページを4セクション構成に再構築
-  - site.tsに`aboutPageContent`追加
+- **2025年1月4日**: aboutページ再設計（Issue #118対応）
+  - StaffProfileCard.astro拡張: `achievementsTitle`, `additionalSection`, `showButtons` 追加
+  - about.astroを画像デザインに基づき3セクション構成に変更（4セクション → 3セクション）
+  - site.tsの`aboutPageContent`構造変更:
+    - `introduction`削除
+    - `philosophy.sections`を`philosophy.text`に統合
+    - `philosophy.photoUrl/photoAlt`追加（星空写真プレースホルダー）
+    - `closingMessage`削除
 - **2025年1月3日**: ServiceComparisonTable.astro追加（Issue #111対応）
   - service-fuji.astro用の3プラン簡易比較表新規実装
   - 黄色ヘッダー + 薄い青テーブルで参考画像に合わせた配色

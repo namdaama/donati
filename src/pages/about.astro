@@ -3,50 +3,17 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
-import DonatiLogo from '../components/common/DonatiLogo.astro';
 import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
 import { aboutPageContent } from '../config/site';
 
-const { introduction, philosophy, staffMembers, closingMessage } = aboutPageContent;
+const { philosophy, staffMembers } = aboutPageContent;
 ---
 
 <Layout title="DONATIとは">
   <Header />
 
   <main class="flex-grow relative overflow-hidden">
-    <!-- ① DONATIとは セクション -->
-    <section class="py-16">
-      <div class="max-w-4xl mx-auto px-4">
-        <!-- セクションタイトル -->
-        <div class="mb-12">
-          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">{introduction.title}</h2>
-          <div class="waveline-wrapper">
-            <div class="w-full overflow-hidden flex justify-center">
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            </div>
-          </div>
-        </div>
-
-        <!-- コンテンツグリッド（左：テキスト、右：ロゴ） -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <!-- 左：説明文 -->
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
-            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
-              {introduction.text}
-            </p>
-          </div>
-
-          <!-- 右：DonatiLogo -->
-          <div class="flex justify-center items-center">
-            <DonatiLogo size="xlarge" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ② 大切にしていること セクション -->
+    <!-- ① 大切にしていること セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
@@ -61,21 +28,26 @@ const { introduction, philosophy, staffMembers, closingMessage } = aboutPageCont
           </div>
         </div>
 
-        <!-- 哲学コンテンツ -->
-        <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg space-y-8">
-          {philosophy.sections.map((section) => (
-            <div>
-              <h3 class="text-lg font-bold mb-3" style="color: #58778D;">{section.subtitle}</h3>
-              <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
-                {section.content}
-              </p>
+        <!-- 2カラムグリッド: 左テキスト + 右写真 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <!-- 左: テキスト -->
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+              {philosophy.text}
+            </p>
+          </div>
+
+          <!-- 右: 星空写真プレースホルダー -->
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg flex items-center justify-center min-h-[300px]">
+            <div class="text-center text-gray-500">
+              <p class="text-sm">ひでゆきさんの<br/>星空の写真<br/>どうですか？</p>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ③ メンバー紹介 セクション -->
+    <!-- ② メンバー紹介 セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
@@ -100,17 +72,6 @@ const { introduction, philosophy, staffMembers, closingMessage } = aboutPageCont
               />
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ④ 締めの言葉 セクション -->
-    <section class="py-16">
-      <div class="max-w-4xl mx-auto px-4">
-        <div class="bg-white/50 backdrop-blur-sm rounded-2xl p-6 shadow-md">
-          <p class="text-gray-700 leading-relaxed text-base" style="white-space: pre-line;">
-            {closingMessage.text}
-          </p>
         </div>
       </div>
     </section>
