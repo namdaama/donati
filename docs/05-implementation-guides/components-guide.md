@@ -20,12 +20,14 @@ src/components/
 │   ├── OverViewServiceSection.astro
 │   ├── OverViewLinkCard.astro
 │   └── FooterDivider.astro
-├── services/        # サービスページ専用 (6個)
+├── services/        # サービスページ専用 (8個)
 │   ├── ServicesSection.astro
 │   ├── ServicesFujiSection.astro
 │   ├── ServicesHideSection.astro
 │   ├── ServiceCategoryHeader.astro
+│   ├── ServiceComparisonTable.astro
 │   ├── ServiceCategoryCard.astro
+│   ├── ServiceDetailCard.astro
 │   └── RequestFlowStep.astro
 ├── professional-experience/  # 活動経歴ページ専用 (5個)
 │   ├── ProfessionalExperienceSection.astro
@@ -44,7 +46,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 30個（削除前: 33個）
+**総コンポーネント数**: 32個（削除前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -246,11 +248,11 @@ StarrySection.astro
 |---------|-----------------|------|
 | common/ | 6 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
-| services/ | 6 | services.astro専用（Services*, ServiceCategory*, RequestFlowStep） |
+| services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
 | professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
 | cards/ | 2 | 汎用カード（ServiceCard, StaffProfileCard） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **30** | **6フォルダ** |
+| **合計** | **32** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -338,8 +340,396 @@ waveLine.svg は複数箇所で使用される装飾要素です。適切に実�
 - **about.astro**: `src/pages/about.astro` (50-56行目、82-88行目)
 - **index.astro**: `src/pages/index.astro` (101-123行目)
 
+## ServiceCategoryHeader.astro (Issue #111 - 再設計)
+
+サービスカテゴリのヘッダーコンポーネント。service-fuji.astro と service-hide.astro で使用される中程度の複雑度コンポーネント。
+
+### 基本情報
+- **ファイル**: `src/components/services/ServiceCategoryHeader.astro`
+- **行数**: 約239行（スタイル含む）
+- **複雑度**: 中
+- **対応ページ**: service-fuji.astro、service-hide.astro
+- **更新日**: 2025年1月3日（Issue #111対応）
+
+### Props定義
+
+```typescript
+interface Props {
+  mainTitle: string;                // メインタイトル（「サイエンス事業」など）
+  subtitle: string;                 // サブタイトル（「見て、驚いて、参加する。」など）
+  description: string;              // 説明文（1～2行程度）
+  subsectionTitle: string;          // サブセクションタイトル（3つのプランを紹介するタイトル）
+  subsectionContent: string[];      // 複数段落のテキスト（5段落推奨）
+  characterIconUrl: string;         // キャラクターSVGのパス
+
+  // 後方互換性用（オプション）
+  icon?: string;                    // 絵文字アイコン（使用されない）
+  title?: string;                   // 旧タイトル（使用されない）
+}
+```
+
+### レイアウト構成
+
+**3セクション構造:**
+
+1. **セクション1: メインタイトル**
+   - 中央寄せの大きなタイトル（font-size: 2.5rem デスクトップ、2rem モバイル）
+   - 単一の 752px ウェーブライン装飾（中央配置）
+
+2. **セクション2: サブタイトルと説明文**
+   - 中央寄せのサブタイトル（font-size: 1.5rem デスクトップ、1.25rem モバイル）
+   - 中央寄せの説明文（font-size: 1.125rem デスクトップ、1rem モバイル）
+
+3. **セクション3: サブセクション（キャラクター付き）**
+   - 中央寄せのサブセクションタイトル（font-size: 1.375rem デスクトップ、1.125rem モバイル）
+   - 単一の 752px ウェーブライン装飾
+   - **CSS Grid レイアウト**: `grid-template-columns: 1fr 200px`（デスクトップ）
+     - 左: 複数段落テキスト（subsectionContent.map()）
+     - 右: キャラクターアイコン（180×180px デスクトップ、150×150px モバイル）
+
+### レスポンシブ設計
+
+| ブレークポイント | グリッド構成 | キャラサイズ | 説明 |
+|------------------|-----------|-----------|------|
+| デスクトップ (>1024px) | 2列 (text + 200px) | 180×180px | 通常レイアウト |
+| タブレット (768-1024px) | 2列 (text + 160px) | 150×150px | 圧縮レイアウト |
+| モバイル (<768px) | 1列スタック | 150×150px | テキスト上、キャラ下 |
+
+### スタイル仕様
+
+**色設定:**
+- テキスト全般: `#58778d`（既存の青色）
+- ウェーブライン: SVGネイティブの黄色
+
+**タイポグラフィ:**
+- すべてのテキスト行高: 1.6～1.8
+
+**余白設定:**
+- セクション間: 3rem
+- サブセクション要素間: 2rem
+- 段落間: 1rem
+- コンポーネント下マージン: 4rem
+
+### ウェーブライン実装
+
+- **アセット**: `/images/svg/Parts/waveLine_752px.svg`（viewBox: "0 0 753 34"）
+- **サイズ**: 単一画像（小さいものを3つ並べていない）
+- **レスポンシブ**: `max-width: 100%; width: 752px;` で自動スケーリング
+- **ラッパークラス**: `overflow: hidden` でオーバーフロー防止
+
+### キャラクターアイコン配置
+
+**重要: 右側配置（現在実装と逆）**
+- HTML 順序: テキスト → キャラクター
+- CSS Grid で視覚的に右側に配置
+- `object-fit: contain` でアスペクト比を維持
+
+### 使用実例
+
+```astro
+// service-fuji.astro（行50-57）
+<ServiceCategoryHeader
+  mainTitle={scienceCategory.mainTitle}
+  subtitle={scienceCategory.subtitle}
+  description={scienceCategory.description}
+  subsectionTitle={scienceCategory.subsectionTitle}
+  subsectionContent={scienceCategory.subsectionContent}
+  characterIconUrl={scienceCategory.characterIconUrl}
+/>
+```
+
+### データソース
+
+- **定義場所**: `src/config/site.ts` (145-156行目)
+- **Science データ**: `serviceCategories.science` (160-175行目)
+- **Space データ**: `serviceCategories.space` (270-280行目)
+
+### 修正時の注意点
+
+- ❌ **避けるべき**: キャラクターを左側に配置
+- ❌ **避けるべき**: 複数の小さいウェーブラインを並べる
+- ❌ **避けるべき**: max-w-4xl の幅制約を外す
+- ✅ **推奨**: subsectionContent を配列で管理し、map() で展開
+- ✅ **推奨**: レスポンシブグリッドで mobile/tablet/desktop を分離
+
+## ServiceComparisonTable.astro (新規追加)
+
+3プランの簡易比較表コンポーネント。service-fuji.astroの ServiceCategoryHeader の直後に配置。
+
+### 基本情報
+- **ファイル**: `src/components/services/ServiceComparisonTable.astro`
+- **行数**: 約150行
+- **複雑度**: 中
+- **対応ページ**: service-fuji.astro（service-hide.astroでも拡張可能）
+- **作成日**: 2025年1月3日（Issue #111対応）
+
+### Props定義
+
+```typescript
+interface Props {
+  services: Array<{
+    id: string;
+    title: string;
+    description: string;
+    detailTable?: {
+      effect: string;           // 期待できる効果
+      achievements: string;     // 主な活動実績・利用場所
+      overview: string;         // 概要
+      scale: string;            // 規模 / 対象
+      duration: string;         // 時間目安
+      merit: string;            // メリット
+    };
+  }>;
+}
+```
+
+### コンポーネント構造
+
+テーブル形式で複数サービスの特徴を比較表示。
+
+```
+┌────────────────────────────────────────────┐
+│  3つのプラン簡易比較表（タイトル行）        │
+├────────────────┬──────┬──────┬──────┐
+│ 項目            │ サービス1 │ サービス2 │ サービス3 │
+├────────────────┼──────┼──────┼──────┤
+│ 期待できる効果   │ ... │ ... │ ... │
+│ 主な活動実績・利用場所 │ ... │ ... │ ... │
+│ 概要            │ ... │ ... │ ... │
+│ 規模 / 対象      │ ... │ ... │ ... │
+│ 時間目安        │ ... │ ... │ ... │
+│ メリット        │ ... │ ... │ ... │
+└────────────────┴──────┴──────┴──────┘
+```
+
+### スタイル仕様
+
+| 要素 | 色 | 備考 |
+|-----|-----|------|
+| タイトル行 | #FFD600（黄色） | 背景色、中央揃え |
+| ヘッダー行 | #FFD600（黄色） | サービス名を表示 |
+| 行ラベル列 | #ADD8E6（薄い青） | 「期待できる効果」など |
+| データセル | #E1F5FE（薄い青） | テーブル本体 |
+| 境界線 | white/50% | セル間の区切り |
+
+### レスポンシブ対応
+
+| デバイス | 表示方式 | 説明 |
+|---------|---------|------|
+| デスクトップ (≥768px) | 水平テーブル | 4列（ラベル + 3サービス） |
+| タブレット (768px～1023px) | 水平テーブル（縮小） | パディング削減、フォント小さく |
+| モバイル (< 768px) | 横スクロール可能 | 最小幅600pxを保証、スクロール対応 |
+
+### データソース
+
+`src/config/site.ts` の `serviceCategories.science.services` から参照:
+- `service.title`: サービス名（列ヘッダー）
+- `service.detailTable`: 比較情報（6項目）
+
+### 主要機能
+
+1. **テーブルタイトル行**
+   - "3つのプラン簡易比較表"をすべてのカラムにまたがって表示
+   - 黄色背景、中央揃え
+
+2. **ヘッダー行**
+   - サービス名を3列に表示
+   - 黄色背景、折り返し対応
+
+3. **データ行（6行）**
+   - 左列: 行ラベル（固定）
+   - 右3列: 各サービスの対応データ
+   - 薄い青背景、左寄せ
+
+4. **レスポンシブ**
+   - デスクトップ: 最適表示
+   - モバイル: 横スクロール可能
+   - すべて max-w-4xl mx-auto で中央配置
+
+### 実装上の注意点
+
+1. **データの存在確認**
+   - すべてのサービスに `detailTable` プロパティが存在することを前提
+   - 存在しない場合は空文字列が表示される
+
+2. **行ラベルの表示**
+   - 2番目の行ラベルは "主な活動実績・利用場所" に固定
+   - `detailTable.achievements` の内容を表示
+
+3. **最大幅制約**
+   - Issue #83に従い、`max-w-4xl mx-auto` で中央寄せ
+   - デスクトップで左右の余白を保証
+
+4. **色設定**
+   - 参考画像 `public/images/OurService_fuji.jpg` をもとに配色設定
+   - TailwindCSSで定義できない色のため、inline styleまたはカスタムクラスを使用
+
+### 使用例
+
+```astro
+import ServiceComparisonTable from '../components/services/ServiceComparisonTable.astro';
+import { serviceCategories } from '../config/site';
+
+const scienceCategory = serviceCategories.science;
+
+<ServiceComparisonTable services={scienceCategory.services} />
+```
+
+### 今後の拡張予定
+
+- [ ] service-hide.astro への導入
+- [ ] 参考画像との完全カラーマッチング
+- [ ] モバイルでのスタック表示への改善（横スクロール → 縦積み）
+
+## ServiceDetailCard.astro (Issue #111追加)
+
+詳細サービスカードコンポーネント。service-fuji.astroで使用される高複雑度コンポーネント。
+
+### 基本情報
+- **ファイル**: `src/components/services/ServiceDetailCard.astro`
+- **行数**: 約180行
+- **複雑度**: 高
+- **対応ページ**: service-fuji.astro（service-hide.astroでも可）
+- **作成日**: 2025年1月2日（Issue #111対応）
+
+### Props定義
+
+```typescript
+interface Props {
+  service: {
+    id: string;
+    title: string;
+    description: string;
+    detailTable?: {
+      effect: string;           // 期待できる効果
+      achievements: string;     // 主な活動実績・利用場所
+      overview: string;         // 概要
+      scale: string;            // 規模 / 対象
+      duration: string;         // 時間目安
+      merit: string;            // メリット
+    };
+    photos?: {
+      photo1: string;
+      photo2: string;
+    };
+  };
+  index: number;
+}
+```
+
+### コンポーネント構造
+
+```
+┌─────────────────────────────────┐
+│ サービスタイトル（h3）           │
+│ ～～～～ (黄色い波線)            │
+├──────────────┬──────────────────┤
+│ 青い詳細     │ 写真1（4:3比）   │
+│ テーブル     │ (プレースホルダー)│
+│ (6行)        │                  │
+│              │ 写真2（4:3比）   │
+│              │ (プレースホルダー)│
+├──────────────┴──────────────────┤
+│ DetailTableButton.svg            │
+├──────────────────────────────────┤
+│ QA.svg（問い合わせバナー）       │
+└──────────────────────────────────┘
+```
+
+### 主要機能
+
+1. **タイトル + 波線装飾**
+   - 黄色い波線（3つ）フィルター: `hue-rotate(45deg) saturate(1.2)`
+   - 黄色カスタマイズで参考画像に合わせた表現
+
+2. **詳細テーブル（左側、40%幅）**
+   - 青いグラデーション背景: `linear-gradient(135deg, #58778D 0%, #4A90E2 100%)`
+   - 6項目の構造化情報（2カラムグリッド）
+   - 白色テキスト、下罫線で見やすく
+
+3. **写真プレースホルダー（右側、60%幅）**
+   - 2つの写真を縦配置（4:3アスペクト比）
+   - プレースホルダー背景: #e5e7eb
+   - 読み込み失敗時フォールバック対応（onerror属性）
+
+4. **DetailTableButton.svg統合**
+   - 中央揃え、最大幅500px
+   - ホバー効果: `opacity: 0.8`
+
+5. **QA.svg問い合わせバナー**
+   - 全幅表示、適切な上余白（2rem）
+
+### レスポンシブ対応
+
+| デバイス | グリッド構成 | 説明 |
+|---------|-----------|------|
+| モバイル (< 768px) | 1カラム | テーブル → 写真1 → 写真2（縦積み） |
+| タブレット (768px～) | 2カラム | テーブル50% / 写真50% |
+| デスクトップ (1024px～) | 2カラム | テーブル40% / 写真60% |
+
+### スタイル詳細
+
+**テーブル行の構成**
+- グリッド: `grid-template-columns: 140px 1fr`
+- ラベル（左）: 140px固定幅、太字（weight 600）
+- 値（右）: 可変幅、折り返し対応
+
+**黄色い波線**
+```html
+<img src="/images/svg/Parts/waveLine.svg" alt="" style="filter: hue-rotate(45deg) saturate(1.2);" />
+```
+
+### データソース
+
+`src/config/site.ts` の `serviceCategories.science.services` から以下の情報を参照:
+- `service.detailTable`: テーブル内容（6項目）
+- `service.photos`: 写真パス（2枚）
+
+### 実装上の注意点
+
+1. **プレースホルダー対応**
+   - 写真ファイルが存在しない場合、`onerror`で画像を非表示
+   - グレー背景のプレースホルダー表示
+
+2. **テーブルラベルの幅**
+   - 140pxで「時間目安」など長いラベルに対応
+
+3. **黄色フィルター**
+   - waveLine.svgの元の色を保持しつつ、フィルターで黄色化
+   - 参考画像の黄色に合わせるため必須
+
+4. **max-w-4xl制約**
+   - Issue #83に従い、service-fuji.astroの親要素でmax-w-4xl設定
+   - このコンポーネント自体は100%幅を使用
+
+### 使用例
+
+```astro
+import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
+
+{scienceCategory.services.map((service, index) => (
+  <ServiceDetailCard service={service} index={index} />
+))}
+```
+
+### 今後の拡張予定
+
+- [ ] DetailTableButtonのクリック時の詳細ページリンク実装
+- [ ] 写真の実際のファイル差し替え
+- [ ] テーブル内容の参考画像と完全マッチング（テキスト精査）
+- [ ] service-hide.astroへの対応検討
+
 ## 更新履歴
 
+- **2025年1月3日**: ServiceComparisonTable.astro追加（Issue #111対応）
+  - service-fuji.astro用の3プラン簡易比較表新規実装
+  - 黄色ヘッダー + 薄い青テーブルで参考画像に合わせた配色
+  - レスポンシブ対応（デスクトップ：4列テーブル、モバイル：横スクロール）
+  - 総コンポーネント数：31個 → 32個
+- **2025年1月2日**: ServiceDetailCard.astro追加（Issue #111対応）
+  - service-fuji.astro用の詳細サービスカード新規実装
+  - 青いテーブル + 写真プレースホルダー + DetailTableButton + QAバナー統合
+  - 総コンポーネント数：30個 → 31個
 - **2025年12月30日**: waveLine 実装ガイド追加（Issue #96対応）
 - **2025年12月27日**: Issue #72完了 - AboutUsページ実装
   - StaffProfileCard.astro (新規)

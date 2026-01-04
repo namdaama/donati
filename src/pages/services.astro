@@ -7,7 +7,7 @@ import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.
 import ServiceCard from '../components/cards/ServiceCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
 import ServicesSection from '../components/services/ServicesSection.astro';
-import { serviceCategories, requestFlow, consultationTopics } from '../config/site';
+import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
 
 
 // サービス情報は src/config/site.ts で一元管理
@@ -87,10 +87,11 @@ const overviewLinks = [
         <!-- サイエンス分野 -->
         <section id="science" class="mb-24">
           <ServiceCategoryHeader
-            icon={serviceCategories.science.icon}
-            title={serviceCategories.science.title}
+            mainTitle={serviceCategories.science.mainTitle}
             subtitle={serviceCategories.science.subtitle}
             description={serviceCategories.science.description}
+            subsectionTitle={serviceCategories.science.subsectionTitle}
+            subsectionContent={serviceCategories.science.subsectionContent}
             characterIconUrl={serviceCategories.science.characterIconUrl}
           />
 
@@ -102,10 +103,11 @@ const overviewLinks = [
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
           <ServiceCategoryHeader
-            icon={serviceCategories.space.icon}
-            title={serviceCategories.space.title}
+            mainTitle={serviceCategories.space.mainTitle}
             subtitle={serviceCategories.space.subtitle}
             description={serviceCategories.space.description}
+            subsectionTitle={serviceCategories.space.subsectionTitle}
+            subsectionContent={serviceCategories.space.subsectionContent}
             characterIconUrl={serviceCategories.space.characterIconUrl}
           />
 

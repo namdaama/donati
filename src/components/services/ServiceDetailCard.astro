@@ -1,0 +1,409 @@
+---
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  detailTable?: {
+    effect: string;
+    achievements: string;
+    overview: string;
+    scale: string;
+    duration: string;
+    merit: string;
+    photos?: {
+      photo1: string;
+      photo2: string;
+    };
+  };
+  photos?: {
+    photo1: string;
+    photo2: string;
+  };
+}
+
+interface Props {
+  service: Service;
+  index: number;
+  showServicePlans?: boolean;
+  services?: Service[];
+}
+
+const { service, index, showServicePlans = false, services = [] } = Astro.props;
+---
+
+<style>
+  .service-section {
+    margin-bottom: 3rem;
+  }
+
+  .service-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #58778D;
+    margin-bottom: 0.5rem;
+  }
+
+
+  .detail-table-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 987px;
+    color: #58778D;
+  }
+
+  .table-section {
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .table-rows-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .photo-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    min-height: 245px;
+  }
+
+  .service-photo {
+    width: 333px;
+    height: 215px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #e5e7eb;
+  }
+
+  @media (max-width: 768px) {
+    .table-section {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .photo-slot {
+      order: 2;
+    }
+
+    .table-rows-group {
+      order: 1;
+    }
+
+    .service-photo {
+      width: 100%;
+      max-width: 331px;
+      height: auto;
+      aspect-ratio: 331 / 218;
+    }
+
+    .table-row {
+      grid-template-columns: 1fr;
+    }
+
+    .table-label {
+      width: 100%;
+      height: auto;
+      min-height: 60px;
+    }
+  }
+
+  .table-row {
+    display: grid;
+    grid-template-columns: 135.15px 1fr;
+    gap: 1rem;
+    align-items: center;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .table-row:last-child {
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .table-section:last-child .table-rows-group .table-row:last-child {
+    border-bottom: none;
+  }
+
+  .table-label {
+    font-weight: ;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+    background-color: #65B7EC;
+    color: white;
+    width: 169.15px;
+    height: 81.56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 4px;
+  }
+
+  .table-value {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding-left: 30px;
+    display: flex;
+    align-items: center;
+    min-height: 81.56px;
+  }
+
+  .button-section {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+
+  .detail-button {
+    width: 100%;
+    max-width: 992px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .detail-button:hover {
+    opacity: 0.8;
+  }
+
+  .qa-section {
+    margin-top: 2rem;
+  }
+
+  .qa-banner {
+    width: 100%;
+  }
+
+  .service-plans-container {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .service-plans-container > div {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 1024px;
+    flex-wrap: wrap;
+  }
+
+  .service-card {
+    width: 266px;
+    height: 421px;
+    background: white;
+    border-radius: 8px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .service-card-title {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1rem 0 1rem;
+    background: transparent;
+  }
+
+  .service-card-title img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .service-card-waveline {
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+
+  .service-card-waveline img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .service-card-description {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    color: #58778D;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    flex-shrink: 0;
+    height: 54px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .service-card-image {
+    height: 200px;
+    overflow: hidden;
+    background: #e5e7eb;
+  }
+
+  .service-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .service-card-button {
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .service-card-button img {
+    max-width: 100%;
+    height: auto;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .service-card-button img:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<div class="service-section" id={service.id}>
+  <!-- サービスタイトル + 波線装飾 -->
+  <h3 class="service-title">{service.title}</h3>
+  <div class="waveline-wrapper">
+    <div class="waveline-container py-4">
+      <div class="flex justify-start gap-1">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+      </div>
+    </div>
+  </div>
+
+  <!-- メインコンテンツ: テーブル + 写真 -->
+  {service.detailTable && (
+    <div class="detail-table-wrapper">
+      <!-- 上半分: 1-3行目 + 写真1 -->
+      <div class="table-section">
+        <div class="table-rows-group">
+          <div class="table-row">
+            <div class="table-label">期待できる効果</div>
+            <div class="table-value">{service.detailTable.effect}</div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">主な活動実績</div>
+            <div class="table-value">{service.detailTable.achievements}</div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">概要</div>
+            <div class="table-value">{service.detailTable.overview}</div>
+          </div>
+        </div>
+        {service.photos && (
+          <div class="photo-slot">
+            <img
+              src={service.photos.photo1}
+              alt={`${service.title} 写真1`}
+              class="service-photo"
+            />
+          </div>
+        )}
+      </div>
+
+      <!-- 下半分: 4-6行目 + 写真2 -->
+      <div class="table-section">
+        <div class="table-rows-group">
+          <div class="table-row">
+            <div class="table-label">規模 / 対象</div>
+            <div class="table-value">{service.detailTable.scale}</div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">時間目安</div>
+            <div class="table-value">{service.detailTable.duration}</div>
+          </div>
+          <div class="table-row">
+            <div class="table-label">メリット</div>
+            <div class="table-value">{service.detailTable.merit}</div>
+          </div>
+        </div>
+        {service.photos && (
+          <div class="photo-slot">
+            <img
+              src={service.photos.photo2}
+              alt={`${service.title} 写真2`}
+              class="service-photo"
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- QA問い合わせバナー -->
+  <div class="qa-section">
+    <a href="/contact">
+      <img
+        src="/images/svg/Parts/QA.svg"
+        alt="お気軽にご相談ください"
+        class="qa-banner cursor-pointer hover:opacity-80 transition-opacity"
+      />
+    </a>
+  </div>
+
+  <!-- サービス3プランの紹介カード -->
+  {showServicePlans && services.length > 0 && (
+    <div class="service-plans-container">
+      <div>
+        {services.map((svc, idx) => {
+          const titleSvgs = [
+            '/images/svg/Parts/text_scienceParformShow.svg',
+            '/images/svg/Parts/text_wakuwakuScienceLab.svg',
+            '/images/svg/Parts/text_workShop.svg'
+          ];
+          return (
+            <div class="service-card">
+              <div class="service-card-title">
+                <img
+                  src={titleSvgs[idx]}
+                  alt={svc.title}
+                />
+              </div>
+              <div class="service-card-waveline">
+                <img
+                  src="/images/svg/Parts/waveLine_300px.svg"
+                  alt=""
+                />
+              </div>
+              <div class="service-card-description">
+                {svc.detailTable?.overview}
+              </div>
+              <div class="service-card-image">
+                {svc.photos?.photo1 && (
+                  <img
+                    src={svc.photos.photo1}
+                    alt={svc.title}
+                  />
+                )}
+              </div>
+              <div class="service-card-button">
+                <a href={`#${svc.id}`}>
+                  <img
+                    src="/images/svg/Parts/roundDetailButton.svg"
+                    alt="詳しくはこちら"
+                  />
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  )}
+</div>

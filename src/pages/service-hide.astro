@@ -4,9 +4,9 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
-import ServiceCard from '../components/cards/ServiceCard.astro';
+import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
-import { serviceCategories, requestFlow, consultationTopics } from '../config/site';
+import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
 
 const spaceCategory = serviceCategories.space;
 ---
@@ -48,19 +48,26 @@ const spaceCategory = serviceCategories.space;
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
           <ServiceCategoryHeader
-            icon={spaceCategory.icon}
-            title={spaceCategory.title}
+            mainTitle={spaceCategory.mainTitle}
             subtitle={spaceCategory.subtitle}
             description={spaceCategory.description}
+            subsectionTitle={spaceCategory.subsectionTitle}
+            subsectionContent={spaceCategory.subsectionContent}
             characterIconUrl={spaceCategory.characterIconUrl}
           />
 
           {spaceCategory.services.map((service, index) => (
-            <ServiceCard service={service} index={index} />
+            <ServiceDetailCard
+              service={service}
+              index={index}
+              showServicePlans={index === spaceCategory.services.length - 1}
+              services={spaceCategory.services}
+            />
           ))}
         </section>
 
-        <!-- ご依頼の流れセクション -->
+        <!-- ご依頼の流れセクション（後で移動） -->
+        {/*
         <section id="request-flow" class="mb-24">
           <div class="text-center mb-16">
             <h2 class="section-title-news">ご依頼の流れ</h2>
@@ -120,6 +127,7 @@ const spaceCategory = serviceCategories.space;
             ))}
           </div>
         </section>
+        */}
 
         <!-- 最終メッセージセクション（青い星） -->
         <section class="mb-24">
