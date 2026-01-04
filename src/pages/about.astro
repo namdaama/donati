@@ -3,17 +3,50 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
+import DonatiLogo from '../components/common/DonatiLogo.astro';
 import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
 import { aboutPageContent } from '../config/site';
 
-const { philosophy, staffMembers } = aboutPageContent;
+const { introduction, philosophy, staffMembers } = aboutPageContent;
 ---
 
 <Layout title="DONATIとは">
   <Header />
 
   <main class="flex-grow relative overflow-hidden">
-    <!-- ① 大切にしていること セクション -->
+    <!-- ① DONATIとは セクション -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="mb-12">
+          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">{introduction.title}</h2>
+          <div class="waveline-wrapper">
+            <div class="w-full overflow-hidden flex justify-center">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- コンテンツグリッド（左：テキスト、右：ロゴ） -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <!-- 左：説明文 -->
+          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+              {introduction.text}
+            </p>
+          </div>
+
+          <!-- 右：DonatiLogo -->
+          <div class="flex justify-center items-center">
+            <DonatiLogo size="xlarge" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② 大切にしていること セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
@@ -47,7 +80,7 @@ const { philosophy, staffMembers } = aboutPageContent;
       </div>
     </section>
 
-    <!-- ② メンバー紹介 セクション -->
+    <!-- ③ メンバー紹介 セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
