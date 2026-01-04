@@ -719,8 +719,77 @@ import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 - [ ] テーブル内容の参考画像と完全マッチング（テキスト精査）
 - [ ] service-hide.astroへの対応検討
 
+## コンポーネント詳細: StaffProfileCard.astro
+
+### 概要
+- **ファイル**: [src/components/cards/StaffProfileCard.astro](src/components/cards/StaffProfileCard.astro)
+- **目的**: スタッフプロフィール表示用の汎用カード
+- **使用ページ**: about.astro, professional-experience.astro
+
+### Props
+
+```typescript
+interface Props {
+  name: string;                   // スタッフ名（例: "フジ", "ひでゆき"）
+  nameSvg: string;               // 名前SVGパス
+  pictSvg: string;               // キャラクター画像SVGパス
+  description: string;           // プロフィール説明文
+  achievements: string[];        // 活動実績リスト
+  achievementsTitle?: string;    // 実績セクションタイトル（デフォルト: "活動実績"）
+  additionalSection?: {          // 追加セクション（例: 出版物）
+    title: string;
+    items: string[];
+  };
+  showButtons?: boolean;         // ボタン表示切り替え（デフォルト: true）
+  professionalExperienceLink?: string;  // 活動履歴リンク（showButtons=trueの場合必須）
+  servicesLink?: string;         // サービスリンク（showButtons=trueの場合必須）
+}
+```
+
+### 使用例
+
+#### about.astroでの使用（ボタンなし）
+```astro
+import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
+import { aboutPageContent } from '../config/site';
+
+<StaffProfileCard
+  {...aboutPageContent.staffMembers[0]}
+  showButtons={false}
+/>
+```
+
+#### professional-experience.astroでの使用（ボタンあり）
+```astro
+<StaffProfileCard
+  name="フジ"
+  nameSvg="/images/svg/Parts/fuji_name.svg"
+  pictSvg="/images/svg/Parts/fuji_pict.svg"
+  description="..."
+  achievements={["...", "..."]}
+  professionalExperienceLink="/professional-experience#fuji-section"
+  servicesLink="/services"
+/>
+```
+
+### レイアウト構成
+1. キャラクターイラスト + 名前SVG（横並び、1:2バランス）
+2. プロフィール説明文
+3. 活動実績リスト（黄色ドット付き）
+4. 追加セクション（オプション、例: 出版物）
+5. アクションボタン×2（オプション、スカイブルー）
+
+### スタイル
+- テキスト色: `#58778D`（紺青色）
+- ボタン背景: `overview-sky` (#87CEEB)
+- リストドット: `overview-yellow` (#FFD700)
+
 ## 更新履歴
 
+- **2025年1月4日**: StaffProfileCard.astro拡張（Issue #118対応）
+  - オプションプロパティ追加: `achievementsTitle`, `additionalSection`, `showButtons`
+  - about.astroページを4セクション構成に再構築
+  - site.tsに`aboutPageContent`追加
 - **2025年1月3日**: ServiceComparisonTable.astro追加（Issue #111対応）
   - service-fuji.astro用の3プラン簡易比較表新規実装
   - 黄色ヘッダー + 薄い青テーブルで参考画像に合わせた配色
