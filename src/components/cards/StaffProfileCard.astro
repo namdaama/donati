@@ -3,13 +3,9 @@ interface Props {
   name: string;
   nameSvg: string;
   pictSvg: string;
-  description: string;
+  overview: string;
   achievements: string[];
-  achievementsTitle?: string;
-  additionalSection?: {
-    title: string;
-    items: string[];
-  };
+  publications?: string[];
   showButtons?: boolean;
   professionalExperienceLink?: string;
   servicesLink?: string;
@@ -19,10 +15,9 @@ const {
   name,
   nameSvg,
   pictSvg,
-  description,
+  overview,
   achievements,
-  achievementsTitle = '活動実績',
-  additionalSection,
+  publications,
   showButtons = true,
   professionalExperienceLink,
   servicesLink
@@ -53,16 +48,17 @@ const {
     </div>
   </div>
 
-  <!-- 説明文 -->
-  <div class="mb-2 flex-grow">
-    <p class="leading-relaxed text-sm" style="color: #58778D;">
-      {description}
+  <!-- 概要 -->
+  <div class="mb-4 min-h-[420px]">
+    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">概要</h4>
+    <p class="leading-relaxed text-sm text-gray-600" style="white-space: pre-line;">
+      {overview}
     </p>
   </div>
 
-  <!-- 活動実績リスト -->
-  <div class="mb-4">
-    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">{achievementsTitle}</h4>
+  <!-- 主な実績 -->
+  <div class="mb-4 min-h-[200px]">
+    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">主な実績</h4>
     <ul class="space-y-1">
       {achievements.map((achievement) => (
         <li class="flex items-start">
@@ -73,12 +69,12 @@ const {
     </ul>
   </div>
 
-  <!-- 追加セクション（出版物など） -->
-  {additionalSection && (
+  <!-- 出版・制作物 -->
+  {publications && publications.length > 0 && (
     <div class="mb-4">
-      <h4 class="text-sm font-bold mb-2" style="color: #58778D;">{additionalSection.title}</h4>
+      <h4 class="text-sm font-bold mb-2" style="color: #58778D;">出版・制作物</h4>
       <ul class="space-y-1">
-        {additionalSection.items.map((item) => (
+        {publications.map((item) => (
           <li class="flex items-start">
             <span class="text-overview-yellow mr-2 text-xs mt-0.5">●</span>
             <span class="text-gray-600 text-xs leading-relaxed">{item}</span>
