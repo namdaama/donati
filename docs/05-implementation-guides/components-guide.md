@@ -233,15 +233,21 @@ src/components/
 
 **CategorySection.astro**
 - **ファイル**: [src/components/professional-experience/CategorySection.astro](src/components/professional-experience/CategorySection.astro)
-- **行数**: 約30行
-- **目的**: カテゴリー見出し（グレーバー）+ 黒丸リスト
+- **行数**: 約38行
+- **目的**: カテゴリー見出し（グレーバー）+ 3階層データ表示
 - **Props**:
-  - `categoryTitle: string` - カテゴリー名
-  - `items: string[]` - リスト項目の配列
+  - `categoryTitle: string` - カテゴリー名（大分類）
+  - `services: Service[]` - サービスの配列
+    - `Service`: `{ serviceName: string; locations: string[] }`
 - **主要機能**:
-  - グレーバー表示（bg-gray-400, rounded-full）
-  - 黒丸リスト（●）
+  - グレーバー表示（bg-gray-400, rounded-full）- 大分類（機関名）
+  - 中分類: 事業名を太字で表示（font-bold）
+  - 小分類: 場所の具体名を黒丸リスト（●）で表示
   - 白背景カード（bg-white/70 backdrop-blur-sm）
+- **データ構造**: 3階層
+  - 大分類（グレーバー）: 機関名（例: 学校・園）
+  - 中分類（太字）: 事業名（例: サイエンスパフォーマンスショー）
+  - 小分類（黒丸リスト）: 場所の具体名
 - **使用場所**: professional-experience.astro（MajorSection内で8回使用）
 - **レスポンシブ**: モバイルでパディング削減（p-6 → p-4）
 - **実装日**: 2026年1月（Issue #121）
