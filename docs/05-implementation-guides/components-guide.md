@@ -29,12 +29,9 @@ src/components/
 │   ├── ServiceCategoryCard.astro
 │   ├── ServiceDetailCard.astro
 │   └── RequestFlowStep.astro
-├── professional-experience/  # 活動経歴ページ専用 (5個)
-│   ├── ProfessionalExperienceSection.astro
-│   ├── ProfessionalExperienceFujiCard.astro
-│   ├── ProfessionalExperienceHideCard.astro
-│   ├── ProfessionalExperienceServicesCard.astro
-│   └── MediaCoverageSection.astro
+├── professional-experience/  # 活動経歴ページ専用 (2個)
+│   ├── MajorSection.astro
+│   └── CategorySection.astro
 ├── cards/           # 再利用可能カード (3個)
 │   ├── ServiceCard.astro
 │   ├── StaffProfileCard.astro
@@ -47,7 +44,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 33個（削除前: 33個）
+**総コンポーネント数**: 30個（変更前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -218,29 +215,36 @@ src/components/
 - **依存**: Stars.astroを埋め込み
 - **用途**: ビジュアル効果強化が必要なセクション
 
-**ProfessionalExperienceFujiCard.astro**
-- **ファイル**: [src/components/ProfessionalExperienceFujiCard.astro](src/components/ProfessionalExperienceFujiCard.astro)
-- **行数**: 約38行
-- **目的**: professional-experienceページのフジ活動経歴カード
-- **Props**: link?: string（デフォルト: '#fuji-section'）
-- **依存**: なし（SVG画像のみ）
-- **特徴**: `bg-white/95 rounded-2xl shadow-lg`カードスタイル
+**MajorSection.astro**
+- **ファイル**: [src/components/professional-experience/MajorSection.astro](src/components/professional-experience/MajorSection.astro)
+- **行数**: 約40行
+- **目的**: 活動経歴ページの大セクションラッパー
+- **Props**:
+  - `title: string` - セクションタイトル
+  - `description?: string` - オプショナルな説明文
+- **主要機能**:
+  - セクションタイトル表示（section-title-news）
+  - waveline装飾（3本）
+  - 説明文の条件付きレンダリング
+  - slotによる子要素配置
+- **使用場所**: professional-experience.astro（3回使用）
+- **レスポンシブ**: max-w-4xl で幅制限
+- **実装日**: 2026年1月（Issue #121）
 
-**ProfessionalExperienceHideCard.astro**
-- **ファイル**: [src/components/ProfessionalExperienceHideCard.astro](src/components/ProfessionalExperienceHideCard.astro)
-- **行数**: 約38行
-- **目的**: professional-experienceページのひでゆき活動経歴カード
-- **Props**: link?: string（デフォルト: '#hide-section'）
-- **依存**: なし（SVG画像のみ）
-- **特徴**: `bg-white/95 rounded-2xl shadow-lg`カードスタイル
-
-**ProfessionalExperienceServicesCard.astro**
-- **ファイル**: [src/components/ProfessionalExperienceServicesCard.astro](src/components/ProfessionalExperienceServicesCard.astro)
-- **行数**: 約45行
-- **目的**: professional-experienceページのサービス内容カード
-- **Props**: listItems: ListItem[], link?: string（デフォルト: '/services'）
-- **依存**: なし（SVG画像のみ）
-- **特徴**: リストアイテム表示機能付きカード
+**CategorySection.astro**
+- **ファイル**: [src/components/professional-experience/CategorySection.astro](src/components/professional-experience/CategorySection.astro)
+- **行数**: 約30行
+- **目的**: カテゴリー見出し（グレーバー）+ 黒丸リスト
+- **Props**:
+  - `categoryTitle: string` - カテゴリー名
+  - `items: string[]` - リスト項目の配列
+- **主要機能**:
+  - グレーバー表示（bg-gray-400, rounded-full）
+  - 黒丸リスト（●）
+  - 白背景カード（bg-white/70 backdrop-blur-sm）
+- **使用場所**: professional-experience.astro（MajorSection内で8回使用）
+- **レスポンシブ**: モバイルでパディング削減（p-6 → p-4）
+- **実装日**: 2026年1月（Issue #121）
 
 ## コンポーネント依存関係
 

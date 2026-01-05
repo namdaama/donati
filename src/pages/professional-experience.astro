@@ -2,81 +2,168 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
-import ProfessionalExperienceSection from '../components/professional-experience/ProfessionalExperienceSection.astro';
-import MediaCoverageSection from '../components/professional-experience/MediaCoverageSection.astro';
-import ProfessionalExperienceFujiCard from '../components/professional-experience/ProfessionalExperienceFujiCard.astro';
-import ProfessionalExperienceHideCard from '../components/professional-experience/ProfessionalExperienceHideCard.astro';
-import ProfessionalExperienceServicesCard from '../components/professional-experience/ProfessionalExperienceServicesCard.astro';
+import FooterDivider from '../components/overview/FooterDivider.astro';
+import MajorSection from '../components/professional-experience/MajorSection.astro';
+import CategorySection from '../components/professional-experience/CategorySection.astro';
 
-// フジの活動経歴
-const fujiExperiences = [
-  {
-    year: '1998年 3月',
-    eventName: '○○○○○大学○○学科',
-    location: '(○○○○○○○大学○○)',
-    description: '○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○',
-    imagePlaceholder: true
-  },
-  {
-    year: '2000年 6月',
-    eventName: '科学実験ショー講師活動開始',
-    location: '(全国各地)',
-    description: '様々な施設でのサイエンスショーの開催・講師活動を開始。子どもたちに科学の楽しさを伝えている。',
-    imagePlaceholder: true
-  },
-  {
-    year: '2010年 9月',
-    eventName: 'DONATI設立',
-    location: '(沖縄県)',
-    description: 'サイエンス&スペース ラボ DONATIを設立。より多くの子どもたちに科学教育を提供するための活動を開始。',
-    imagePlaceholder: true
-  }
-];
+// サイエンス事業データ
+const scienceSection = {
+  title: '活動経歴',
+  description: 'これまで、学校・商業施設・地域イベントなど、さまざまな場所で科学と星空の体験をお届けしてきました。',
+  subtitle: 'サイエンス事業',
+  categories: [
+    {
+      categoryTitle: '学校・園',
+      services: [
+        {
+          serviceName: 'サイエンスパフォーマンスショー',
+          locations: [
+            '大野市内 小学校PTA',
+            '勝山市内 児童ホール',
+            'ふじしま認定こども園　など'
+          ]
+        },
+        {
+          serviceName: 'わくわく科学実験室（スライム・色変パンケーキ・DNA抽出 ほか）',
+          locations: [
+            '大野市内 小学校PTA',
+            'こどもステーションまんてん',
+            '英語学童 GONDWANA',
+            '認定こども園あわたべ学童ホール',
+            '永平寺町 上志比地区 放課後こども教室',
+            '永平寺町 御陵地区 放課後こども教室 など'
+          ]
+        },
+        {
+          serviceName: '探究学習 講師',
+          locations: ['仁愛女子高等学校']
+        }
+      ]
+    },
+    {
+      categoryTitle: '行政・地域イベント・団体',
+      services: [
+        {
+          serviceName: 'サイエンスパフォーマンスショー／ワークショップ',
+          locations: [
+            '福井県太鼓連盟',
+            '松岡子育て支援センター',
+            '志比堺まつり',
+            '御陵公民館まつり',
+            '松岡公民館まつり',
+            '永平寺町文化祭',
+            '福井市 西藤島地区 子どものカフェ',
+            'カムカムエヴバデ',
+            'わくにこロハスマーケット など'
+          ]
+        },
+        {
+          serviceName: '自然・環境分野 講師',
+          locations: ['永平寺町吉野公民館（ホタル観察会）']
+        }
+      ]
+    },
+    {
+      categoryTitle: '商業施設・その他',
+      services: [
+        {
+          serviceName: 'サイエンスパフォーマンスショー＆ワークショップ',
+          locations: [
+            'ラブリーパートナー エルパ',
+            'イオンそよら福井開発　など'
+          ]
+        }
+      ]
+    }
+  ]
+};
 
-// フジの全国紙掲載
-const fujiMediaCoverage = [
-  '大丈夫天文学科 1999年 9月 「科学教育の未来」誌',
-  '○○○新聞 2005年 3月 「子どもたちに伝わる科学」',
-  '××××雑誌 2012年 6月 「DONATI設立特集」'
-];
+// 星空事業データ
+const spaceSection = {
+  title: '星空事業',
+  categories: [
+    {
+      categoryTitle: '行政・地域イベント・団体',
+      services: [
+        {
+          serviceName: '星空観察会',
+          locations: [
+            'ガールスカウト福井県連盟',
+            'Fun! Family　など'
+          ]
+        },
+        {
+          serviceName: '星のお話・ナビゲート',
+          locations: [
+            '福井市自然史博物館分館セーレンプラネット（サイエンスカフェ）',
+            '星空モクテルNIGHT委員会（VR星空解説）',
+            '子ども食堂 木のおうち　など'
+          ]
+        }
+      ]
+    },
+    {
+      categoryTitle: '商業施設・その他',
+      services: [
+        {
+          serviceName: 'ましかくプラネタリウム',
+          locations: ['イオンそよら福井開発']
+        }
+      ]
+    },
+    {
+      categoryTitle: '高等教育・専門機関',
+      services: [
+        {
+          serviceName: '集中講義講師',
+          locations: ['福井大学（天文学入門（基礎地学））']
+        }
+      ]
+    }
+  ]
+};
 
-// ひでの活動経歴
-const hideExperiences = [
-  {
-    year: '1995年 4月',
-    eventName: '○○○○○大学○○学科',
-    location: '(○○○○○○○大学○○)',
-    description: '○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○○',
-    imagePlaceholder: true
-  },
-  {
-    year: '2002年 5月',
-    eventName: 'プラネタリウム解説員デビュー',
-    location: '(全国各地)',
-    description: 'プラネタリウムでの星空解説と天文教育活動を開始。美しい宇宙の物語を多くの人に伝えている。',
-    imagePlaceholder: true
-  },
-  {
-    year: '2015年 1月',
-    eventName: 'DONATI宇宙部門リーダー就任',
-    location: '(沖縄県)',
-    description: 'DONATIの宇宙部門のリーダーとして、より充実した宇宙教育プログラムの開発に従事。',
-    imagePlaceholder: true
-  }
-];
-
-// ひでの全国紙掲載
-const hideMediaCoverage = [
-  '星空新聞 2003年 2月 「プラネタリウムの魅力」',
-  '○○○雑誌 2008年 11月 「宇宙教育の最前線」',
-  '××××新聞 2016年 7月 「DONATI宇宙部門活動」'
-];
-
-// サービスカード用のリストアイテム
-const servicesListItems = [
-  { text: '依頼の流れ', href: '/services#request-flow' },
-  { text: 'よくある質問', href: '/services#faq' }
-];
+// メディア出演・その他データ
+const mediaSection = {
+  title: 'メディア出演・その他',
+  categories: [
+    {
+      categoryTitle: 'メディア出演',
+      services: [
+        {
+          serviceName: 'ラジオ・テレビ出演',
+          locations: [
+            'FM福井「Morning Tune」',
+            'FBCテレビ「おじゃまっテレ」',
+            'FBCラジオ「ふむふむいっぱいラジカフェ」'
+          ]
+        }
+      ]
+    },
+    {
+      categoryTitle: '自主企画イベント',
+      services: [
+        {
+          serviceName: '主催イベント',
+          locations: [
+            'お菓子な科学実験教室',
+            '星のお話と音楽会',
+            '【R15】大人のプラネタリウム　など'
+          ]
+        }
+      ]
+    },
+    {
+      categoryTitle: '声の出演',
+      services: [
+        {
+          serviceName: 'Moon Night Circus 2025',
+          locations: ['オーディオガイド ナレーション']
+        }
+      ]
+    }
+  ]
+};
 ---
 
 <Layout title="活動経歴">
@@ -113,44 +200,52 @@ const servicesListItems = [
         </div>
       </section>
 
-      <!-- ナビゲーションカード -->
-      <section class="mb-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <ProfessionalExperienceFujiCard link="#fuji-section" />
-          <ProfessionalExperienceHideCard link="#hide-section" />
-          <ProfessionalExperienceServicesCard listItems={servicesListItems} link="/services" />
+      <!-- 大セクション1: サイエンス事業 -->
+      <MajorSection
+        title={scienceSection.title}
+        description={scienceSection.description}
+      >
+        <h3 class="text-xl font-bold text-gray-800 mb-4">{scienceSection.subtitle}</h3>
+        <div class="waveline-wrapper mb-6">
+          <div class="w-full overflow-hidden flex justify-center">
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+          </div>
         </div>
-      </section>
+        <div class="space-y-6">
+          {scienceSection.categories.map((category) => (
+            <CategorySection
+              categoryTitle={category.categoryTitle}
+              services={category.services}
+            />
+          ))}
+        </div>
+      </MajorSection>
 
-      <!-- フジの活動経歴セクション -->
-      <section id="fuji-section" class="mb-24">
-        <ProfessionalExperienceSection
-          name="フジ"
-          title="活動経歴 サイエンスパフォーマー フジ"
-          characterIcon="/images/svg/Parts/fuji_pict.svg"
-          experiences={fujiExperiences}
-        />
-        <MediaCoverageSection
-          title="全国紙掲載"
-          items={fujiMediaCoverage}
-        />
-      </section>
+      <!-- 大セクション2: 星空事業 -->
+      <MajorSection title={spaceSection.title}>
+        {spaceSection.categories.map((category) => (
+          <CategorySection
+            categoryTitle={category.categoryTitle}
+            services={category.services}
+          />
+        ))}
+      </MajorSection>
 
-      <!-- ひでの活動経歴セクション -->
-      <section id="hide-section" class="mb-24">
-        <ProfessionalExperienceSection
-          name="ひでゆき"
-          title="活動経歴 虚空先生 ひでゆき"
-          characterIcon="/images/svg/Parts/hide_pict.svg"
-          experiences={hideExperiences}
-        />
-        <MediaCoverageSection
-          title="全国紙掲載"
-          items={hideMediaCoverage}
-        />
-      </section>
+      <!-- 大セクション3: メディア出演・その他 -->
+      <MajorSection title={mediaSection.title}>
+        {mediaSection.categories.map((category) => (
+          <CategorySection
+            categoryTitle={category.categoryTitle}
+            services={category.services}
+          />
+        ))}
+      </MajorSection>
 
     </div>
+
+    <FooterDivider />
   </main>
 
   <Footer />
