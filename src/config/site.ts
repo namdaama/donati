@@ -29,9 +29,10 @@ export const siteConfig = {
 export const aboutPageContent = {
   // ① DONATIとは
   introduction: {
-    title: "DONATIとは",
-    text: `科学と星空を、もっと身近に、もっと楽しく。
-私たちは、博物館や科学館で10年以上にわたり、
+    title: "DONATI（ドナチ）とは",
+    concept: `科学と星空を、
+もっと身近に、もっと楽しく。`,
+    text: `私たちは、博物館や科学館で10年以上にわたり、
 星空案内や科学普及に携わってきた専門家夫婦によるユニットです。
 プロとして培ってきた知識と経験を、
 子どもから大人まで、誰もがワクワクできる体験へ。
@@ -41,9 +42,8 @@ export const aboutPageContent = {
   // ② 大切にしていること
   philosophy: {
     title: "大切にしていること",
-    text: `「なぜ？」が「わかった！」に変わる瞬間を大切に
-
-私たちは、博物館や科学館で多くの人と向き合う中で、
+    concept: `「なぜ？」が「わかった！」に変わる瞬間を大切に`,
+    text: `私たちは、博物館や科学館で多くの人と向き合う中で、
 ほんの一言の説明や、実際に見て・触れる体験によって、
 表情がふっと変わる瞬間を、何度も見てきました。
 「なぜ？」が「わかった！」に変わるとき、
@@ -65,6 +65,7 @@ export const aboutPageContent = {
   staffMembers: [
     {
       name: 'フジ',
+      realName: '加藤 絢',
       title: 'サイエンスパフォーマー・フジ（加藤 絢）',
       nameSvg: '/images/svg/Parts/fuji_name.svg',
       pictSvg: '/images/svg/Parts/fuji_pict.svg',
@@ -85,6 +86,7 @@ export const aboutPageContent = {
     },
     {
       name: 'ひでゆき',
+      realName: '加藤 英行',
       title: '星の写真家 ひでゆき（加藤 英行）',
       nameSvg: '/images/svg/Parts/hide_name.svg',
       pictSvg: '/images/svg/Parts/hide_pict.svg',

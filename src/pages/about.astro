@@ -29,17 +29,23 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
           </div>
         </div>
 
-        <!-- コンテンツグリッド（左：テキスト、右：ロゴ） -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <!-- 左：説明文 -->
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+        <!-- コンテンツグリッド（左：テキスト 2/3、右：ロゴ 1/3） -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <!-- 左：テキストエリア（2/3幅） -->
+          <div class="md:col-span-2">
+            <!-- コンセプトメッセージ -->
+            <h3 class="text-3xl md:text-4xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+              {introduction.concept}
+            </h3>
+
+            <!-- 説明文 -->
             <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
               {introduction.text}
             </p>
           </div>
 
-          <!-- 右：DonatiLogo -->
-          <div class="flex justify-center items-center">
+          <!-- 右：DonatiLogo（1/3幅いっぱい） -->
+          <div class="md:col-span-1 flex justify-center items-center w-full h-full">
             <DonatiLogo size="xlarge" />
           </div>
         </div>
@@ -61,17 +67,23 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
           </div>
         </div>
 
-        <!-- 2カラムグリッド: 左テキスト + 右写真 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <!-- 左: テキスト -->
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
+        <!-- コンテンツグリッド（左：テキスト 2/3、右：写真 1/3） -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <!-- 左：テキストエリア（2/3幅） -->
+          <div class="md:col-span-2">
+            <!-- コンセプトメッセージ -->
+            <h3 class="text-3xl md:text-4xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+              {philosophy.concept}
+            </h3>
+
+            <!-- 説明文 -->
             <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
               {philosophy.text}
             </p>
           </div>
 
-          <!-- 右: 星空写真プレースホルダー -->
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg flex items-center justify-center min-h-[300px]">
+          <!-- 右：星空写真プレースホルダー（1/3幅いっぱい） -->
+          <div class="md:col-span-1 flex items-center justify-center w-full h-full min-h-[300px]">
             <div class="text-center text-gray-500">
               <p class="text-sm">ひでゆきさんの<br/>星空の写真<br/>どうですか？</p>
             </div>
@@ -98,12 +110,10 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
         <!-- スタッフカードグリッド -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {staffMembers.map((staff) => (
-            <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-              <StaffProfileCard
-                {...staff}
-                showButtons={false}
-              />
-            </div>
+            <StaffProfileCard
+              {...staff}
+              showButtons={false}
+            />
           ))}
         </div>
       </div>
