@@ -1,13 +1,14 @@
 ---
-import OverViewAboutSection from './OverViewAboutSection.astro';
-import OverViewServiceSection from './OverViewServiceSection.astro';
+import OverViewServiceCard from './OverViewServiceCard.astro';
 import OverViewLinkCard from './OverViewLinkCard.astro';
 
-interface StaffMember {
-  name: string;
-  role: string;
-  pictSvg: string;
-  nameSvg: string;
+interface ServiceCardData {
+  title: string;
+  titleSvg?: string;
+  image: string;
+  imageAlt: string;
+  items: string[];
+  link?: string;
 }
 
 interface LinkItem {
@@ -17,70 +18,42 @@ interface LinkItem {
 }
 
 interface Props {
-  staffMembers?: StaffMember[];
-  services?: string[];
+  scienceService: ServiceCardData;
+  starryService: ServiceCardData;
   links: LinkItem[];
-  // 左列のカスタマイズ
-  leftTitle?: string;
-  leftIcon?: string;
-  leftStaff?: StaffMember[];
-  leftLink?: string;
-  // 中列のカスタマイズ
-  middleTitle?: string;
-  middleIcon?: string;
-  middleStaff?: StaffMember[];
-  middleServices?: string[];
-  middleLink?: string;
-  hideMiddleIcon?: boolean;
 }
 
 const {
-  staffMembers = [],
-  services = [],
-  links,
-  leftTitle = '私たちについて',
-  leftIcon,
-  leftStaff,
-  leftLink = '/staff',
-  middleTitle = 'サービス内容',
-  middleIcon,
-  middleStaff,
-  middleServices,
-  middleLink = '/services',
-  hideMiddleIcon = false
+  scienceService,
+  starryService,
+  links
 } = Astro.props;
-
-// データの優先順位を設定
-const displayLeftStaff = leftStaff ?? staffMembers;
-const displayMiddleStaff = middleStaff;
-const displayMiddleServices = middleServices ?? services;
 ---
 
 <section class="py-16 md:py-24 bg-transparent">
   <div class="max-w-4xl mx-auto px-4">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <OverViewAboutSection
-        staffMembers={displayLeftStaff}
-        staffLink={leftLink}
-        title={leftTitle}
-        icon={leftIcon}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+      <!-- サイエンス事業 -->
+      <OverViewServiceCard
+        title={scienceService.title}
+        titleSvg={scienceService.titleSvg}
+        image={scienceService.image}
+        imageAlt={scienceService.imageAlt}
+        items={scienceService.items}
+        link={scienceService.link}
       />
-      {displayMiddleStaff ? (
-        <OverViewAboutSection
-          staffMembers={displayMiddleStaff}
-          staffLink={middleLink}
-          title={middleTitle}
-          icon={middleIcon}
-        />
-      ) : (
-        <OverViewServiceSection
-          services={displayMiddleServices}
-          servicesLink={middleLink}
-          title={middleTitle}
-          icon={middleIcon}
-          hideIcon={hideMiddleIcon}
-        />
-      )}
+
+      <!-- 星空事業 -->
+      <OverViewServiceCard
+        title={starryService.title}
+        titleSvg={starryService.titleSvg}
+        image={starryService.image}
+        imageAlt={starryService.imageAlt}
+        items={starryService.items}
+        link={starryService.link}
+      />
+
+      <!-- 私たちについて（3つの小さいカード） -->
       <OverViewLinkCard {links} />
     </div>
   </div>
