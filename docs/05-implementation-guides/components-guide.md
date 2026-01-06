@@ -6,13 +6,14 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 
 ```
 src/components/
-├── common/          # 共通コンポーネント (6個)
+├── common/          # 共通コンポーネント (7個)
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── DonatiLogo.astro
 │   ├── Hero.astro
 │   ├── Carousel.astro
-│   └── InstagramSection.astro
+│   ├── InstagramSection.astro
+│   └── SectionHeading.astro
 ├── overview/        # トップページ専用 (6個)
 │   ├── OverViewSection.astro
 │   ├── OverViewHero.astro
@@ -35,9 +36,10 @@ src/components/
 │   ├── ProfessionalExperienceHideCard.astro
 │   ├── ProfessionalExperienceServicesCard.astro
 │   └── MediaCoverageSection.astro
-├── cards/           # 再利用可能カード (2個)
+├── cards/           # 再利用可能カード (3個)
 │   ├── ServiceCard.astro
-│   └── StaffProfileCard.astro
+│   ├── StaffProfileCard.astro
+│   └── FAQItem.astro
 └── effects/         # 視覚効果 (5個)
     ├── CustomCursor.astro
     ├── CustomCursor-StarTheme.astro
@@ -46,7 +48,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 32個（削除前: 33個）
+**総コンポーネント数**: 34個（削除前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -154,11 +156,31 @@ src/components/
 #### カード系
 
 **ServiceCard.astro**
-- **ファイル**: [src/components/ServiceCard.astro](src/components/ServiceCard.astro)
+- **ファイル**: [src/components/cards/ServiceCard.astro](src/components/cards/ServiceCard.astro)
 - **行数**: 31行
 - **目的**: サービス説明カード
 - **Props**: icon, title, description
 - **用途**: servicesページでグリッド表示
+
+**StaffProfileCard.astro**
+- **ファイル**: [src/components/cards/StaffProfileCard.astro](src/components/cards/StaffProfileCard.astro)
+- **目的**: スタッフプロフィールカード
+- **Props**: name, nameSvg, pictSvg, description, achievements, professionalExperienceLink, servicesLink
+- **用途**: about.astroページでスタッフ紹介
+
+**FAQItem.astro**
+- **ファイル**: [src/components/cards/FAQItem.astro](src/components/cards/FAQItem.astro)
+- **行数**: 約70行
+- **目的**: FAQ質問・回答アコーディオン
+- **Props**: question (string), answer (string), index (number)
+- **用途**: faq.astroページで使用
+- **実装方式**: HTML5 `<details>`/`<summary>`要素
+- **特徴**:
+  - Q/Aアイコン（黄色・青円）
+  - 白背景カード、黄色星装飾
+  - スムーズな開閉アニメーション
+  - レスポンシブ対応
+- **使用場所**: faq.astro
 
 #### UI部品
 
@@ -168,6 +190,21 @@ src/components/
 - **目的**: ロゴ表示
 - **Props**: size（サイズ可変：sm, md, lg）
 - **使用箇所**: Header、OverViewHero等
+
+**SectionHeading.astro**
+- **ファイル**: [src/components/common/SectionHeading.astro](src/components/common/SectionHeading.astro)
+- **目的**: セクション見出し（タイトル + waveLine装飾）
+- **Props**:
+  - `title: string` - 見出しテキスト（必須）
+  - `level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'` - 見出しレベル（デフォルト: 'h2'）
+  - `size?: 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl'` - フォントサイズ（デフォルト: h1の場合'text-4xl'、その他'text-2xl'）
+  - `waveLineCount?: 3 | 5` - waveLine SVGの表示数（デフォルト: 3）
+  - `titleMarginBottom?: string` - タイトルの下マージン（デフォルト: 'mb-4'）
+  - `marginBottom?: string` - セクション全体の下マージン（デフォルト: 'mb-12'）
+  - `titleMarginLeft?: string` - タイトルの左マージン（デフォルト: ''）
+- **スタイル**: タイトルは`text-[#58778D]`、`font-bold`
+- **使用箇所**: contact.astro、about.astro、services.astro等の各セクション見出し
+- **実装日**: 2026年1月6日
 
 **Footer.astro**
 - **ファイル**: [src/components/Footer.astro](src/components/Footer.astro)
@@ -246,13 +283,13 @@ StarrySection.astro
 ### フォルダ別内訳
 | フォルダ | コンポーネント数 | 用途 |
 |---------|-----------------|------|
-| common/ | 6 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection） |
+| common/ | 7 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
 | professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
-| cards/ | 2 | 汎用カード（ServiceCard, StaffProfileCard） |
+| cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **32** | **6フォルダ** |
+| **合計** | **34** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -719,8 +756,81 @@ import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 - [ ] テーブル内容の参考画像と完全マッチング（テキスト精査）
 - [ ] service-hide.astroへの対応検討
 
+## コンポーネント詳細: StaffProfileCard.astro
+
+### 概要
+- **ファイル**: [src/components/cards/StaffProfileCard.astro](src/components/cards/StaffProfileCard.astro)
+- **目的**: スタッフプロフィール表示用の汎用カード
+- **使用ページ**: about.astro, professional-experience.astro
+
+### Props
+
+```typescript
+interface Props {
+  name: string;                   // スタッフ名（例: "フジ", "ひでゆき"）
+  nameSvg: string;               // 名前SVGパス
+  pictSvg: string;               // キャラクター画像SVGパス
+  description: string;           // プロフィール説明文
+  achievements: string[];        // 活動実績リスト
+  achievementsTitle?: string;    // 実績セクションタイトル（デフォルト: "活動実績"）
+  additionalSection?: {          // 追加セクション（例: 出版物）
+    title: string;
+    items: string[];
+  };
+  showButtons?: boolean;         // ボタン表示切り替え（デフォルト: true）
+  professionalExperienceLink?: string;  // 活動履歴リンク（showButtons=trueの場合必須）
+  servicesLink?: string;         // サービスリンク（showButtons=trueの場合必須）
+}
+```
+
+### 使用例
+
+#### about.astroでの使用（ボタンなし）
+```astro
+import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
+import { aboutPageContent } from '../config/site';
+
+<StaffProfileCard
+  {...aboutPageContent.staffMembers[0]}
+  showButtons={false}
+/>
+```
+
+#### professional-experience.astroでの使用（ボタンあり）
+```astro
+<StaffProfileCard
+  name="フジ"
+  nameSvg="/images/svg/Parts/fuji_name.svg"
+  pictSvg="/images/svg/Parts/fuji_pict.svg"
+  description="..."
+  achievements={["...", "..."]}
+  professionalExperienceLink="/professional-experience#fuji-section"
+  servicesLink="/services"
+/>
+```
+
+### レイアウト構成
+1. キャラクターイラスト + 名前SVG（横並び、1:2バランス）
+2. プロフィール説明文
+3. 活動実績リスト（黄色ドット付き）
+4. 追加セクション（オプション、例: 出版物）
+5. アクションボタン×2（オプション、スカイブルー）
+
+### スタイル
+- テキスト色: `#58778D`（紺青色）
+- ボタン背景: `overview-sky` (#87CEEB)
+- リストドット: `overview-yellow` (#FFD700)
+
 ## 更新履歴
 
+- **2025年1月4日**: aboutページ再設計（Issue #118対応）
+  - StaffProfileCard.astro拡張: `achievementsTitle`, `additionalSection`, `showButtons` 追加
+  - about.astroを画像デザインに基づき3セクション構成に変更（4セクション → 3セクション）
+  - site.tsの`aboutPageContent`構造変更:
+    - `introduction`削除
+    - `philosophy.sections`を`philosophy.text`に統合
+    - `philosophy.photoUrl/photoAlt`追加（星空写真プレースホルダー）
+    - `closingMessage`削除
 - **2025年1月3日**: ServiceComparisonTable.astro追加（Issue #111対応）
   - service-fuji.astro用の3プラン簡易比較表新規実装
   - 黄色ヘッダー + 薄い青テーブルで参考画像に合わせた配色

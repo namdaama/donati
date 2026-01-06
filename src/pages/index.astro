@@ -47,35 +47,39 @@ const newsItems = [
   }
 ];
 
-// スタッフ情報（OverView.jpgデザインに合わせて更新）
-const staffMembers = [
-  {
-    name: 'フジ',
-    role: 'サイエンスコミュニケーター',
-    pictSvg: '/images/svg/Parts/fuji_pict.svg',
-    nameSvg: '/images/svg/Parts/fuji_name.svg'
-  },
-  {
-    name: 'ひでゆき',
-    role: '星空案内人',
-    pictSvg: '/images/svg/Parts/hide_pict.svg',
-    nameSvg: '/images/svg/Parts/hide_name.svg'
-  }
-];
+// サイエンス事業カードデータ
+const scienceService = {
+  title: 'サイエンス事業',
+  titleSvg: '/images/svg/Parts/text_science.svg',
+  image: '/images/picture/OverView/Science.jpg',
+  imageAlt: 'サイエンスパフォーマンスショー',
+  items: [
+    'サイエンスパフォーマンスショー',
+    'わくわく科学実験室',
+    'ワークショップ　など'
+  ],
+  link: '/service-fuji'
+};
 
-// サービス内容（OverView.jpgデザインに合わせて更新）
-const services = [
-  'わくわく実験教室',
-  'ワークショップ',
-  '星空イベント',
-  '星空の写真　など'
-];
+// 星空事業カードデータ
+const starryService = {
+  title: '星空事業',
+  titleSvg: '/images/svg/Parts/text_space.svg',
+  image: '/images/picture/OverView/StarrySky.jpg',
+  imageAlt: '星空観察会',
+  items: [
+    '星空観察会',
+    'ましかくプラネタリウム',
+    '天文イベント　など'
+  ],
+  link: '/service-hide'
+};
 
-// OverViewセクション用のリンク情報
-const overviewLinks = [
-  { textSvg: '/images/svg/Parts/text_Offer.svg', href: '/services', altText: '依頼の流れ' },
-  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/services#faq', altText: 'よくある質問' },
-  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '活動経歴' }
+// 「私たちについて」リンクカードデータ（3つの小さいカード）
+const aboutLinks = [
+  { textSvg: '/images/svg/Parts/text_AboutUs.svg', href: '/about', altText: '私たちについて' },
+  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '実績' },
+  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/services#faq', altText: '料金・FAQ' }
 ];
 ---
 
@@ -87,7 +91,7 @@ const overviewLinks = [
     <Carousel slides={heroCarouselData} />
 
     <!-- お知らせセクション -->
-    <section class="py-12 md:py-20 bg-transparent">
+    <section class="py-8 md:py-12 bg-transparent">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="text-left mb-12">
@@ -99,7 +103,7 @@ const overviewLinks = [
 
       <!-- ウェーブライン（containerの外） -->
       <div class="waveline-wrapper">
-        <div class="waveline-container py-6">
+        <div class="waveline-container py-2 md:py-3">
           <!-- モバイル: 2つ -->
           <div class="flex sm:hidden">
             <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
@@ -160,7 +164,7 @@ const overviewLinks = [
 
     <!-- 波線装飾（複数並べて中央寄せ） -->
     <div class="waveline-wrapper">
-      <div class="waveline-container py-4">
+      <div class="waveline-container py-2 md:py-3">
         <!-- モバイル: 2つ -->
         <div class="flex sm:hidden">
           <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
@@ -183,10 +187,14 @@ const overviewLinks = [
       </div>
     </div>
 
-    <OverViewSection {staffMembers} {services} links={overviewLinks} />
+    <OverViewSection
+      scienceService={scienceService}
+      starryService={starryService}
+      links={aboutLinks}
+    />
 
     <!-- CTAバナー（QA画像） -->
-    <section class="py-12 md:py-20">
+    <section class="py-8 md:py-12">
       <div class="max-w-4xl mx-auto px-4">
         <a href="/contact" class="block hover:opacity-90 transition-opacity duration-300">
           <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full" />
@@ -229,27 +237,14 @@ const overviewLinks = [
   }
 
   /* Heroカルーセル専用スタイル */
-  /* レスポンシブ画像高さ */
+  /* アスペクト比固定でコンテナに完全フィット */
   main .carousel-slide img {
-    height: 400px;
     object-fit: cover;
-  }
-
-  @media (min-width: 768px) {
-    main .carousel-slide img {
-      height: 500px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    main .carousel-slide img {
-      height: 600px;
-    }
   }
 
   /* カルーセルコンテンツを非表示 */
   main .carousel-content {
-    display: none;
+    display: none !important;
   }
 
   /* アクティブドットの配色調整 */

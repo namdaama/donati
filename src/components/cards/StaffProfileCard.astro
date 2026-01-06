@@ -1,20 +1,26 @@
 ---
 interface Props {
   name: string;
+  realName?: string;
   nameSvg: string;
   pictSvg: string;
-  description: string;
+  overview: string;
   achievements: string[];
-  professionalExperienceLink: string;
-  servicesLink: string;
+  publications?: string[];
+  showButtons?: boolean;
+  professionalExperienceLink?: string;
+  servicesLink?: string;
 }
 
 const {
   name,
+  realName,
   nameSvg,
   pictSvg,
-  description,
+  overview,
   achievements,
+  publications,
+  showButtons = true,
   professionalExperienceLink,
   servicesLink
 } = Astro.props;
@@ -44,16 +50,19 @@ const {
     </div>
   </div>
 
-  <!-- 説明文 -->
-  <div class="mb-2 flex-grow">
-    <p class="leading-relaxed text-sm" style="color: #58778D;">
-      {description}
+  <!-- 概要 -->
+  <div class="mb-6 min-h-[420px]">
+    {realName && (
+      <h3 class="text-2xl font-bold mb-4" style="color: #58778D;">{realName}</h3>
+    )}
+    <p class="leading-relaxed text-sm text-gray-600" style="white-space: pre-line;">
+      {overview}
     </p>
   </div>
 
-  <!-- 活動実績リスト -->
-  <div class="mb-4">
-    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">活動実績</h4>
+  <!-- 主な実績 -->
+  <div class="mb-6">
+    <h4 class="text-sm font-bold mb-2" style="color: #58778D;">主な実績</h4>
     <ul class="space-y-1">
       {achievements.map((achievement) => (
         <li class="flex items-start">
@@ -64,24 +73,41 @@ const {
     </ul>
   </div>
 
-  <!-- ボタン2つ（横並び、どちらもライトブルー） -->
-  <div class="flex gap-3 mt-auto">
-    <!-- 詳しい活動履歴ボタン -->
-    <a
-      href={professionalExperienceLink}
-      class="flex-1 bg-overview-sky hover:bg-overview-sky/80 text-white font-bold py-2 px-3 rounded-lg
-             transition-all duration-300 text-center text-sm shadow-md"
-    >
-      詳しい活動履歴
-    </a>
+  <!-- 出版・制作物 -->
+  {publications && publications.length > 0 && (
+    <div class="mb-6">
+      <h4 class="text-sm font-bold mb-2" style="color: #58778D;">出版・制作物</h4>
+      <ul class="space-y-1">
+        {publications.map((item) => (
+          <li class="flex items-start">
+            <span class="text-overview-yellow mr-2 text-xs mt-0.5">●</span>
+            <span class="text-gray-600 text-xs leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
 
-    <!-- サービス内容ボタン -->
-    <a
-      href={servicesLink}
-      class="flex-1 bg-overview-sky hover:bg-overview-sky/80 text-white font-bold py-2 px-3 rounded-lg
-             transition-all duration-300 text-center text-sm shadow-md"
-    >
-      サービス内容
-    </a>
-  </div>
+  <!-- ボタン2つ（横並び、どちらもライトブルー） -->
+  {showButtons && (
+    <div class="flex gap-3 mt-auto">
+      <!-- 詳しい活動履歴ボタン -->
+      <a
+        href={professionalExperienceLink}
+        class="flex-1 bg-overview-sky hover:bg-overview-sky/80 text-white font-bold py-2 px-3 rounded-lg
+               transition-all duration-300 text-center text-sm shadow-md"
+      >
+        詳しい活動履歴
+      </a>
+
+      <!-- サービス内容ボタン -->
+      <a
+        href={servicesLink}
+        class="flex-1 bg-overview-sky hover:bg-overview-sky/80 text-white font-bold py-2 px-3 rounded-lg
+               transition-all duration-300 text-center text-sm shadow-md"
+      >
+        サービス内容
+      </a>
+    </div>
+  )}
 </div>
