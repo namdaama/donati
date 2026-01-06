@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  titleSvg?: string;
+  image: string;
+  imageAlt: string;
+  items: string[];
+  link?: string;
+}
+
+const { title, titleSvg, image, imageAlt, items, link } = Astro.props;
+---
+
+<a
+  href={link}
+  class="flex flex-col h-full bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+>
+  <!-- タイトル -->
+  <div class="text-center mb-4">
+    {titleSvg ? (
+      <img src={titleSvg} alt={title} class="h-8 mx-auto" />
+    ) : (
+      <h3 class="text-xl font-bold text-gray-800">{title}</h3>
+    )}
+  </div>
+
+  <!-- 波線装飾 -->
+  <div class="mb-6">
+    <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="w-full h-3" />
+  </div>
+
+  <!-- 箇条書きリスト -->
+  <ul class="space-y-2 mb-6">
+    {items.map((item) => (
+      <li class="flex items-start">
+        <span class="text-blue-500 mr-1 flex-shrink-0">・</span>
+        <span class="text-gray-700 text-sm whitespace-nowrap">{item}</span>
+      </li>
+    ))}
+  </ul>
+
+  <!-- 画像 -->
+  <div class="mt-auto">
+    <img src={image} alt={imageAlt} class="w-full rounded-lg object-cover" />
+  </div>
+</a>
