@@ -35,9 +35,10 @@ src/components/
 │   ├── ProfessionalExperienceHideCard.astro
 │   ├── ProfessionalExperienceServicesCard.astro
 │   └── MediaCoverageSection.astro
-├── cards/           # 再利用可能カード (2個)
+├── cards/           # 再利用可能カード (3個)
 │   ├── ServiceCard.astro
-│   └── StaffProfileCard.astro
+│   ├── StaffProfileCard.astro
+│   └── FAQItem.astro
 └── effects/         # 視覚効果 (5個)
     ├── CustomCursor.astro
     ├── CustomCursor-StarTheme.astro
@@ -46,7 +47,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 32個（削除前: 33個）
+**総コンポーネント数**: 33個（削除前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -154,11 +155,31 @@ src/components/
 #### カード系
 
 **ServiceCard.astro**
-- **ファイル**: [src/components/ServiceCard.astro](src/components/ServiceCard.astro)
+- **ファイル**: [src/components/cards/ServiceCard.astro](src/components/cards/ServiceCard.astro)
 - **行数**: 31行
 - **目的**: サービス説明カード
 - **Props**: icon, title, description
 - **用途**: servicesページでグリッド表示
+
+**StaffProfileCard.astro**
+- **ファイル**: [src/components/cards/StaffProfileCard.astro](src/components/cards/StaffProfileCard.astro)
+- **目的**: スタッフプロフィールカード
+- **Props**: name, nameSvg, pictSvg, description, achievements, professionalExperienceLink, servicesLink
+- **用途**: about.astroページでスタッフ紹介
+
+**FAQItem.astro**
+- **ファイル**: [src/components/cards/FAQItem.astro](src/components/cards/FAQItem.astro)
+- **行数**: 約70行
+- **目的**: FAQ質問・回答アコーディオン
+- **Props**: question (string), answer (string), index (number)
+- **用途**: faq.astroページで使用
+- **実装方式**: HTML5 `<details>`/`<summary>`要素
+- **特徴**:
+  - Q/Aアイコン（黄色・青円）
+  - 白背景カード、黄色星装飾
+  - スムーズな開閉アニメーション
+  - レスポンシブ対応
+- **使用場所**: faq.astro
 
 #### UI部品
 
@@ -250,9 +271,9 @@ StarrySection.astro
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
 | professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
-| cards/ | 2 | 汎用カード（ServiceCard, StaffProfileCard） |
+| cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **32** | **6フォルダ** |
+| **合計** | **33** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
