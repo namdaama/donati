@@ -51,7 +51,7 @@ const {
   </div>
 
   <!-- 概要 -->
-  <div class="mb-4 min-h-[420px]">
+  <div class="mb-6 min-h-[420px]">
     {realName && (
       <h3 class="text-2xl font-bold mb-4" style="color: #58778D;">{realName}</h3>
     )}
@@ -61,7 +61,7 @@ const {
   </div>
 
   <!-- 主な実績 -->
-  <div class="mb-4 min-h-[280px]">
+  <div class="mb-6">
     <h4 class="text-sm font-bold mb-2" style="color: #58778D;">主な実績</h4>
     <ul class="space-y-1">
       {achievements.map((achievement) => (
@@ -75,7 +75,7 @@ const {
 
   <!-- 出版・制作物 -->
   {publications && publications.length > 0 && (
-    <div class="mb-4">
+    <div class="mb-6">
       <h4 class="text-sm font-bold mb-2" style="color: #58778D;">出版・制作物</h4>
       <ul class="space-y-1">
         {publications.map((item) => (

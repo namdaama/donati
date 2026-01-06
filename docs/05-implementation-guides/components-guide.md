@@ -6,13 +6,14 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 
 ```
 src/components/
-├── common/          # 共通コンポーネント (6個)
+├── common/          # 共通コンポーネント (7個)
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── DonatiLogo.astro
 │   ├── Hero.astro
 │   ├── Carousel.astro
-│   └── InstagramSection.astro
+│   ├── InstagramSection.astro
+│   └── SectionHeading.astro
 ├── overview/        # トップページ専用 (6個)
 │   ├── OverViewSection.astro
 │   ├── OverViewHero.astro
@@ -47,7 +48,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 33個（削除前: 33個）
+**総コンポーネント数**: 34個（削除前: 33個）
 
 **削除されたコンポーネント**:
 - AchievementCard.astro - achievements.astroのみで使用
@@ -190,6 +191,21 @@ src/components/
 - **Props**: size（サイズ可変：sm, md, lg）
 - **使用箇所**: Header、OverViewHero等
 
+**SectionHeading.astro**
+- **ファイル**: [src/components/common/SectionHeading.astro](src/components/common/SectionHeading.astro)
+- **目的**: セクション見出し（タイトル + waveLine装飾）
+- **Props**:
+  - `title: string` - 見出しテキスト（必須）
+  - `level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'` - 見出しレベル（デフォルト: 'h2'）
+  - `size?: 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl'` - フォントサイズ（デフォルト: h1の場合'text-4xl'、その他'text-2xl'）
+  - `waveLineCount?: 3 | 5` - waveLine SVGの表示数（デフォルト: 3）
+  - `titleMarginBottom?: string` - タイトルの下マージン（デフォルト: 'mb-4'）
+  - `marginBottom?: string` - セクション全体の下マージン（デフォルト: 'mb-12'）
+  - `titleMarginLeft?: string` - タイトルの左マージン（デフォルト: ''）
+- **スタイル**: タイトルは`text-[#58778D]`、`font-bold`
+- **使用箇所**: contact.astro、about.astro、services.astro等の各セクション見出し
+- **実装日**: 2026年1月6日
+
 **Footer.astro**
 - **ファイル**: [src/components/Footer.astro](src/components/Footer.astro)
 - **行数**: 41行
@@ -267,13 +283,13 @@ StarrySection.astro
 ### フォルダ別内訳
 | フォルダ | コンポーネント数 | 用途 |
 |---------|-----------------|------|
-| common/ | 6 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection） |
+| common/ | 7 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
 | professional-experience/ | 5 | professional-experience.astro専用（ProfessionalExperience*, MediaCoverageSection） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **33** | **6フォルダ** |
+| **合計** | **34** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
