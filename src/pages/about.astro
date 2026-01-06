@@ -5,48 +5,21 @@ import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import DonatiLogo from '../components/common/DonatiLogo.astro';
 import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
+import { aboutPageContent } from '../config/site';
 
-// スタッフ情報定義
-const staffMembers = [
-  {
-    name: 'フジ',
-    nameSvg: '/images/svg/Parts/fuji_name.svg',
-    pictSvg: '/images/svg/Parts/fuji_pict.svg',
-    description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-    achievements: [
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお'
-    ],
-    professionalExperienceLink: '/professional-experience#fuji-section',
-    servicesLink: '/services'
-  },
-  {
-    name: 'ひでゆき',
-    nameSvg: '/images/svg/Parts/hide_name.svg',
-    pictSvg: '/images/svg/Parts/hide_pict.svg',
-    description: 'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-    achievements: [
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお',
-      'あいうえおあいうえおあいうえおあいうえおあいうえおあいうえお'
-    ],
-    professionalExperienceLink: '/professional-experience#hide-section',
-    servicesLink: '/services'
-  }
-];
+const { introduction, philosophy, staffMembers } = aboutPageContent;
 ---
 
 <Layout title="DONATIとは">
   <Header />
 
   <main class="flex-grow relative overflow-hidden">
-    <!-- DONATIとは セクション -->
+    <!-- ① DONATIとは セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="mb-12">
-          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">DONATIとは？</h2>
+          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">{introduction.title}</h2>
           <div class="waveline-wrapper">
             <div class="w-full overflow-hidden flex justify-center">
               <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
@@ -56,29 +29,75 @@ const staffMembers = [
           </div>
         </div>
 
-        <!-- コンテンツグリッド（左：テキスト、右：ロゴ） -->
-        <div class="grid grid-cols-2 gap-12 items-center">
-          <!-- 左：説明文 -->
-          <div class="bg-white/70 backdrop-blur-sm rounded-2xl p-8 shadow-lg">
-            <p class="text-gray-700 leading-relaxed text-sm">
-              {staffMembers[0].description}
+        <!-- コンテンツグリッド（左：テキスト 2/3、右：ロゴ 1/3） -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <!-- 左：テキストエリア（2/3幅） -->
+          <div class="md:col-span-2">
+            <!-- コンセプトメッセージ -->
+            <h3 class="text-3xl md:text-4xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+              {introduction.concept}
+            </h3>
+
+            <!-- 説明文 -->
+            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+              {introduction.text}
             </p>
           </div>
 
-          <!-- 右：DonatiLogo -->
-          <div class="flex justify-center items-center">
+          <!-- 右：DonatiLogo（1/3幅いっぱい） -->
+          <div class="md:col-span-1 flex justify-center items-center w-full h-full">
             <DonatiLogo size="xlarge" />
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 私たちについて セクション -->
+    <!-- ② 大切にしていること セクション -->
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <div class="mb-12">
-          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">私たちについて</h2>
+          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">{philosophy.title}</h2>
+          <div class="waveline-wrapper">
+            <div class="w-full overflow-hidden flex justify-center">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- コンテンツグリッド（左：テキスト 2/3、右：写真 1/3） -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <!-- 左：テキストエリア（2/3幅） -->
+          <div class="md:col-span-2">
+            <!-- コンセプトメッセージ -->
+            <h3 class="text-3xl md:text-4xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+              {philosophy.concept}
+            </h3>
+
+            <!-- 説明文 -->
+            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+              {philosophy.text}
+            </p>
+          </div>
+
+          <!-- 右：星空写真プレースホルダー（1/3幅いっぱい） -->
+          <div class="md:col-span-1 flex items-center justify-center w-full h-full min-h-[300px]">
+            <div class="text-center text-gray-500">
+              <p class="text-sm">ひでゆきさんの<br/>星空の写真<br/>どうですか？</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ メンバー紹介 セクション -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <!-- セクションタイトル -->
+        <div class="mb-12">
+          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">メンバー紹介</h2>
           <div class="waveline-wrapper">
             <div class="w-full overflow-hidden flex justify-center">
               <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
@@ -89,9 +108,12 @@ const staffMembers = [
         </div>
 
         <!-- スタッフカードグリッド -->
-        <div class="grid grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {staffMembers.map((staff) => (
-            <StaffProfileCard {...staff} />
+            <StaffProfileCard
+              {...staff}
+              showButtons={false}
+            />
           ))}
         </div>
       </div>
