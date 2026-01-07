@@ -5,6 +5,7 @@ import Carousel from '../components/common/Carousel.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import OverViewSection from '../components/overview/OverViewSection.astro';
+import SectionHeading from '../components/common/SectionHeading.astro';
 import { heroCarouselData } from '../config/carousel';
 
 // お知らせデータ（4列グリッド用）
@@ -72,14 +73,14 @@ const starryService = {
     'ましかくプラネタリウム',
     '天文イベント　など'
   ],
-  link: '/service-hide'
+  link: '/_service-hide'
 };
 
 // 「私たちについて」リンクカードデータ（3つの小さいカード）
 const aboutLinks = [
   { textSvg: '/images/svg/Parts/text_AboutUs.svg', href: '/about', altText: '私たちについて' },
-  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '実績' },
-  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/services#faq', altText: '料金・FAQ' }
+  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/_professional-experience', altText: '実績' },
+  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/_faq', altText: '料金・FAQ' }
 ];
 ---
 
@@ -93,40 +94,11 @@ const aboutLinks = [
     <!-- お知らせセクション -->
     <section class="py-8 md:py-12 bg-transparent">
       <div class="max-w-4xl mx-auto px-4">
-        <!-- セクションタイトル -->
-        <div class="text-left mb-12">
-          <h2 class="section-title-news">
-            お知らせ
-          </h2>
-        </div>
-      </div>
-
-      <!-- ウェーブライン（containerの外） -->
-      <div class="waveline-wrapper">
-        <div class="waveline-container py-2 md:py-3">
-          <!-- モバイル: 2つ -->
-          <div class="flex sm:hidden">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          </div>
-          <!-- タブレット: 3つ -->
-          <div class="hidden sm:flex md:hidden">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          </div>
-          <!-- デスクトップ: 5つ -->
-          <div class="hidden md:flex">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          </div>
-        </div>
-      </div>
-
-      <div class="max-w-4xl mx-auto px-4 mt-8">
+        <SectionHeading
+          title="お知らせ"
+          waveLineCount={5}
+          titleMarginLeft="ml-4"
+        />
 
         <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
