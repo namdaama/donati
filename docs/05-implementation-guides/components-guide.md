@@ -766,20 +766,24 @@ import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 ### Props
 
 ```typescript
+interface SocialLink {
+  type: 'instagram' | 'youtube' | 'website' | 'community';
+  url: string;
+  label: string;  // アクセシビリティ用
+}
+
 interface Props {
   name: string;                   // スタッフ名（例: "フジ", "ひでゆき"）
+  realName?: string;             // 実名（例: "加藤 絢"）
   nameSvg: string;               // 名前SVGパス
   pictSvg: string;               // キャラクター画像SVGパス
-  description: string;           // プロフィール説明文
+  overview: string;              // プロフィール説明文
   achievements: string[];        // 活動実績リスト
-  achievementsTitle?: string;    // 実績セクションタイトル（デフォルト: "活動実績"）
-  additionalSection?: {          // 追加セクション（例: 出版物）
-    title: string;
-    items: string[];
-  };
+  publications?: string[];       // 出版・制作物リスト（オプション）
   showButtons?: boolean;         // ボタン表示切り替え（デフォルト: true）
   professionalExperienceLink?: string;  // 活動履歴リンク（showButtons=trueの場合必須）
   servicesLink?: string;         // サービスリンク（showButtons=trueの場合必須）
+  socialLinks?: SocialLink[];    // SNSリンク（オプション）
 }
 ```
 
@@ -811,10 +815,12 @@ import { aboutPageContent } from '../config/site';
 
 ### レイアウト構成
 1. キャラクターイラスト + 名前SVG（横並び、1:2バランス）
-2. プロフィール説明文
-3. 活動実績リスト（黄色ドット付き）
-4. 追加セクション（オプション、例: 出版物）
-5. アクションボタン×2（オプション、スカイブルー）
+2. 実名表示（オプション）
+3. プロフィール説明文
+4. 主な実績リスト（黄色ドット付き）
+5. 出版・制作物リスト（オプション、黄色ドット付き）
+6. アクションボタン×2（オプション、スカイブルー）
+7. SNSリンク（オプション、カード最下部に横並び表示）
 
 ### スタイル
 - テキスト色: `#58778D`（紺青色）
@@ -823,6 +829,11 @@ import { aboutPageContent } from '../config/site';
 
 ## 更新履歴
 
+- **2025年1月8日**: StaffProfileCard SNSリンク追加（Issue #136対応）
+  - `socialLinks` プロパティ追加（Instagram、YouTube、個人HP、オンラインサロン対応）
+  - 新規アイコン追加: `icon_Website.svg`, `icon_Community.svg`（暫定実装）
+  - カード最下部にSNSリンクセクション追加（ボーダー区切り、中央揃え）
+  - site.tsに`socialLinks`データ追加（フジ: Instagram 1件、ひでゆき: 4件）
 - **2025年1月4日**: aboutページ再設計（Issue #118対応）
   - StaffProfileCard.astro拡張: `achievementsTitle`, `additionalSection`, `showButtons` 追加
   - about.astroを画像デザインに基づき3セクション構成に変更（4セクション → 3セクション）
