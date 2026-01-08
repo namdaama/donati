@@ -1,4 +1,10 @@
 ---
+interface SocialLink {
+  type: 'instagram' | 'youtube' | 'website' | 'community';
+  url: string;
+  label: string;
+}
+
 interface Props {
   name: string;
   realName?: string;
@@ -10,6 +16,7 @@ interface Props {
   showButtons?: boolean;
   professionalExperienceLink?: string;
   servicesLink?: string;
+  socialLinks?: SocialLink[];
 }
 
 const {
@@ -22,8 +29,20 @@ const {
   publications,
   showButtons = true,
   professionalExperienceLink,
-  servicesLink
+  servicesLink,
+  socialLinks
 } = Astro.props;
+
+// アイコンパス取得関数
+const getIconPath = (type: string): string => {
+  const iconMap: Record<string, string> = {
+    instagram: '/images/svg/Parts/icon_Instagram.svg',
+    youtube: '/images/svg/Parts/icon_Youtube.svg',
+    website: '/images/svg/Parts/icon_Website.svg',
+    community: '/images/svg/Parts/icon_Community.svg'
+  };
+  return iconMap[type] || '/images/svg/Parts/icon_Website.svg';
+};
 ---
 
 <div class="bg-transparent flex flex-col h-full p-4">
@@ -108,6 +127,27 @@ const {
       >
         サービス内容
       </a>
+    </div>
+  )}
+
+  <!-- SNSリンク -->
+  {socialLinks && socialLinks.length > 0 && (
+    <div class="flex justify-center gap-4 mt-6 pt-4 border-t border-gray-200">
+      {socialLinks.map((link) => (
+        <a
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={link.label}
+          class="hover:opacity-80 transition-opacity duration-300"
+        >
+          <img
+            src={getIconPath(link.type)}
+            alt={link.label}
+            class="w-10 h-10 md:w-12 md:h-12"
+          />
+        </a>
+      ))}
     </div>
   )}
 </div>

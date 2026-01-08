@@ -82,6 +82,13 @@ export const aboutPageContent = {
         '科学実験ショー・ワークショップ・星空体験の出張実施',
         '岩手大学 農学部 卒業',
         '福井県畜産試験場 研究職'
+      ],
+      socialLinks: [
+        {
+          type: 'instagram',
+          url: 'https://www.instagram.com/wakuwaku_science_fuji/',
+          label: 'フジのInstagram'
+        }
       ]
     },
     {
@@ -107,6 +114,28 @@ export const aboutPageContent = {
       publications: [
         '写真集『Fukui starry sky』（2024）',
         '写真集『STARRY SKY』（2018）'
+      ],
+      socialLinks: [
+        {
+          type: 'instagram',
+          url: 'https://www.instagram.com/hideyuki_kato_/',
+          label: 'ひでゆきのInstagram'
+        },
+        {
+          type: 'youtube',
+          url: 'https://www.youtube.com/@hideyukikato41',
+          label: 'ひでゆきのYouTube'
+        },
+        {
+          type: 'website',
+          url: 'https://www.hideyuki-kato.com/',
+          label: 'ひでゆきの個人ホームページ'
+        },
+        {
+          type: 'community',
+          url: 'https://community.camp-fire.jp/projects/view/776551',
+          label: 'オンラインサロン スターズ'
+        }
       ]
     }
   ]
