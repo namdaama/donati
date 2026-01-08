@@ -194,19 +194,6 @@ const aboutLinks = [
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
-  
-  /* 背景画像の上に軽いオーバーレイを追加 */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, rgba(135, 206, 235, 0.1) 0%, rgba(255, 215, 0, 0.1) 100%);
-    pointer-events: none;
-    z-index: -1;
-  }
 
   /* Heroカルーセル専用スタイル */
   /* アスペクト比固定でコンテナに完全フィット */
