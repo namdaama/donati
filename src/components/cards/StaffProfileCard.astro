@@ -33,15 +33,26 @@ const {
   socialLinks
 } = Astro.props;
 
-// アイコンパス取得関数
-const getIconPath = (type: string): string => {
+// Font Awesomeアイコンクラス取得関数
+const getIconClass = (type: string): string => {
   const iconMap: Record<string, string> = {
-    instagram: '/images/svg/Parts/icon_Instagram.svg',
-    youtube: '/images/svg/Parts/icon_Youtube.svg',
-    website: '/images/svg/Parts/icon_Website.svg',
-    community: '/images/svg/Parts/icon_Community.svg'
+    instagram: 'fa-brands fa-instagram',
+    youtube: 'fa-brands fa-youtube',
+    website: 'fa-solid fa-globe',
+    community: 'fa-solid fa-users'
   };
-  return iconMap[type] || '/images/svg/Parts/icon_Website.svg';
+  return iconMap[type] || 'fa-solid fa-link';
+};
+
+// SNSカラー取得関数
+const getIconColor = (type: string): string => {
+  const colorMap: Record<string, string> = {
+    instagram: '#E4405F', // Instagram公式カラー
+    youtube: '#FF0000',   // YouTube公式カラー
+    website: '#58778D',   // サイトテーマカラー（紺青）
+    community: '#F5C842'  // マイルドな黄色
+  };
+  return colorMap[type] || '#58778D';
 };
 ---
 
@@ -132,7 +143,7 @@ const getIconPath = (type: string): string => {
 
   <!-- SNSリンク -->
   {socialLinks && socialLinks.length > 0 && (
-    <div class="flex justify-center gap-4 mt-6 pt-4 border-t border-gray-200">
+    <div class="flex gap-4 mt-auto pt-4 pl-4 border-t border-gray-200">
       {socialLinks.map((link) => (
         <a
           href={link.url}
@@ -141,11 +152,10 @@ const getIconPath = (type: string): string => {
           aria-label={link.label}
           class="hover:opacity-80 transition-opacity duration-300"
         >
-          <img
-            src={getIconPath(link.type)}
-            alt={link.label}
-            class="w-10 h-10 md:w-12 md:h-12"
-          />
+          <i
+            class={`${getIconClass(link.type)} text-3xl md:text-4xl`}
+            style={`color: ${getIconColor(link.type)};`}
+          ></i>
         </a>
       ))}
     </div>
