@@ -1,13 +1,14 @@
 ---
-interface SocialLink {
+export interface SocialLink {
   type: 'instagram' | 'youtube' | 'website' | 'community';
   url: string;
   label: string;
 }
 
-interface Props {
+export interface Props {
   name: string;
   realName?: string;
+  title?: string;
   nameSvg: string;
   pictSvg: string;
   overview: string;

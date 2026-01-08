@@ -1,4 +1,6 @@
 // サイト全体の基本設定を一元管理
+import type { SocialLink } from '../components/cards/StaffProfileCard.astro';
+
 export const siteConfig = {
   // サイト基本情報
   name: 'サイエンス アンド スペース ラボ DONATI',
@@ -85,11 +87,11 @@ export const aboutPageContent = {
       ],
       socialLinks: [
         {
-          type: 'instagram',
+          type: 'instagram' as const,
           url: 'https://www.instagram.com/wakuwaku_science_fuji/',
           label: 'フジのInstagram'
         }
-      ]
+      ] as SocialLink[]
     },
     {
       name: 'ひでゆき',
@@ -117,26 +119,26 @@ export const aboutPageContent = {
       ],
       socialLinks: [
         {
-          type: 'instagram',
+          type: 'instagram' as const,
           url: 'https://www.instagram.com/hideyuki_kato_/',
           label: 'ひでゆきのInstagram'
         },
         {
-          type: 'youtube',
+          type: 'youtube' as const,
           url: 'https://www.youtube.com/@hideyukikato41',
           label: 'ひでゆきのYouTube'
         },
         {
-          type: 'website',
+          type: 'website' as const,
           url: 'https://www.hideyuki-kato.com/',
           label: 'ひでゆきの個人ホームページ'
         },
         {
-          type: 'community',
+          type: 'community' as const,
           url: 'https://community.camp-fire.jp/projects/view/776551',
           label: 'オンラインサロン スターズ'
         }
-      ]
+      ] as SocialLink[]
     }
   ]
 };
