@@ -3,12 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
-import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
-import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
-import RequestFlowStep from '../components/services/RequestFlowStep.astro';
-import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
-
-const spaceCategory = serviceCategories.space;
 ---
 
 <Layout
@@ -45,107 +39,264 @@ const spaceCategory = serviceCategories.space;
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
-        <!-- スペース分野 -->
-        <section id="space" class="mb-24">
-          <ServiceCategoryHeader
-            mainTitle={spaceCategory.mainTitle}
-            subtitle={spaceCategory.subtitle}
-            description={spaceCategory.description}
-            subsectionTitle={spaceCategory.subsectionTitle}
-            subsectionContent={spaceCategory.subsectionContent}
-            characterIconUrl={spaceCategory.characterIconUrl}
-          />
+      <!-- セクション1: 星空事業（イントロ） -->
+      <section id="space-intro" class="mb-24">
+        <!-- タイトル -->
+        <div class="text-center mb-8">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: #58778D;">星空事業</h2>
 
-          {spaceCategory.services.map((service, index) => (
-            <ServiceDetailCard
-              service={service}
-              index={index}
-              showServicePlans={index === spaceCategory.services.length - 1}
-              services={spaceCategory.services}
-            />
-          ))}
-        </section>
+          <!-- 波線装飾 -->
+          <div class="flex justify-center">
+            <!-- モバイル: 2つ -->
+            <div class="flex sm:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- タブレット: 3つ -->
+            <div class="hidden sm:flex md:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- デスクトップ: 5つ -->
+            <div class="hidden md:flex">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+          </div>
+        </div>
 
-        <!-- ご依頼の流れセクション（後で移動） -->
-        {/*
-        <section id="request-flow" class="mb-24">
-          <div class="text-center mb-16">
-            <h2 class="section-title-news">ご依頼の流れ</h2>
-            <div class="waveline-wrapper">
-              <div class="waveline-container py-6">
-                <!-- モバイル: 2つ -->
-                <div class="flex sm:hidden">
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-                <!-- タブレット: 3つ -->
-                <div class="hidden sm:flex md:hidden">
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-                <!-- デスクトップ: 5つ -->
-                <div class="hidden md:flex">
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-              </div>
+        <!-- メインコンテンツエリア -->
+        <div class="flex flex-col md:flex-row items-center gap-8">
+          <!-- リードテキスト -->
+          <div class="flex-1 text-left">
+            <p class="text-lg leading-relaxed mb-4" style="color: #58778D;">
+              星を見上げる体験は、心に深い感動を残し、好奇心を育みます。
+            </p>
+            <p class="text-base leading-relaxed" style="color: #58778D;">
+              私たちの星空事業は、季節ごとに変わる星座や天体の観察を通じて、宇宙の魅力を伝えます。星空の下、みんなで一緒に宇宙の不思議を楽しみませんか？
+            </p>
+          </div>
+
+          <!-- キャラクター画像 -->
+          <div class="flex-shrink-0 flex flex-col items-center">
+            <img src="/images/svg/Parts/hide_pict.svg" alt="宇宙分野キャラクター" class="w-48 h-48 mb-2" />
+            <img src="/images/svg/Parts/hide_name.svg" alt="宇宙分野 hide" class="w-32 h-auto" />
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション2: 星空観望会 -->
+      <section id="stargazing" class="mb-24">
+        <!-- タイトル -->
+        <div class="text-center mb-8">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: #58778D;">星空観望会</h2>
+
+          <!-- 波線装飾 -->
+          <div class="flex justify-center mb-4">
+            <!-- モバイル: 2つ -->
+            <div class="flex sm:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- タブレット: 3つ -->
+            <div class="hidden sm:flex md:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- デスクトップ: 5つ -->
+            <div class="hidden md:flex">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
             </div>
           </div>
 
-          <!-- フローステップ -->
-          <div class="max-w-4xl mx-auto">
-            {requestFlow.map((step) => (
-              <RequestFlowStep
-                step={step.step}
-                title={step.title}
-                description={step.description}
-              >
-                {step.step === 1 && (
-                  <div class="mt-6">
-                    <h4 class="text-lg font-bold mb-4" style="color: #58778D;">打ち合わせ内容</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {consultationTopics.map((topic) => (
-                        <div class="flex flex-col items-center text-center">
-                          <img
-                            src={topic.svg}
-                            alt={topic.question}
-                            class="w-32 h-16 mb-2"
-                          />
-                          <p class="text-xs leading-relaxed" style="color: #58778D;">
-                            {topic.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </RequestFlowStep>
-            ))}
-          </div>
-        </section>
-        */}
+          <!-- サブタイトル -->
+          <p class="text-xl md:text-2xl font-semibold mb-4" style="color: #58778D;">「みなさんと星空見つめませんか?」</p>
+        </div>
 
-        <!-- 最終メッセージセクション（青い星） -->
-        <section class="mb-24">
-          <div class="flex items-start gap-6 max-w-4xl mx-auto">
-            <img src="/images/svg/Parts/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
+        <!-- 説明テキスト -->
+        <div class="mb-8">
+          <p class="text-lg leading-relaxed mb-4" style="color: #58778D;">
+            望遠鏡で星を見たり、プラネタリウムのような星空のお話をしたり、一緒に宇宙を旅しましょう！
+          </p>
+          <p class="text-base leading-relaxed" style="color: #58778D;">
+            星空観望会では、実際の星空の下で望遠鏡を使って天体を観察します。また、屋内でプラネタリウムのような解説を行い、星座の物語や宇宙の不思議をわかりやすくお伝えします。どなたでも楽しめるプログラムを用意していますので、ぜひ一緒に星空を見つめましょう！
+          </p>
+        </div>
 
-            <div class="flex-1 backdrop-blur-sm rounded-lg p-6 text-left">
-              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">実施後まで丁寧にサポート</h3>
+        <!-- 画像エリア（プレースホルダー） -->
+        <div class="mb-8 bg-gray-400 rounded-lg h-64 flex items-center justify-center">
+          <p class="text-white text-lg">星空観望会の写真</p>
+        </div>
+
+        <!-- 事例カード（水色吹き出し） -->
+        <div class="mb-12 p-8 pt-10 rounded-lg relative shadow-md" style="background-color: #D4E9F3;">
+
+          <!-- 事例コンテンツ -->
+          <div class="flex flex-col md:flex-row gap-6 items-start">
+            <div class="flex-1">
+              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">事例「新潟県の野辺山」ツアー</h3>
               <p class="leading-relaxed" style="color: #58778D;">
-                イベント実施後のアンケート集計や報告書作成、次回に向けた改善提案など、
-                実施後のフォローアップも充実しています。長期的なパートナーとして、
-                皆様の科学教育・普及活動をサポートいたします。
+                宇宙が大好きな小学生から大人まで、たくさんの方に楽しんでいただきました！
+                野辺山の美しい星空の下で、望遠鏡を使って木星や土星を観察。みんなの「わぁー！」という声が忘れられません。
               </p>
             </div>
+            <!-- 事例写真（プレースホルダー） -->
+            <div class="flex-shrink-0 w-full md:w-40 h-40 bg-gray-300 rounded-lg flex items-center justify-center">
+              <p class="text-gray-600 text-sm text-center">事例写真</p>
+            </div>
           </div>
-        </section>
+        </div>
 
-    <FooterDivider />
+        <!-- 料金表セクション -->
+        <div class="mb-8">
+          <h3 class="text-2xl font-bold text-center mb-6" style="color: #58778D;">こんな料金でおまかせます😊</h3>
+
+          <p class="text-base leading-relaxed mb-6" style="color: #58778D;">
+            星空観望会は、イベント内容や参加人数に応じて柔軟にご対応いたします。
+            詳細は下記の料金表をご確認ください。基本的な料金プランをご案内しておりますが、ご予算やご要望に応じて調整可能ですので、お気軽にご相談ください。
+          </p>
+
+          <!-- 料金表 -->
+          <div class="p-6 rounded-lg" style="background-color: #B3E5FC;">
+            <h4 class="text-xl font-bold mb-4" style="color: #58778D;">星空観望会の料金プラン</h4>
+            <ul class="space-y-3" style="color: #58778D;">
+              <li><strong>対象:</strong> 全年齢</li>
+              <li><strong>所要時間:</strong> 90分〜180分（ご要望に応じて調整可能）</li>
+              <li><strong>参加人数:</strong> 10名〜100名程度
+                <ul class="ml-6 mt-2 space-y-1">
+                  <li>・10名〜30名：基本料金 50,000円〜</li>
+                  <li>・31名〜50名：70,000円〜</li>
+                  <li>・51名〜100名：100,000円〜</li>
+                </ul>
+              </li>
+              <li><strong>プログラム内容:</strong> 季節の星座解説、望遠鏡での天体観察、プラネタリウム風の星空解説など</li>
+            </ul>
+            <p class="mt-4 text-sm" style="color: #58778D;">※天候により内容が変更になる場合があります。ご了承ください。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション3: よしだプラネタリウム -->
+      <section id="planetarium" class="mb-24">
+        <!-- タイトル -->
+        <div class="text-center mb-8">
+          <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: #58778D;">よしだプラネタリウム</h2>
+
+          <!-- 波線装飾 -->
+          <div class="flex justify-center mb-4">
+            <!-- モバイル: 2つ -->
+            <div class="flex sm:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- タブレット: 3つ -->
+            <div class="hidden sm:flex md:hidden">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+            <!-- デスクトップ: 5つ -->
+            <div class="hidden md:flex">
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+            </div>
+          </div>
+        </div>
+
+        <!-- メインコンテンツ（画像 + 説明テキスト） -->
+        <div class="flex flex-col md:flex-row gap-8 mb-12">
+          <!-- プラネタリウム写真（プレースホルダー） -->
+          <div class="flex-shrink-0 w-full md:w-64 h-48 bg-gray-400 rounded-lg flex items-center justify-center">
+            <p class="text-white text-sm text-center">プラネタリウム投影中の写真</p>
+          </div>
+
+          <!-- 説明テキスト -->
+          <div class="flex-1">
+            <p class="text-lg leading-relaxed mb-4" style="color: #58778D;">
+              私たちのプラネタリウムは、移動式で日本一の星空を投影できます。
+            </p>
+            <p class="text-base leading-relaxed" style="color: #58778D;">
+              よしだプラネタリウムは、どこにでも持ち運べる移動式のプラネタリウムです。学校や公民館、イベント会場など、さまざまな場所で美しい星空を楽しんでいただけます。日本一の星空を投影できる高性能な機材を使用し、臨場感あふれる星空体験をお届けします。子どもから大人まで、みんなで宇宙の不思議を感じてください。
+            </p>
+          </div>
+        </div>
+
+        <!-- 料金案内セクション -->
+        <div class="mb-8 p-6 rounded-lg" style="background-color: #F0F8FF;">
+          <h3 class="text-xl font-bold mb-4" style="color: #58778D;">料金案内について</h3>
+          <p class="text-base leading-relaxed mb-3" style="color: #58778D;">
+            料金は投影回数やプログラム内容によって異なります。また、こちらのプラネタリウムは移動にかかる交通費が別途必要となります。
+          </p>
+          <p class="text-base leading-relaxed" style="color: #58778D;">
+            基本的には、1回あたり30分〜60分の投影を行います。投影回数が増えるほどお得なプランもございますので、詳しくはお問い合わせください。遠方の場合は、交通費や宿泊費についてもご相談させていただきます。
+          </p>
+        </div>
+
+        <!-- 料金表セクション -->
+        <div class="mb-8">
+          <h3 class="text-2xl font-bold text-center mb-6" style="color: #58778D;">こんな料金でおまかせます😊</h3>
+
+          <p class="text-base leading-relaxed mb-6" style="color: #58778D;">
+            よしだプラネタリウムは、投影回数やご要望に応じて柔軟にプランをご提案いたします。
+            以下は基本的な料金の目安です。詳細はお気軽にお問い合わせください。
+          </p>
+
+          <!-- 料金表 -->
+          <div class="p-6 rounded-lg" style="background-color: #B3E5FC;">
+            <h4 class="text-xl font-bold mb-4" style="color: #58778D;">よしだプラネタリウムの料金プラン</h4>
+            <ul class="space-y-3" style="color: #58778D;">
+              <li><strong>1回投影（30分〜60分）:</strong> 30,000円〜</li>
+              <li><strong>2回投影:</strong> 50,000円〜</li>
+              <li><strong>3回投影以上:</strong> 70,000円〜（回数に応じて割引あり）</li>
+              <li><strong>1日貸切プラン:</strong> 150,000円〜</li>
+            </ul>
+            <div class="mt-4 space-y-1 text-sm" style="color: #58778D;">
+              <p>※交通費・宿泊費は別途ご相談させていただきます。</p>
+              <p>※投影内容はご要望に応じてカスタマイズ可能です。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- セクション4: CTAバナー -->
+      <section id="cta-banner" class="mb-24">
+        <div class="p-8 md:p-12 rounded-2xl flex flex-col md:flex-row items-center justify-center gap-6 shadow-lg" style="background-color: #FFE84C;">
+          <!-- メールアイコン -->
+          <img src="/images/svg/Parts/contact_confirm_clean.svg" alt="お問い合わせ" class="w-24 h-24 flex-shrink-0" />
+
+          <!-- メッセージ -->
+          <div class="text-center md:text-left flex-1">
+            <p class="text-xl md:text-2xl font-bold leading-relaxed" style="color: #58778D;">
+              講演＆講義：分野を超えた知識創造で<br class="hidden md:block" />
+              皆さまのご要望に応えます！
+            </p>
+          </div>
+
+          <!-- ボタン -->
+          <a
+            href="/contact"
+            class="px-8 py-4 rounded-full font-bold text-white text-lg transition-all duration-300 hover:opacity-90 hover:shadow-xl flex-shrink-0"
+            style="background-color: #58778D;"
+          >
+            お問い合わせはこちら
+          </a>
+        </div>
+      </section>
+
+      <FooterDivider />
+    </div>
   </main>
 
   <Footer />
