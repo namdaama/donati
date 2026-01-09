@@ -185,15 +185,14 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
             <!-- Plan (Select Dropdown) -->
             <div>
               <label for="plan" class="block text-lg font-medium text-white mb-2">
-                ご検討中のプラン <span class="bg-[#DC143C] text-white text-xs px-2 py-1 ml-2">必須</span>
+                ご検討中のプラン <span class="text-white/70 text-sm">(任意)</span>
               </label>
               <select
                 id="plan"
                 name="plan"
-                required
                 class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-text-dark focus:outline-none focus:border-primary-color focus:ring-2 focus:ring-primary-color/20 transition-all"
               >
-                <option value="">プランを選択してください</option>
+                <option value="">プランを選択してください（任意）</option>
                 <option value="サイエンスパフォーマンスショー">サイエンスパフォーマンスショー</option>
                 <option value="わくわく科学実験室！">わくわく科学実験室！</option>
                 <option value="ワークショップ">ワークショップ</option>
@@ -312,6 +311,11 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     <!-- Success/Error Modal -->
     <div id="message-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center z-50">
       <div id="message-box" class="bg-white rounded-lg shadow-2xl p-8 max-w-md mx-4">
+        <!-- 成功時のみ表示されるロゴ（初期状態は非表示） -->
+        <div id="success-logo" class="flex justify-center mb-6 hidden">
+          <img src="/images/svg/Parts/homeLogo.svg" alt="サイエンス&スペースラボ DONATI" class="h-12 md:h-16" />
+        </div>
+
         <div class="flex items-center mb-4">
           <div id="message-icon" class="mr-3"></div>
           <h3 id="message-title" class="text-xl font-bold"></h3>
@@ -387,22 +391,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 
   // Select field validation
   function validateSelectField(): boolean {
-    const select = form.querySelector('select[name="plan"]') as HTMLSelectElement;
-    const errorMsg = document.getElementById('plan-error') as HTMLElement;
-
-    if (!select.value || select.value === '') {
-      if (errorMsg) {
-        errorMsg.textContent = 'プランを選択してください';
-        errorMsg.classList.remove('hidden');
-      }
-      select.classList.add('border-red-500');
-      return false;
-    }
-
-    if (errorMsg) {
-      errorMsg.classList.add('hidden');
-    }
-    select.classList.remove('border-red-500');
+    // プランは任意項目のため、常にtrueを返す
     return true;
   }
 
@@ -470,6 +459,7 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     const messageText = document.getElementById('message-text') as HTMLElement;
     const messageIcon = document.getElementById('message-icon') as HTMLElement;
     const messageBox = document.getElementById('message-box') as HTMLElement;
+    const successLogo = document.getElementById('success-logo') as HTMLElement;
 
     messageTitle.textContent = title;
     messageText.textContent = text;
@@ -478,9 +468,15 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     if (type === 'success') {
       messageIcon.innerHTML = '<svg class="w-8 h-8 text-accent-green" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
       messageBox.classList.add('border-l-4', 'border-accent-green');
+
+      // ロゴを表示
+      successLogo?.classList.remove('hidden');
     } else {
       messageIcon.innerHTML = '<svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
       messageBox.classList.add('border-l-4', 'border-red-500');
+
+      // ロゴを非表示
+      successLogo?.classList.add('hidden');
     }
 
     messageModal.classList.remove('hidden');
@@ -492,10 +488,14 @@ const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
   function closeMessageModal() {
     const messageModal = document.getElementById('message-modal') as HTMLDivElement;
     const messageBox = document.getElementById('message-box') as HTMLElement;
+    const successLogo = document.getElementById('success-logo') as HTMLElement;
 
     messageModal.classList.add('hidden');
     messageModal.classList.remove('flex');
     messageBox.classList.remove('border-l-4', 'border-accent-green', 'border-red-500');
+
+    // ロゴを非表示に戻す
+    successLogo?.classList.add('hidden');
   }
 
   (window as any).closeMessageModal = closeMessageModal;
