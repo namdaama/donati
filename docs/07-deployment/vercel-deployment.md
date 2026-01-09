@@ -6,14 +6,14 @@ DONATIウェブサイトのVercelでのホスティング・デプロイメン�
 
 ### 本番環境
 - **URL**: https://donati-science.jp
-- **ブランチ**: `master`
-- **自動デプロイ**: masterブランチへのプッシュで本番デプロイ
+- **ブランチ**: `release`
+- **自動デプロイ**: releaseブランチへのプッシュで本番デプロイ
 - **用途**: クライアント（フジ）向けの公開サイト
 - **DNS**: カスタムドメイン（ドメイン管理者がCNAMEレコード設定）
 
 ### ステージング環境
 - **URL**: https://stg.donati-science.jp
-- **ブランチ**: `master`（本番と同期）
+- **ブランチ**: `master`（開発統合ブランチ）
 - **自動デプロイ**: masterブランチへのプッシュでデプロイ
 - **認証**: Vercel Authentication有効（プロジェクトメンバーのみアクセス可能）
 - **用途**: 本番前の動作確認、デザイナーレビュー、クライアント確認
@@ -121,8 +121,8 @@ nslookup stg.donati-science.jp
 
 1. **開発**: ローカルで `npm run dev`
 2. **プレビュー**: 機能ブランチをpushしてプレビューURL確認
-3. **リリース**: `master` ブランチにマージで自動デプロイ
-4. **本番反映**: 本番環境（donati-science.jp）への反映完了
+3. **ステージング**: `master` ブランチにマージで stg.donati-science.jp に自動デプロイ
+4. **本番リリース**: `master` から `release` ブランチにマージで本番環境（donati-science.jp）へ自動デプロイ
 
 ## QRコード生成
 
