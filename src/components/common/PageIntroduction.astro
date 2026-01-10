@@ -1,0 +1,47 @@
+---
+import SectionGrayHeading from '../professional-experience/SectionGrayHeading.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="text-left mb-16">
+  <!-- 大見出し（グレー背景） -->
+  <SectionGrayHeading title={title} level="h1" />
+
+  <!-- waveline装飾 -->
+  <div class="waveline-wrapper">
+    <div class="waveline-container py-6">
+      <!-- モバイル: 2つ -->
+      <div class="flex sm:hidden">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+      <!-- タブレット: 3つ -->
+      <div class="hidden sm:flex md:hidden">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+      <!-- デスクトップ: 5つ -->
+      <div class="hidden md:flex">
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+    </div>
+  </div>
+
+  <!-- 説明文（オプション） -->
+  {description && (
+    <h2 class="text-2xl font-bold leading-relaxed mt-6" style="color: #58778D; white-space: pre-line;">
+      {description}
+    </h2>
+  )}
+</section>
