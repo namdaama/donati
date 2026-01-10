@@ -42,8 +42,8 @@ export const scienceServices: ServiceCategory = {
         merit: '盛り上がり保証！パフォーマーの熱量を直接お届け。'
       },
       photos: {
-        photo1: '/images/placeholders/science-performance-1.jpg',
-        photo2: '/images/placeholders/science-performance-2.jpg'
+        photo1: '/images/picture/Science/detail_Show01.jpg',
+        photo2: '/images/picture/Science/detail_Show02.jpg'
       }
     },
     {
@@ -71,8 +71,8 @@ export const scienceServices: ServiceCategory = {
         merit: '「なぜ？」を「わかった！」に変える深い体験。'
       },
       photos: {
-        photo1: '/images/placeholders/experiment-room-1.jpg',
-        photo2: '/images/placeholders/experiment-room-2.jpg'
+        photo1: '/images/picture/Science/detail_Lab01.jpg',
+        photo2: '/images/picture/Science/detail_Lab02.jpg'
       }
     },
     {
@@ -100,8 +100,8 @@ export const scienceServices: ServiceCategory = {
         merit: 'パフォーマンスショーとの相乗効果で集客力が高い。'
       },
       photos: {
-        photo1: '/images/placeholders/workshop-1.jpg',
-        photo2: '/images/placeholders/workshop-2.jpg'
+        photo1: '/images/picture/Science/detail_WorkShop01.jpg',
+        photo2: '/images/picture/Science/detail_WorkShop02.jpg'
       }
     }
   ]
