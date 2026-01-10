@@ -1,4 +1,6 @@
 ---
+import SectionHeading from '../common/SectionHeading.astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -10,16 +12,11 @@ const { title, description } = Astro.props;
 <section class="mb-16">
   <div class="max-w-4xl mx-auto px-4">
     <!-- タイトル -->
-    <h2 class="section-title-news mb-4">{title}</h2>
-
-    <!-- waveline装飾（3つ） -->
-    <div class="waveline-wrapper mb-6">
-      <div class="w-full overflow-hidden flex justify-center">
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      </div>
-    </div>
+    <SectionHeading
+      title={title}
+      waveLineCount={3}
+      titleMarginLeft="ml-4"
+    />
 
     <!-- 説明文（オプション） -->
     {description && (

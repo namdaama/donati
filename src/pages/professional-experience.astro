@@ -3,14 +3,13 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import MajorSection from '../components/professional-experience/MajorSection.astro';
 import CategorySection from '../components/professional-experience/CategorySection.astro';
 
 // サイエンス事業データ
 const scienceSection = {
-  title: '活動経歴',
-  description: 'これまで、学校・商業施設・地域イベントなど、さまざまな場所で科学と星空の体験をお届けしてきました。',
-  subtitle: 'サイエンス事業',
+  title: 'サイエンス事業',
   categories: [
     {
       categoryTitle: '学校・園',
@@ -173,54 +172,20 @@ const mediaSection = {
     <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
 
       <!-- ページタイトルセクション -->
-      <section class="text-left mb-16">
-        <h1 class="section-title-news">活動経歴</h1>
-        <div class="waveline-wrapper">
-          <div class="waveline-container py-6">
-            <!-- モバイル: 2つ -->
-            <div class="flex sm:hidden">
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            </div>
-            <!-- タブレット: 3つ -->
-            <div class="hidden sm:flex md:hidden">
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            </div>
-            <!-- デスクトップ: 5つ -->
-            <div class="hidden md:flex">
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageIntroduction
+        title="活動経歴"
+        description={`これまで、学校・商業施設・地域イベントなど、
+さまざまな場面で科学と星空の体験をお届けしてきました。`}
+      />
 
       <!-- 大セクション1: サイエンス事業 -->
-      <MajorSection
-        title={scienceSection.title}
-        description={scienceSection.description}
-      >
-        <h3 class="text-xl font-bold text-gray-800 mb-4">{scienceSection.subtitle}</h3>
-        <div class="waveline-wrapper mb-6">
-          <div class="w-full overflow-hidden flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          </div>
-        </div>
-        <div class="space-y-6">
-          {scienceSection.categories.map((category) => (
-            <CategorySection
-              categoryTitle={category.categoryTitle}
-              services={category.services}
-            />
-          ))}
-        </div>
+      <MajorSection title={scienceSection.title}>
+        {scienceSection.categories.map((category) => (
+          <CategorySection
+            categoryTitle={category.categoryTitle}
+            services={category.services}
+          />
+        ))}
       </MajorSection>
 
       <!-- 大セクション2: 星空事業 -->

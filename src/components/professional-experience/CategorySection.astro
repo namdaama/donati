@@ -1,4 +1,6 @@
 ---
+import SectionGrayHeading from './SectionGrayHeading.astro';
+
 interface Service {
   serviceName: string;
   locations: string[];
@@ -12,11 +14,9 @@ interface Props {
 const { categoryTitle, services } = Astro.props;
 ---
 
-<div class="bg-white/70 backdrop-blur-sm rounded-lg p-4 md:p-6 shadow-sm">
+<div class="rounded-lg p-4 md:p-6">
   <!-- カテゴリータイトル（グレーバー） -->
-  <div class="bg-gray-400 text-white font-bold text-base md:text-lg rounded-full px-4 md:px-6 py-2 md:py-3 mb-4 text-center inline-block">
-    {categoryTitle}
-  </div>
+  <SectionGrayHeading title={categoryTitle} level="h3" />
 
   <!-- サービスごとの表示 -->
   {services.map((service, index) => (
