@@ -1,0 +1,31 @@
+---
+import SectionHeading from '../common/SectionHeading.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<section class="mb-16">
+  <div class="max-w-4xl mx-auto px-4">
+    <!-- タイトル -->
+    <SectionHeading
+      title={title}
+      waveLineCount={3}
+      titleMarginLeft="ml-4"
+    />
+
+    <!-- 説明文（オプション） -->
+    {description && (
+      <p class="text-gray-700 mb-8 leading-relaxed">{description}</p>
+    )}
+
+    <!-- 子カテゴリーセクション -->
+    <div class="space-y-6">
+      <slot />
+    </div>
+  </div>
+</section>
