@@ -31,10 +31,11 @@ src/components/
 │   ├── ServiceCategoryCard.astro
 │   ├── ServiceDetailCard.astro
 │   └── RequestFlowStep.astro
-├── professional-experience/  # 活動経歴ページ専用 (3個)
+├── professional-experience/  # 活動経歴ページ専用 (4個)
 │   ├── MajorSection.astro
 │   ├── CategorySection.astro
-│   └── SectionGrayHeading.astro
+│   ├── SectionGrayHeading.astro
+│   └── SectionCloudyHeading.astro
 ├── cards/           # 再利用可能カード (3個)
 │   ├── ServiceCard.astro
 │   ├── StaffProfileCard.astro
@@ -47,7 +48,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 36個
+**総コンポーネント数**: 37個
 
 ## コンポーネント統計
 
@@ -57,10 +58,10 @@ src/components/
 | common/ | 8 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
-| professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
+| professional-experience/ | 4 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading, SectionCloudyHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **36** | **6フォルダ** |
+| **合計** | **37** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -69,7 +70,7 @@ src/components/
 | services.astro | 7 | Header, Footer, FooterDivider, ServiceCategoryHeader, ServiceCard, RequestFlowStep, ServicesSection |
 | contact.astro | 3 | Header, Footer, Hero |
 | professional-experience.astro | 5 | Header, Footer, PageIntroduction, MajorSection, CategorySection |
-| about.astro | 5 | Header, Footer, DonatiLogo, StaffProfileCard, FooterDivider |
+| about.astro | 6 | Header, Footer, DonatiLogo, StaffProfileCard, PageIntroduction, FooterDivider |
 | Layout.astro | 1 | CustomCursorStarTheme |
 
 ## 高複雑度コンポーネント（実装時要注意）
@@ -117,7 +118,7 @@ src/components/
 ### common/
 - **Hero.astro**: 7個のProps、Aurora/Stars効果の条件付きレンダリング
 - **SectionHeading.astro**: セクション見出し（タイトル + waveLine装飾）、レベル・サイズ・マージン調整可能
-- **PageIntroduction.astro**: ページ全体イントロ（グレー見出し + 波線 + 説明文）、aboutページと同じスタイル
+- **PageIntroduction.astro**: ページ全体イントロ（もくもく見出し + 小見出し + 本文）、柔らかい印象のセクション
 - **DonatiLogo.astro**: サイズ可変ロゴ（sm/md/lg）
 
 ### overview/
@@ -132,7 +133,8 @@ src/components/
 ### professional-experience/
 - **MajorSection.astro**: 大セクションラッパー（SectionHeading使用）
 - **CategorySection.astro**: カテゴリー見出し（SectionGrayHeading）+ 3階層データ表示
-- **SectionGrayHeading.astro**: sectionGrayRound.svg背景の見出し（h1/h2/h3対応）
+- **SectionGrayHeading.astro**: sectionGrayRound.svg背景の見出し（h1/h2/h3対応）、紺青背景+白文字
+- **SectionCloudyHeading.astro**: introductionCloud.svg背景の見出し（h1/h2/h3対応）、もくもく背景+明るい青文字
 
 ### effects/
 - **AuroraBackground.astro**: オーロラエフェクト（SVG + CSS @keyframes 60秒）
@@ -166,21 +168,19 @@ src/components/
 **スタイル**: タイトルは`text-[#58778D]`、`font-bold`
 
 ### PageIntroduction.astro
-**Props**:
-- `title: string` - ページタイトル
-- `description?: string` - 説明文（オプション）
+**Props**: `title`, `description?`, `content?`
 
-**構成**:
-1. SectionGrayHeading（h1レベル）
-2. レスポンシブ波線（2/3/5本）
-3. 説明文（青色、太字、2xl、pre-line）
+**構成**: SectionCloudyHeading + オプション小見出し/本文
 
 ### SectionGrayHeading.astro
-**Props**:
-- `title: string` - 見出しテキスト
-- `level?: 'h1' | 'h2' | 'h3'` - 見出しレベル（デフォルト: 'h2'）
+**Props**: `title`, `level?` (h1/h2/h3)
 
-**特徴**: sectionGrayRound.svg背景、45px固定高さ、白文字、レスポンシブフォントサイズ
+**特徴**: sectionGrayRound.svg背景、45px高さ、白文字
+
+### SectionCloudyHeading.astro
+**Props**: `title`, `level?` (h1/h2/h3)
+
+**特徴**: introductionCloud.svg背景、135px高さ、明るい青文字（#65B7EC）
 
 ### StaffProfileCard.astro
 **Props**:
