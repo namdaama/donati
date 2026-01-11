@@ -6,6 +6,7 @@ import FooterDivider from '../components/overview/FooterDivider.astro';
 import DonatiLogo from '../components/common/DonatiLogo.astro';
 import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import { aboutPageContent } from '../config/site';
 
 const { introduction, philosophy, staffMembers } = aboutPageContent;
@@ -19,23 +20,19 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title={introduction.title}
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title={introduction.title} />
 
         <!-- コンテンツグリッド（左：テキスト 3/5、右：ロゴ 2/5） -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
               {introduction.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
               {introduction.text}
             </p>
           </div>
@@ -52,23 +49,19 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title={philosophy.title}
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title={philosophy.title} />
 
         <!-- コンテンツグリッド（左：テキスト 3/5、右：写真 2/5） -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
               {philosophy.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
               {philosophy.text}
             </p>
           </div>
@@ -90,11 +83,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title="メンバー紹介"
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title="メンバー紹介" />
 
         <!-- スタッフカードグリッド -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
