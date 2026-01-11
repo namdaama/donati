@@ -34,26 +34,15 @@ const {
   socialLinks
 } = Astro.props;
 
-// Font Awesomeアイコンクラス取得関数
-const getIconClass = (type: string): string => {
+// SNSアイコン画像パス取得関数
+const getIconPath = (type: string): string => {
   const iconMap: Record<string, string> = {
-    instagram: 'fa-brands fa-instagram',
-    youtube: 'fa-brands fa-youtube',
-    website: 'fa-solid fa-globe',
-    community: 'fa-solid fa-users'
+    instagram: '/images/picture/About/icon_Instagram.jpg',
+    youtube: '/images/picture/About/icon_Youtube.jpg',
+    website: '/images/picture/About/icon_Hideyuki.jpg',
+    community: '/images/picture/About/icon_Community.jpg'
   };
-  return iconMap[type] || 'fa-solid fa-link';
-};
-
-// SNSカラー取得関数
-const getIconColor = (type: string): string => {
-  const colorMap: Record<string, string> = {
-    instagram: '#E4405F', // Instagram公式カラー
-    youtube: '#FF0000',   // YouTube公式カラー
-    website: '#58778D',   // サイトテーマカラー（紺青）
-    community: '#F5C842'  // マイルドな黄色
-  };
-  return colorMap[type] || '#58778D';
+  return iconMap[type] || '/images/picture/About/icon_Hideyuki.jpg'; // デフォルト
 };
 ---
 
@@ -84,7 +73,7 @@ const getIconColor = (type: string): string => {
   <!-- 概要 -->
   <div class="mb-6 min-h-[420px]">
     {realName && (
-      <h3 class="text-2xl font-bold mb-4" style="color: #58778D;">{realName}</h3>
+      <h3 class="text-2xl font-bold mb-4" style="color: #65B7EC;">{realName}</h3>
     )}
     <p class="leading-relaxed text-sm text-gray-600" style="white-space: pre-line;">
       {overview}
@@ -153,10 +142,11 @@ const getIconColor = (type: string): string => {
           aria-label={link.label}
           class="hover:opacity-80 transition-opacity duration-300"
         >
-          <i
-            class={`${getIconClass(link.type)} text-3xl md:text-4xl`}
-            style={`color: ${getIconColor(link.type)};`}
-          ></i>
+          <img
+            src={getIconPath(link.type)}
+            alt={link.label}
+            class="w-12 h-12 md:w-15 md:h-15 object-contain"
+          />
         </a>
       ))}
     </div>

@@ -6,6 +6,7 @@ import FooterDivider from '../components/overview/FooterDivider.astro';
 import DonatiLogo from '../components/common/DonatiLogo.astro';
 import StaffProfileCard from '../components/cards/StaffProfileCard.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import { aboutPageContent } from '../config/site';
 
 const { introduction, philosophy, staffMembers } = aboutPageContent;
@@ -19,23 +20,19 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title={introduction.title}
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title={introduction.title} />
 
         <!-- コンテンツグリッド（左：テキスト 3/5、右：ロゴ 2/5） -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+            <h3 class="text-xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
               {introduction.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
               {introduction.text}
             </p>
           </div>
@@ -52,23 +49,19 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title={philosophy.title}
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title={philosophy.title} />
 
         <!-- コンテンツグリッド（左：テキスト 3/5、右：写真 2/5） -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-2xl font-bold mb-8 leading-relaxed" style="color: #58778D; white-space: pre-line;">
+            <h3 class="text-xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
               {philosophy.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="text-gray-700 leading-loose text-base" style="white-space: pre-line;">
+            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
               {philosophy.text}
             </p>
           </div>
@@ -90,11 +83,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
-        <SectionHeading
-          title="メンバー紹介"
-          waveLineCount={5}
-          titleMarginLeft="ml-4"
-        />
+        <PageIntroduction title="メンバー紹介" />
 
         <!-- スタッフカードグリッド -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -111,32 +100,10 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <!-- 締めのメッセージ -->
     <section class="py-8">
       <div class="max-w-4xl mx-auto px-4">
-        <!-- waveLine装飾（上） -->
-        <div class="mb-6">
-          <div class="w-full overflow-hidden flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          </div>
-        </div>
-
-        <div class="text-left mb-6">
-          <p class="text-xl md:text-2xl font-bold leading-relaxed" style="color: #58778D; white-space: pre-line;">科学や星空を通して、
+        <div class="text-center mb-6">
+          <p class="text-xl md:text-2xl font-bold leading-relaxed" style="color: #65B7EC; white-space: pre-line;">科学や星空を通して、
 だれかの毎日を少し楽しくするきっかけをつくりたい。
 そんな想いを大切に、活動しています。</p>
-        </div>
-
-        <!-- waveLine装飾（下） -->
-        <div class="mb-6">
-          <div class="w-full overflow-hidden flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          </div>
         </div>
       </div>
     </section>
@@ -145,38 +112,22 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     <section class="py-12">
       <div class="max-w-4xl mx-auto px-4">
         <div class="bg-gray-100 rounded-lg p-8 md:p-10">
-          <div class="text-xs md:text-sm text-gray-600 leading-relaxed space-y-2">
+          <h2 class="text-lg font-bold mb-6" style="color: #58778D;">【運営者について】</h2>
+          <div class="text-xs md:text-sm text-gray-600 leading-relaxed space-y-3 font-bold">
             <p><strong>屋号：</strong>サイエンス＆スペースラボ DONATI</p>
             <p><strong>事業形態：</strong>個人事業主</p>
             <p><strong>代表者：</strong>加藤 絢</p>
 
-            <div class="pt-2">
-              <p class="font-semibold mb-2">事業内容：</p>
-              <p class="pl-4">科学実験ショー、科学実験教室、星空イベントの企画・実施</p>
-            </div>
+            <p><strong>事業内容：</strong>科学実験ショー、科学実験教室、星空イベントの企画・実施</p>
 
-            <div class="pt-2">
-              <p><strong>拠点：</strong></p>
-              <p class="pl-4">福井県吉田郡永平寺町（全国どこへでも出張いたします！）</p>
-            </div>
+            <p><strong>拠点：</strong>福井県吉田郡永平寺町（全国どこへでも出張いたします！）</p>
 
-            <div class="pt-2">
-              <p><strong>連絡先：</strong></p>
-              <p class="pl-4">
-                <a href="mailto:donati.science.space@gmail.com" class="text-blue-600 hover:text-blue-800 underline">
-                  donati.science.space@gmail.com
-                </a>
-              </p>
-            </div>
-
-            <div class="pt-2">
-              <p><strong>お問い合わせ：</strong></p>
-              <p class="pl-4">
-                <a href="/contact" class="text-blue-600 hover:text-blue-800 underline">
-                  お問い合わせフォーム
-                </a>よりご連絡ください
-              </p>
-            </div>
+            <p>
+              <strong>お問い合わせ：</strong>
+              <a href="/contact" class="text-blue-600 hover:text-blue-800 underline">
+                お問い合わせフォーム
+              </a>よりご連絡ください
+            </p>
           </div>
         </div>
       </div>
