@@ -8,9 +8,25 @@ import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.
 import ServiceComparisonTable from '../components/services/ServiceComparisonTable.astro';
 import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
+import RecommendedScenes from '../components/services/RecommendedScenes.astro';
 import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
 
 const scienceCategory = serviceCategories.science;
+
+// RecommendedScenes用のデータ
+const recommendedScenesData = {
+  overviewDescription: "学校事業や行政、地域イベントなど、幅広い場面で実施しています。\n校だからこそ楽しめる、特別なプログラムとしておすすめです。",
+  scenes: [
+    {
+      title: "子どもたちに、夜空やほしの特別な体験を",
+      description: "学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ"
+    },
+    {
+      title: "集客やにぎわいを生む、等のイベントとして",
+      description: "展覧会等でのイベント / 前泊時間の特別プログラム / 地域のお祭りなど"
+    }
+  ]
+};
 ---
 
 <Layout
@@ -59,6 +75,12 @@ const scienceCategory = serviceCategories.science;
             subsectionTitle={scienceCategory.subsectionTitle}
             subsectionContent={scienceCategory.subsectionContent}
             characterIconUrl={scienceCategory.characterIconUrl}
+          />
+
+          <!-- Phase1: こんな場面にお勧め -->
+          <RecommendedScenes
+            overviewDescription={recommendedScenesData.overviewDescription}
+            scenes={recommendedScenesData.scenes}
           />
 
           <!-- Service Comparison Table -->
