@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
 import ServiceCard from '../components/cards/ServiceCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
@@ -60,25 +61,9 @@ const overviewLinks = [
       }
     </style>
         
-    <!-- タイトルセクション -->
-    <section class="text-center py-12 relative z-10">
-      <div class="container mx-auto px-4">
-        <!-- セクションタイトル -->
-        <div class="text-left mb-12">
-          <h2 class="section-title-news">
-            サービス内容
-          </h2>
-        </div>
-        <div class="waveline-wrapper">
-          <div class="flex justify-center">
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-          </div>
-        </div>
-      </div>
-
     <div class="container mx-auto px-4 py-12 relative z-10">
+      <!-- タイトルセクション -->
+      <PageIntroduction title="サービス内容" />
       <!-- サービス分類セクション（OverViewセクション） -->
       <ServicesSection
         links={overviewLinks}
@@ -118,16 +103,7 @@ const overviewLinks = [
         
         <!-- ご依頼の流れセクション -->
         <section id="request-flow" class="mb-24">
-          <div class="text-center mb-16">
-            <h2 class="section-title-news">ご依頼の流れ</h2>
-            <div class="waveline-wrapper">
-              <div class="flex justify-center">
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-                <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              </div>
-            </div>
-          </div>
+          <PageIntroduction title="ご依頼の流れ" />
 
           <!-- フローステップ -->
           <div class="max-w-4xl mx-auto">

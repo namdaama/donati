@@ -6,7 +6,7 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 
 ```
 src/components/
-├── common/          # 共通コンポーネント (8個)
+├── common/          # 共通コンポーネント (9個)
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── DonatiLogo.astro
@@ -14,6 +14,7 @@ src/components/
 │   ├── Carousel.astro
 │   ├── InstagramSection.astro
 │   ├── SectionHeading.astro
+│   ├── SectionCloudyHeading.astro  ← 移動元: professional-experience/
 │   └── PageIntroduction.astro
 ├── overview/        # トップページ専用 (6個)
 │   ├── OverViewSection.astro
@@ -31,11 +32,10 @@ src/components/
 │   ├── ServiceCategoryCard.astro
 │   ├── ServiceDetailCard.astro
 │   └── RequestFlowStep.astro
-├── professional-experience/  # 活動経歴ページ専用 (4個)
+├── professional-experience/  # 活動経歴ページ専用 (3個)
 │   ├── MajorSection.astro
 │   ├── CategorySection.astro
-│   ├── SectionGrayHeading.astro
-│   └── SectionCloudyHeading.astro
+│   └── SectionGrayHeading.astro
 ├── cards/           # 再利用可能カード (3個)
 │   ├── ServiceCard.astro
 │   ├── StaffProfileCard.astro
@@ -55,10 +55,10 @@ src/components/
 ### フォルダ別内訳
 | フォルダ | コンポーネント数 | 用途 |
 |---------|-----------------|------|
-| common/ | 8 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, PageIntroduction） |
+| common/ | 9 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionCloudyHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
-| professional-experience/ | 4 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading, SectionCloudyHeading） |
+| professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
 | **合計** | **37** | **6フォルダ** |
@@ -118,7 +118,8 @@ src/components/
 ### common/
 - **Hero.astro**: 7個のProps、Aurora/Stars効果の条件付きレンダリング
 - **SectionHeading.astro**: セクション見出し（タイトル + waveLine装飾）、レベル・サイズ・マージン調整可能
-- **PageIntroduction.astro**: ページ全体イントロ（もくもく見出し + 小見出し + 本文）、柔らかい印象のセクション
+- **SectionCloudyHeading.astro**: introductionCloud.svg背景の見出し（h1/h2/h3対応）、もくもく背景+明るい青文字、全ページで使用可能
+- **PageIntroduction.astro**: ページ全体イントロ（SectionCloudyHeading + 小見出し + 本文）、柔らかい印象のセクション、全ページで推奨
 - **DonatiLogo.astro**: サイズ可変ロゴ（sm/md/lg）
 
 ### overview/
@@ -134,7 +135,6 @@ src/components/
 - **MajorSection.astro**: 大セクションラッパー（SectionHeading使用）
 - **CategorySection.astro**: カテゴリー見出し（SectionGrayHeading）+ 3階層データ表示
 - **SectionGrayHeading.astro**: sectionGrayRound.svg背景の見出し（h1/h2/h3対応）、紺青背景+白文字
-- **SectionCloudyHeading.astro**: introductionCloud.svg背景の見出し（h1/h2/h3対応）、もくもく背景+明るい青文字
 
 ### effects/
 - **AuroraBackground.astro**: オーロラエフェクト（SVG + CSS @keyframes 60秒）
