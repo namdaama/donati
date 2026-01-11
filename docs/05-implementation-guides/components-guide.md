@@ -208,12 +208,12 @@ interface Props {
 
 **レイアウト**:
 1. キャラクターイラスト + 名前SVG
-2. 実名表示（オプション）
+2. 実名表示（オプション、明るい青 #65B7EC）
 3. プロフィール説明文
 4. 実績リスト（黄色ドット）
 5. 出版物リスト（オプション）
 6. アクションボタン×2（オプション）
-7. SNSリンク（オプション）
+7. SNSリンク（オプション、JPG画像、48px/60px）
 
 ## コンポーネント更新ルール
 
@@ -234,14 +234,13 @@ interface Props {
 
 ## 更新履歴
 
-- **2026年1月10日**: professional-experienceページ再設計（Issue #121）
-  - PageIntroduction.astro、SectionGrayHeading.astro 新規追加
-  - MajorSection.astro、CategorySection.astro 更新
-  - Header.astro、Footer.astro、index.astro リンク有効化
-  - 総コンポーネント数：34個 → 36個
+- **2026年1月11日**: SNSアイコンをJPG画像に変更、aboutページ調整（Issue #153）
+  - StaffProfileCard: Font Awesome → JPG画像に変更、アイコンサイズ1.5倍（48px/60px）
+  - StaffProfileCard: 実名色を明るい青（#65B7EC）に変更
+  - about.astro: 締めメッセージを中央揃えに変更
+  - 不要なSVGアイコンファイル削除（Instagram, YouTube, Website, Community）
 
-- **2025年1月8日**: StaffProfileCard SNSリンク追加（Issue #136）
-  - `socialLinks` プロパティ追加、SNSアイコン4種対応
+- **2026年1月10日**: professional-experienceページ再設計（Issue #121）
 
 - **2025年1月4日**: aboutページ再設計（Issue #118）
   - StaffProfileCard拡張、about.astro 3セクション構成化
