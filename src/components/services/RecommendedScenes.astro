@@ -21,9 +21,9 @@ const {
 } = Astro.props;
 ---
 
-<div class="recommended-scenes-container">
-  <!-- タイトル行 -->
-  <div class="title-row">
+<details class="recommended-scenes-accordion">
+  <!-- タイトル行（クリック可能なsummary） -->
+  <summary class="title-row">
     <h3 class="section-title">{title}</h3>
     {showPullDownIcon && (
       <img
@@ -32,40 +32,43 @@ const {
         class="pulldown-icon"
       />
     )}
-  </div>
+  </summary>
 
-  <!-- 全体説明文 -->
-  <p class="overview-description">{overviewDescription}</p>
+  <!-- アコーディオンコンテンツ -->
+  <div class="accordion-content">
+    <!-- 全体説明文 -->
+    <p class="overview-description">{overviewDescription}</p>
 
-  <!-- 「具体的な実施例」ラベル -->
-  <div class="examples-section-label">
-    <span>{examplesSectionTitle}</span>
-  </div>
+    <!-- 「具体的な実施例」ラベル -->
+    <div class="examples-section-label">
+      <span>{examplesSectionTitle}</span>
+    </div>
 
-  <!-- シーンリスト -->
-  <div class="scenes-list">
-    {scenes.map((scene) => (
-      <div class="scene-item">
-        <!-- 星アイコン -->
-        <img
-          src="/images/svg/Parts/icon_dotStar.svg"
-          alt=""
-          class="star-icon"
-        />
+    <!-- シーンリスト -->
+    <div class="scenes-list">
+      {scenes.map((scene) => (
+        <div class="scene-item">
+          <!-- 星アイコン -->
+          <img
+            src="/images/svg/Parts/icon_dotStar.svg"
+            alt=""
+            class="star-icon"
+          />
 
-        <!-- シーン内容 -->
-        <div class="scene-content">
-          <h4 class="scene-title">{scene.title}</h4>
-          <p class="scene-description">{scene.description}</p>
+          <!-- シーン内容 -->
+          <div class="scene-content">
+            <h4 class="scene-title">{scene.title}</h4>
+            <p class="scene-description">{scene.description}</p>
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
-</div>
+</details>
 
 <style>
-  /* コンテナ */
-  .recommended-scenes-container {
+  /* アコーディオンコンテナ */
+  .recommended-scenes-accordion {
     max-width: 1024px;
     margin: 0 auto 3rem;
     padding: 2rem 1.5rem;
@@ -74,13 +77,26 @@ const {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  /* タイトル行 */
+  /* タイトル行（summary要素） */
   .title-row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  /* ブラウザデフォルトのマーカーを非表示 */
+  .title-row::marker,
+  .title-row::-webkit-details-marker {
+    display: none;
+  }
+
+  /* ホバー時の視覚フィードバック */
+  .title-row:hover {
+    opacity: 0.8;
   }
 
   .section-title {
@@ -90,10 +106,37 @@ const {
     margin: 0;
   }
 
+  /* プルダウンアイコンの回転アニメーション */
   .pulldown-icon {
     width: 35px;
     height: 35px;
     flex-shrink: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .recommended-scenes-accordion[open] .pulldown-icon {
+    transform: rotate(180deg);
+  }
+
+  /* アコーディオンコンテンツ */
+  .accordion-content {
+    overflow: hidden;
+  }
+
+  /* 開閉時のスライドアニメーション */
+  .recommended-scenes-accordion[open] .accordion-content {
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* 全体説明文 */
@@ -161,7 +204,7 @@ const {
 
   /* レスポンシブデザイン */
   @media (max-width: 768px) {
-    .recommended-scenes-container {
+    .recommended-scenes-accordion {
       padding: 1.75rem 1.25rem;
     }
 
@@ -196,7 +239,7 @@ const {
   }
 
   @media (max-width: 640px) {
-    .recommended-scenes-container {
+    .recommended-scenes-accordion {
       padding: 1.5rem 1rem;
     }
 

@@ -7,15 +7,17 @@ export interface ServiceItem {
   features: string[];
   programs: string[];
   detailTable?: {
-    effect: string;           // 期待できる効果
-    achievements: string;     // 主な活動実績・利用場所
-    overview: string;         // 概要
-    scale: string;            // 規模 / 対象
-    duration: string;         // 時間目安
-    merit: string;            // メリット
+    overview: string;                  // 概要
+    effect: string;                    // 期待できる効果
+    suitableEvents: string;            // 向いているイベント
+    achievements: string;              // これまでの実績実例
+    recommendedFor: string;            // こんな方におすすめ！
+    scale: string;                     // 規模・対象
+    duration: string;                  // 時間目安
+    requiredSpace: string;             // 必要スペース
     photos?: {
-      photo1: string;        // 1枚目の写真パス
-      photo2: string;        // 2枚目の写真パス
+      photo1: string;                  // 1枚目の写真パス
+      photo2: string;                  // 2枚目の写真パス
     };
   };
   photos?: {

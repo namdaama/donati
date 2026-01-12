@@ -34,12 +34,14 @@ export const scienceServices: ServiceCategory = {
         '静電気パワー！電気の実験ショー'
       ],
       detailTable: {
-        effect: '会場の一体感と集客力の最大化',
-        achievements: '商業施設、地域イベント、学校の芸術鑑賞会、保育園・幼稚園のお祭りなど',
-        overview: '笑いと驚きのステージ型ショー\n大規模イベント向き！',
-        scale: '100名～ / ホール、体育館',
-        duration: '30分〜45分',
-        merit: '盛り上がり保証！パフォーマーの熱量を直接お届け。'
+        overview: '笑いと驚きで会場を包む体験型ステージサイエンスショー',
+        effect: '会場を一気に盛り上げ、思わず足を止めた人まで巻き込みながら、科学のおもしろさが自然と伝わる空間を作ります。',
+        suitableEvents: '・集客を強化したい\n・目玉企画を入れたい\n・科学に触れるきっかけを作りたい',
+        achievements: '商業施設、地域イベント、小中学校芸術鑑賞会、保育園・幼稚園',
+        recommendedFor: '・商業施設のイベント担当者さま\n・自治体・公共施設の企画担当者さま\n・学校・保育施設の関係者さま\n・地域のイベント主催者さま',
+        scale: '50名〜 ／ 幼児〜大人',
+        duration: '30〜45分',
+        requiredSpace: '・会場の広さに合わせて内容を調整します\n・電源：1口\n・屋内外どちらも可\n・観覧方法は会場に応じてご相談'
       },
       photos: {
         photo1: '/images/picture/Science/detail_Show01.jpg',
@@ -63,12 +65,14 @@ export const scienceServices: ServiceCategory = {
         '研究発表会への挑戦'
       ],
       detailTable: {
-        effect: '深い学び・探求心',
-        achievements: '小中学校 PTA 行事、中学・高校の探求学習。',
-        overview: '参加者自身がじっくり\n取り組む実験教室',
-        scale: '20名程度 / 教室、会議室',
-        duration: '60分～90分',
-        merit: '「なぜ？」を「わかった！」に変える深い体験。'
+        overview: '楽しいから集中して取り組める！探究型の実験教室※対象学年に応じて「探究型（中高生）」と「体験型（小学生）」の2コースをご用意しています。',
+        effect: '「なぜ？」が「わかった！」に変わり、知的好奇心がぐんぐん育つ、深い学びが得られます。',
+        suitableEvents: '・探究学習を充実させたい\n・学びのある体験企画を入れたい\n・親子や地域の学びの場を作りたい',
+        achievements: '小中学校PTA行事、中学校・高校の探究学習授業、学習塾、学童保育など',
+        recommendedFor: '・教育委員会・自治体の学習事業担当者さま\n・中学校・高校・小学校の関係者さま\n・学童保育・民間教育事業者さま',
+        scale: '・探究型：小5〜高校生（〜約40名）\n・体験型：小1〜小6（〜約40名）',
+        duration: '・探究型：60分〜180分\n・体験型：45分〜90分',
+        requiredSpace: '・机・椅子がある室内で実施できます\n・電源：1〜2口\n・水道はあれば便利ですが、なくても対応可\n・探究型は生徒のみ／体験型は親子参加OK'
       },
       photos: {
         photo1: '/images/picture/Science/detail_Lab01.jpg',
@@ -92,12 +96,14 @@ export const scienceServices: ServiceCategory = {
         '結晶作りで学ぶ化学反応'
       ],
       detailTable: {
-        effect: '短時間で楽しめる科学体験の提供と集客促進。',
-        achievements: '商業施設、住宅展示場（賑やかし）、マルシェイベントなど',
-        overview: '10分～15分で\n完結するライトな体験会',
-        scale: '少人数～多数 / ブース、商業施設',
-        duration: '随時受付（回転率重視）',
-        merit: 'パフォーマンスショーとの相乗効果で集客力が高い。'
+        overview: '短時間で楽しめる、立ち寄り型の科学体験',
+        effect: '短時間で気軽に参加でき、科学の楽しさに出会うきっかけとなります。集客と滞在時間の向上にもつながります。',
+        suitableEvents: '・にぎわいを作りたい\n・滞在時間を延ばしたい\n・子供向けの手軽な体験を入れたい',
+        achievements: '商業施設、住宅展示場、マルシェ',
+        recommendedFor: '・商業施設の販促・イベント担当者さま\n・住宅展示場の企画担当者さま\n・地域イベント主催者さま',
+        scale: 'どなたでも',
+        duration: '1回 10〜15分（随時受付）',
+        requiredSpace: '・テーブル2〜3台のスペースがあれば実施可\n・電源不要のメニューも多数\n・屋内外どちらも可\n・随時受付に対応'
       },
       photos: {
         photo1: '/images/picture/Science/detail_WorkShop01.jpg',
