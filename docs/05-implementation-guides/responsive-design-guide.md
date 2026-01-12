@@ -16,11 +16,37 @@ DONATIサイトのレスポンシブデザイン実装の詳細ガイド。Issue
 
 ## 統一された幅の一覧
 
-- **Header**: `max-w-4xl mx-auto px-4`（Header.astro:38）
+- **Header**: `max-w-4xl mx-auto px-4`（Header.astro:47）
 - **Hero Carousel**: `max-width: 1024px; margin: 0 auto`（各ページのスタイル）
 - **セクションコンテナ**: `max-w-4xl mx-auto px-4`（すべてのセクション）
 - **ウェーブライン装飾**: `max-w-4xl mx-auto px-4`（.waveline-wrapper）
-- **Footer**: `max-w-4xl mx-auto px-4`（Footer.astro）
+- **Footer**: `.container-custom`クラス使用（Footer.astro:4, 44）
+
+## 統一された上端padding（もくもく見出し位置統一）
+
+全ページでもくもく見出し（PageIntroduction）の表示位置を統一するため、メインコンテナの上端paddingを`py-16`に統一しています。
+
+### 統一ルール
+- **基本padding**: `py-16`（上下padding 4rem = 64px）
+- **レスポンシブ対応**: 画面サイズによってpadding値を変えない（全画面サイズで統一）
+
+### 適用箇所（PageIntroductionコンポーネント使用ページ）
+- **about.astro**: `<section class="py-16">`（about.astro:20）
+- **professional-experience.astro**: `<div class="max-w-4xl mx-auto px-4 py-16 relative z-10">`（professional-experience.astro:172）
+- **service-fuji.astro**: `<div class="max-w-4xl mx-auto px-4 py-16 relative z-10">`（service-fuji.astro:279）
+- **service-hide.astro**: `<div class="max-w-4xl mx-auto px-4 py-16 relative z-10">`（service-hide.astro:48）
+- **contact.astro**: `<section class="py-16">`（contact.astro:82）
+- **faq.astro**: `<section class="py-16">`（faq.astro:15）
+
+### その他のページ
+- **index.astro**: トップページ（PageIntroduction非使用）
+- **404.astro**: エラーページ（PageIntroduction非使用、独自レイアウト）
+
+### 注意事項
+- `py-24`など異なるpadding値を使用すると、もくもく見出しの位置がずれます
+- 新規ページ追加時は必ず`py-16`を使用してください
+- レスポンシブ対応（`md:py-24`等）は使用しないでください
+- PageIntroductionを使用しないページでも、レイアウトの一貫性のため`py-16`の使用を推奨
 
 ## グローバル設定（src/styles/global.css）
 
