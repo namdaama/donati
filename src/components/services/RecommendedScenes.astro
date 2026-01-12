@@ -1,0 +1,276 @@
+---
+interface SceneItem {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  overviewDescription: string;
+  examplesSectionTitle?: string;
+  scenes: SceneItem[];
+  showPullDownIcon?: boolean;
+}
+
+const {
+  title = "こんな場面にお勧め",
+  overviewDescription,
+  examplesSectionTitle = "具体的な実施例",
+  scenes,
+  showPullDownIcon = true
+} = Astro.props;
+---
+
+<details class="recommended-scenes-accordion">
+  <!-- タイトル行（クリック可能なsummary） -->
+  <summary class="title-row">
+    <h3 class="section-title">{title}</h3>
+    {showPullDownIcon && (
+      <img
+        src="/images/svg/Parts/icon_PullDown.svg"
+        alt=""
+        class="pulldown-icon"
+      />
+    )}
+  </summary>
+
+  <!-- アコーディオンコンテンツ -->
+  <div class="accordion-content">
+    <!-- 全体説明文 -->
+    <p class="overview-description">{overviewDescription}</p>
+
+    <!-- 「具体的な実施例」ラベル -->
+    <div class="examples-section-label">
+      <span>{examplesSectionTitle}</span>
+    </div>
+
+    <!-- シーンリスト -->
+    <div class="scenes-list">
+      {scenes.map((scene) => (
+        <div class="scene-item">
+          <!-- 星アイコン -->
+          <img
+            src="/images/svg/Parts/icon_dotStar.svg"
+            alt=""
+            class="star-icon"
+          />
+
+          <!-- シーン内容 -->
+          <div class="scene-content">
+            <h4 class="scene-title">{scene.title}</h4>
+            <p class="scene-description">{scene.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</details>
+
+<style>
+  /* アコーディオンコンテナ */
+  .recommended-scenes-accordion {
+    max-width: 1024px;
+    margin: 0 auto 3rem;
+    padding: 2rem 1.5rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* タイトル行（summary要素） */
+  .title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  /* ブラウザデフォルトのマーカーを非表示 */
+  .title-row::marker,
+  .title-row::-webkit-details-marker {
+    display: none;
+  }
+
+  /* ホバー時の視覚フィードバック */
+  .title-row:hover {
+    opacity: 0.8;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #58778d;
+    margin: 0;
+  }
+
+  /* プルダウンアイコンの回転アニメーション */
+  .pulldown-icon {
+    width: 35px;
+    height: 35px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .recommended-scenes-accordion[open] .pulldown-icon {
+    transform: rotate(180deg);
+  }
+
+  /* アコーディオンコンテンツ */
+  .accordion-content {
+    overflow: hidden;
+  }
+
+  /* 開閉時のスライドアニメーション */
+  .recommended-scenes-accordion[open] .accordion-content {
+    animation: slideDown 0.3s ease-in-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 全体説明文 */
+  .overview-description {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #65b7ec;
+    line-height: 1.75;
+    text-align: left;
+    margin: 0 0 1.5rem 0;
+    white-space: pre-line;
+  }
+
+  /* 「具体的な実施例」ラベル */
+  .examples-section-label {
+    background-color: #65b7ec;
+    padding: 0.75rem 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  .examples-section-label span {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: white;
+  }
+
+  /* シーンリスト */
+  .scenes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .scene-item {
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+  }
+
+  .star-icon {
+    width: 19px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+
+  .scene-content {
+    flex: 1;
+  }
+
+  .scene-title {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #65b7ec;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .scene-description {
+    font-size: 1rem;
+    color: #58778d;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* レスポンシブデザイン */
+  @media (max-width: 768px) {
+    .recommended-scenes-accordion {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+    }
+
+    .pulldown-icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .overview-description {
+      font-size: 0.938rem;
+    }
+
+    .examples-section-label {
+      padding: 0.625rem 1rem;
+    }
+
+    .examples-section-label span {
+      font-size: 1rem;
+    }
+
+    .scene-title {
+      font-size: 1rem;
+    }
+
+    .scene-description {
+      font-size: 0.938rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .recommended-scenes-accordion {
+      padding: 1.5rem 1rem;
+    }
+
+    .section-title {
+      font-size: 1.125rem;
+    }
+
+    .pulldown-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .overview-description {
+      font-size: 0.875rem;
+    }
+
+    .examples-section-label {
+      padding: 0.5rem 0.75rem;
+    }
+
+    .examples-section-label span {
+      font-size: 0.938rem;
+    }
+
+    .scene-item {
+      gap: 0.75rem;
+    }
+
+    .star-icon {
+      width: 16px;
+      height: 15px;
+    }
+  }
+</style>

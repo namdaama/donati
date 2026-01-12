@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import FAQItem from '../components/cards/FAQItem.astro';
 import { faqData } from '../config/faq';
 ---
@@ -14,18 +15,7 @@ import { faqData } from '../config/faq';
     <section class="py-16 md:py-24">
       <div class="max-w-4xl mx-auto px-4">
         <!-- 1. ページタイトル -->
-        <div class="mb-12">
-          <h1 class="text-4xl font-bold mb-4" style="color: #58778D;">よくあるご質問 (FAQ)</h1>
-
-          <!-- waveline -->
-          <div class="mb-6">
-            <div class="w-full overflow-hidden flex justify-center">
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-              <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-            </div>
-          </div>
-        </div>
+        <PageIntroduction title="よくあるご質問 (FAQ)" />
 
         <!-- 2. 料金についての説明 -->
         <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 md:p-8 mb-12 shadow">

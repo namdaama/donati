@@ -1,31 +1,11 @@
 ---
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  detailTable?: {
-    effect: string;
-    achievements: string;
-    overview: string;
-    scale: string;
-    duration: string;
-    merit: string;
-    photos?: {
-      photo1: string;
-      photo2: string;
-    };
-  };
-  photos?: {
-    photo1: string;
-    photo2: string;
-  };
-}
+import type { ServiceItem } from '../../config/types';
 
 interface Props {
-  service: Service;
+  service: ServiceItem;
   index: number;
   showServicePlans?: boolean;
-  services?: Service[];
+  services?: ServiceItem[];
 }
 
 const { service, index, showServicePlans = false, services = [] } = Astro.props;
@@ -327,10 +307,6 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
           <div class="table-row">
             <div class="table-label">時間目安</div>
             <div class="table-value">{service.detailTable.duration}</div>
-          </div>
-          <div class="table-row">
-            <div class="table-label">メリット</div>
-            <div class="table-value">{service.detailTable.merit}</div>
           </div>
         </div>
         {service.photos && (

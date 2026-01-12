@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
+import PageIntroduction from '../components/common/PageIntroduction.astro';
 import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
 import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
@@ -45,6 +46,9 @@ const spaceCategory = serviceCategories.space;
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
+        <!-- ページタイトル -->
+        <PageIntroduction title="スペース（宇宙分野）" />
+
         <!-- スペース分野 -->
         <section id="space" class="mb-24">
           <ServiceCategoryHeader
