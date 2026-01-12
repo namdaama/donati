@@ -40,7 +40,7 @@ npm run preview
 ## 機能
 
 - **トップページカルーセル**: 自動スライド機能付きの画像カルーセル
-- **Instagram連携**: 最新の活動を表示
+- **Instagram連携**: 「お知らせ」セクションでInstagram投稿を埋め込み表示
 - **お問い合わせフォーム**: Web3Formsフォーム
 - **レスポンシブデザイン**: モバイル・タブレット・デスクトップ対応
 - **高速表示**: Astroの静的サイト生成による最適化
@@ -67,7 +67,7 @@ MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 
 # 公開情報（PUBLIC_プレフィックス付き）
-PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
+PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science_space/
 PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
 PUBLIC_TWITTER_URL=
 PUBLIC_FACEBOOK_URL=
