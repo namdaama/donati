@@ -64,7 +64,7 @@ src/components/
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
 |--------|----------|-------------------|
-| index.astro | 5 | Header, Carousel, Footer, FooterDivider, OverViewSection |
+| index.astro | 7 | Header, Carousel, InstagramSection, SectionHeading, Footer, FooterDivider, OverViewSection |
 | contact.astro | 3 | Header, Footer, Hero |
 | professional-experience.astro | 5 | Header, Footer, PageIntroduction, MajorSection, CategorySection |
 | about.astro | 6 | Header, Footer, DonatiLogo, StaffProfileCard, PageIntroduction, FooterDivider |
@@ -104,11 +104,25 @@ src/components/
 
 ### InstagramSection.astro
 - **ファイル**: src/components/common/InstagramSection.astro
-- **行数**: 111行
+- **行数**: 118行
 - **目的**: Instagram投稿の埋め込み表示
-- **設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理
+- **Props**:
+  - `title?: string` - セクションタイトル（デフォルト: "最新の活動"）
+  - `instagramUrl?: string` - Instagram投稿URL（デフォルト: "https://www.instagram.com/namdaama/"）
+- **設定**: 環境変数`PUBLIC_INSTAGRAM_URL`で管理（`siteConfig.social.instagram`経由）
 - **実装方式**: Instagram公式埋め込みAPI使用
 - **外部スクリプト**: `//www.instagram.com/embed.js`を非同期ロード
+- **スタイル**:
+  - 背景: 透過（`bg-transparent`）
+  - 説明文: 左揃え（`text-left`）
+  - SectionHeading統合: waveLine装飾（waveLineCount=5, titleMarginLeft="ml-4"）
+- **使用例** (index.astro):
+  ```astro
+  <InstagramSection
+    title="お知らせ"
+    instagramUrl={siteConfig.social.instagram}
+  />
+  ```
 
 ## 中複雑度コンポーネント
 
