@@ -6,47 +6,49 @@ import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import OverViewSection from '../components/overview/OverViewSection.astro';
 import SectionHeading from '../components/common/SectionHeading.astro';
+import InstagramSection from '../components/common/InstagramSection.astro';
 import { heroCarouselData } from '../config/carousel';
+import { siteConfig } from '../config/site';
 
-// お知らせデータ（4列グリッド用）
-const newsItems = [
-  {
-    id: 1,
-    thumbnail: '/images/news/event1.jpg',
-    date: '2025/01 [土]',
-    title: '1/18観察会～20:30時～',
-    location: '駅前プラザ（ROOM A）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event1'
-  },
-  {
-    id: 2,
-    thumbnail: '/images/news/event2.jpg', 
-    date: '2025/02 [日]',
-    title: '2/15実験ショー～14:00時～',
-    location: '市民会館（大ホール）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event2'
-  },
-  {
-    id: 3,
-    thumbnail: '/images/news/event3.jpg',
-    date: '2025/02 [土]',
-    title: '2/22ワークショップ～10:00時～',
-    location: '科学館（実験室）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event3'
-  },
-  {
-    id: 4,
-    thumbnail: '/images/news/event4.jpg',
-    date: '2025/03 [日]',
-    title: '3/8星空観察～19:30時～',
-    location: '山頂公園（観望台）',
-    detail: '予約方法：Instagram DM',
-    link: '/news/event4'
-  }
-];
+// お知らせデータ（4列グリッド用）- Instagram Sectionに置き換えたためコメントアウト
+// const newsItems = [
+//   {
+//     id: 1,
+//     thumbnail: '/images/news/event1.jpg',
+//     date: '2025/01 [土]',
+//     title: '1/18観察会～20:30時～',
+//     location: '駅前プラザ（ROOM A）',
+//     detail: '予約方法：Instagram DM',
+//     link: '/news/event1'
+//   },
+//   {
+//     id: 2,
+//     thumbnail: '/images/news/event2.jpg',
+//     date: '2025/02 [日]',
+//     title: '2/15実験ショー～14:00時～',
+//     location: '市民会館（大ホール）',
+//     detail: '予約方法：Instagram DM',
+//     link: '/news/event2'
+//   },
+//   {
+//     id: 3,
+//     thumbnail: '/images/news/event3.jpg',
+//     date: '2025/02 [土]',
+//     title: '2/22ワークショップ～10:00時～',
+//     location: '科学館（実験室）',
+//     detail: '予約方法：Instagram DM',
+//     link: '/news/event3'
+//   },
+//   {
+//     id: 4,
+//     thumbnail: '/images/news/event4.jpg',
+//     date: '2025/03 [日]',
+//     title: '3/8星空観察～19:30時～',
+//     location: '山頂公園（観望台）',
+//     detail: '予約方法：Instagram DM',
+//     link: '/news/event4'
+//   }
+// ];
 
 // サイエンス事業カードデータ
 const scienceService = {
@@ -91,8 +93,14 @@ const aboutLinks = [
     <!-- Hero Carousel Section -->
     <Carousel slides={heroCarouselData} />
 
-    <!-- お知らせセクション -->
-    <section class="py-8 md:py-12 bg-transparent">
+    <!-- Instagram Section -->
+    <InstagramSection
+      title="お知らせ"
+      instagramUrl={siteConfig.social.instagram}
+    />
+
+    <!-- お知らせセクション - Instagram Sectionに置き換えたためコメントアウト -->
+    <!-- <section class="py-8 md:py-12 bg-transparent">
       <div class="max-w-4xl mx-auto px-4">
         <SectionHeading
           title="お知らせ"
@@ -100,30 +108,24 @@ const aboutLinks = [
           titleMarginLeft="ml-4"
         />
 
-        <!-- 4列グリッド -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {newsItems.map((item) => (
             <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-              <!-- サムネイル（後でInstagram画像に差し替え予定） -->
               <div class="relative h-48 bg-gray-50 overflow-hidden flex items-center justify-center">
                 <span class="text-6xl">📅</span>
               </div>
 
-              <!-- コンテンツ -->
               <div class="p-5">
-                <!-- イベントタグ -->
                 <div class="inline-block mb-3">
                   <span class="bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded">
                     イベント
                   </span>
                 </div>
 
-                <!-- 日付 -->
                 <p class="text-sm text-gray-600 mb-2 font-medium">
                   {item.date}
                 </p>
 
-                <!-- タイトル -->
                 <h3 class="font-bold text-gray-800 mb-2 text-base leading-snug">
                   {item.title}
                 </h3>
@@ -132,7 +134,7 @@ const aboutLinks = [
           ))}
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- 波線装飾（複数並べて中央寄せ） -->
     <div class="waveline-wrapper">
