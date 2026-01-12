@@ -1,20 +1,27 @@
 ---
+import SectionHeading from './SectionHeading.astro';
+
 export interface Props {
   title?: string;
   instagramUrl?: string;
 }
 
-const { 
-  title = "最新の活動", 
-  instagramUrl = "https://www.instagram.com/donati_science/"
+const {
+  title = "最新の活動",
+  instagramUrl = "https://www.instagram.com/namdaama/"
 } = Astro.props;
 ---
 
-<section class="instagram-section py-16 md:py-24 bg-gray-50">
-  <div class="container-custom">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold text-text-dark mb-4">{title}</h2>
-      <p class="text-lg text-text-gray max-w-2xl mx-auto">
+<section class="instagram-section py-8 md:py-12 bg-transparent">
+  <div class="max-w-4xl mx-auto px-4">
+    <SectionHeading
+      title={title}
+      waveLineCount={5}
+      titleMarginLeft="ml-4"
+    />
+
+    <div class="text-left mb-8">
+      <p class="text-lg text-[#58778D]">
         Instagramで最新の活動や実験の様子をご覧いただけます
       </p>
     </div>
