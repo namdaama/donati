@@ -23,13 +23,9 @@ src/components/
 │   ├── OverViewServiceSection.astro
 │   ├── OverViewLinkCard.astro
 │   └── FooterDivider.astro
-├── services/        # サービスページ専用 (10個)
-│   ├── ServicesSection.astro
-│   ├── ServicesFujiSection.astro
-│   ├── ServicesHideSection.astro
+├── services/        # サービスページ専用 (6個)
 │   ├── ServiceCategoryHeader.astro
 │   ├── ServiceComparisonTable.astro
-│   ├── ServiceCategoryCard.astro
 │   ├── ServiceDetailCard.astro
 │   ├── ServiceDescription.astro
 │   ├── RequestFlowStep.astro
@@ -50,7 +46,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 39個
+**総コンポーネント数**: 35個
 
 ## コンポーネント統計
 
@@ -59,17 +55,16 @@ src/components/
 |---------|-----------------|------|
 | common/ | 9 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionCloudyHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
-| services/ | 10 | services.astro/service-fuji.astro/service-hide.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes） |
+| services/ | 6 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes） |
 | professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **39** | **6フォルダ** |
+| **合計** | **35** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
 |--------|----------|-------------------|
 | index.astro | 5 | Header, Carousel, Footer, FooterDivider, OverViewSection |
-| services.astro | 7 | Header, Footer, FooterDivider, ServiceCategoryHeader, ServiceCard, RequestFlowStep, ServicesSection |
 | contact.astro | 3 | Header, Footer, Hero |
 | professional-experience.astro | 5 | Header, Footer, PageIntroduction, MajorSection, CategorySection |
 | about.astro | 6 | Header, Footer, DonatiLogo, StaffProfileCard, PageIntroduction, FooterDivider |
@@ -340,6 +335,14 @@ interface Props {
 ```
 
 ## 更新履歴
+
+- **2026年1月12日**: 未使用コンポーネント削除（Issue #160）
+  - services.astro削除（service-fuji.astro/service-hide.astroに分割済みのため不要）
+  - ServiceCategoryCard.astro削除（未使用）
+  - ServicesSection.astro削除（services.astroでのみ使用）
+  - ServicesFujiSection.astro削除（ServicesSectionでのみ使用）
+  - ServicesHideSection.astro削除（ServicesSectionでのみ使用）
+  - 総コンポーネント数：39個 → 35個
 
 - **2026年1月12日**: ServiceDescription.astro追加（Issue #160, Phase2）
   - 「事業解説」コンポーネント実装
