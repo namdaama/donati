@@ -4,7 +4,6 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import PageIntroduction from '../components/common/PageIntroduction.astro';
-import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
 import ServiceComparisonTable from '../components/services/ServiceComparisonTable.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
 import RecommendedScenes from '../components/services/RecommendedScenes.astro';
@@ -121,22 +120,69 @@ const serviceDescriptions = [
         border-radius: 50%;
         opacity: 0.3;
       }
+
+      /* 3つのプラン紹介セクション */
+      .three-plans-intro {
+        text-align: left;
+      }
+
+      .three-plans-title {
+        font-size: 1.375rem;
+        font-weight: bold;
+        color: #58778d;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .three-plans-content {
+        padding: 1.5rem 0;
+      }
+
+      .three-plans-content p {
+        font-size: 1rem;
+        color: #58778d;
+        line-height: 1.8;
+        margin: 0.5rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .three-plans-title {
+          font-size: 1.125rem;
+        }
+
+        .three-plans-content {
+          padding: 1rem 0;
+        }
+
+        .three-plans-content p {
+          font-size: 0.875rem;
+        }
+      }
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
         <!-- ページタイトル -->
-        <PageIntroduction title="サイエンス（科学分野）" />
+        <PageIntroduction
+          title="サイエンス事業"
+          description="見て、驚いて、参加する。\n会場が一体になるワクワクの科学体験！"
+          content="実験ショー・科学実験室・ワークショップなど会場や目的に合わせたプログラムをご提案。"
+        />
 
         <!-- サイエンス分野 -->
         <section id="science" class="mb-24">
-          <ServiceCategoryHeader
-            mainTitle={scienceCategory.mainTitle}
-            subtitle={scienceCategory.subtitle}
-            description={scienceCategory.description}
-            subsectionTitle={scienceCategory.subsectionTitle}
-            subsectionContent={scienceCategory.subsectionContent}
-            characterIconUrl={scienceCategory.characterIconUrl}
-          />
+          <!-- 3つのプラン紹介セクション -->
+          <div class="three-plans-intro mb-16">
+            <h2 class="three-plans-title">
+              科学のワクワクを届ける！幼児から大人まで対応可能な３つのプラン
+            </h2>
+
+            <div class="three-plans-content">
+              <p>お子様が目を輝かせ、大人が思わず笑い出す！</p>
+              <p>商業施設の集客、学校イベント、地域行事の活性化にお悩みですか？</p>
+              <p>私たちDONATIは、驚きと感動の科学体験を通して、参加者全員を、笑顔と発見の渦に巻き込みます。</p>
+              <p>幼児から大人までを夢中にさせる最高にワクワクする学びを、ぜひご体感ください！</p>
+            </div>
+          </div>
 
           <!-- Phase2: 事業解説 -->
           {serviceDescriptions.map((serviceDesc) => (
