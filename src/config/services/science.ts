@@ -36,7 +36,7 @@ export const scienceServices: ServiceCategory = {
       detailTable: {
         effect: '会場の一体感と集客力の最大化',
         achievements: '商業施設、地域イベント、学校の芸術鑑賞会、保育園・幼稚園のお祭りなど',
-        overview: '笑いと驚きのステージ型ショー。大規模イベント向き。',
+        overview: '笑いと驚きのステージ型ショー\n大規模イベント向き！',
         scale: '100名～ / ホール、体育館',
         duration: '30分〜45分',
         merit: '盛り上がり保証！パフォーマーの熱量を直接お届け。'
@@ -65,7 +65,7 @@ export const scienceServices: ServiceCategory = {
       detailTable: {
         effect: '深い学び・探求心',
         achievements: '小中学校 PTA 行事、中学・高校の探求学習。',
-        overview: '参加者自身がじっくり取り組む実験教室',
+        overview: '参加者自身がじっくり\n取り組む実験教室',
         scale: '20名程度 / 教室、会議室',
         duration: '60分～90分',
         merit: '「なぜ？」を「わかった！」に変える深い体験。'
@@ -94,7 +94,7 @@ export const scienceServices: ServiceCategory = {
       detailTable: {
         effect: '短時間で楽しめる科学体験の提供と集客促進。',
         achievements: '商業施設、住宅展示場（賑やかし）、マルシェイベントなど',
-        overview: '10分～15分で完結するライトな体験会。',
+        overview: '10分～15分で\n完結するライトな体験会',
         scale: '少人数～多数 / ブース、商業施設',
         duration: '随時受付（回転率重視）',
         merit: 'パフォーマンスショーとの相乗効果で集客力が高い。'
