@@ -1,22 +1,8 @@
 ---
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  detailTable?: {
-    overview: string;
-    effect: string;
-    suitableEvents: string;
-    achievements: string;
-    recommendedFor: string;
-    scale: string;
-    duration: string;
-    requiredSpace: string;
-  };
-}
+import type { ServiceItem } from '../../config/types';
 
 interface Props {
-  services: Service[];
+  services: ServiceItem[];
 }
 
 const { services } = Astro.props;
@@ -209,10 +195,11 @@ const formatServiceTitle = (title: string) => {
               </td>
               {services.map((service) => {
                 const content = service.detailTable ? service.detailTable[row.key as keyof typeof service.detailTable] : '';
-                const lines = content.split('\n');
+                const contentStr = typeof content === 'string' ? content : '';
+                const lines = contentStr.split('\n');
                 return (
                   <td class="data-cell">
-                    {lines.map((line, lineIndex) => (
+                    {lines.map((line: string, lineIndex: number) => (
                       <>
                         {line}
                         {lineIndex < lines.length - 1 && <br />}
