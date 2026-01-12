@@ -4,13 +4,99 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import PageIntroduction from '../components/common/PageIntroduction.astro';
-import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
 import ServiceComparisonTable from '../components/services/ServiceComparisonTable.astro';
-import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
 import RequestFlowStep from '../components/services/RequestFlowStep.astro';
+import RecommendedScenes from '../components/services/RecommendedScenes.astro';
+import ServiceDescription from '../components/services/ServiceDescription.astro';
 import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
 
 const scienceCategory = serviceCategories.science;
+
+// サービスカード用のタイトルSVG
+const titleSvgs = [
+  '/images/svg/Parts/text_scienceParformShow.svg',
+  '/images/svg/Parts/text_wakuwakuScienceLab.svg',
+  '/images/svg/Parts/text_workShop.svg'
+];
+
+// RecommendedScenes用のデータ
+const recommendedScenesData = {
+  overviewDescription: "学校事業や行政、地域イベントなど、幅広い場面で実施しています。\n校だからこそ楽しめる、特別なプログラムとしておすすめです。",
+  scenes: [
+    {
+      title: "子どもたちに、夜空やほしの特別な体験を",
+      description: "学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ"
+    },
+    {
+      title: "集客やにぎわいを生む、等のイベントとして",
+      description: "展覧会等でのイベント / 前泊時間の特別プログラム / 地域のお祭りなど"
+    }
+  ]
+};
+
+// ServiceDescription用のデータ（Phase2）
+const serviceDescriptions = [
+  {
+    id: "science-performance-show",
+    title: "サイエンスパフォーマンスショー",
+    photoUrl: "/images/picture/Science/detail_Show01.jpg",
+    mainCatch: "見て、驚いて、思わず声が出る。\n会場がひとつになる、体験型サイエンスショー。",
+    description: "身近な素材が魔法のように姿を変える、ハラハラ・ドキドキのステージ型サイエンスショーです。\n ただ見るだけではなく、予想し、考え、参加する場面もあり、会場全体が楽しい一体感に包まれます。\n 五感を刺激するダイナミックな実験を通して、「学び」を最高に楽しい体験へ。\n 子どもから大人まで、科学への好奇心の扉を大きく開く時間をお届けします。",
+    recommendedScenesData: {
+      overviewDescription: "学校行事やPTAイベント・地域イベントなど、幅広い場面で実施しています。\n夜からこそ楽しめる、特別なプログラムとしておすすめです。",
+      scenes: [
+        {
+          title: "子どもたちに、夜空やほしの特別な体験を",
+          description: "学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ"
+        },
+        {
+          title: "集客やにぎわいを生む、等のイベントとして",
+          description: "展覧会等でのイベント / 前泊時間の特別プログラム / 地域のお祭りなど"
+        }
+      ]
+    }
+  },
+  {
+    id: "science-experiment-room",
+    title: "わくわく科学実験室",
+    photoUrl: "/images/picture/Science/detail_Lab01.jpg",
+    mainCatch: "「なぜ？」が止まらない、考える科学体験。",
+    description: "「なぜ？」から始まり、自分の手を動かしながら考えを深める、探究型の科学実験プログラムです。\n対象年齢や目的に応じて、じっくり考える〈探究型〉と、体験を通して学ぶ〈体験型〉の2コースをご用意。\n楽しみながら集中して取り組む中で、知的好奇心が自然と育まれます。\n学校の探究学習やPTA行事など、学びの場に深く寄り添う実験室です。",
+    recommendedScenesData: {
+      overviewDescription: "小中学校のPTA行事や探求学習など、深い学びを求める場面で実施しています。\n少人数制でじっくり学べる特別なプログラムとしておすすめです。",
+      scenes: [
+        {
+          title: "探求学習の一環として、科学的思考力を育む",
+          description: "中学・高校の探求学習 / 小学校の理科実験授業"
+        },
+        {
+          title: "PTA行事で、親子で楽しく学ぶ機会に",
+          description: "小中学校のPTA行事 / 親子科学教室"
+        }
+      ]
+    }
+  },
+  {
+    id: "workshop",
+    title: "ワークショップ",
+    photoUrl: "/images/picture/Science/detail_WorkShop01.jpg",
+    mainCatch: "",
+    description: "短時間で楽しめる、立ち寄り型の科学ワークショップです。\n電源不要のメニューも多く、屋内外を問わず実施可能。\n集客や場のにぎわいづくりにも、活用いただいています。\nサイエンスパフォーマンスショーとの組み合わせもおすすめです。",
+    recommendedScenesData: {
+      overviewDescription: "商業施設やマルシェ、住宅展示場など、集客や賑やかしが必要な場面で実施しています。\n短時間で楽しめる特別なプログラムとしておすすめです。",
+      scenes: [
+        {
+          title: "商業施設やマルシェで、集客と賑やかしを",
+          description: "商業施設のイベント / マルシェやお祭り / 住宅展示場"
+        },
+        {
+          title: "サイエンスショーとの相乗効果で、集客力アップ",
+          description: "パフォーマンスショーと組み合わせて、より多くの来場者を獲得"
+        }
+      ]
+    }
+  }
+];
 ---
 
 <Layout
@@ -44,25 +130,230 @@ const scienceCategory = serviceCategories.science;
         border-radius: 50%;
         opacity: 0.3;
       }
+
+      /* 3つのプラン紹介セクション */
+      .three-plans-intro {
+        text-align: left;
+      }
+
+      .three-plans-title {
+        font-size: 1.375rem;
+        font-weight: bold;
+        color: #58778d;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .three-plans-content {
+        padding: 1.5rem 0;
+      }
+
+      .three-plans-content p {
+        font-size: 1rem;
+        color: #58778d;
+        line-height: 1.8;
+        margin: 0.5rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .three-plans-title {
+          font-size: 1.125rem;
+        }
+
+        .three-plans-content {
+          padding: 1rem 0;
+        }
+
+        .three-plans-content p {
+          font-size: 0.875rem;
+        }
+      }
+
+      /* サービスカード */
+      .service-plans-container {
+        margin-top: 3rem;
+        margin-bottom: 3rem;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .service-plans-grid {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 1024px;
+        flex-wrap: wrap;
+      }
+
+      .service-card {
+        width: 270px;
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .service-card-title {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+        background: transparent;
+      }
+
+      .service-card-title img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .service-card-waveline {
+        padding: 0.5rem 0 1rem 0;
+        margin: 0 -1.5rem;
+        text-align: center;
+      }
+
+      .service-card-waveline img {
+        width: 100%;
+        height: auto;
+      }
+
+      .service-card-description {
+        padding: 0 0 1rem 0;
+        text-align: left;
+        color: #58778D;
+        font-size: 0.875rem;
+        line-height: 1.6;
+        min-height: 3rem;
+      }
+
+      .service-card-image {
+        width: 100%;
+        height: 180px;
+        overflow: hidden;
+        background: #e5e7eb;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .service-card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .service-card-button {
+        text-align: center;
+        margin-top: auto;
+      }
+
+      .service-card-button img {
+        max-width: 100%;
+        height: auto;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      .service-card-button img:hover {
+        opacity: 0.8;
+      }
+
+      @media (max-width: 768px) {
+        .service-plans-grid {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .service-card {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
         <!-- ページタイトル -->
-        <PageIntroduction title="サイエンス（科学分野）" />
+        <PageIntroduction
+          title="サイエンス事業"
+          description="見て、驚いて、参加する。\n会場が一体になるワクワクの科学体験！"
+          content="実験ショー・科学実験室・ワークショップなど会場や目的に合わせたプログラムをご提案。"
+        />
 
         <!-- サイエンス分野 -->
         <section id="science" class="mb-24">
-          <ServiceCategoryHeader
-            mainTitle={scienceCategory.mainTitle}
-            subtitle={scienceCategory.subtitle}
-            description={scienceCategory.description}
-            subsectionTitle={scienceCategory.subsectionTitle}
-            subsectionContent={scienceCategory.subsectionContent}
-            characterIconUrl={scienceCategory.characterIconUrl}
-          />
+          <!-- 3つのプラン紹介セクション -->
+          <div class="three-plans-intro mb-16">
+            <h2 class="three-plans-title">
+              科学のワクワクを届ける！幼児から大人まで対応可能な３つのプラン
+            </h2>
 
-          <!-- Service Comparison Table -->
-          <ServiceComparisonTable services={scienceCategory.services} />
+            <div class="three-plans-content">
+              <p>お子様が目を輝かせ、大人が思わず笑い出す！</p>
+              <p>商業施設の集客、学校イベント、地域行事の活性化にお悩みですか？</p>
+              <p>私たちDONATIは、驚きと感動の科学体験を通して、参加者全員を、笑顔と発見の渦に巻き込みます。</p>
+              <p>幼児から大人までを夢中にさせる最高にワクワクする学びを、ぜひご体感ください！</p>
+            </div>
+          </div>
+
+          <!-- 3つのサービスカード -->
+          <div class="service-plans-container">
+            <div class="service-plans-grid">
+              {scienceCategory.services.map((service, idx) => (
+                <div class="service-card">
+                  <div class="service-card-title">
+                    <img
+                      src={titleSvgs[idx]}
+                      alt={service.title}
+                    />
+                  </div>
+                  <div class="service-card-waveline">
+                    <img
+                      src="/images/svg/Parts/waveLine_300px.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="service-card-description">
+                    {service.detailTable?.overview.split('\n').map((line, i, arr) => (
+                      <>{line}{i < arr.length - 1 && <br />}</>
+                    ))}
+                  </div>
+                  <div class="service-card-image">
+                    {service.photos?.photo1 && (
+                      <img
+                        src={service.photos.photo1}
+                        alt={service.title}
+                      />
+                    )}
+                  </div>
+                  <div class="service-card-button">
+                    <a href={`#${service.id}`}>
+                      <img
+                        src="/images/svg/Parts/roundDetailButton.svg"
+                        alt="詳しくはこちら"
+                      />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Phase2: 事業解説 -->
+          {serviceDescriptions.map((serviceDesc) => (
+            <ServiceDescription
+              id={serviceDesc.id}
+              title={serviceDesc.title}
+              photoUrl={serviceDesc.photoUrl}
+              mainCatch={serviceDesc.mainCatch}
+              description={serviceDesc.description}
+              recommendedScenesData={serviceDesc.recommendedScenesData}
+            />
+          ))}
 
           <!-- DetailTableButton -->
           <div class="flex justify-center mb-12">
@@ -75,6 +366,9 @@ const scienceCategory = serviceCategories.science;
             </a>
           </div>
 
+          <!-- Service Comparison Table -->
+          <ServiceComparisonTable services={scienceCategory.services} />
+
           <!-- QA Banner -->
           <div class="flex justify-center mb-12">
             <a href="/contact">
@@ -85,15 +379,6 @@ const scienceCategory = serviceCategories.science;
               />
             </a>
           </div>
-
-          {scienceCategory.services.map((service, index) => (
-            <ServiceDetailCard
-              service={service}
-              index={index}
-              showServicePlans={true}
-              services={scienceCategory.services}
-            />
-          ))}
         </section>
 
         <!-- ご依頼の流れセクション（後で移動） -->

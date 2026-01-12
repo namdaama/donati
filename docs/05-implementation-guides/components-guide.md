@@ -23,15 +23,13 @@ src/components/
 │   ├── OverViewServiceSection.astro
 │   ├── OverViewLinkCard.astro
 │   └── FooterDivider.astro
-├── services/        # サービスページ専用 (8個)
-│   ├── ServicesSection.astro
-│   ├── ServicesFujiSection.astro
-│   ├── ServicesHideSection.astro
+├── services/        # サービスページ専用 (6個)
 │   ├── ServiceCategoryHeader.astro
 │   ├── ServiceComparisonTable.astro
-│   ├── ServiceCategoryCard.astro
 │   ├── ServiceDetailCard.astro
-│   └── RequestFlowStep.astro
+│   ├── ServiceDescription.astro
+│   ├── RequestFlowStep.astro
+│   └── RecommendedScenes.astro
 ├── professional-experience/  # 活動経歴ページ専用 (3個)
 │   ├── MajorSection.astro
 │   ├── CategorySection.astro
@@ -48,7 +46,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 37個
+**総コンポーネント数**: 35個
 
 ## コンポーネント統計
 
@@ -57,17 +55,16 @@ src/components/
 |---------|-----------------|------|
 | common/ | 9 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionCloudyHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
-| services/ | 8 | services.astro/service-fuji.astro専用（Services*, ServiceCategory*, ServiceComparisonTable, ServiceDetailCard, RequestFlowStep） |
+| services/ | 6 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes） |
 | professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **37** | **6フォルダ** |
+| **合計** | **35** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
 |--------|----------|-------------------|
 | index.astro | 5 | Header, Carousel, Footer, FooterDivider, OverViewSection |
-| services.astro | 7 | Header, Footer, FooterDivider, ServiceCategoryHeader, ServiceCard, RequestFlowStep, ServicesSection |
 | contact.astro | 3 | Header, Footer, Hero |
 | professional-experience.astro | 5 | Header, Footer, PageIntroduction, MajorSection, CategorySection |
 | about.astro | 6 | Header, Footer, DonatiLogo, StaffProfileCard, PageIntroduction, FooterDivider |
@@ -130,6 +127,8 @@ src/components/
 - **ServiceCategoryHeader.astro**: サービスカテゴリヘッダー（3セクション構造、キャラクター付き）
 - **ServiceComparisonTable.astro**: 3プラン簡易比較表（レスポンシブテーブル）
 - **ServiceDetailCard.astro**: 詳細サービスカード（青テーブル + 写真 + ボタン + QAバナー）
+- **ServiceDescription.astro**: 事業解説コンポーネント（セクションヘッダー + 写真 + 説明文 + RecommendedScenes統合）
+- **RecommendedScenes.astro**: 「こんな場面にお勧め」コンポーネント（縦並びリスト形式、説明文+箇条書き特徴）
 
 ### professional-experience/
 - **MajorSection.astro**: 大セクションラッパー（SectionHeading使用）
@@ -232,7 +231,134 @@ interface Props {
 - **cards/**: 汎用カード（ページ非依存）
 - **effects/**: 視覚効果、カーソルカスタマイズ
 
+## コンポーネント詳細
+
+### RecommendedScenes.astro
+**ファイル**: src/components/services/RecommendedScenes.astro
+
+**Props**:
+```typescript
+interface SceneItem {
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  overviewDescription: string;
+  examplesSectionTitle?: string;
+  scenes: SceneItem[];
+  showPullDownIcon?: boolean;
+}
+```
+
+**特徴**:
+- タイトル行に黄色い丸に下矢印のアイコン（icon_PullDown.svg）
+- 全体説明文セクション
+- 「具体的な実施例」青い背景ラベル
+- 箇条書きに黄色い星マーク（icon_dotStar.svg）
+- サービスページ統一カラー（#58778D）
+- レスポンシブ対応（モバイル/タブレット/デスクトップ）
+
+**使用箇所**: service-fuji.astro
+
+**使用例**:
+```astro
+<RecommendedScenes
+  overviewDescription="学校事業や行政、地域イベントなど、幅広い場面で実施しています。\n校だからこそ楽しめる、特別なプログラムとしておすすめです。"
+  scenes={[
+    {
+      title: "子どもたちに、夜空やほしの特別な体験を",
+      description: "学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ"
+    },
+    {
+      title: "集客やにぎわいを生む、等のイベントとして",
+      description: "展覧会等でのイベント / 前泊時間の特別プログラム / 地域のお祭りなど"
+    }
+  ]}
+/>
+```
+
+### ServiceDescription.astro
+**ファイル**: src/components/services/ServiceDescription.astro
+
+**Props**:
+```typescript
+interface Props {
+  title: string;
+  photoUrl: string;
+  mainCatch: string;
+  description: string;
+  recommendedScenesData: {
+    overviewDescription: string;
+    scenes: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
+}
+```
+
+**特徴**:
+- セクションヘッダー（タイトル + 黄色い波線装飾）
+- 2列グリッドレイアウト（写真 | 説明文）
+  - 写真: 300px × 200px (aspect-ratio 3:2)、角丸8px
+  - メインキャッチ: 明るい青（#65B7EC）、太字、左寄せ、`\n`で改行可能
+  - 詳細説明: 青（#58778D）、左寄せ
+- RecommendedScenesコンポーネント統合
+- レスポンシブ対応（768px未満で1列に切り替え）
+
+**配色**:
+- タイトル: #58778D
+- メインキャッチ: #65B7EC
+- 詳細説明: #58778D
+
+**使用箇所**: service-fuji.astro
+
+**使用例**:
+```astro
+<ServiceDescription
+  title="サイエンスパフォーマンスショー"
+  photoUrl="/images/picture/Science/detail_Show01.jpg"
+  mainCatch="見て、驚いて、思わず声が出る\n会場がひとつになる、\n体験型サイエンスショー。"
+  description="身近な素材が魔法のように姿を変える、ハラハラ・ドキドキのステージ型サイエンスショーです。ただ見るだけではなく、予想したり考えたり、実験の一部に参加することもあります。"
+  recommendedScenesData={{
+    overviewDescription: "学校行事やPTAイベント・地域イベントなど、幅広い場面で実施しています。",
+    scenes: [
+      {
+        title: "子どもたちに、夜空やほしの特別な体験を",
+        description: "学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ"
+      }
+    ]
+  }}
+/>
+```
+
 ## 更新履歴
+
+- **2026年1月12日**: 未使用コンポーネント削除（Issue #160）
+  - services.astro削除（service-fuji.astro/service-hide.astroに分割済みのため不要）
+  - ServiceCategoryCard.astro削除（未使用）
+  - ServicesSection.astro削除（services.astroでのみ使用）
+  - ServicesFujiSection.astro削除（ServicesSectionでのみ使用）
+  - ServicesHideSection.astro削除（ServicesSectionでのみ使用）
+  - 総コンポーネント数：39個 → 35個
+
+- **2026年1月12日**: ServiceDescription.astro追加（Issue #160, Phase2）
+  - 「事業解説」コンポーネント実装
+  - セクションヘッダー（タイトル + 波線装飾）
+  - 2列グリッドレイアウト（写真 | 説明文）
+  - RecommendedScenesコンポーネント統合
+  - service-fuji.astroに統合
+  - 総コンポーネント数：38個 → 39個
+
+- **2026年1月12日**: RecommendedScenes.astro追加および再設計（Issue #159, Phase1）
+  - 「こんな場面にお勧め」コンポーネント実装
+  - 黄色い丸に下矢印アイコン（icon_PullDown.svg）追加
+  - 黄色い星マーク（icon_dotStar.svg）による箇条書き
+  - 「具体的な実施例」青い背景ラベル
+  - service-fuji.astroに統合
+  - 総コンポーネント数：37個 → 38個
 
 - **2026年1月11日**: SNSアイコンをJPG画像に変更、aboutページ調整（Issue #153）
   - StaffProfileCard: Font Awesome → JPG画像に変更、アイコンサイズ1.5倍（48px/60px）

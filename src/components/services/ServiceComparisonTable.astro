@@ -1,32 +1,22 @@
 ---
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  detailTable?: {
-    effect: string;
-    achievements: string;
-    overview: string;
-    scale: string;
-    duration: string;
-    merit: string;
-  };
-}
+import type { ServiceItem } from '../../config/types';
 
 interface Props {
-  services: Service[];
+  services: ServiceItem[];
 }
 
 const { services } = Astro.props;
 
 // Row labels configuration
 const rowLabels = [
-  { key: 'effect', label: '期待できる効果' },
-  { key: 'achievements', label: '主な活動実績・利用場所' },
   { key: 'overview', label: '概要' },
-  { key: 'scale', label: '規模 / 対象' },
+  { key: 'effect', label: '期待できる効果' },
+  { key: 'suitableEvents', label: '向いている\nイベント' },
+  { key: 'achievements', label: 'これまでの\n実績実例' },
+  { key: 'recommendedFor', label: 'こんな方に\nおすすめ！' },
+  { key: 'scale', label: '規模・対象' },
   { key: 'duration', label: '時間目安' },
-  { key: 'merit', label: 'メリット' }
+  { key: 'requiredSpace', label: '必要スペース' }
 ];
 
 // Format service titles with line breaks
@@ -191,16 +181,36 @@ const formatServiceTitle = (title: string) => {
       </thead>
       <!-- Data rows -->
       <tbody>
-        {rowLabels.map((row) => (
-          <tr>
-            <td class="row-label">{row.label}</td>
-            {services.map((service) => (
-              <td class="data-cell">
-                {service.detailTable ? service.detailTable[row.key as keyof typeof service.detailTable] : ''}
+        {rowLabels.map((row) => {
+          const labelLines = row.label.split('\n');
+          return (
+            <tr>
+              <td class="row-label">
+                {labelLines.map((line, lineIndex) => (
+                  <>
+                    {line}
+                    {lineIndex < labelLines.length - 1 && <br />}
+                  </>
+                ))}
               </td>
-            ))}
-          </tr>
-        ))}
+              {services.map((service) => {
+                const content = service.detailTable ? service.detailTable[row.key as keyof typeof service.detailTable] : '';
+                const contentStr = typeof content === 'string' ? content : '';
+                const lines = contentStr.split('\n');
+                return (
+                  <td class="data-cell">
+                    {lines.map((line: string, lineIndex: number) => (
+                      <>
+                        {line}
+                        {lineIndex < lines.length - 1 && <br />}
+                      </>
+                    ))}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
       </tbody>
     </table>
   </div>
