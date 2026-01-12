@@ -2,6 +2,7 @@
 import RecommendedScenes from './RecommendedScenes.astro';
 
 interface Props {
+  id?: string;
   title: string;
   photoUrl: string;
   mainCatch: string;
@@ -15,10 +16,10 @@ interface Props {
   };
 }
 
-const { title, photoUrl, mainCatch, description, recommendedScenesData } = Astro.props;
+const { id, title, photoUrl, mainCatch, description, recommendedScenesData } = Astro.props;
 ---
 
-<div class="service-description">
+<div class="service-description" id={id}>
   <!-- セクションヘッダー -->
   <div class="section-header">
     <h2 class="service-title">{title}</h2>
