@@ -195,7 +195,7 @@ src/components/
 **特徴**:
 - `SectionHeading.astro`をベースにアイコン表示機能を追加
 - アイコンはタイトルの左側に配置（flexboxレイアウト）
-- アイコンサイズ: 24px × 24px（h-6 w-6）、タイトルとの間隔は3（mr-3）
+- アイコンサイズ: 32px × 32px（h-8 w-8）、タイトルとの間隔は2（mr-2）
 - アイコン未指定時は従来のSectionHeadingと同じ表示
 - 主に`professional-experience.astro`のMajorSectionで使用
 
@@ -203,7 +203,7 @@ src/components/
 ```astro
 <SectionHeadingWithIcon
   title="サイエンス事業"
-  iconPath="/images/svg/Parts/icon_Science.svg"
+  iconPath="/images/svg/Parts/icon_Pro_Science.svg"
   waveLineCount={3}
 />
 ```
