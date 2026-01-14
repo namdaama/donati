@@ -1,19 +1,21 @@
 ---
-import SectionHeading from '../common/SectionHeading.astro';
+import SectionHeadingWithIcon from '../common/SectionHeadingWithIcon.astro';
 
 interface Props {
   title: string;
   description?: string;
+  iconPath?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, iconPath } = Astro.props;
 ---
 
 <section class="mb-16">
   <div class="max-w-4xl mx-auto px-4">
     <!-- タイトル -->
-    <SectionHeading
+    <SectionHeadingWithIcon
       title={title}
+      iconPath={iconPath}
       waveLineCount={3}
       titleMarginLeft="ml-4"
     />
