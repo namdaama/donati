@@ -179,7 +179,10 @@ const mediaSection = {
       />
 
       <!-- 大セクション1: サイエンス事業 -->
-      <MajorSection title={scienceSection.title}>
+      <MajorSection
+        title={scienceSection.title}
+        iconPath="/images/svg/Parts/icon_Science.svg"
+      >
         {scienceSection.categories.map((category) => (
           <CategorySection
             categoryTitle={category.categoryTitle}
@@ -189,7 +192,10 @@ const mediaSection = {
       </MajorSection>
 
       <!-- 大セクション2: 星空事業 -->
-      <MajorSection title={spaceSection.title}>
+      <MajorSection
+        title={spaceSection.title}
+        iconPath="/images/svg/Parts/icon_StarrySky.svg"
+      >
         {spaceSection.categories.map((category) => (
           <CategorySection
             categoryTitle={category.categoryTitle}
