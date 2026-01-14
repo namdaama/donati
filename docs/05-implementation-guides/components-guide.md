@@ -6,7 +6,7 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 
 ```
 src/components/
-├── common/          # 共通コンポーネント (9個)
+├── common/          # 共通コンポーネント (10個)
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── DonatiLogo.astro
@@ -14,6 +14,7 @@ src/components/
 │   ├── Carousel.astro
 │   ├── InstagramSection.astro
 │   ├── SectionHeading.astro
+│   ├── SectionHeadingWithIcon.astro
 │   ├── SectionCloudyHeading.astro  ← 移動元: professional-experience/
 │   └── PageIntroduction.astro
 ├── overview/        # トップページ専用 (6個)
@@ -46,20 +47,20 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 35個
+**総コンポーネント数**: 36個
 
 ## コンポーネント統計
 
 ### フォルダ別内訳
 | フォルダ | コンポーネント数 | 用途 |
 |---------|-----------------|------|
-| common/ | 9 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionCloudyHeading, PageIntroduction） |
+| common/ | 10 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionHeadingWithIcon, SectionCloudyHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 6 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes） |
 | professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **35** | **6フォルダ** |
+| **合計** | **36** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -145,7 +146,7 @@ src/components/
 - **RecommendedScenes.astro**: 「こんな場面にお勧め」コンポーネント（縦並びリスト形式、説明文+箇条書き特徴）
 
 ### professional-experience/
-- **MajorSection.astro**: 大セクションラッパー（SectionHeading使用）
+- **MajorSection.astro**: 大セクションラッパー（SectionHeadingWithIcon使用、iconPath propでアイコン表示可能）
 - **CategorySection.astro**: カテゴリー見出し（SectionGrayHeading）+ 3階層データ表示
 - **SectionGrayHeading.astro**: sectionGrayRound.svg背景の見出し（h1/h2/h3対応）、紺青背景+白文字
 
@@ -179,6 +180,33 @@ src/components/
 - `titleMarginLeft?: string` - タイトルの左マージン（デフォルト: ''）
 
 **スタイル**: タイトルは`text-[#58778D]`、`font-bold`
+
+### SectionHeadingWithIcon.astro
+**Props**:
+- `title: string` - 見出しテキスト（必須）
+- `iconPath?: string` - アイコン画像のパス（オプション）
+- `level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'` - 見出しレベル（デフォルト: 'h2'）
+- `size?: 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl'` - フォントサイズ
+- `waveLineCount?: 3 | 5` - waveLine SVGの表示数（デフォルト: 3）
+- `titleMarginBottom?: string` - タイトルの下マージン（デフォルト: 'mb-4'）
+- `marginBottom?: string` - セクション全体の下マージン（デフォルト: 'mb-12'）
+- `titleMarginLeft?: string` - タイトルの左マージン（デフォルト: ''）
+
+**特徴**:
+- `SectionHeading.astro`をベースにアイコン表示機能を追加
+- アイコンはタイトルの左側に配置（flexboxレイアウト）
+- アイコンサイズ: 24px × 24px（h-6 w-6）、タイトルとの間隔は3（mr-3）
+- アイコン未指定時は従来のSectionHeadingと同じ表示
+- 主に`professional-experience.astro`のMajorSectionで使用
+
+**使用例**:
+```astro
+<SectionHeadingWithIcon
+  title="サイエンス事業"
+  iconPath="/images/svg/Parts/icon_Science.svg"
+  waveLineCount={3}
+/>
+```
 
 ### PageIntroduction.astro
 **Props**: `title`, `description?`, `content?`

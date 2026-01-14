@@ -169,7 +169,7 @@ const mediaSection = {
   <Header />
 
   <main class="flex-grow relative overflow-hidden">
-    <div class="max-w-4xl mx-auto px-4 py-16 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 py-8 md:py-16 relative z-10">
 
       <!-- ページタイトルセクション -->
       <PageIntroduction
@@ -179,7 +179,10 @@ const mediaSection = {
       />
 
       <!-- 大セクション1: サイエンス事業 -->
-      <MajorSection title={scienceSection.title}>
+      <MajorSection
+        title={scienceSection.title}
+        iconPath="/images/svg/Parts/icon_Science.svg"
+      >
         {scienceSection.categories.map((category) => (
           <CategorySection
             categoryTitle={category.categoryTitle}
@@ -189,7 +192,10 @@ const mediaSection = {
       </MajorSection>
 
       <!-- 大セクション2: 星空事業 -->
-      <MajorSection title={spaceSection.title}>
+      <MajorSection
+        title={spaceSection.title}
+        iconPath="/images/svg/Parts/icon_StarrySky.svg"
+      >
         {spaceSection.categories.map((category) => (
           <CategorySection
             categoryTitle={category.categoryTitle}

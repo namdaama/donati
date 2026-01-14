@@ -1,8 +1,8 @@
 ---
 /**
- * SectionHeading - セクション見出しコンポーネント
- * タイトルテキストとwaveLineを組み合わせた見出しを表示
- * 複数ページで共通して使用可能
+ * SectionHeadingWithIcon - アイコン付きセクション見出しコンポーネント
+ * タイトルテキスト、アイコン、waveLineを組み合わせた見出しを表示
+ * professional-experienceページの大セクション見出しで使用
  */
 interface Props {
   /**
@@ -10,15 +10,19 @@ interface Props {
    */
   title: string;
   /**
+   * アイコン画像のパス（オプション）
+   */
+  iconPath?: string;
+  /**
    * 見出しのレベル (h1-h6)
    * @default 'h2'
    */
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   /**
    * タイトルのフォントサイズ
-   * @default 'text-4xl' (h1の場合), 'text-base md:text-xl' (その他)
+   * @default 'text-4xl' (h1の場合), 'text-2xl' (その他)
    */
-  size?: string;
+  size?: 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl';
   /**
    * waveLine SVGの表示数
    * @default 3
@@ -35,7 +39,7 @@ interface Props {
    */
   marginBottom?: string;
   /**
-   * タイトルの左マージン（contact.astroでml-4が使用されている）
+   * タイトルの左マージン
    * @default ''
    */
   titleMarginLeft?: string;
@@ -43,6 +47,7 @@ interface Props {
 
 const {
   title,
+  iconPath,
   level = 'h2',
   size,
   waveLineCount = 3,
@@ -51,8 +56,8 @@ const {
   titleMarginLeft = '',
 } = Astro.props;
 
-// デフォルトのサイズを決定（レスポンシブ対応: モバイル text-base / PC text-xl）
-const defaultSize = level === 'h1' ? 'text-4xl' : 'text-base md:text-xl';
+// デフォルトのサイズを決定
+const defaultSize = level === 'h1' ? 'text-4xl' : 'text-2xl';
 const titleSize = size || defaultSize;
 
 // waveLineの配列を生成
@@ -63,7 +68,6 @@ const titleClasses = [
   titleSize,
   'font-bold',
   'text-[#58778D]',
-  titleMarginBottom,
   titleMarginLeft,
 ].filter(Boolean).join(' ');
 
@@ -72,10 +76,20 @@ const Tag = level;
 ---
 
 <div class={marginBottom}>
-  <Tag class={titleClasses}>{title}</Tag>
+  <!-- タイトルとアイコン -->
+  <div class={`flex items-center ${titleMarginBottom}`}>
+    {iconPath && (
+      <img
+        src={iconPath}
+        alt=""
+        class="h-6 w-6 mr-3 flex-shrink-0"
+      />
+    )}
+    <Tag class={titleClasses}>{title}</Tag>
+  </div>
 
   <!-- waveline -->
-  <div class="mb-4 md:mb-6">
+  <div class="mb-6">
     <div class="w-full overflow-hidden flex justify-center">
       {waveLines.map(() => (
         <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
