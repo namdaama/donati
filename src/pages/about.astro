@@ -17,7 +17,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
 
   <main class="flex-grow relative overflow-hidden">
     <!-- ① DONATIとは セクション -->
-    <section class="py-16">
+    <section class="py-8 md:py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <PageIntroduction title={introduction.title} />
@@ -27,12 +27,12 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
+            <h3 class="text-xl font-bold mb-8 leading-relaxed introduction-concept" style="color: #65B7EC;">
               {introduction.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
+            <p class="leading-loose text-base introduction-text" style="color: #58778D;">
               {introduction.text}
             </p>
           </div>
@@ -46,7 +46,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     </section>
 
     <!-- ② 大切にしていること セクション -->
-    <section class="py-16">
+    <section class="py-8 md:py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <PageIntroduction title={philosophy.title} />
@@ -56,12 +56,12 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
           <!-- 左：テキストエリア（3/5幅） -->
           <div class="md:col-span-3">
             <!-- コンセプトメッセージ -->
-            <h3 class="text-xl font-bold mb-8 leading-relaxed" style="color: #65B7EC; white-space: pre-line;">
+            <h3 class="text-xl font-bold mb-8 leading-relaxed philosophy-concept" style="color: #65B7EC;">
               {philosophy.concept}
             </h3>
 
             <!-- 説明文 -->
-            <p class="leading-loose text-base" style="color: #58778D; white-space: pre-line;">
+            <p class="leading-loose text-base philosophy-text" style="color: #58778D;">
               {philosophy.text}
             </p>
           </div>
@@ -80,7 +80,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     </section>
 
     <!-- ③ メンバー紹介 セクション -->
-    <section class="py-16">
+    <section class="py-8 md:py-16">
       <div class="max-w-4xl mx-auto px-4">
         <!-- セクションタイトル -->
         <PageIntroduction title="メンバー紹介" />
@@ -98,7 +98,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     </section>
 
     <!-- 締めのメッセージ -->
-    <section class="py-8">
+    <section class="py-4 md:py-8">
       <div class="max-w-4xl mx-auto px-4">
         <div class="text-center mb-6">
           <p class="text-xl md:text-2xl font-bold leading-relaxed" style="color: #65B7EC; white-space: pre-line;">科学や星空を通して、
@@ -109,7 +109,7 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     </section>
 
     <!-- 事業情報 -->
-    <section class="py-12">
+    <section class="py-6 md:py-12">
       <div class="max-w-4xl mx-auto px-4">
         <div class="bg-gray-100 rounded-lg p-8 md:p-10">
           <h2 class="text-lg font-bold mb-6" style="color: #58778D;">【運営者について】</h2>
@@ -149,4 +149,21 @@ const { introduction, philosophy, staffMembers } = aboutPageContent;
     background-attachment: fixed;
   }
 
+  /* セクションのテキスト */
+  .introduction-concept,
+  .introduction-text,
+  .philosophy-concept,
+  .philosophy-text {
+    white-space: pre-line;
+  }
+
+  /* モバイルでは自然な折り返しにする */
+  @media (max-width: 768px) {
+    .introduction-concept,
+    .introduction-text,
+    .philosophy-concept,
+    .philosophy-text {
+      white-space: normal;
+    }
+  }
 </style>

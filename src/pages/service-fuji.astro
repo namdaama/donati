@@ -276,7 +276,7 @@ const serviceDescriptions = [
       }
     </style>
 
-    <div class="max-w-4xl mx-auto px-4 py-12 relative z-10">
+    <div class="max-w-4xl mx-auto px-4 py-8 md:py-16 relative z-10">
         <!-- ページタイトル -->
         <PageIntroduction
           title="サイエンス事業"
@@ -285,7 +285,7 @@ const serviceDescriptions = [
         />
 
         <!-- サイエンス分野 -->
-        <section id="science" class="mb-24">
+        <section id="science" class="mb-12 md:mb-24">
           <!-- 3つのプラン紹介セクション -->
           <div class="three-plans-intro mb-16">
             <h2 class="three-plans-title">
@@ -355,8 +355,8 @@ const serviceDescriptions = [
             />
           ))}
 
-          <!-- DetailTableButton -->
-          <div class="flex justify-center mb-12">
+          <!-- DetailTableButton（モバイルでは非表示） -->
+          <div class="hidden md:flex justify-center mb-12">
             <a href="#science">
               <img
                 src="/images/svg/Parts/DetailTableButton.svg"
@@ -370,7 +370,7 @@ const serviceDescriptions = [
           <ServiceComparisonTable services={scienceCategory.services} />
 
           <!-- QA Banner -->
-          <div class="flex justify-center mb-12">
+          <div class="flex justify-center mb-4 md:mb-12">
             <a href="/contact">
               <img
                 src="/images/svg/Parts/QA.svg"
