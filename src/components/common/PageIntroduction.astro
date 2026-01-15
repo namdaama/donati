@@ -10,20 +10,20 @@ interface Props {
 const { title, description, content } = Astro.props;
 ---
 
-<section class="text-left mb-16">
+<section class="text-left mb-8 md:mb-16">
   <!-- 大見出し（もくもく背景） -->
   <SectionCloudyHeading title={title} level="h1" />
 
   <!-- 小見出し（オプション） -->
   {description && (
-    <h2 class="text-base font-bold leading-normal mt-6" style="color: #65B7EC; white-space: pre-line;">
+    <h2 class="text-base md:text-2xl font-bold leading-normal mt-6" style="color: #65B7EC; white-space: pre-line;">
       {description}
     </h2>
   )}
 
   <!-- 本文（オプション） -->
   {content && (
-    <p class="leading-loose text-base mt-4" style="color: #58778D; white-space: pre-line;">
+    <p class="leading-loose text-sm md:text-base mt-4" style="color: #58778D; white-space: pre-line;">
       {content}
     </p>
   )}
