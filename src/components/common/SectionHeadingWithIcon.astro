@@ -20,9 +20,9 @@ interface Props {
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   /**
    * タイトルのフォントサイズ
-   * @default 'text-4xl' (h1の場合), 'text-2xl' (その他)
+   * @default 'text-4xl' (h1の場合), 'text-base md:text-xl' (その他)
    */
-  size?: 'text-xl' | 'text-2xl' | 'text-3xl' | 'text-4xl';
+  size?: string;
   /**
    * waveLine SVGの表示数
    * @default 3
@@ -56,8 +56,8 @@ const {
   titleMarginLeft = '',
 } = Astro.props;
 
-// デフォルトのサイズを決定
-const defaultSize = level === 'h1' ? 'text-4xl' : 'text-2xl';
+// デフォルトのサイズを決定（レスポンシブ対応: モバイル text-base / PC text-xl）
+const defaultSize = level === 'h1' ? 'text-4xl' : 'text-base md:text-xl';
 const titleSize = size || defaultSize;
 
 // waveLineの配列を生成
@@ -89,7 +89,7 @@ const Tag = level;
   </div>
 
   <!-- waveline -->
-  <div class="mb-6">
+  <div class="mb-4 md:mb-6">
     <div class="w-full overflow-hidden flex justify-center">
       {waveLines.map(() => (
         <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
