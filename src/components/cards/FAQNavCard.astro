@@ -1,0 +1,53 @@
+---
+/**
+ * FAQNavCard - FAQページ用ナビゲーションカードコンポーネント
+ * もくもく見出しの下に配置し、ページ内セクションへのリンクを提供
+ */
+interface Props {
+  /**
+   * タイトルSVG画像のパス
+   */
+  titleSvg: string;
+  /**
+   * タイトルのalt属性
+   */
+  titleAlt: string;
+  /**
+   * リンク先（ページ内アンカー例：#pricing）
+   */
+  href: string;
+}
+
+const { titleSvg, titleAlt, href } = Astro.props;
+---
+
+<a href={href} class="faq-nav-card block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+  <div class="flex items-center justify-between p-4">
+    <img
+      src={titleSvg}
+      alt={titleAlt}
+      class="h-6 md:h-8 w-auto"
+    />
+    <img
+      src="/images/svg/Parts/icon_PullDown.svg"
+      alt=""
+      class="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
+    />
+  </div>
+  <!-- waveLine -->
+  <div class="w-full overflow-hidden flex">
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-full object-cover" />
+  </div>
+</a>
+
+<style>
+  .faq-nav-card {
+    width: 100%;
+    max-width: 452px;
+    height: 90px;
+  }
+
+  .faq-nav-card > div:first-child {
+    height: calc(90px - 16px); /* 全体の高さ - waveLine の高さ */
+  }
+</style>
