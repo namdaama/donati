@@ -21,13 +21,13 @@ import { faqData } from '../config/faq';
         <PageIntroduction title="よくあるご質問 (FAQ)" />
 
         <!-- ナビゲーションカード -->
-        <div class="grid grid-cols-2 gap-4 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
           <FAQNavCard titleSvg="/images/svg/Parts/text_Price.svg" titleAlt="料金" href="#pricing" />
           <FAQNavCard titleSvg="/images/svg/Parts/text_Question.svg" titleAlt="よくある質問（FAQ）" href="#faq" />
         </div>
 
         <!-- 2. 料金についてのご案内 -->
-        <div id="pricing" class="bg-white/80 backdrop-blur-sm rounded-lg p-6 md:p-8 mb-12 shadow">
+        <div id="pricing" class="p-6 md:p-8 mb-12">
           <h2 class="text-xl md:text-2xl font-bold mb-4 text-[#58778D]">{faqData.introSection.title}</h2>
           {faqData.introSection.content.map((paragraph) => (
             <p class="text-text-gray mb-3 leading-relaxed text-sm md:text-base">{paragraph}</p>
@@ -41,7 +41,7 @@ import { faqData } from '../config/faq';
             <div class="pricing-item">
               <SectionGrayHeading title={item.title} level="h3" />
               <div class="p-4 md:p-6">
-                <p class="text-lg md:text-xl font-bold text-[#58778D] mb-2">{item.price}</p>
+                <p class="text-lg md:text-xl font-bold text-[#65B7EC] mb-2">{item.price}</p>
                 {item.note && (
                   <p class="text-sm text-text-gray whitespace-pre-line leading-relaxed">{item.note}</p>
                 )}
