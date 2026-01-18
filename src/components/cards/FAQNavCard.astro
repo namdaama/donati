@@ -22,16 +22,18 @@ const { titleSvg, titleAlt, href } = Astro.props;
 ---
 
 <a href={href} class="faq-nav-card block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-  <div class="flex items-center justify-between p-4">
+  <div class="card-content relative flex items-center justify-center">
+    <!-- 背面レイヤー: 文字SVG（中央配置） -->
     <img
       src={titleSvg}
       alt={titleAlt}
-      class="h-6 md:h-8 w-auto"
+      class="h-5 md:h-6 w-auto"
     />
+    <!-- 前面レイヤー: プルダウンアイコン（下部中央配置） -->
     <img
       src="/images/svg/Parts/icon_PullDown.svg"
       alt=""
-      class="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
+      class="absolute right-4 bottom-2 w-8 h-8 md:w-10 md:h-10"
     />
   </div>
   <!-- waveLine -->
@@ -43,11 +45,19 @@ const { titleSvg, titleAlt, href } = Astro.props;
 <style>
   .faq-nav-card {
     width: 100%;
-    max-width: 452px;
+    max-width: 350px;
     height: 90px;
+    margin: 0 auto;
   }
 
-  .faq-nav-card > div:first-child {
+  @media (min-width: 768px) {
+    .faq-nav-card {
+      max-width: 452px;
+      margin: 0;
+    }
+  }
+
+  .card-content {
     height: calc(90px - 16px); /* 全体の高さ - waveLine の高さ */
   }
 </style>
