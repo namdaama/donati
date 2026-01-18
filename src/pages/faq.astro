@@ -4,7 +4,10 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import PageIntroduction from '../components/common/PageIntroduction.astro';
+import SectionHeading from '../components/common/SectionHeading.astro';
+import SectionGrayHeading from '../components/professional-experience/SectionGrayHeading.astro';
 import FAQItem from '../components/cards/FAQItem.astro';
+import FAQNavCard from '../components/cards/FAQNavCard.astro';
 import { faqData } from '../config/faq';
 ---
 
@@ -17,72 +20,94 @@ import { faqData } from '../config/faq';
         <!-- 1. ページタイトル -->
         <PageIntroduction title="よくあるご質問 (FAQ)" />
 
-        <!-- 2. 料金についての説明 -->
-        <div class="bg-white/70 backdrop-blur-sm rounded-lg p-6 md:p-8 mb-12 shadow">
-          <h2 class="text-2xl font-bold mb-4" style="color: #58778D;">{faqData.introSection.title}</h2>
-          {faqData.introSection.content.map((paragraph) => (
-            <p class="text-text-gray mb-3 leading-relaxed">{paragraph}</p>
+        <!-- ナビゲーションカード -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center mb-12">
+          <FAQNavCard titleSvg="/images/svg/Parts/text_Price.svg" titleAlt="料金" href="#pricing" />
+          <FAQNavCard titleSvg="/images/svg/Parts/text_Question.svg" titleAlt="よくある質問（FAQ）" href="#faq" />
+        </div>
+
+        <!-- 2. 料金についてのご案内 -->
+        <div id="pricing">
+          <SectionHeading title={faqData.introSection.title} waveLineCount={5} titleMarginLeft="ml-4" />
+          <div class="mb-12">
+            {faqData.introSection.content.map((paragraph) => (
+              <p class="text-text-gray mb-3 leading-relaxed text-sm md:text-base whitespace-pre-line">{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+        <!-- 3. 料金の目安 -->
+        <SectionHeading title="料金の目安" waveLineCount={5} titleMarginLeft="ml-4" />
+        <div class="space-y-6 mb-16">
+          {faqData.pricingItems.map((item) => (
+            <div class="pricing-item">
+              <SectionGrayHeading title={item.title} level="h3" />
+              <div class="p-4 md:p-6">
+                <p class="text-lg md:text-xl font-bold text-[#65B7EC] mb-2">{item.price}</p>
+                {item.note && (
+                  <p class="text-sm text-text-gray whitespace-pre-line leading-relaxed">{item.note}</p>
+                )}
+              </div>
+            </div>
           ))}
         </div>
 
-        <!-- 3. 料金カテゴリグリッド -->
-        <div class="mb-12">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {faqData.pricingCategories.map((category) => (
-              <div class="bg-gray-100 rounded-lg p-4 shadow hover:shadow-md transition-shadow">
-                <h3 class="font-bold text-gray-800 mb-2 text-lg">{category.title}</h3>
-                <p class="text-sm text-gray-600 whitespace-pre-line leading-relaxed">{category.description}</p>
+        <!-- 4. 費用についての補足 -->
+        <SectionHeading title="費用についての補足" waveLineCount={5} titleMarginLeft="ml-4" />
+        <div class="space-y-6 mb-16">
+          {faqData.expenseItems.map((item) => (
+            <div class="expense-item">
+              <SectionGrayHeading title={item.title} level="h3" />
+              <div class="p-4 md:p-6">
+                <p class="text-sm md:text-base text-text-gray whitespace-pre-line leading-relaxed">{item.description}</p>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- 4. イベント関連質問グリッド -->
-        <div class="mb-12">
-          <h2 class="text-2xl font-bold mb-6" style="color: #58778D;">費用について詳しく知る</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {faqData.eventQuestions.map((item) => (
-              <div class="bg-gray-100 rounded-lg p-4 shadow hover:shadow-md transition-shadow">
-                <h3 class="font-bold text-gray-800 mb-2 text-lg">{item.title}</h3>
-                <p class="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <!-- 5. FAQアコーディオン -->
-        <div class="mb-12">
-          <h2 class="text-2xl font-bold mb-6" style="color: #58778D;">よくあるご質問 (FAQ)</h2>
-          <div class="space-y-4">
-            {faqData.faqItems.map((item, index) => (
-              <FAQItem question={item.question} answer={item.answer} index={index} />
-            ))}
-          </div>
-        </div>
-
-        <!-- 6. CTAセクション -->
-        <div class="bg-overview-yellow rounded-lg p-8 text-center shadow-lg">
-          <div class="flex flex-col items-center gap-4">
-            <!-- メールアイコン -->
-            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
-              <svg class="w-8 h-8 text-primary-color" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-              </svg>
             </div>
+          ))}
+        </div>
 
-            <h2 class="text-2xl font-bold text-gray-800">{faqData.ctaSection.title}</h2>
-            <p class="text-gray-700 leading-relaxed whitespace-pre-line max-w-2xl">
-              {faqData.ctaSection.description}
-            </p>
-
-            <a
-              href={faqData.ctaSection.buttonLink}
-              class="inline-block bg-primary-color text-white font-bold px-8 py-4 rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md mt-4"
-            >
-              {faqData.ctaSection.buttonText}
-            </a>
+        <!-- 5. キャンセルポリシー -->
+        <SectionHeading title="キャンセルポリシー" waveLineCount={5} titleMarginLeft="ml-4" />
+        <div class="mb-16">
+          <p class="text-sm md:text-base text-text-gray whitespace-pre-line leading-relaxed mb-8">
+            {faqData.cancelPolicy.intro}
+          </p>
+          <div class="space-y-8">
+            {faqData.cancelPolicy.sections.map((section) => (
+              <div class="cancel-policy-section">
+                <SectionGrayHeading title={section.title} level="h3" />
+                <div class="p-4 md:p-6">
+                  <p class="text-sm md:text-base text-text-gray whitespace-pre-line leading-relaxed mb-4">
+                    {section.content}
+                  </p>
+                  {section.items.length > 0 && (
+                    <ul class="space-y-2 mb-4">
+                      {section.items.map((item) => (
+                        <li class="text-sm md:text-base text-text-gray whitespace-pre-line leading-relaxed flex">
+                          <span class="mr-1 flex-shrink-0">・</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {section.note && (
+                    <p class="text-sm text-text-gray whitespace-pre-line leading-relaxed">
+                      {section.note}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
+
+        <!-- 6. よくあるご質問 (FAQ) -->
+        <div id="faq">
+          <SectionHeading title="よくあるご質問 (FAQ)" waveLineCount={5} titleMarginLeft="ml-4" />
+        </div>
+        <div class="space-y-4 mb-16">
+          {faqData.faqItems.map((item, index) => (
+            <FAQItem question={item.question} answer={item.answer} index={index} />
+          ))}
         </div>
       </div>
     </section>
@@ -101,5 +126,10 @@ import { faqData } from '../config/faq';
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+  }
+
+  /* SectionHeading の幅を752pxに制限 */
+  :global(.max-w-4xl div.mb-12) {
+    max-width: 752px;
   }
 </style>

@@ -13,7 +13,7 @@ const { title, titleSvg, image, imageAlt, items, link } = Astro.props;
 
 <a
   href={link}
-  class="flex flex-col h-full bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+  class="overview-service-card flex flex-col h-full bg-white/95 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
 >
   <!-- タイトル -->
   <div class="text-center mb-4">
@@ -44,3 +44,16 @@ const { title, titleSvg, image, imageAlt, items, link } = Astro.props;
     <img src={image} alt={imageAlt} class="w-full rounded-lg object-cover" />
   </div>
 </a>
+
+<style>
+  .overview-service-card {
+    max-width: 270px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 1024px) {
+    .overview-service-card {
+      max-width: none;
+    }
+  }
+</style>

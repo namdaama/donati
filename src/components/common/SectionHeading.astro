@@ -16,7 +16,7 @@ interface Props {
   level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   /**
    * タイトルのフォントサイズ
-   * @default 'text-4xl' (h1の場合), 'text-base md:text-xl' (その他)
+   * @default 'text-4xl' (h1の場合), 'text-lg md:text-[1.375rem]' (その他)
    */
   size?: string;
   /**
@@ -51,8 +51,8 @@ const {
   titleMarginLeft = '',
 } = Astro.props;
 
-// デフォルトのサイズを決定（レスポンシブ対応: モバイル text-base / PC text-xl）
-const defaultSize = level === 'h1' ? 'text-4xl' : 'text-base md:text-xl';
+// デフォルトのサイズを決定（レスポンシブ対応: モバイル 18px / PC 22px）
+const defaultSize = level === 'h1' ? 'text-4xl' : 'text-lg md:text-[1.375rem]';
 const titleSize = size || defaultSize;
 
 // waveLineの配列を生成

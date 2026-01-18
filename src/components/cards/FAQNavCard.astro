@@ -1,0 +1,63 @@
+---
+/**
+ * FAQNavCard - FAQページ用ナビゲーションカードコンポーネント
+ * もくもく見出しの下に配置し、ページ内セクションへのリンクを提供
+ */
+interface Props {
+  /**
+   * タイトルSVG画像のパス
+   */
+  titleSvg: string;
+  /**
+   * タイトルのalt属性
+   */
+  titleAlt: string;
+  /**
+   * リンク先（ページ内アンカー例：#pricing）
+   */
+  href: string;
+}
+
+const { titleSvg, titleAlt, href } = Astro.props;
+---
+
+<a href={href} class="faq-nav-card block bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+  <div class="card-content relative flex items-center justify-center">
+    <!-- 背面レイヤー: 文字SVG（中央配置） -->
+    <img
+      src={titleSvg}
+      alt={titleAlt}
+      class="h-5 md:h-6 w-auto"
+    />
+    <!-- 前面レイヤー: プルダウンアイコン（下部中央配置） -->
+    <img
+      src="/images/svg/Parts/icon_PullDown.svg"
+      alt=""
+      class="absolute right-4 bottom-2 w-8 h-8 md:w-10 md:h-10"
+    />
+  </div>
+  <!-- waveLine -->
+  <div class="w-full overflow-hidden flex">
+    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-full object-cover" />
+  </div>
+</a>
+
+<style>
+  .faq-nav-card {
+    width: 100%;
+    max-width: 350px;
+    height: 90px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .faq-nav-card {
+      max-width: 452px;
+      margin: 0;
+    }
+  }
+
+  .card-content {
+    height: calc(90px - 16px); /* 全体の高さ - waveLine の高さ */
+  }
+</style>
