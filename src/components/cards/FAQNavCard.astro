@@ -45,8 +45,16 @@ const { titleSvg, titleAlt, href } = Astro.props;
 <style>
   .faq-nav-card {
     width: 100%;
-    max-width: 452px;
+    max-width: 350px;
     height: 90px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .faq-nav-card {
+      max-width: 452px;
+      margin: 0;
+    }
   }
 
   .card-content {

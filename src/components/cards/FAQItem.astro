@@ -15,7 +15,7 @@ const { question, answer, index } = Astro.props;
       alt="Q"
       class="w-8 h-8 md:w-10 md:h-10 flex-shrink-0"
     />
-    <span class="flex-1 text-[#58778D] font-semibold text-base md:text-lg leading-relaxed">
+    <span class="flex-1 text-[#58778D] font-bold text-base md:text-lg leading-relaxed">
       {question}
     </span>
     <span class="toggle-icon text-primary-color text-xl md:text-2xl flex-shrink-0 transition-transform duration-300">
@@ -30,7 +30,7 @@ const { question, answer, index } = Astro.props;
         alt="A"
         class="w-8 h-8 md:w-10 md:h-10 flex-shrink-0 mt-2"
       />
-      <p class="flex-1 text-text-gray leading-relaxed whitespace-pre-line pt-2">
+      <p class="flex-1 text-text-gray text-xs md:text-sm leading-relaxed whitespace-pre-line pt-2">
         {answer}
       </p>
     </div>
