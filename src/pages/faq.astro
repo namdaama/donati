@@ -21,17 +21,19 @@ import { faqData } from '../config/faq';
         <PageIntroduction title="よくあるご質問 (FAQ)" />
 
         <!-- ナビゲーションカード -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 justify-items-center mb-12">
           <FAQNavCard titleSvg="/images/svg/Parts/text_Price.svg" titleAlt="料金" href="#pricing" />
           <FAQNavCard titleSvg="/images/svg/Parts/text_Question.svg" titleAlt="よくある質問（FAQ）" href="#faq" />
         </div>
 
         <!-- 2. 料金についてのご案内 -->
-        <div id="pricing" class="p-6 md:p-8 mb-12">
-          <h2 class="text-xl md:text-2xl font-bold mb-4 text-[#58778D]">{faqData.introSection.title}</h2>
-          {faqData.introSection.content.map((paragraph) => (
-            <p class="text-text-gray mb-3 leading-relaxed text-sm md:text-base">{paragraph}</p>
-          ))}
+        <div id="pricing">
+          <SectionHeading title={faqData.introSection.title} waveLineCount={5} titleMarginLeft="ml-4" />
+          <div class="mb-12">
+            {faqData.introSection.content.map((paragraph) => (
+              <p class="text-text-gray mb-3 leading-relaxed text-sm md:text-base whitespace-pre-line">{paragraph}</p>
+            ))}
+          </div>
         </div>
 
         <!-- 3. 料金の目安 -->
@@ -127,7 +129,7 @@ import { faqData } from '../config/faq';
   }
 
   /* SectionHeading の幅を752pxに制限 */
-  :global(.max-w-4xl > div.mb-12) {
+  :global(.max-w-4xl div.mb-12) {
     max-width: 752px;
   }
 </style>
