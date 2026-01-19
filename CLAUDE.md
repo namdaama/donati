@@ -62,10 +62,18 @@ src/
 └── styles/          # グローバルスタイル
 
 public/
-└── images/          # 画像一元管理
-    ├── svg/Carousel/  # カルーセル用SVG
-    ├── svg/Parts/     # UI用SVGパーツ
-    └── (直下)         # ページ用画像・背景画像
+└── images/          # 画像一元管理（約106ファイル）
+    ├── svg/         # SVGファイル（70ファイル）
+    │   ├── Carousel/    # カルーセル用SVG（4ファイル + _old/）
+    │   ├── Parts/       # UI用SVGパーツ（60ファイル + _old/、フラット構造）
+    │   └── Screen/      # デザインモックアップ参考用（6ファイル）
+    ├── picture/     # コンテンツ用写真（16ファイル）
+    │   ├── About/       # Aboutページ用（5ファイル）
+    │   ├── OverView/    # トップページ用（2ファイル）
+    │   └── Science/     # サイエンス事業用（9ファイル: card_*/detail_*）
+    ├── _old/        # 旧ファイル保管（2ファイル）
+    ├── forDev/      # 開発用参考画像（4ファイル）
+    └── (直下)       # ページ用背景画像（9ファイル: *.jpg, backGround.png等）
 ```
 
 詳細はドキュメント構成セクションを参照。
@@ -84,7 +92,17 @@ public/
 
 ### 画像管理
 - **配置**: `public/images/` に一元管理（Figma書き出しも直接配置）
-- **構造**: svg/Carousel/, svg/Parts/, 直下にページ用画像
+- **構造**:
+  - `svg/Carousel/`: カルーセル用SVG（4ファイル）
+  - `svg/Parts/`: UI用SVGパーツ（60ファイル、フラット構造維持）
+  - `svg/Screen/`: 各ページの全画面デザインモックアップ参考用（6ファイル）
+  - `picture/`: コンテンツ用写真（About/, OverView/, Science/）
+  - 直下: ページ用背景画像（AboutUs.jpg, Contact.jpg等）
+  - `_old/`, `forDev/`: 旧ファイル保管・開発参考用
+- **重要な設計判断**:
+  - `svg/Parts/`はサブディレクトリ化せずフラット構造を維持
+  - 背景画像は `/images/` 直下配置（`rough/` ディレクトリは不採用）
+  - `svg/Screen/` は新規追加（Issue #186で追加）
 - **Figmaワークフロー**: Dev Modeから数値取得、public/images/に配置
 - **詳細**: docs/04-workflow-collaboration/figma-workflow.md を参照
 
