@@ -112,11 +112,27 @@ SVGO, ImageOptim 等を使用
 
 ```
 public/images/
-├── svg/Carousel/      # カルーセル用SVG（5枚）
-├── svg/Parts/         # UI用SVGパーツ、キャラクター画像
-├── svg/Screen/        # デザインモックアップSVG
-└── (直下)             # ページ用画像、背景画像
+├── svg/
+│   ├── Carousel/      # カルーセル用SVG（4ファイル + _old/）
+│   ├── Parts/         # UI用SVGパーツ（60ファイル、フラット構造）
+│   └── Screen/        # デザインモックアップ参考用（6ファイル）
+├── picture/           # コンテンツ用写真
+│   ├── About/         # Aboutページ用（5ファイル）
+│   ├── OverView/      # トップページ用（2ファイル）
+│   └── Science/       # サイエンス事業用（9ファイル）
+├── _old/              # 旧ファイル保管
+├── forDev/            # 開発用参考画像
+└── (直下)             # ページ用背景画像（*.jpg, backGround.png等）
 ```
+
+**配置ルール**:
+- **SVGファイル**: `/images/svg/` 配下に用途別配置
+  - `Carousel/`: カルーセルスライド用
+  - `Parts/`: アイコン、ロゴ、UI要素（フラット構造維持）
+  - `Screen/`: 全画面デザインモックアップ（開発参考用）
+- **写真**: `/images/picture/` 配下にページ別配置
+- **背景画像**: `/images/` 直下（AboutUs.jpg, Contact.jpg等）
+- **旧ファイル**: `_old/` フォルダに保管（削除前の一時保管場所）
 
 ### 4. Gitコミット
 最適化済みファイルをコミット。
