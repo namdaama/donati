@@ -69,8 +69,8 @@ export const aboutPageContent = {
       name: 'フジ',
       realName: '加藤 絢',
       title: 'サイエンスパフォーマー・フジ（加藤 絢）',
-      nameSvg: '/images/svg/Parts/fuji_name.svg',
-      pictSvg: '/images/svg/Parts/fuji_pict.svg',
+      nameSvg: '/images/svg/performers/fuji/fuji_name.svg',
+      pictSvg: '/images/svg/performers/fuji/fuji_pict.svg',
       overview: `小学生の頃から理科実験と星に親しみ、科学への関心を深めてきた。
 大学卒業後、日本から見えない星空を確かめるため船で世界一周を経験。各地で見上げた夜空での体験が、現在の活動の原点となっている。
 
@@ -97,8 +97,8 @@ export const aboutPageContent = {
       name: 'ひでゆき',
       realName: '加藤 英行',
       title: '星の写真家 ひでゆき（加藤 英行）',
-      nameSvg: '/images/svg/Parts/hide_name.svg',
-      pictSvg: '/images/svg/Parts/hide_pict.svg',
+      nameSvg: '/images/svg/performers/hide/hide_name.svg',
+      pictSvg: '/images/svg/performers/hide/hide_pict.svg',
       overview: `日本写真作家協会 正会員
 
 天文学を専門に学び、大学院修了後は医療機器メーカーのエンジニアを経て、プラネタリウム解説員、そして福井初の天文分野の学芸員として活動。福井市自然史博物館分館（宇宙・天文博物館）の立ち上げに携わり、展示・解説・教育普及活動に従事してきた。

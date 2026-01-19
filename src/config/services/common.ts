@@ -40,24 +40,24 @@ export const consultationTopics: ConsultationTopic[] = [
     number: 1,
     question: '内容？',
     description: '目的や参加者を考えて予算や時間に合わせたプランを企画します',
-    svg: '/images/svg/Parts/conference_thing1.svg'
+    svg: '/images/svg/conference/conference_thing1.svg'
   },
   {
     number: 2,
     question: '時間？',
     description: '基本的00分です実験の組み合わせで調整できます',
-    svg: '/images/svg/Parts/conference_thing2.svg'
+    svg: '/images/svg/conference/conference_thing2.svg'
   },
   {
     number: 3,
     question: '予算？',
     description: '基本料金あり予算にできるだけお応えします',
-    svg: '/images/svg/Parts/conference_thing3.svg'
+    svg: '/images/svg/conference/conference_thing3.svg'
   },
   {
     number: 4,
     question: '準備？',
     description: '特にありません設備は事前に確認します',
-    svg: '/images/svg/Parts/conference_thing4.svg'
+    svg: '/images/svg/conference/conference_thing4.svg'
   }
 ];

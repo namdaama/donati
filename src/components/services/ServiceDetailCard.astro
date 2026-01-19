@@ -260,9 +260,9 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
   <div class="waveline-wrapper">
     <div class="waveline-container py-4">
       <div class="flex justify-start gap-1">
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
-        <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-3 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-3 w-auto" />
       </div>
     </div>
   </div>
@@ -326,7 +326,7 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
   <div class="qa-section">
     <a href="/contact">
       <img
-        src="/images/svg/Parts/QA.svg"
+        src="/images/svg/logos/QA.svg"
         alt="お気軽にご相談ください"
         class="qa-banner cursor-pointer hover:opacity-80 transition-opacity"
       />
@@ -339,9 +339,9 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
       <div>
         {services.map((svc, idx) => {
           const titleSvgs = [
-            '/images/svg/Parts/text_scienceParformShow.svg',
-            '/images/svg/Parts/text_wakuwakuScienceLab.svg',
-            '/images/svg/Parts/text_workShop.svg'
+            '/images/svg/text/text_scienceParformShow.svg',
+            '/images/svg/text/text_wakuwakuScienceLab.svg',
+            '/images/svg/text/text_workShop.svg'
           ];
           return (
             <div class="service-card">
@@ -353,7 +353,7 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
               </div>
               <div class="service-card-waveline">
                 <img
-                  src="/images/svg/Parts/waveLine_300px.svg"
+                  src="/images/svg/decorations/waveline/waveLine_300px.svg"
                   alt=""
                 />
               </div>
@@ -371,7 +371,7 @@ const { service, index, showServicePlans = false, services = [] } = Astro.props;
               <div class="service-card-button">
                 <a href={`#${svc.id}`}>
                   <img
-                    src="/images/svg/Parts/roundDetailButton.svg"
+                    src="/images/svg/icons/sub/roundDetailButton.svg"
                     alt="詳しくはこちら"
                   />
                 </a>

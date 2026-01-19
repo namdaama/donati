@@ -18,15 +18,15 @@ const { services, servicesLink = '/services', title = 'サービス内容', icon
         <span class="text-3xl">{icon}</span>
       </div>
     ) : (
-      <img src="/images/svg/Parts/text_service.svg" alt={title} class="h-7 mx-auto mb-2" />
+      <img src="/images/svg/text/text_service.svg" alt={title} class="h-7 mx-auto mb-2" />
     )}
-    <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-3 mx-auto" />
+    <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-3 mx-auto" />
   </div>
 
   <!-- サービスアイコンとリスト -->
   <div class={`flex ${hideIcon ? 'justify-center' : 'items-center justify-center'} gap-4 mb-4 flex-grow`}>
     {!hideIcon && (
-      <img src="/images/svg/Parts/icon_Science.svg" alt="" class="w-16 h-16 flex-shrink-0" />
+      <img src="/images/svg/icons/header/icon_Science.svg" alt="" class="w-16 h-16 flex-shrink-0" />
     )}
     <ul class={`space-y-1 ${hideIcon ? 'w-full text-center' : 'text-left'}`}>
       {services.map((service) => (
@@ -40,7 +40,7 @@ const { services, servicesLink = '/services', title = 'サービス内容', icon
 
   <div class="text-center mt-auto">
     <a href={servicesLink} class="inline-block">
-      <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
+      <img src="/images/svg/icons/sub/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
     </a>
   </div>
 </div>
