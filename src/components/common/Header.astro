@@ -1,11 +1,17 @@
 ---
-// ミニマルヘッダー（Issue #132: 一時的に必要最小限のナビゲーションのみ表示）
+// ミニマルヘッダー（Issue #193: 星空事業を復元）
 const navIcons = [
   {
     iconSvg: '/images/svg/icons/header/icon_Science.svg',
     label: 'サイエンス分野',
     href: '/service-fuji',
     description: '科学実験ショー・ワークショップ'
+  },
+  {
+    iconSvg: '/images/svg/icons/header/icon_StarrySky.svg',
+    label: 'スペース分野',
+    href: '/service-hide',
+    description: '星空観望会・天文講演'
   },
   {
     iconSvg: '/images/svg/icons/header/icon_Achivements.svg',
@@ -31,23 +37,14 @@ const navIcons = [
     href: '/contact',
     description: 'お問合せフォーム'
   }
-  // 一時的にコメントアウト (Issue #132: 将来的に復元可能)
-  /*
-  {
-    iconSvg: '/images/svg/icons/header/icon_StarrySky.svg',
-    label: 'スペース分野',
-    href: '/service-hide',
-    description: '星空観望会・天文講演'
-  }
-  */
 ];
 ---
 
 <header class="relative z-10">
-  <div class="max-w-4xl mx-auto px-4 py-4 md:py-6 lg:py-8">
-    <div class="flex justify-between items-center">
+  <div class="max-w-4xl mx-auto px-4 py-2 md:py-3 lg:py-4">
+    <div class="flex justify-between items-center gap-4 lg:gap-[110px]">
       <!-- ロゴ（左上） - SVG + SEO対応 -->
-      <a href="/" class="flex items-center group">
+      <a href="/" class="flex items-center group flex-shrink-0">
         <img
           src="/images/svg/logos/homeLogo.svg"
           alt="サイエンス&スペースラボ DONATI"
@@ -92,7 +89,7 @@ const navIcons = [
         {navIcons.map((item) => (
           <a
             href={item.href}
-            class="group flex items-center justify-center p-2 xl:p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
+            class="group flex items-center justify-center rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
             title={item.description}
             aria-label={item.label}
           >
