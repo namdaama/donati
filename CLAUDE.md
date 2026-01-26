@@ -62,10 +62,23 @@ src/
 └── styles/          # グローバルスタイル
 
 public/
-└── images/          # 画像一元管理
-    ├── svg/Carousel/  # カルーセル用SVG
-    ├── svg/Parts/     # UI用SVGパーツ
-    └── (直下)         # ページ用画像・背景画像
+└── images/          # 画像一元管理（102ファイル）
+    ├── svg/         # SVGファイル（73ファイル）
+    │   ├── Carousel/      # カルーセル用SVG（4ファイル + _old/3ファイル）
+    │   ├── Screen/        # デザインモックアップ参考用（6ファイル）
+    │   ├── icons/         # アイコン類（18ファイル: header/7 + sub/11）
+    │   ├── text/          # テキストSVG（16ファイル）
+    │   ├── steps/         # ステップ表示（6ファイル）
+    │   ├── logos/         # ロゴ類（3ファイル）
+    │   ├── performers/    # 出演者画像（4ファイル: fuji/2 + hide/2）
+    │   ├── decorations/   # 装飾要素（9ファイル: waveline/4 + 直下5）
+    │   └── conference/    # カンファレンス用（4ファイル）
+    ├── picture/     # コンテンツ用写真（16ファイル）
+    │   ├── About/       # Aboutページ用（5ファイル）
+    │   ├── OverView/    # トップページ用（2ファイル）
+    │   └── Science/     # サイエンス事業用（9ファイル: card_*/detail_*）
+    ├── rough/       # ページ用背景画像（9ファイル: *.jpg, backGround.png等）
+    └── forDev/      # 開発用参考画像（4ファイル）
 ```
 
 詳細はドキュメント構成セクションを参照。
@@ -84,8 +97,25 @@ public/
 
 ### 画像管理
 - **配置**: `public/images/` に一元管理（Figma書き出しも直接配置）
-- **構造**: svg/Carousel/, svg/Parts/, 直下にページ用画像
-- **Figmaワークフロー**: Dev Modeから数値取得、public/images/に配置
+- **構造**:
+  - `svg/Carousel/`: カルーセル用SVG（4ファイル + _old/）
+  - `svg/Screen/`: 全画面デザインモックアップ参考用（6ファイル）
+  - `svg/icons/`: アイコン類（header/, sub/ に階層化、18ファイル）
+  - `svg/text/`: テキストSVG（16ファイル）
+  - `svg/steps/`: ステップ表示用星アイコン（6ファイル）
+  - `svg/logos/`: ロゴ類（3ファイル）
+  - `svg/performers/`: 出演者画像（fuji/, hide/ に階層化、4ファイル）
+  - `svg/decorations/`: 装飾要素（waveline/ サブディレクトリ含む、9ファイル）
+  - `svg/conference/`: カンファレンス用素材（4ファイル）
+  - `picture/`: コンテンツ用写真（About/, OverView/, Science/ に階層化、16ファイル）
+  - `rough/`: ページ用背景画像（9ファイル: AboutUs.jpg, Contact.jpg等）
+  - `forDev/`: 開発用参考画像（4ファイル）
+- **重要な設計判断**:
+  - Issue #186でディレクトリ構造を大幅に再編成
+  - SVGファイルは用途別に細分化（icons, text, steps, logos等）
+  - 背景画像は `rough/` ディレクトリに集約
+  - `svg/Screen/` は開発参考用のデザインモックアップ（Issue #186で追加）
+- **Figmaワークフロー**: Dev Modeから数値取得、public/images/配下の適切なディレクトリに配置
 - **詳細**: docs/04-workflow-collaboration/figma-workflow.md を参照
 
 ### 文言・コミュニケーション

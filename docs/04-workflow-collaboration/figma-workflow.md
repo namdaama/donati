@@ -108,15 +108,43 @@ SVGO, ImageOptim 等を使用
 ```
 
 ### 3. 配置
-`public/images/` に直接配置:
+`public/images/` 配下の適切なディレクトリに配置:
 
 ```
 public/images/
-├── svg/Carousel/      # カルーセル用SVG（5枚）
-├── svg/Parts/         # UI用SVGパーツ、キャラクター画像
-├── svg/Screen/        # デザインモックアップSVG
-└── (直下)             # ページ用画像、背景画像
+├── svg/
+│   ├── Carousel/      # カルーセル用SVG（4ファイル + _old/）
+│   ├── Screen/        # デザインモックアップ参考用（6ファイル）
+│   ├── icons/         # アイコン類（階層構造）
+│   │   ├── header/    # ヘッダー用アイコン（7ファイル）
+│   │   └── sub/       # サブアイコン（11ファイル）
+│   ├── text/          # テキストSVG（16ファイル）
+│   ├── steps/         # ステップ表示（6ファイル）
+│   ├── logos/         # ロゴ類（3ファイル）
+│   ├── performers/    # 出演者画像（階層構造）
+│   │   ├── fuji/      # フジさん（2ファイル）
+│   │   └── hide/      # ヒデさん（2ファイル）
+│   ├── decorations/   # 装飾要素（階層構造）
+│   │   └── waveline/  # 波線（4ファイル + 直下5ファイル）
+│   └── conference/    # カンファレンス用（4ファイル）
+├── picture/           # コンテンツ用写真
+│   ├── About/         # Aboutページ用（5ファイル）
+│   ├── OverView/      # トップページ用（2ファイル）
+│   └── Science/       # サイエンス事業用（9ファイル）
+├── rough/             # ページ用背景画像（9ファイル）
+└── forDev/            # 開発用参考画像（4ファイル）
 ```
+
+**配置ルール**:
+- **SVGアイコン**: `/images/svg/icons/` 配下に用途別配置（header/ または sub/）
+- **SVGテキスト**: `/images/svg/text/` に配置
+- **SVGロゴ**: `/images/svg/logos/` に配置
+- **SVG装飾**: `/images/svg/decorations/` に配置（波線系は waveline/ サブディレクトリ）
+- **カルーセル**: `/images/svg/Carousel/` に配置
+- **写真**: `/images/picture/` 配下にページ別配置（About/, OverView/, Science/）
+- **背景画像**: `/images/rough/` に配置（AboutUs.jpg, Contact.jpg等）
+- **デザインモックアップ**: `/images/svg/Screen/` に配置（開発参考用）
+- **開発参考用**: `/images/forDev/` に配置
 
 ### 4. Gitコミット
 最適化済みファイルをコミット。

@@ -1,55 +1,52 @@
 ---
-// ミニマルヘッダー（Issue #132: 一時的に必要最小限のナビゲーションのみ表示）
+// ミニマルヘッダー（Issue #193: 星空事業を復元）
 const navIcons = [
   {
-    iconSvg: '/images/svg/Parts/icon_Science.svg',
+    iconSvg: '/images/svg/icons/header/icon_Science.svg',
     label: 'サイエンス分野',
     href: '/service-fuji',
     description: '科学実験ショー・ワークショップ'
   },
   {
-    iconSvg: '/images/svg/Parts/icon_Achivements.svg',
+    iconSvg: '/images/svg/icons/header/icon_StarrySky.svg',
+    label: 'スペース分野',
+    href: '/service-hide',
+    description: '星空観望会・天文講演'
+  },
+  {
+    iconSvg: '/images/svg/icons/header/icon_Achivements.svg',
     label: '活動経歴',
     href: '/professional-experience',
     description: 'これまでの活動実績'
   },
   {
-    iconSvg: '/images/svg/Parts/icon_AboutUs.svg',
+    iconSvg: '/images/svg/icons/header/icon_AboutUs.svg',
     label: '私たちについて',
     href: '/about',
     description: '私たちの紹介'
   },
   {
-    iconSvg: '/images/svg/Parts/icon_FAQ.svg',
+    iconSvg: '/images/svg/icons/header/icon_FAQ.svg',
     label: 'よくある質問',
     href: '/faq',
     description: 'よくある質問'
   },
   {
-    iconSvg: '/images/svg/Parts/icon_Contact.svg',
+    iconSvg: '/images/svg/icons/header/icon_Contact.svg',
     label: 'お問合せ',
     href: '/contact',
     description: 'お問合せフォーム'
   }
-  // 一時的にコメントアウト (Issue #132: 将来的に復元可能)
-  /*
-  {
-    iconSvg: '/images/svg/Parts/icon_StarrySky.svg',
-    label: 'スペース分野',
-    href: '/service-hide',
-    description: '星空観望会・天文講演'
-  }
-  */
 ];
 ---
 
 <header class="relative z-10">
-  <div class="max-w-4xl mx-auto px-4 py-4 md:py-6 lg:py-8">
-    <div class="flex justify-between items-center">
+  <div class="max-w-4xl mx-auto px-4 py-2 md:py-3 lg:py-4">
+    <div class="flex justify-between items-center gap-4 lg:gap-[110px]">
       <!-- ロゴ（左上） - SVG + SEO対応 -->
-      <a href="/" class="flex items-center group">
+      <a href="/" class="flex items-center group flex-shrink-0">
         <img
-          src="/images/svg/Parts/homeLogo.svg"
+          src="/images/svg/logos/homeLogo.svg"
           alt="サイエンス&スペースラボ DONATI"
           class="h-10 sm:h-12 md:h-16 lg:h-20 group-hover:opacity-80 transition-opacity"
         />
@@ -92,7 +89,7 @@ const navIcons = [
         {navIcons.map((item) => (
           <a
             href={item.href}
-            class="group flex items-center justify-center p-2 xl:p-3 rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
+            class="group flex items-center justify-center rounded-lg hover:bg-overview-sky/20 transition-colors duration-200"
             title={item.description}
             aria-label={item.label}
           >
@@ -112,22 +109,22 @@ const navIcons = [
     <div class="w-full overflow-hidden flex justify-center">
     <!-- モバイル: 2つ -->
     <div class="flex sm:hidden">
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-4 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-4 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-4 w-auto flex-shrink-0" />
     </div>
     <!-- タブレット: 3つ -->
     <div class="hidden sm:flex md:hidden">
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-5 w-auto flex-shrink-0" />
     </div>
     <!-- デスクトップ: 5つ -->
     <div class="hidden md:flex">
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
-      <img src="/images/svg/Parts/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
+      <img src="/images/svg/decorations/waveline/waveLine_752px.svg" alt="" class="h-6 w-auto flex-shrink-0" />
     </div>
     </div>
   </div>

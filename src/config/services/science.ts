@@ -5,7 +5,7 @@ export const scienceServices: ServiceCategory = {
   title: 'サイエンス（科学分野）',
   icon: '⚗️',
   mainTitle: 'サイエンス事業',
-  characterIconUrl: '/images/svg/Parts/fuji_pict.svg',
+  characterIconUrl: '/images/svg/performers/fuji/fuji_pict.svg',
   subtitle: '見て、驚いて、参加する。\n会場が一体になるワクワクの科学体験！',
   description: '実験ショー・科学実験室・ワークショップなど会場や目的に合わせたプログラムをご提案。',
   subsectionTitle: '科学のワクワクを届ける！幼児から大人まで対応可能な３つのプラン',

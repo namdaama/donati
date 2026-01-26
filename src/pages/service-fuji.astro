@@ -15,9 +15,9 @@ const scienceCategory = serviceCategories.science;
 
 // サービスカード用のタイトルSVG
 const titleSvgs = [
-  '/images/svg/Parts/text_scienceParformShow.svg',
-  '/images/svg/Parts/text_wakuwakuScienceLab.svg',
-  '/images/svg/Parts/text_workShop.svg'
+  '/images/svg/text/text_scienceParformShow.svg',
+  '/images/svg/text/text_wakuwakuScienceLab.svg',
+  '/images/svg/text/text_workShop.svg'
 ];
 
 // RecommendedScenes用のデータ
@@ -111,7 +111,7 @@ const serviceDescriptions = [
     <style>
       /* backGround.png を背景として使用 */
       body {
-        background-image: url('/images/backGround.png');
+        background-image: url('/images/rough/backGround.png');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -134,7 +134,7 @@ const serviceDescriptions = [
 
       /* 3つのプラン紹介セクション */
       .three-plans-content {
-        padding: 1.5rem 0;
+        padding: 0;
       }
 
       .three-plans-content p {
@@ -259,6 +259,83 @@ const serviceDescriptions = [
           max-width: 300px;
         }
       }
+
+      /* 比較表アコーディオン */
+      .comparison-table-accordion {
+        max-width: 1024px;
+        margin: 0 auto 3rem;
+        border: none;
+        outline: none;
+      }
+
+      /* Toggle button (summary要素) */
+      .comparison-table-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+        list-style: none;
+        margin-bottom: 1.5rem;
+        border: none;
+        outline: none;
+      }
+
+      /* フォーカス時のアウトライン削除（アクセシビリティを考慮した代替） */
+      .comparison-table-toggle:focus {
+        outline: none;
+      }
+
+      .comparison-table-toggle:focus-visible {
+        outline: 2px solid rgba(88, 119, 141, 0.3);
+        outline-offset: 4px;
+        border-radius: 4px;
+      }
+
+      /* デフォルトマーカー非表示 */
+      .comparison-table-toggle::-webkit-details-marker,
+      .comparison-table-toggle::marker {
+        display: none;
+      }
+
+      /* ボタン画像 */
+      .toggle-button {
+        max-width: 1024px;
+        width: 100%;
+        transition: opacity 0.2s;
+      }
+
+      .comparison-table-toggle:hover .toggle-button {
+        opacity: 0.8;
+      }
+
+      /* プルダウンアイコン */
+      .pulldown-icon {
+        width: 24px;
+        height: 24px;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      /* 開いた状態：アイコン回転 */
+      .comparison-table-accordion[open] .pulldown-icon {
+        transform: rotate(180deg);
+      }
+
+      /* スライドダウンアニメーション */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .comparison-table-accordion[open] > :not(summary) {
+        animation: slideDown 0.3s ease-in-out;
+      }
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-8 md:py-16 relative z-10">
@@ -277,6 +354,8 @@ const serviceDescriptions = [
               title="科学のワクワクを届ける！幼児から大人まで対応可能な３つのプラン"
               waveLineCount={5}
               titleMarginLeft="ml-4"
+              marginBottom="mb-6"
+              titleMarginBottom="mb-2"
             />
 
             <div class="three-plans-content">
@@ -300,7 +379,7 @@ const serviceDescriptions = [
                   </div>
                   <div class="service-card-waveline">
                     <img
-                      src="/images/svg/Parts/waveLine_300px.svg"
+                      src="/images/svg/decorations/waveline/waveLine_300px.svg"
                       alt=""
                     />
                   </div>
@@ -320,7 +399,7 @@ const serviceDescriptions = [
                   <div class="service-card-button">
                     <a href={`#${service.id}`}>
                       <img
-                        src="/images/svg/Parts/roundDetailButton.svg"
+                        src="/images/svg/icons/sub/roundDetailButton.svg"
                         alt="詳しくはこちら"
                       />
                     </a>
@@ -342,25 +421,24 @@ const serviceDescriptions = [
             />
           ))}
 
-          <!-- DetailTableButton（モバイルでは非表示） -->
-          <div class="hidden md:flex justify-center mb-12">
-            <a href="#science">
+          <!-- Service Comparison Table (アコーディオン) -->
+          <details class="comparison-table-accordion hidden md:block">
+            <summary class="comparison-table-toggle">
               <img
-                src="/images/svg/Parts/DetailTableButton.svg"
-                alt="詳しくはこちら"
-                class="w-full max-w-4xl cursor-pointer hover:opacity-80 transition-opacity"
+                src="/images/svg/icons/sub/DetailTableButton.svg"
+                alt="3つのプラン簡易比較表を表示"
+                class="toggle-button"
               />
-            </a>
-          </div>
+            </summary>
 
-          <!-- Service Comparison Table -->
-          <ServiceComparisonTable services={scienceCategory.services} />
+            <ServiceComparisonTable services={scienceCategory.services} />
+          </details>
 
           <!-- QA Banner -->
           <div class="flex justify-center mb-4 md:mb-12">
             <a href="/contact">
               <img
-                src="/images/svg/Parts/QA.svg"
+                src="/images/svg/logos/QA.svg"
                 alt="お気軽にご相談ください"
                 class="w-full max-w-4xl cursor-pointer hover:opacity-80 transition-opacity"
               />

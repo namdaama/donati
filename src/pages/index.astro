@@ -53,7 +53,7 @@ import { siteConfig } from '../config/site';
 // サイエンス事業カードデータ
 const scienceService = {
   title: 'サイエンス事業',
-  titleSvg: '/images/svg/Parts/text_OverViewScience.svg',
+  titleSvg: '/images/svg/text/text_OverViewScience.svg',
   image: '/images/picture/OverView/Science.jpg',
   imageAlt: 'サイエンスパフォーマンスショー',
   items: [
@@ -67,7 +67,7 @@ const scienceService = {
 // 星空事業カードデータ
 const starryService = {
   title: '星空事業',
-  titleSvg: '/images/svg/Parts/text_OverViewStarrySky.svg',
+  titleSvg: '/images/svg/text/text_OverViewStarrySky.svg',
   image: '/images/picture/OverView/StarrySky.jpg',
   imageAlt: '星空観察会',
   items: [
@@ -80,13 +80,13 @@ const starryService = {
 
 // 「私たちについて」リンクカードデータ（3つの小さいカード）
 const aboutLinks = [
-  { textSvg: '/images/svg/Parts/text_AboutUs.svg', href: '/about', altText: '私たちについて' },
-  { textSvg: '/images/svg/Parts/text_Carrer.svg', href: '/professional-experience', altText: '実績' },
-  { textSvg: '/images/svg/Parts/text_QA.svg', href: '/faq', altText: '料金・FAQ' }
+  { textSvg: '/images/svg/text/text_AboutUs.svg', href: '/about', altText: '私たちについて' },
+  { textSvg: '/images/svg/text/text_Carrer.svg', href: '/professional-experience', altText: '実績' },
+  { textSvg: '/images/svg/text/text_QA.svg', href: '/faq', altText: '料金・FAQ' }
 ];
 ---
 
-<Layout title="OverView - DONATI">
+<Layout title="DONATI">
   <Header />
   
   <main class="flex-grow">
@@ -141,22 +141,22 @@ const aboutLinks = [
       <div class="waveline-container py-2 md:py-3">
         <!-- モバイル: 2つ -->
         <div class="flex sm:hidden">
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
         </div>
         <!-- タブレット: 3つ -->
         <div class="hidden sm:flex md:hidden">
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
         </div>
         <!-- デスクトップ: 5つ -->
         <div class="hidden md:flex">
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
-          <img src="/images/svg/Parts/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+          <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
         </div>
       </div>
     </div>
@@ -171,7 +171,7 @@ const aboutLinks = [
     <section class="py-8 md:py-12">
       <div class="max-w-4xl mx-auto px-4">
         <a href="/contact" class="block hover:opacity-90 transition-opacity duration-300">
-          <img src="/images/svg/Parts/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full" />
+          <img src="/images/svg/logos/QA.svg" alt="お問い合わせ - 時間・予算・内容、ご相談OKです！" class="w-full" />
         </a>
       </div>
     </section>
@@ -190,7 +190,7 @@ const aboutLinks = [
   
   /* backGround.png を背景として使用 */
   body {
-    background-image: url('/images/backGround.png');
+    background-image: url('/images/rough/backGround.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

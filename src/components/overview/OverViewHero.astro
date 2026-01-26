@@ -30,19 +30,19 @@ const { title, subtitle, ctaText, ctaLink } = Astro.props;
         <!-- 左側: テキストコンテンツ -->
         <div class="lg:w-1/2 text-center lg:text-left">
           <div class="mb-4">
-            <img src="/images/svg/Parts/text_AboutDonati.svg" alt="DONATIとは？" class="h-12 md:h-16 lg:h-20" />
+            <img src="/images/svg/text/text_AboutDonati.svg" alt="DONATIとは？" class="h-12 md:h-16 lg:h-20" />
           </div>
           <p class="text-base md:text-lg text-overview-dark-blue/80 mb-4 md:mb-6 leading-relaxed">
             {subtitle}
           </p>
           <a href={ctaLink} class="inline-block">
-            <img src="/images/svg/Parts/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
+            <img src="/images/svg/icons/sub/icon_detailHere.svg" alt="詳しくはコチラ" class="h-10 md:h-12 hover:scale-105 transition-transform duration-300" />
           </a>
         </div>
 
         <!-- 右側: DONATIロゴ（背景画像付き・コンテナの3/5サイズ） -->
         <div class="lg:w-3/5 flex justify-end">
-          <div class="w-full flex items-center justify-center shadow-lg p-6 md:p-8" style="background-image: url('/images/logoBackGround.png'); background-size: cover; background-position: center;">
+          <div class="w-full flex items-center justify-center shadow-lg p-6 md:p-8" style="background-image: url('/images/rough/logoBackGround.png'); background-size: cover; background-position: center;">
             <DonatiLogo size="xlarge" />
           </div>
         </div>

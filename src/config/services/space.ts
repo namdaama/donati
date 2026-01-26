@@ -5,7 +5,7 @@ export const spaceServices: ServiceCategory = {
   title: 'スペース（宇宙分野）',
   icon: '🌟',
   mainTitle: 'スペース事業',
-  characterIconUrl: '/images/svg/Parts/hide_pict.svg',
+  characterIconUrl: '/images/svg/performers/hide/hide_pict.svg',
   subtitle: '宇宙の神秘を一緒に探検。\n星空の下で感動体験をお届けします！',
   description: '星空観望会・プラネタリウム解説・講演など、宇宙の不思議を楽しく学べるプログラムをご提案。',
   subsectionTitle: '宇宙の魅力を伝える！全年齢対応の３つのプラン',
