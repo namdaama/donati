@@ -1,21 +1,39 @@
 import type { ServiceCategory } from '../types';
 
+// スペース事業専用の型定義
+export interface SpaceServiceDetail {
+  id: string;
+  title: string;
+  subtitle?: string;
+  photo: string;
+  photoAlt: string;
+  description: string;
+  recommendedScenes?: {
+    title: string;
+    items: string[];
+  };
+  pricing: {
+    type: 'table' | 'list';
+    title?: string;
+    rows?: Array<{
+      label: string;
+      price: string;
+      note?: string;
+    }>;
+    items?: string[];
+  };
+}
+
 export const spaceServices: ServiceCategory = {
   id: 'space',
   title: 'スペース（宇宙分野）',
   icon: '🌟',
-  mainTitle: 'スペース事業',
+  mainTitle: '星空事業',
   characterIconUrl: '/images/svg/performers/hide/hide_pict.svg',
-  subtitle: '宇宙の神秘を一緒に探検。\n星空の下で感動体験をお届けします！',
-  description: '星空観望会・プラネタリウム解説・講演など、宇宙の不思議を楽しく学べるプログラムをご提案。',
-  subsectionTitle: '宇宙の魅力を伝える！全年齢対応の３つのプラン',
-  subsectionContent: [
-    '私たちは、宇宙の魅力をみんなに届けるために、3つの異なるプランをご用意しています。',
-    '「星空観望会／プラネタリウム解説」では、望遠鏡で実際に星を観察したり、プラネタリウムのような星空解説をお届けします。10名から100名まで対応可能です。',
-    '「講演・大学講義」は、宇宙の歴史や最新の探査ミッションなど、専門的な内容をわかりやすくお伝えします。中学生から一般まで、オンライン対応も可能です。',
-    '「星空風景写真の提供」では、天の川や流星群など、美しい星空写真を商用利用でもお使いいただけます。',
-    'どのプランも、目的や参加者に合わせて内容を調整できます。宇宙の不思議を一緒に楽しみましょう！'
-  ],
+  subtitle: '星を見上げる時間が、心に残る特別な体験に。',
+  description: '星空観察会・ましかくプラネタリウム・星空イベントなど、場所や対象に合わせて実施します。',
+  subsectionTitle: '',
+  subsectionContent: [],
   services: [
     {
       id: 'stargazing',
@@ -70,3 +88,62 @@ export const spaceServices: ServiceCategory = {
     }
   ]
 };
+
+// service-hide.astro ページ専用のデータ
+export const spaceServiceDetails: SpaceServiceDetail[] = [
+  {
+    id: 'stargazing',
+    title: '星空観望会',
+    subtitle: '『月っ...てどんなところ？』',
+    photo: '/images/picture/About/StarrySky.png',
+    photoAlt: '天の川と星空の風景',
+    description: '実物を見ながら、本物を通してお話します。天体望遠鏡で月面のクレーターを観察したり、木星の縞模様や土星の環を実際に見ることで、宇宙への興味と理解を深めます。イベントの規模や参加者の年齢層に合わせて、最適な観望プログラムをご提案します。',
+    recommendedScenes: {
+      title: 'こんな場面にオススメ😊',
+      items: [
+        '学校行事やPTAイベントでの特別な体験活動として',
+        'お泊り保育での夜のアクティビティとして',
+        '地域のお祭りやイベントでの天文体験コーナーとして',
+        '企業の福利厚生イベントや社員研修として'
+      ]
+    },
+    pricing: {
+      type: 'table',
+      title: '料金プラン',
+      rows: [
+        {
+          label: '基本プラン',
+          price: '50,000円〜',
+          note: '90分、10-30名対応'
+        },
+        {
+          label: '標準プラン',
+          price: '80,000円〜',
+          note: '120分、30-60名対応'
+        },
+        {
+          label: '大規模プラン',
+          price: '要相談',
+          note: '180分以上、60名以上対応'
+        }
+      ]
+    }
+  },
+  {
+    id: 'planetarium',
+    title: 'よしだプラネタリウム',
+    photo: '/images/picture/OverView/StarrySky.jpg',
+    photoAlt: 'プラネタリウムドーム内の様子',
+    description: '移動式のプラネタリウムをお持ちします。屋内でも星空体験ができ、天候に左右されずに実施できます。ドーム内で寝転がりながら、満天の星空を眺める特別な時間を過ごせます。星座の神話や季節の星空解説、最新の天文ニュースなど、参加者の興味に合わせてお話しします。',
+    pricing: {
+      type: 'list',
+      title: '種類豊富にございます',
+      items: [
+        'エアドーム式プラネタリウム（定員20-80名）：200,000円〜',
+        '移動式プラネタリウム（定員10-30名）：100,000円〜',
+        'プラネタリウム解説のみ（既存施設利用）：50,000円〜',
+        'オンライン星空解説：30,000円〜'
+      ]
+    }
+  }
+];

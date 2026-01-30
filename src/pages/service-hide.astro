@@ -4,17 +4,14 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import PageIntroduction from '../components/common/PageIntroduction.astro';
-import ServiceCategoryHeader from '../components/services/ServiceCategoryHeader.astro';
-import ServiceDetailCard from '../components/services/ServiceDetailCard.astro';
-import RequestFlowStep from '../components/services/RequestFlowStep.astro';
-import { serviceCategories, requestFlow, consultationTopics } from '../config/services';
-
-const spaceCategory = serviceCategories.space;
+import SpaceServiceSection from '../components/services/SpaceServiceSection.astro';
+import SpaceCTASection from '../components/services/SpaceCTASection.astro';
+import { spaceServices, spaceServiceDetails } from '../config/services/space';
 ---
 
 <Layout
-  title="スペース（宇宙分野）"
-  description="星空観望会、プラネタリウム解説、講演、星空写真提供など、宇宙の不思議を探検するサービスをご提供します"
+  title="星空事業"
+  description="星空観望会、プラネタリウム解説など、宇宙の不思議を探検するサービスをご提供します"
 >
   <Header />
 
@@ -46,110 +43,44 @@ const spaceCategory = serviceCategories.space;
     </style>
 
     <div class="max-w-4xl mx-auto px-4 py-8 md:py-16 relative z-10">
-        <!-- ページタイトル -->
-        <PageIntroduction title="スペース（宇宙分野）" />
+      <!-- ページタイトルとイントロダクション -->
+      <PageIntroduction
+        title={spaceServices.mainTitle}
+        description={spaceServices.subtitle}
+        content={spaceServices.description}
+      />
 
-        <!-- スペース分野 -->
-        <section id="space" class="mb-12 md:mb-24">
-          <ServiceCategoryHeader
-            mainTitle={spaceCategory.mainTitle}
-            subtitle={spaceCategory.subtitle}
-            description={spaceCategory.description}
-            subsectionTitle={spaceCategory.subsectionTitle}
-            subsectionContent={spaceCategory.subsectionContent}
-            characterIconUrl={spaceCategory.characterIconUrl}
+      <!-- HIDEキャラクター表示 -->
+      <div class="flex justify-center mb-12 md:mb-16">
+        <div class="flex flex-col items-center">
+          <img
+            src={spaceServices.characterIconUrl}
+            alt="HIDE"
+            class="w-48 h-48 mb-2"
           />
+          <img
+            src="/images/svg/performers/hide/hide_name.svg"
+            alt="hide"
+            class="w-32 h-auto"
+          />
+        </div>
+      </div>
 
-          {spaceCategory.services.map((service, index) => (
-            <ServiceDetailCard
-              service={service}
-              index={index}
-              showServicePlans={index === spaceCategory.services.length - 1}
-              services={spaceCategory.services}
-            />
-          ))}
-        </section>
+      <!-- 星空観望会 & プラネタリウムセクション -->
+      {spaceServiceDetails.map((service) => (
+        <SpaceServiceSection service={service} />
+      ))}
 
-        <!-- ご依頼の流れセクション（後で移動） -->
-        {/*
-        <section id="request-flow" class="mb-24">
-          <div class="text-center mb-16">
-            <h2 class="section-title-news">ご依頼の流れ</h2>
-            <div class="waveline-wrapper">
-              <div class="waveline-container py-6">
-                <!-- モバイル: 2つ -->
-                <div class="flex sm:hidden">
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-                <!-- タブレット: 3つ -->
-                <div class="hidden sm:flex md:hidden">
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-                <!-- デスクトップ: 5つ -->
-                <div class="hidden md:flex">
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                  <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- CTAセクション -->
+      <SpaceCTASection
+        message={`興味・疑問・ご質問などがあったら何でも
+お気軽にお問合せください！`}
+        buttonText="お問い合わせはこちら"
+        buttonLink="/contact"
+      />
 
-          <!-- フローステップ -->
-          <div class="max-w-4xl mx-auto">
-            {requestFlow.map((step) => (
-              <RequestFlowStep
-                step={step.step}
-                title={step.title}
-                description={step.description}
-              >
-                {step.step === 1 && (
-                  <div class="mt-6">
-                    <h4 class="text-lg font-bold mb-4" style="color: #58778D;">打ち合わせ内容</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                      {consultationTopics.map((topic) => (
-                        <div class="flex flex-col items-center text-center">
-                          <img
-                            src={topic.svg}
-                            alt={topic.question}
-                            class="w-32 h-16 mb-2"
-                          />
-                          <p class="text-xs leading-relaxed" style="color: #58778D;">
-                            {topic.description}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </RequestFlowStep>
-            ))}
-          </div>
-        </section>
-        */}
-
-        <!-- 最終メッセージセクション（青い星） -->
-        <section class="mb-24">
-          <div class="flex items-start gap-6 max-w-4xl mx-auto">
-            <img src="/images/svg/decorations/blue_star.svg" alt="サポート" class="w-56 h-52 flex-shrink-0" />
-
-            <div class="flex-1 backdrop-blur-sm rounded-lg p-6 text-left">
-              <h3 class="text-xl font-bold mb-3" style="color: #58778D;">実施後まで丁寧にサポート</h3>
-              <p class="leading-relaxed" style="color: #58778D;">
-                イベント実施後のアンケート集計や報告書作成、次回に向けた改善提案など、
-                実施後のフォローアップも充実しています。長期的なパートナーとして、
-                皆様の科学教育・普及活動をサポートいたします。
-              </p>
-            </div>
-          </div>
-        </section>
-
-    <FooterDivider />
+      <FooterDivider />
+    </div>
   </main>
 
   <Footer />
