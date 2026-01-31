@@ -4,6 +4,7 @@ import Header from '../components/common/Header.astro';
 import Footer from '../components/common/Footer.astro';
 import FooterDivider from '../components/overview/FooterDivider.astro';
 import PageIntroduction from '../components/common/PageIntroduction.astro';
+import StargazingHeroSection from '../components/services/StargazingHeroSection.astro';
 import SpaceServiceSection from '../components/services/SpaceServiceSection.astro';
 import SpaceCTASection from '../components/services/SpaceCTASection.astro';
 import { spaceServices, spaceServiceDetails } from '../config/services/space';
@@ -50,34 +51,22 @@ import { spaceServices, spaceServiceDetails } from '../config/services/space';
         content={spaceServices.description}
       />
 
-      <!-- HIDEキャラクター表示 -->
-      <div class="flex justify-center mb-12 md:mb-16">
-        <div class="flex flex-col items-center">
-          <img
-            src={spaceServices.characterIconUrl}
-            alt="HIDE"
-            class="w-48 h-48 mb-2"
-          />
-          <img
-            src="/images/svg/performers/hide/hide_name.svg"
-            alt="hide"
-            class="w-32 h-auto"
-          />
-        </div>
-      </div>
-
-      <!-- 星空観望会 & プラネタリウムセクション -->
+      <!-- 星空観察会 & プラネタリウムセクション -->
       {spaceServiceDetails.map((service) => (
-        <SpaceServiceSection service={service} />
+        service.layout === 'modern' ? (
+          <StargazingHeroSection
+            title={service.title}
+            heroSection={service.heroSection!}
+            illustrationSection={service.illustrationSection}
+            modernRecommendedScenes={service.modernRecommendedScenes!}
+          />
+        ) : (
+          <SpaceServiceSection service={service} />
+        )
       ))}
 
       <!-- CTAセクション -->
-      <SpaceCTASection
-        message={`興味・疑問・ご質問などがあったら何でも
-お気軽にお問合せください！`}
-        buttonText="お問い合わせはこちら"
-        buttonLink="/contact"
-      />
+      <SpaceCTASection />
 
       <FooterDivider />
     </div>

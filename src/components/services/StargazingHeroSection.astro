@@ -1,0 +1,165 @@
+---
+import SectionHeading from '../common/SectionHeading.astro';
+import RecommendedScenes from './RecommendedScenes.astro';
+
+interface Props {
+  title: string;
+  heroSection: {
+    photo: string;
+    photoAlt: string;
+    mainCatch: string;
+    description: string;
+  };
+  illustrationSection?: {
+    svgPath: string;
+    alt: string;
+  };
+  modernRecommendedScenes: {
+    overviewDescription: string;
+    scenes: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
+}
+
+const { title, heroSection, illustrationSection, modernRecommendedScenes } = Astro.props;
+---
+
+<section class="mb-12 md:mb-24">
+  <!-- タイトルセクション -->
+  <SectionHeading
+    title={title}
+    level="h2"
+    waveLineCount={5}
+    marginBottom="mb-8 md:mb-12"
+  />
+
+  <!-- ヒーローセクション: 写真 + メインテキスト -->
+  <div class="hero-grid mb-8 md:mb-12">
+    <!-- 写真（左） -->
+    <div class="hero-image">
+      <img
+        src={heroSection.photo}
+        alt={heroSection.photoAlt}
+        class="w-full h-auto rounded-lg shadow-md object-cover"
+      />
+    </div>
+
+    <!-- メインテキスト（右） -->
+    <div class="hero-text">
+      <h3 class="main-catch mb-4 md:mb-6" style="color: #65B7EC;">
+        {heroSection.mainCatch.split('\n').map((line, i, arr) => (
+          <>{line}{i < arr.length - 1 && <br />}</>
+        ))}
+      </h3>
+      <p class="description" style="color: #58778D;">
+        {heroSection.description}
+      </p>
+    </div>
+  </div>
+
+  <!-- SVGイラストセクション -->
+  {illustrationSection && (
+    <div class="illustration-section">
+      <img
+        src={illustrationSection.svgPath}
+        alt={illustrationSection.alt}
+        class="illustration-svg"
+      />
+    </div>
+  )}
+
+  <!-- こんな場面におすすめセクション -->
+  <div class="mb-8 md:mb-12">
+    <RecommendedScenes
+      overviewDescription={modernRecommendedScenes.overviewDescription}
+      scenes={modernRecommendedScenes.scenes}
+    />
+  </div>
+</section>
+
+<style>
+  /* ヒーローグリッドレイアウト */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  /* ヒーロー画像 */
+  .hero-image {
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .hero-image img {
+      max-width: 100%;
+    }
+  }
+
+  /* メインキャッチ */
+  .main-catch {
+    font-size: 1.125rem;  /* 18px */
+    font-weight: bold;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .main-catch {
+      font-size: 1rem;  /* 16px */
+    }
+  }
+
+  @media (max-width: 640px) {
+    .main-catch {
+      font-size: 0.9375rem;  /* 15px */
+    }
+  }
+
+  /* 説明文 */
+  .description {
+    font-size: 1rem;  /* 16px */
+    line-height: 1.75;
+  }
+
+  @media (max-width: 768px) {
+    .description {
+      font-size: 0.9375rem;  /* 15px */
+    }
+  }
+
+  @media (max-width: 640px) {
+    .description {
+      font-size: 0.875rem;  /* 14px */
+    }
+  }
+
+  /* SVGイラストセクション */
+  .illustration-section {
+    width: 100%;
+    max-width: 1024px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  @media (max-width: 768px) {
+    .illustration-section {
+      margin: 2rem auto;
+    }
+  }
+
+  .illustration-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
