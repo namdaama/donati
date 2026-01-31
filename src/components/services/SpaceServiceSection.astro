@@ -1,0 +1,131 @@
+---
+import type { SpaceServiceDetail } from '../../config/services/space';
+
+interface Props {
+  service: SpaceServiceDetail;
+}
+
+const { service } = Astro.props;
+---
+
+<section id={service.id} class="mb-16 md:mb-24">
+  <!-- セクションタイトル（黄色背景） -->
+  <div class="mb-8">
+    <div class="bg-[#FFE84C] py-4 px-6 rounded-lg">
+      <h2 class="text-2xl md:text-3xl font-bold text-center" style="color: #58778D;">
+        {service.title}
+      </h2>
+    </div>
+
+    <!-- 波線装飾 -->
+    <div class="flex justify-center mt-4">
+      <!-- モバイル: 2つ -->
+      <div class="flex sm:hidden">
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+      <!-- タブレット: 3つ -->
+      <div class="hidden sm:flex md:hidden">
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+      <!-- デスクトップ: 5つ -->
+      <div class="hidden md:flex">
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+        <img src="/images/svg/decorations/waveline/waveLine.svg" alt="" class="h-4 w-auto" />
+      </div>
+    </div>
+
+    {service.subtitle && (
+      <p class="text-xl md:text-2xl font-semibold text-center mt-6" style="color: #58778D;">
+        {service.subtitle}
+      </p>
+    )}
+  </div>
+
+  <!-- メインコンテンツ: 写真 + 説明 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+    <!-- 写真 -->
+    <div class="flex justify-center items-start">
+      <img
+        src={service.photo}
+        alt={service.photoAlt}
+        class="rounded-lg shadow-lg w-full h-auto object-cover max-w-md"
+      />
+    </div>
+
+    <!-- 説明テキスト -->
+    <div class="flex flex-col justify-start">
+      <p class="text-base md:text-lg leading-relaxed" style="color: #58778D;">
+        {service.description}
+      </p>
+    </div>
+  </div>
+
+  <!-- 推奨シーンカード -->
+  {service.recommendedScenes && (
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+      <h3 class="text-lg md:text-xl font-bold mb-4" style="color: #58778D;">
+        {service.recommendedScenes.title}
+      </h3>
+      <ul class="space-y-2">
+        {service.recommendedScenes.items.map((item) => (
+          <li class="text-sm md:text-base leading-relaxed" style="color: #58778D;">
+            ・{item}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )}
+
+  <!-- 料金情報 -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    {service.pricing.title && (
+      <div class="bg-[#65B7EC] py-3 px-6">
+        <h3 class="text-lg md:text-xl font-bold text-white">
+          {service.pricing.title}
+        </h3>
+      </div>
+    )}
+
+    <div class="p-6">
+      {service.pricing.type === 'table' && service.pricing.rows && (
+        <div class="space-y-4">
+          {service.pricing.rows.map((row) => (
+            <div class="flex justify-between items-center border-b border-gray-200 pb-3 last:border-0">
+              <div class="flex-1">
+                <p class="font-semibold text-base md:text-lg" style="color: #58778D;">
+                  {row.label}
+                </p>
+                {row.note && (
+                  <p class="text-sm text-gray-600 mt-1">
+                    {row.note}
+                  </p>
+                )}
+              </div>
+              <div class="ml-4">
+                <p class="font-bold text-lg md:text-xl" style="color: #58778D;">
+                  {row.price}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {service.pricing.type === 'list' && service.pricing.items && (
+        <ul class="space-y-3">
+          {service.pricing.items.map((item) => (
+            <li class="text-sm md:text-base leading-relaxed" style="color: #58778D;">
+              ・{item}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+</section>
