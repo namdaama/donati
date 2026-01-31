@@ -19,13 +19,13 @@ export const heroCarouselData = [
     alt: '星空事業 - 星空観望会',
     title: '星空事業',
     description: '星空観望会・天文イベントなど、宇宙の神秘を一緒に楽しみましょう',
-    link: '/_service-hide'
+    link: '/service-hide'
   },
   {
     image: '/images/svg/Carousel/Carousel_Career.svg',
     alt: '活動経歴 - これまでの実績',
     title: '活動経歴',
     description: '200名以上が参加した実験ショーなど、みんなで楽しんだ活動の記録です',
-    link: '/_professional-experience'
+    link: '/professional-experience'
   }
 ];
