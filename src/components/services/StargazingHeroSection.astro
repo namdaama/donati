@@ -53,8 +53,7 @@ const { title, heroSection, illustrationSection, modernRecommendedScenes } = Ast
           <>{line}{i < arr.length - 1 && <br />}</>
         ))}
       </h3>
-      <p class="description" style="color: #58778D;">
-        {heroSection.description}
+      <p class="description" style="color: #58778D;" set:html={heroSection.description}>
       </p>
     </div>
   </div>

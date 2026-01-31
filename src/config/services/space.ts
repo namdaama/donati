@@ -189,7 +189,7 @@ export const spaceServiceDetails: SpaceServiceDetail[] = [
       photo: '/images/picture/StarrySky/Planetarium.png',
       photoAlt: 'プラネタリウムドーム内の様子',
       mainCatch: '時間と場所を超えて、見たい星空に出会えるプラネタリウム体験です。',
-      description: '生まれた日の星空や、旅先で見た思い出の星空など、地球上であれば、どの場所・どの時代の星空も映し出せます。元プラネタリウム解説員が、参加者の年代や目的に合わせて、その場にぴったりの星空や宇宙の世界をお届けします。'
+      description: '生まれた日の星空や、旅先で見た思い出の星空など、<strong>地球上であれば、どの場所・どの時代の星空も映し出せます。</strong>元プラネタリウム解説員が、参加者の年代や目的に合わせて、その場にぴったりの星空や宇宙の世界をお届けします。'
     },
 
     illustrationSection: {
