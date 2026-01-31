@@ -2,6 +2,7 @@
 interface SceneItem {
   title: string;
   description: string;
+  note?: string;
 }
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const {
-  title = "こんな場面にお勧め",
+  title = "こんな場面におすすめ",
   overviewDescription,
   examplesSectionTitle = "具体的な実施例",
   scenes,
@@ -59,6 +60,7 @@ const {
           <div class="scene-content">
             <h4 class="scene-title">{scene.title}</h4>
             <p class="scene-description">{scene.description}</p>
+            {scene.note && <p class="scene-note">{scene.note}</p>}
           </div>
         </div>
       ))}
@@ -200,6 +202,13 @@ const {
     color: #58778d;
     line-height: 1.6;
     margin: 0;
+  }
+
+  .scene-note {
+    font-size: 0.75rem;
+    color: #8a9ba8;
+    line-height: 1.5;
+    margin: 0.5rem 0 0 0;
   }
 
   /* レスポンシブデザイン */
