@@ -135,6 +135,7 @@ public/
 
 - `00-manufacturing-strategy/`: 開発の優先度と方針
 - `01-project-overview/`: プロジェクト概要・決定事項
+  - **`glossary.md`** (新規): Donati固有名詞用語集
 - `02-pricing-estimates/`: 価格・工数見積もり
 - `03-technical-specs/`: 技術仕様・実装方針
   - **`color-management.md`** (新規): 配色管理
