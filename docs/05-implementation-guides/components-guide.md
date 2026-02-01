@@ -24,13 +24,16 @@ src/components/
 │   ├── OverViewServiceSection.astro
 │   ├── OverViewLinkCard.astro
 │   └── FooterDivider.astro
-├── services/        # サービスページ専用 (6個)
+├── services/        # サービスページ専用 (9個)
 │   ├── ServiceCategoryHeader.astro
 │   ├── ServiceComparisonTable.astro
 │   ├── ServiceDetailCard.astro
 │   ├── ServiceDescription.astro
 │   ├── RequestFlowStep.astro
-│   └── RecommendedScenes.astro
+│   ├── RecommendedScenes.astro
+│   ├── SpaceServiceSection.astro      ← service-hide.astro専用（プラネタリウム）
+│   ├── SpaceCTASection.astro          ← service-hide.astro専用
+│   └── StargazingHeroSection.astro    ← service-hide.astro専用（星空観察会）
 ├── professional-experience/  # 活動経歴ページ専用 (3個)
 │   ├── MajorSection.astro
 │   ├── CategorySection.astro
@@ -47,7 +50,7 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 36個
+**総コンポーネント数**: 39個
 
 ## コンポーネント統計
 
@@ -56,11 +59,11 @@ src/components/
 |---------|-----------------|------|
 | common/ | 10 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionHeadingWithIcon, SectionCloudyHeading, PageIntroduction） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
-| services/ | 6 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes） |
+| services/ | 9 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes, SpaceServiceSection, SpaceCTASection, StargazingHeroSection） |
 | professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **36** | **6フォルダ** |
+| **合計** | **39** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -376,7 +379,201 @@ interface Props {
 />
 ```
 
+### SpaceServiceSection.astro
+**ファイル**: src/components/services/SpaceServiceSection.astro
+
+**Props**:
+```typescript
+import type { SpaceServiceDetail } from '../../config/services/space';
+
+interface Props {
+  service: SpaceServiceDetail;
+}
+
+// SpaceServiceDetail の定義
+interface SpaceServiceDetail {
+  id: string;
+  title: string;              // "星空観望会" or "よしだプラネタリウム"
+  subtitle?: string;          // サブタイトル（例: "『月っ...てどんなところ？』"）
+  photo: string;              // メイン写真URL
+  photoAlt: string;           // 写真のalt属性
+  description: string;        // メイン説明文
+  recommendedScenes?: {
+    title: string;
+    items: string[];
+  };
+  pricing: {
+    type: 'table' | 'list';
+    title?: string;
+    rows?: Array<{
+      label: string;
+      price: string;
+      note?: string;
+    }>;
+    items?: string[];
+  };
+}
+```
+
+**用途**: service-hide.astro（星空事業ページ）専用
+
+**特徴**:
+- 黄色背景（#FFE84C）のセクションタイトル
+- 波線装飾（レスポンシブ: モバイル2本、タブレット3本、デスクトップ5本）
+- サブタイトル表示（オプション）
+- 2カラムグリッド: 写真（左） + 説明テキスト（右）
+- 白背景の推奨シーンカード（オプション、例: "こんな場面にオススメ😊"）
+- 料金情報エリア:
+  - テーブル形式: 青いヘッダー + プラン名・価格・注記
+  - リスト形式: 箇条書きリスト
+- レスポンシブ対応: モバイルでは1カラムにスタック
+
+**使用例**:
+```astro
+import SpaceServiceSection from '../components/services/SpaceServiceSection.astro';
+import { spaceServiceDetails } from '../config/services/space';
+
+{spaceServiceDetails.map((service) => (
+  <SpaceServiceSection service={service} />
+))}
+```
+
+**データソース**: `src/config/services/space.ts` の `spaceServiceDetails` 配列
+
+### SpaceCTASection.astro
+**ファイル**: src/components/services/SpaceCTASection.astro
+
+**Props**:
+```typescript
+interface Props {
+  message: string;
+  buttonText?: string;        // デフォルト: "お問い合わせはこちら"
+  buttonLink?: string;        // デフォルト: "/contact"
+}
+```
+
+**用途**: service-hide.astro（星空事業ページ）専用
+
+**特徴**:
+- 黄色背景（#FFE84C）、角丸
+- 中央配置レイアウト
+- メールアイコン（SVG、80×80px / 96×96px レスポンシブ）
+- メッセージテキスト（改行対応、`whitespace-pre-line`）
+- 青いボタン（#65B7EC、ホバー時: #5AA8DC）
+- ボタン: 角丸フル、シャドウ効果、ホバーアニメーション
+
+**使用例**:
+```astro
+import SpaceCTASection from '../components/services/SpaceCTASection.astro';
+
+<SpaceCTASection
+  message="興味・疑問・ご質問などがあったら何でも&#x000A;お気軽にお問合せください！"
+  buttonText="お問い合わせはこちら"
+  buttonLink="/contact"
+/>
+```
+
+**デザインノート**:
+- メッセージ内の改行は HTML エンティティ `&#x000A;` を使用
+- メールアイコンは SVG で直接実装（外部ファイル不要）
+
+### StargazingHeroSection.astro
+**ファイル**: src/components/services/StargazingHeroSection.astro
+
+**Props**:
+```typescript
+interface Props {
+  title: string;
+  heroSection: {
+    photo: string;
+    photoAlt: string;
+    mainCatch: string;
+    description: string;
+  };
+  illustrationSection?: {
+    svgPath: string;
+    alt: string;
+  };
+  modernRecommendedScenes: {
+    overviewDescription: string;
+    scenes: Array<{
+      title: string;
+      description: string;
+    }>;
+  };
+  pricing: {
+    type: 'table' | 'list';
+    title?: string;
+    rows?: Array<{ label: string; price: string; note?: string; }>;
+    items?: string[];
+  };
+}
+```
+
+**用途**: service-hide.astro（星空事業ページ）専用 - 星空観察会セクション
+
+**特徴**:
+- ServiceDescription.astroと類似の2カラムレイアウト
+- SectionHeadingコンポーネント使用（タイトル + 波線装飾）
+- ヒーローセクション: 写真（左）+ メインテキスト（右）
+- SVGイラスト全幅表示機能（starrySkySubPlan.svg）
+- RecommendedScenesコンポーネント統合
+- 料金セクション（table/list形式対応）
+- レスポンシブ対応: デスクトップ2カラム → タブレット/モバイル1カラム
+
+**レスポンシブブレークポイント**:
+- デスクトップ（1024px以上）: 2カラム（300px + 1fr）、波線5本
+- タブレット（768px）: 1カラム、波線3本
+- モバイル（640px以下）: 1カラム、波線2本、フォントサイズ縮小
+
+**使用例**:
+```astro
+import StargazingHeroSection from '../components/services/StargazingHeroSection.astro';
+import { spaceServiceDetails } from '../config/services/space';
+
+{spaceServiceDetails.map((service) => (
+  service.layout === 'modern' ? (
+    <StargazingHeroSection
+      title={service.title}
+      heroSection={service.heroSection!}
+      illustrationSection={service.illustrationSection}
+      modernRecommendedScenes={service.modernRecommendedScenes!}
+      pricing={service.pricing}
+    />
+  ) : (
+    <SpaceServiceSection service={service} />
+  )
+))}
+```
+
+**データソース**: `src/config/services/space.ts` の `spaceServiceDetails[0]`（layout: 'modern'）
+
+**依存関係**:
+- SectionHeading.astro（common/）
+- RecommendedScenes.astro（services/）
+
+**配色**:
+- タイトル: `#58778D`
+- メインキャッチ: `#65B7EC`
+- 説明テキスト: `#58778D`
+- 波線背景: `#FFE84C`（SectionHeading自動適用）
+- 料金ヘッダー: `#65B7EC`
+
 ## 更新履歴
+
+- **2026年1月31日**: StargazingHeroSection.astro追加（Issue #122 - 星空観察会セクション新デザイン）
+  - 星空観察会セクション専用コンポーネント実装
+  - 2カラムヒーローレイアウト（写真 + メインテキスト）
+  - SVGイラスト全幅表示機能（starrySkySubPlan.svg）
+  - SectionHeading、RecommendedScenes統合
+  - データ駆動型アプローチ（space.ts の SpaceServiceDetail 型拡張、layout フラグ追加）
+  - 総コンポーネント数：38個 → 39個
+
+- **2026年1月31日**: SpaceServiceSection.astro / SpaceCTASection.astro追加（service-hide.astro リニューアル）
+  - 星空事業ページ専用コンポーネント実装
+  - OurService-hide.jpg デザインをHTML化
+  - データ駆動型アプローチ（space.ts に SpaceServiceDetail 型追加）
+  - 総コンポーネント数：36個 → 38個
 
 - **2026年1月12日**: 未使用コンポーネント削除（Issue #160）
   - services.astro削除（service-fuji.astro/service-hide.astroに分割済みのため不要）
