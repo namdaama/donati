@@ -1,0 +1,67 @@
+---
+/**
+ * ResponsiveImage - レスポンシブ画像コンポーネント
+ * 統一されたスタイルで画像を表示
+ */
+interface Props {
+  /**
+   * 画像のソースURL
+   */
+  src: string;
+  /**
+   * 代替テキスト
+   */
+  alt: string;
+  /**
+   * 最大幅クラス
+   * @default 'max-w-md'
+   */
+  maxWidth?: string;
+  /**
+   * アスペクト比（例: "3/2", "16/9"）
+   */
+  aspectRatio?: string;
+  /**
+   * 角丸クラス
+   * @default 'rounded-lg'
+   */
+  rounded?: string;
+  /**
+   * 影クラス
+   */
+  shadow?: string;
+  /**
+   * object-fitクラス
+   * @default 'object-cover'
+   */
+  objectFit?: string;
+  /**
+   * 追加のCSSクラス
+   */
+  className?: string;
+}
+
+const {
+  src,
+  alt,
+  maxWidth = 'max-w-md',
+  aspectRatio,
+  rounded = 'rounded-lg',
+  shadow,
+  objectFit = 'object-cover',
+  className = '',
+} = Astro.props;
+
+const baseClasses = ['w-full', 'h-auto', rounded, objectFit, maxWidth];
+if (shadow) baseClasses.push(shadow);
+if (className) baseClasses.push(className);
+
+const style = aspectRatio ? `aspect-ratio: ${aspectRatio};` : undefined;
+---
+
+<img
+  src={src}
+  alt={alt}
+  class:list={baseClasses}
+  style={style}
+/>
