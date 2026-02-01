@@ -1,0 +1,78 @@
+---
+/**
+ * WavelineDecoration - 波線装飾コンポーネント
+ * 複数の波線SVGを並べて装飾を表示
+ * レスポンシブモードでは画面幅に応じて本数を自動調整
+ */
+interface Props {
+  /**
+   * 波線の表示数（responsive=falseの場合に使用）
+   * @default 5
+   */
+  count?: number;
+  /**
+   * レスポンシブモード（モバイル2本、タブレット3本、デスクトップ5本）
+   * @default false
+   */
+  responsive?: boolean;
+  /**
+   * 高さクラス
+   * @default 'h-4'
+   */
+  height?: string;
+  /**
+   * SVGファイルのパス
+   * @default '/images/svg/decorations/waveline/waveLine.svg'
+   */
+  svgPath?: string;
+  /**
+   * 追加のCSSクラス
+   */
+  className?: string;
+}
+
+const {
+  count = 5,
+  responsive = false,
+  height = 'h-4',
+  svgPath = '/images/svg/decorations/waveline/waveLine.svg',
+  className = '',
+} = Astro.props;
+
+// 固定数モード用の配列
+const fixedWaveLines = Array.from({ length: count }, (_, i) => i);
+
+// レスポンシブモード用の配列
+const mobileWaveLines = Array.from({ length: 2 }, (_, i) => i);
+const tabletWaveLines = Array.from({ length: 3 }, (_, i) => i);
+const desktopWaveLines = Array.from({ length: 5 }, (_, i) => i);
+---
+
+{responsive ? (
+  <div class:list={['flex justify-center', className]}>
+    {/* モバイル: 2本 */}
+    <div class="flex sm:hidden">
+      {mobileWaveLines.map(() => (
+        <img src={svgPath} alt="" class:list={[height, 'w-auto']} />
+      ))}
+    </div>
+    {/* タブレット: 3本 */}
+    <div class="hidden sm:flex md:hidden">
+      {tabletWaveLines.map(() => (
+        <img src={svgPath} alt="" class:list={[height, 'w-auto']} />
+      ))}
+    </div>
+    {/* デスクトップ: 5本 */}
+    <div class="hidden md:flex">
+      {desktopWaveLines.map(() => (
+        <img src={svgPath} alt="" class:list={[height, 'w-auto']} />
+      ))}
+    </div>
+  </div>
+) : (
+  <div class:list={['flex justify-center overflow-hidden', className]}>
+    {fixedWaveLines.map(() => (
+      <img src={svgPath} alt="" class:list={[height, 'w-auto']} />
+    ))}
+  </div>
+)}
