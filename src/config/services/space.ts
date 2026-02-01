@@ -59,7 +59,7 @@ export const spaceServices: ServiceCategory = {
   mainTitle: '星空事業',
   characterIconUrl: '/images/svg/performers/hide/hide_pict.svg',
   subtitle: '星を見上げる時間が、心に残る特別な体験に。',
-  description: '星空観察会・ましかくプラネタリウム・星空イベントなど、場所や対象に合わせて実施します。',
+  description: '星空観察会・ましかくプラネタリウム・星空イベントなど、\n場所や対象に合わせて実施します。',
   subsectionTitle: '',
   subsectionContent: [],
   services: [
@@ -138,15 +138,15 @@ export const spaceServiceDetails: SpaceServiceDetail[] = [
     },
 
     modernRecommendedScenes: {
-      overviewDescription: '学校行事やPTAイベント・地域イベントなど、幅広い場面で実施しています。\n夜からこそ楽しめる、特別なプログラムとしておすすめです。',
+      overviewDescription: '学校行事や行政・地域イベントなど、幅広い場面で実施しています。\n夜だからこそ楽しめる、特別なプログラムとしておすすめです。',
       scenes: [
         {
-          title: '子どもたちに、夜空やほしの特別な体験を',
-          description: '学校行事 / PTAイベント / お泊まり保育等どの夜のアクティビティ'
+          title: '子どもたちに、夜ならではの特別な体験を',
+          description: '学校行事 / PTAイベント / お泊まり保育などの夜のアクティビティ'
         },
         {
-          title: '集客やにぎわいを生む、等のイベントとして',
-          description: '展覧会等でのイベント / 前泊時間の特別プログラム / 地域のお祭りなど'
+          title: '集客やにぎわいを生む、夜のイベントとして',
+          description: '商業施設でのイベント / 宿泊施設の特別プログラム / 地域のお祭りなど'
         }
       ]
     },
@@ -189,7 +189,7 @@ export const spaceServiceDetails: SpaceServiceDetail[] = [
       photo: '/images/picture/StarrySky/Planetarium.png',
       photoAlt: 'プラネタリウムドーム内の様子',
       mainCatch: '時間と場所を超えて、見たい星空に出会えるプラネタリウム体験です。',
-      description: '生まれた日の星空や、旅先で見た思い出の星空など、<strong>地球上であれば、どの場所・どの時代の星空も映し出せます。</strong>元プラネタリウム解説員が、参加者の年代や目的に合わせて、その場にぴったりの星空や宇宙の世界をお届けします。'
+      description: '生まれた日の星空や、旅先で見た思い出の星空など、<strong>地球上であれば、どの場所・どの時代の星空も映し出せます。</strong><br>元プラネタリウム解説員が、参加者の年代や目的に合わせて、その場にぴったりの星空や宇宙の世界をお届けします。'
     },
 
     illustrationSection: {
