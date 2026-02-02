@@ -6,7 +6,7 @@ DONATIプロジェクトで使用されている全Astroコンポーネントの
 
 ```
 src/components/
-├── common/          # 共通コンポーネント (10個)
+├── common/          # 共通コンポーネント (13個)
 │   ├── Header.astro
 │   ├── Footer.astro
 │   ├── DonatiLogo.astro
@@ -16,7 +16,10 @@ src/components/
 │   ├── SectionHeading.astro
 │   ├── SectionHeadingWithIcon.astro
 │   ├── SectionCloudyHeading.astro  ← 移動元: professional-experience/
-│   └── PageIntroduction.astro
+│   ├── PageIntroduction.astro
+│   ├── WavelineDecoration.astro    ← NEW: 波線装飾コンポーネント
+│   ├── ResponsiveImage.astro       ← NEW: レスポンシブ画像コンポーネント
+│   └── TwoColumnLayout.astro       ← NEW: 2カラムレイアウトコンポーネント
 ├── overview/        # トップページ専用 (6個)
 │   ├── OverViewSection.astro
 │   ├── OverViewHero.astro
@@ -50,20 +53,20 @@ src/components/
     └── StarrySection.astro
 ```
 
-**総コンポーネント数**: 39個
+**総コンポーネント数**: 42個
 
 ## コンポーネント統計
 
 ### フォルダ別内訳
 | フォルダ | コンポーネント数 | 用途 |
 |---------|-----------------|------|
-| common/ | 10 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionHeadingWithIcon, SectionCloudyHeading, PageIntroduction） |
+| common/ | 13 | 全ページ共通（Header, Footer, DonatiLogo, Hero, Carousel, InstagramSection, SectionHeading, SectionHeadingWithIcon, SectionCloudyHeading, PageIntroduction, WavelineDecoration, ResponsiveImage, TwoColumnLayout） |
 | overview/ | 6 | index.astro専用（OverView*, FooterDivider） |
 | services/ | 9 | service-fuji.astro/service-hide.astro専用（ServiceCategoryHeader, ServiceComparisonTable, ServiceDetailCard, ServiceDescription, RequestFlowStep, RecommendedScenes, SpaceServiceSection, SpaceCTASection, StargazingHeroSection） |
 | professional-experience/ | 3 | professional-experience.astro専用（MajorSection, CategorySection, SectionGrayHeading） |
 | cards/ | 3 | 汎用カード（ServiceCard, StaffProfileCard, FAQItem） |
 | effects/ | 5 | 視覚効果（CustomCursor*, Aurora*, Stars*） |
-| **合計** | **39** | **6フォルダ** |
+| **合計** | **42** | **6フォルダ** |
 
 ### ページ別import統計
 | ページ | import数 | 主要コンポーネント |
@@ -136,6 +139,9 @@ src/components/
 - **SectionCloudyHeading.astro**: introductionCloud.svg背景の見出し（h1/h2/h3対応）、もくもく背景+明るい青文字、全ページで使用可能
 - **PageIntroduction.astro**: ページ全体イントロ（SectionCloudyHeading + 小見出し + 本文）、柔らかい印象のセクション、全ページで推奨
 - **DonatiLogo.astro**: サイズ可変ロゴ（sm/md/lg）
+- **WavelineDecoration.astro**: 波線装飾（固定数/レスポンシブ対応）、count/responsive/height/svgPath指定可能
+- **ResponsiveImage.astro**: 統一スタイル画像（maxWidth/aspectRatio/rounded/shadow/objectFit指定可能）
+- **TwoColumnLayout.astro**: CSS Grid 2カラムレイアウト（768px以下で1カラム化）、左右スロット対応
 
 ### overview/
 - **OverViewHero.astro**: 複数画像レイアウト、ロゴ配置、SVG波線装飾
@@ -559,7 +565,67 @@ import { spaceServiceDetails } from '../config/services/space';
 - 波線背景: `#FFE84C`（SectionHeading自動適用）
 - 料金ヘッダー: `#65B7EC`
 
+### WavelineDecoration.astro
+**Props**:
+- `count?: number` - 波線の表示数（デフォルト: 5）
+- `responsive?: boolean` - レスポンシブモード（デフォルト: false）
+- `height?: string` - 高さクラス（デフォルト: 'h-4'）
+- `svgPath?: string` - SVGファイルパス（デフォルト: '/images/svg/decorations/waveline/waveLine.svg'）
+- `className?: string` - 追加CSSクラス
+
+**レスポンシブモード**: `responsive=true`でモバイル2本、タブレット3本、デスクトップ5本に自動調整
+
+**使用例**:
+```astro
+<WavelineDecoration count={5} />
+<WavelineDecoration responsive={true} className="mt-4" />
+```
+
+### ResponsiveImage.astro
+**Props**:
+- `src: string` - 画像URL（必須）
+- `alt: string` - 代替テキスト（必須）
+- `maxWidth?: string` - 最大幅クラス（デフォルト: 'max-w-md'）
+- `aspectRatio?: string` - アスペクト比（例: '3/2', '16/9'）
+- `rounded?: string` - 角丸クラス（デフォルト: 'rounded-lg'）
+- `shadow?: string` - 影クラス
+- `objectFit?: string` - object-fitクラス（デフォルト: 'object-cover'）
+- `className?: string` - 追加CSSクラス
+
+**使用例**:
+```astro
+<ResponsiveImage src="/images/photo.jpg" alt="説明" />
+<ResponsiveImage src="/images/photo.jpg" alt="説明" aspectRatio="3/2" shadow="shadow-lg" />
+```
+
+### TwoColumnLayout.astro
+**Props**:
+- `leftWidth?: string` - 左カラム幅（デフォルト: '300px'）
+- `gap?: string` - ギャップ（デフォルト: '2rem'）
+- `mobileGap?: string` - モバイルギャップ（デフォルト: '1.5rem'）
+- `mobileBreakpoint?: string` - ブレークポイント（デフォルト: '768px'）
+- `alignItems?: 'start' | 'center' | 'end' | 'stretch'` - 垂直配置（デフォルト: 'start'）
+- `className?: string` - 追加CSSクラス
+
+**スロット**: `<slot name="left" />`, `<slot name="right" />`
+
+**使用例**:
+```astro
+<TwoColumnLayout leftWidth="300px" gap="2rem">
+  <img slot="left" src="/images/photo.jpg" alt="写真" />
+  <div slot="right">
+    <p>説明テキスト</p>
+  </div>
+</TwoColumnLayout>
+```
+
 ## 更新履歴
+
+- **2026年2月1日**: Phase A 原子コンポーネント追加（Issue #208）
+  - WavelineDecoration.astro: 波線装飾コンポーネント（固定数/レスポンシブ対応）
+  - ResponsiveImage.astro: 統一スタイル画像コンポーネント
+  - TwoColumnLayout.astro: CSS Grid 2カラムレイアウトコンポーネント
+  - 総コンポーネント数：39個 → 42個
 
 - **2026年1月31日**: StargazingHeroSection.astro追加（Issue #122 - 星空観察会セクション新デザイン）
   - 星空観察会セクション専用コンポーネント実装

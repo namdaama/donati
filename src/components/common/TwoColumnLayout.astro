@@ -1,0 +1,75 @@
+---
+/**
+ * TwoColumnLayout - 2カラムレイアウトコンポーネント
+ * CSS Gridベースのレスポンシブ2カラムレイアウト
+ * 768px以下で1カラムに切り替え
+ */
+interface Props {
+  /**
+   * 左カラムの幅
+   * @default '300px'
+   */
+  leftWidth?: string;
+  /**
+   * カラム間のギャップ
+   * @default '2rem'
+   */
+  gap?: string;
+  /**
+   * モバイル時のギャップ
+   * @default '1.5rem'
+   */
+  mobileGap?: string;
+  /**
+   * モバイル切り替えのブレークポイント
+   * @default '768px'
+   */
+  mobileBreakpoint?: string;
+  /**
+   * 垂直方向の配置
+   * @default 'start'
+   */
+  alignItems?: 'start' | 'center' | 'end' | 'stretch';
+  /**
+   * 追加のCSSクラス
+   */
+  className?: string;
+}
+
+const {
+  leftWidth = '300px',
+  gap = '2rem',
+  mobileGap = '1.5rem',
+  mobileBreakpoint = '768px',
+  alignItems = 'start',
+  className = '',
+} = Astro.props;
+
+// ユニークなIDを生成（スコープ付きスタイル用）
+const uniqueId = `two-col-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div class:list={['two-column-layout', uniqueId, className]}>
+  <div class="left-column">
+    <slot name="left" />
+  </div>
+  <div class="right-column">
+    <slot name="right" />
+  </div>
+</div>
+
+<style define:vars={{ leftWidth, gap, mobileGap, mobileBreakpoint, alignItems }}>
+  .two-column-layout {
+    display: grid;
+    grid-template-columns: var(--leftWidth) 1fr;
+    gap: var(--gap);
+    align-items: var(--alignItems);
+  }
+
+  @media (max-width: 768px) {
+    .two-column-layout {
+      grid-template-columns: 1fr;
+      gap: var(--mobileGap);
+    }
+  }
+</style>
