@@ -1,4 +1,5 @@
 ---
+import { siteConfig } from '../../config/site';
 ---
 
 <footer class="mt-auto" style="background-color: rgb(102, 182, 236);">
@@ -14,6 +15,15 @@
           科学の楽しさを伝え、<br />
           世界をワクワクでいっぱいにする
         </p>
+        <a
+          href={siteConfig.social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block mt-3 text-white/90 hover:text-white transition-colors"
+          aria-label="DONATI公式Instagram"
+        >
+          <i class="fa-brands fa-instagram text-2xl"></i>
+        </a>
       </div>
 
       <!-- Quick Links -->
