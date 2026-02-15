@@ -60,7 +60,7 @@ MICROCMS_API_KEY=your-api-key
 
 #### 公開情報（PUBLIC_プレフィックス）
 ```env
-PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
+PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science_space/
 PUBLIC_WEB3FORMS_ACCESS_KEY=dfa9ec58-78f2-4ab5-94b5-a109ddb6a5dd
 PUBLIC_TWITTER_URL=
 PUBLIC_FACEBOOK_URL=

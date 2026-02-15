@@ -9,7 +9,7 @@ export const siteConfig = {
 
   // ソーシャルメディア
   social: {
-    instagram: import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/donati_science/',
+    instagram: import.meta.env.PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/donati_science_space/',
     twitter: import.meta.env.PUBLIC_TWITTER_URL || '',
     facebook: import.meta.env.PUBLIC_FACEBOOK_URL || ''
   },
