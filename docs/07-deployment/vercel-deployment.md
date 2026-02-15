@@ -38,7 +38,7 @@ MICROCMS_SERVICE_DOMAIN=your-service-domain
 MICROCMS_API_KEY=your-api-key
 
 # 公開情報
-PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
+PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science_space/
 PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
 ```
 
