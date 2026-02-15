@@ -46,7 +46,7 @@ npm run astro check  # Astroの組み込み型チェック
    ```env
    MICROCMS_SERVICE_DOMAIN=your-service-domain
    MICROCMS_API_KEY=your-api-key
-   PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science/
+   PUBLIC_INSTAGRAM_URL=https://www.instagram.com/donati_science_space/
    PUBLIC_WEB3FORMS_ACCESS_KEY=your-web3forms-access-key
    ```
 
