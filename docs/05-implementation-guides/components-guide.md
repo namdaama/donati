@@ -156,7 +156,7 @@ src/components/
 
 ### professional-experience/
 - **MajorSection.astro**: 大セクションラッパー（SectionHeadingWithIcon使用、iconPath propでアイコン表示可能）
-- **CategorySection.astro**: カテゴリー見出し（SectionGrayHeading）+ 3階層データ表示
+- **CategorySection.astro**: カテゴリー見出し（SectionGrayHeading、categoryTitle省略時は非表示）+ 3階層データ表示、サービス名は箇条書きマーク（・）付き `#65B7EC`（明るい青、太字）、場所リストは黒丸（●）付き `text-gray-700`
 - **SectionGrayHeading.astro**: sectionGrayRound.svg背景の見出し（h1/h2/h3対応）、紺青背景+白文字
 
 ### effects/

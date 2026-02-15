@@ -1,167 +1,171 @@
-# 設計: Footer文言修正とリンク再設定 (Issue #133)
+# 設計: [実績] 文言の全般的な書き換え (Issue #215)
 
 ## 前段階の確認
-`.claude_workflow/requirements.md`を読み込みました。
+`.claude_workflow/requirements.md` を読み込みました。
 
-## 現状分析
+## 変更対象と方針
 
-### 現在のFooter.astro構成
-- **3カラムレイアウト** (`grid grid-cols-1 md:grid-cols-3 gap-8`)
-- **背景色**: `rgb(102, 182, 236)` (水色)
-- **テキスト色**: `text-white` および `text-white/90`
+### 変更1: わくわく科学実験室のサービス名修正
+**ファイル**: `src/pages/professional-experience.astro`（データ部分のみ）
 
-**左側カラム**: 会社情報
-- `<h3>` サイエンス＆スペース ラボ
-- `<h3>` DONATI
-- `<p>` 科学の楽しさを伝え、世界をワクワクでいっぱいにする
+**現在:**
+```typescript
+{
+  serviceName: 'わくわく科学実験室（スライム・色変パンケーキ・DNA抽出 ほか）',
+  locations: [
+    '大野市内 小学校PTA',
+    // ...
+  ]
+}
+```
 
-**中央カラム**: メニュー（Quick Links）
-- 6つのリンク項目（現状は一部重複したリンク先）
+**変更後:**
+```typescript
+{
+  serviceName: 'わくわく科学実験室',
+  locations: [
+    '（スライム・色変パンケーキ・DNA抽出 ほか）',
+    '大野市内 小学校PTA',
+    // ...
+  ]
+}
+```
 
-**右側カラム**: お問合せ
-- 見出しのみでリンクなし
-- 説明文のみ
+- サービス名から括弧記述を分離
+- `（スライム・色変パンケーキ・DNA抽出 ほか）` を locations 配列の先頭に移動
+- 既存の場所データはそのまま維持
 
-**最下部**: コピーライト
-- ボーダー付きセクション
-- 中央揃え
+### 変更2: メディア出演・その他セクションの構造変更
+**ファイル**: `src/pages/professional-experience.astro`（データ部分）、`src/components/professional-experience/CategorySection.astro`
 
-## 実装アプローチ
+#### アプローチ: categoryTitle を省略可能にする
 
-### 対応方針
-1. **左側**: 変更なし（現状維持）
-2. **中央**: メニュー項目の文言とリンク先を更新
-3. **右側**: 説明文を更新し、お問合せページへのリンクを追加
-4. **最下部**: コピーライト文言を更新
+**理由:**
+- Issue #215 ではメディア出演・その他セクションにカテゴリ（###）ヘッダーがない
+- 「メディア出演」「自主企画イベント」「声の出演」はサービスレベルの項目
+- CategorySection の categoryTitle を省略可能にし、空の場合は SectionGrayHeading を非表示にする
 
-### 技術的アプローチ
+**CategorySection.astro の変更:**
 
-#### 1. 左側カラム（変更なし）
-現状のまま維持：
+```astro
+interface Props {
+  categoryTitle?: string;  // optional に変更
+  services: Service[];
+}
+
+const { categoryTitle, services } = Astro.props;
+```
+
 ```html
-<div>
-  <h3 class="text-white/90 mb-2">サイエンス＆スペースラボ</h3>
-  <h3 class="text-2xl font-bold mb-4 text-white">DONATI</h3>
-  <p class="text-white/90">
-    科学の楽しさを伝え、<br />
-    世界をワクワクでいっぱいにする
-  </p>
+<div class="rounded-lg p-4 md:p-6">
+  <!-- categoryTitle がある場合のみグレーバーを表示 -->
+  {categoryTitle && <SectionGrayHeading title={categoryTitle} level="h3" />}
+
+  <!-- サービスごとの表示（変更なし） -->
+  ...
 </div>
 ```
 
-**注意**: 現状は「サイエンス＆スペース ラボ」（スペース入り）だが、要件では「サイエンス＆スペースラボ」（スペースなし）。要件に合わせてスペースを削除する。
+**ページデータの変更:**
 
-#### 2. 中央カラム（メニュー更新）
+```typescript
+// 変更前: 3階層（カテゴリ→サービス→場所）
+const mediaSection = {
+  title: 'メディア出演・その他',
+  categories: [
+    {
+      categoryTitle: 'メディア出演',
+      services: [
+        { serviceName: 'ラジオ・テレビ出演', locations: [...] }
+      ]
+    },
+    {
+      categoryTitle: '自主企画イベント',
+      services: [
+        { serviceName: '主催イベント', locations: [...] }
+      ]
+    },
+    {
+      categoryTitle: '声の出演',
+      services: [
+        { serviceName: 'Moon Night Circus 2025', locations: ['オーディオガイド ナレーション'] }
+      ]
+    }
+  ]
+};
 
-**新しいメニュー構成**:
-```html
-<div>
-  <h3 class="text-lg font-semibold mb-4 text-white">メニュー</h3>
-  <ul class="space-y-2">
-    <li><a href="/service-fuji" class="text-white/90 hover:text-white transition-colors">・サイエンス事業</a></li>
-    <li><a href="/service-hide" class="text-white/90 hover:text-white transition-colors">・星空事業</a></li>
-    <li><a href="/professional-experience" class="text-white/90 hover:text-white transition-colors">・実績</a></li>
-    <li><a href="/faq" class="text-white/90 hover:text-white transition-colors">・料金・FAQ</a></li>
-    <li><a href="/about" class="text-white/90 hover:text-white transition-colors">・私たちについて</a></li>
-    <li><a href="/news" class="text-white/90 hover:text-white transition-colors">・お知らせ</a></li>
-  </ul>
-</div>
+// 変更後: 2階層（サービス→場所）、カテゴリタイトルなし
+const mediaSection = {
+  title: 'メディア出演・その他',
+  categories: [
+    {
+      categoryTitle: '',
+      services: [
+        {
+          serviceName: 'メディア出演',
+          locations: [
+            'FM福井「Morning Tune」',
+            'FBCテレビ「おじゃまっテレ」',
+            'FBCラジオ「ふむふむいっぱいラジカフェ」'
+          ]
+        },
+        {
+          serviceName: '自主企画イベント',
+          locations: [
+            'お菓子な科学実験教室',
+            '星のお話と音楽会',
+            '【R15】大人のプラネタリウム など'
+          ]
+        },
+        {
+          serviceName: '声の出演',
+          locations: [
+            'Moon Night Circus 2025 （オーディオガイド ナレーション）'
+          ]
+        }
+      ]
+    }
+  ]
+};
 ```
 
-**変更点**:
-| 変更前 | リンク先 | 変更後 | 新リンク先 |
-|--------|---------|--------|-----------|
-| ・DONATIとは？ | /about | ・サイエンス事業 | /service-fuji |
-| ・私たちについて | /about | ・星空事業 | /service-hide |
-| ・お知らせ（イベント案内など）| /news | ・実績 | /professional-experience |
-| ・サービス内容について | /services | ・料金・FAQ | /faq |
-| ・依頼の流れ | /services | ・私たちについて | /about |
-| ・活動経歴 | /professional-experience | ・お知らせ | /news |
+**ポイント:**
+- categories 配列は1要素のみ（categoryTitle は空文字列）
+- 旧カテゴリ名（メディア出演、自主企画イベント、声の出演）をサービス名に降格
+- 旧サービス名（ラジオ・テレビ出演、主催イベント）を削除し、場所を直接紐づけ
+- 「Moon Night Circus 2025 （オーディオガイド ナレーション）」を1つの場所項目に統合
 
-**注意**: /newsページの存在確認が必要（要件には含まれているが、pagesフォルダには存在しなかった）
+### 変更3: スペース表記の統一
+**ファイル**: `src/pages/professional-experience.astro`
 
-#### 3. 右側カラム（お問合せセクション）
+Issue の内容に合わせて全角スペース「　」を半角スペース「 」に統一する箇所:
+- `'ふじしま認定こども園　など'` → `'ふじしま認定こども園 など'`
+- `'Fun! Family　など'` → `'Fun! Family など'`
+- `'子ども食堂 木のおうち　など'` → `'子ども食堂 木のおうち など'`
+- `'イオンそよら福井開発　など'` → `'イオンそよら福井開発 など'`
+- `'【R15】大人のプラネタリウム　など'` → `'【R15】大人のプラネタリウム など'`
 
-**新しい構成**:
-```html
-<div>
-  <h3 class="text-lg font-semibold mb-4 text-white">
-    <a href="/contact" class="hover:text-white/80 transition-colors">お問合せ</a>
-  </h3>
-  <p class="text-white/90">
-    実施内容・時間・ご予算について、<br />
-    ご希望に合わせてご相談を承ります。<br />
-    まずはお気軽にご連絡ください。
-  </p>
-</div>
-```
+## 変更ファイル一覧
 
-**変更点**:
-- 見出し「お問合せ」をリンク化（/contactへ）
-- 説明文を更新（柔らかい表現を維持）
+| ファイル | 変更内容 |
+|---------|---------|
+| `src/components/professional-experience/CategorySection.astro` | categoryTitle を optional 化、空の場合 SectionGrayHeading 非表示 |
+| `src/pages/professional-experience.astro` | データ更新（差分1〜3） |
+| `docs/05-implementation-guides/components-guide.md` | CategorySection の Props 変更を反映 |
 
-#### 4. 最下部（コピーライト）
+## 影響範囲
 
-**新しいコピーライト**:
-```html
-<div class="border-t border-white/20 py-6 mt-6">
-  <div class="container-custom text-center">
-    <p class="text-sm text-white/90">
-      © 2026 サイエンス＆スペースラボ DONATI<br class="md:hidden" />
-      <span class="hidden md:inline"> </span>(Science & Space Lab DONATI) All rights reserved.
-    </p>
-  </div>
-</div>
-```
-
-**変更点**:
-- 「© サイエンス&スペース ラボ DONATI」
-- → 「© 2026 サイエンス＆スペースラボ DONATI (Science & Space Lab DONATI) All rights reserved.」
-- レスポンシブ対応: モバイルでは改行、デスクトップでは1行表示
-
-**文字使い分け**:
-- 「サイエンス＆スペースラボ」→ 全角「＆」、スペースなし
-- 「(Science & Space Lab DONATI)」→ 半角「&」、スペースあり
-
-## 期待される結果
-
-### デスクトップ表示
-- 3カラムレイアウトが維持される
-- 各メニューリンクが新しい文言で表示される
-- お問合せ見出しがクリック可能になる
-- コピーライトが1行で表示される
-
-### モバイル表示
-- 1カラムレイアウト（縦積み）
-- コピーライトが2行で表示される（改行）
-
-## リスクと対策
-
-### リスク1: /newsページの不存在
-- **問題**: pagesフォルダに/news.astroが存在しない可能性
-- **対策**: 実装前に確認、存在しなければユーザーに確認
-
-### リスク2: 表記の統一
-- **問題**: 「サイエンス＆スペース ラボ」vs「サイエンス＆スペースラボ」のスペース有無
-- **対策**: 要件に従い「サイエンス＆スペースラボ」（スペースなし）に統一
-
-### リスク3: 文字の「＆」と「&」の使い分け
-- **問題**: 全角と半角の混在
-- **対策**: 日本語表記は全角「＆」、英語表記は半角「&」で統一
+- CategorySection は `professional-experience.astro` でのみ使用されているため、他ページへの影響なし
+- MajorSection、SectionGrayHeading は変更不要
+- 既存のスタイル変更（青色テキスト、・マーク）はそのまま維持
 
 ## 検証項目
 
-1. 左側カラムが「サイエンス＆スペースラボ」になっているか（スペースなし）
-2. 中央カラムの6つのメニュー項目が新しい文言で表示されるか
-3. 各メニューリンクが正しいページに遷移するか
-   - サイエンス事業 → /service-fuji
-   - 星空事業 → /service-hide
-   - 実績 → /professional-experience
-   - 料金・FAQ → /faq
-   - 私たちについて → /about
-   - お知らせ → /news（ページ存在確認要）
-4. お問合せ見出しがリンク化され、/contactに遷移するか
-5. お問合せの説明文が新しい文言になっているか
-6. コピーライトが「© 2026 サイエンス＆スペースラボ DONATI (Science & Space Lab DONATI) All rights reserved.」になっているか
-7. レスポンシブ対応が維持されているか（3カラム→1カラム）
-8. 既存のスタイル（背景色、テキスト色、ホバー効果）が維持されているか
+1. サイエンス事業セクションのカテゴリ見出し（グレーバー）が正常に表示されること
+2. 星空事業セクションのカテゴリ見出し（グレーバー）が正常に表示されること
+3. メディア出演・その他セクションにカテゴリ見出しが表示されないこと
+4. メディア出演・その他セクションのサービス名（青色・太字）が正しく表示されること
+5. わくわく科学実験室のサービス名に括弧記述が含まれていないこと
+6. `（スライム・色変パンケーキ・DNA抽出 ほか）` が場所リストの先頭に表示されること
+7. 全角スペースが半角スペースに統一されていること
+8. `npm run build` がエラーなく完了すること
