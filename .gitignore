@@ -22,6 +22,9 @@ pnpm-debug.log*
 # macOS
 .DS_Store
 
+# local credential notes
+.github/ISSUE_TEMPLATE/setup-walkthrough.local.md
+
 # typescript
 *.tsbuildinfonode_modules/
 experiments/
