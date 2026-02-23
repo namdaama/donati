@@ -4,8 +4,10 @@
 
 <div class="star-cursor" id="star-cursor">
   <svg width="20" height="20" viewBox="0 0 20 20">
-    <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z" 
-          fill="currentColor" />
+    <path d="M10 0 L12.5 7.5 L20 10 L12.5 12.5 L10 20 L7.5 12.5 L0 10 L7.5 7.5 Z"
+          fill="currentColor"
+          stroke="#2c5aa0"
+          stroke-width="1" />
   </svg>
 </div>
 <div class="star-trail" id="star-trail"></div>
@@ -18,7 +20,7 @@
     height: 20px;
     pointer-events: none;
     z-index: 9999;
-    color: var(--color-primary, #2c5aa0);
+    color: #2c5aa0;
     transition: transform 0.1s ease-out, color 0.2s ease;
     animation: twinkle 2s infinite;
   }
@@ -34,7 +36,7 @@
     position: fixed;
     width: 4px;
     height: 4px;
-    background: var(--color-primary, #2c5aa0);
+    background: #2c5aa0;
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
@@ -43,7 +45,7 @@
 
   /* ホバー時 */
   .star-cursor.hover {
-    color: #ff69b4;
+    color: #FFD700;
     transform: scale(1.5);
     animation: spin 1s linear infinite;
   }
@@ -60,8 +62,10 @@
       display: none;
     }
   }
+</style>
 
-  /* デフォルトカーソルを非表示 */
+<style is:global>
+  /* デフォルトカーソルを非表示（is:globalでページ全体に適用） */
   body.star-cursor-active {
     cursor: none;
   }

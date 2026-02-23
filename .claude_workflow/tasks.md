@@ -1,27 +1,29 @@
-# タスク化: Issue #217-219 まとめて対応
+# タスク化: [実績] 文言の全般的な書き換え (Issue #215)
 
-前段階の `.claude_workflow/design.md` を読み込みました。
+## 前段階の確認
+`.claude_workflow/design.md` を読み込みました。
 
 ## タスクリスト
 
-### タスク1: サイエンス事業ページの文言修正（Issue #217）
-- [ ] `src/pages/service-fuji.astro` の `serviceDescriptions[0].recommendedScenesData.overviewDescription` を差し替え（サイエンスパフォーマンスショー）
-- [ ] `serviceDescriptions[1].recommendedScenesData.overviewDescription` を差し替え（わくわく科学実験室）
-- [ ] `serviceDescriptions[2].recommendedScenesData.overviewDescription` を差し替え（ワークショップ）
+### タスク1: CategorySection.astro の categoryTitle を optional 化
+- [x] `categoryTitle: string` → `categoryTitle?: string` に変更
+- [x] テンプレート部分: categoryTitle が空の場合 SectionGrayHeading を非表示にする条件分岐を追加
 
-### タスク2: Header固定化（Issue #218）
-- [ ] `src/components/common/Header.astro` の `<header>` タグのクラスを `sticky top-0 z-50 bg-white` に変更
+### タスク2: わくわく科学実験室のデータ修正
+- [x] serviceName から `（スライム・色変パンケーキ・DNA抽出 ほか）` を削除
+- [x] locations 配列の先頭に `（スライム・色変パンケーキ・DNA抽出 ほか）` を追加
 
-### タスク3: FooterにInstagramリンク追加（Issue #219）
-- [ ] `src/components/common/Footer.astro` の frontmatter で `siteConfig` をインポート
-- [ ] 左側セクション（キャッチコピーの下）にInstagramアイコンリンクを追加
+### タスク3: メディア出演・その他セクションのデータ再構築
+- [x] categories を1要素（categoryTitle: ''）に統合
+- [x] 旧カテゴリ名（メディア出演、自主企画イベント、声の出演）をサービス名に降格
+- [x] 旧サービス名（ラジオ・テレビ出演、主催イベント）を削除し場所を直接紐づけ
+- [x] 「Moon Night Circus 2025 （オーディオガイド ナレーション）」を1つの場所項目に統合
 
-### タスク4: 動作確認
-- [ ] `npm run build` でビルドエラーがないことを確認
+### タスク4: スペース表記の統一
+- [x] 全角スペース「　」+「など」を半角スペース+「など」に統一（4箇所）
 
-## 実行順序
+### タスク5: components-guide.md のドキュメント更新
+- [x] CategorySection の Props 説明に categoryTitle が optional であることを反映
 
-1. タスク1（文言差し替え・単純作業）
-2. タスク2（Header 1行変更）
-3. タスク3（Footer インポート追加 + アイコン追加）
-4. タスク4（ビルド確認）
+### タスク6: ビルド確認
+- [x] `npm run build` でエラーがないことを確認（0 errors, 0 warnings）

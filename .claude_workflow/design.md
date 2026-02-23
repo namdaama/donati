@@ -1,93 +1,171 @@
-# 設計: Issue #217-219 まとめて対応
+# 設計: [実績] 文言の全般的な書き換え (Issue #215)
 
-前段階の `.claude_workflow/requirements.md` を読み込みました。
+## 前段階の確認
+`.claude_workflow/requirements.md` を読み込みました。
 
----
+## 変更対象と方針
 
-## Issue #217: サイエンス事業ページの文言修正
+### 変更1: わくわく科学実験室のサービス名修正
+**ファイル**: `src/pages/professional-experience.astro`（データ部分のみ）
 
-### アプローチ
-- `src/pages/service-fuji.astro` の `serviceDescriptions` 配列内、各サービスの `recommendedScenesData.overviewDescription` を差し替える
-- 他の箇所（scenes配列、description等）は変更しない
-
-### 変更箇所（3箇所）
-
-| # | サービス | 行番号目安 |
-|---|---------|-----------|
-| 1 | サイエンスパフォーマンスショー | L47 |
-| 2 | わくわく科学実験室 | L71 |
-| 3 | ワークショップ | L95 |
-
-各 `overviewDescription` を Issue #217 の指定文言に差し替えるのみ。
-
----
-
-## Issue #218: Header固定化（sticky）
-
-### アプローチ
-- `<header>` タグのクラスを変更し sticky ヘッダーにする
-
-### 変更内容
-**ファイル**: `src/components/common/Header.astro` (L43)
-
-```
-変更前: <header class="relative z-10">
-変更後: <header class="sticky top-0 z-50 bg-white">
+**現在:**
+```typescript
+{
+  serviceName: 'わくわく科学実験室（スライム・色変パンケーキ・DNA抽出 ほか）',
+  locations: [
+    '大野市内 小学校PTA',
+    // ...
+  ]
+}
 ```
 
-### 設計判断
-| 項目 | 値 | 理由 |
-|------|---|------|
-| `sticky top-0` | - | スクロール時に画面上部に固定 |
-| `z-50` | 50 | ページコンテンツ（z-10等）の上、モバイルメニュー（z-index:9999）の下 |
-| `bg-white` | 白 | コンテンツが透けないようにする。各ページで背景画像や背景色が異なるため、白で統一 |
+**変更後:**
+```typescript
+{
+  serviceName: 'わくわく科学実験室',
+  locations: [
+    '（スライム・色変パンケーキ・DNA抽出 ほか）',
+    '大野市内 小学校PTA',
+    // ...
+  ]
+}
+```
 
-### 影響範囲
-- 全ページで Header を使用しているため全ページに影響
-- 波線装飾もヘッダー内のため一緒に固定される
-- `body` の `min-h-screen flex flex-col` との相性は問題なし（stickyはフロー内に留まる）
+- サービス名から括弧記述を分離
+- `（スライム・色変パンケーキ・DNA抽出 ほか）` を locations 配列の先頭に移動
+- 既存の場所データはそのまま維持
 
----
+### 変更2: メディア出演・その他セクションの構造変更
+**ファイル**: `src/pages/professional-experience.astro`（データ部分）、`src/components/professional-experience/CategorySection.astro`
 
-## Issue #219: FooterにInstagramリンク追加
+#### アプローチ: categoryTitle を省略可能にする
 
-### アプローチ
-- Font Awesome（`Layout.astro` で読み込み済み）の `fa-brands fa-instagram` を使用
-- 左側の会社情報セクション（キャッチコピーの下）にアイコンリンクを配置
-- `siteConfig.social.instagram` からURLを取得
+**理由:**
+- Issue #215 ではメディア出演・その他セクションにカテゴリ（###）ヘッダーがない
+- 「メディア出演」「自主企画イベント」「声の出演」はサービスレベルの項目
+- CategorySection の categoryTitle を省略可能にし、空の場合は SectionGrayHeading を非表示にする
 
-### 変更内容
-**ファイル**: `src/components/common/Footer.astro`
+**CategorySection.astro の変更:**
 
-1. frontmatter で `siteConfig` をインポート
-2. 左側セクションのキャッチコピー `<p>` の下にアイコンリンクを追加
+```astro
+interface Props {
+  categoryTitle?: string;  // optional に変更
+  services: Service[];
+}
+
+const { categoryTitle, services } = Astro.props;
+```
 
 ```html
-<a href={siteConfig.social.instagram}
-   target="_blank"
-   rel="noopener noreferrer"
-   class="inline-block mt-3 text-white/90 hover:text-white transition-colors"
-   aria-label="DONATI公式Instagram">
-  <i class="fa-brands fa-instagram text-2xl"></i>
-</a>
+<div class="rounded-lg p-4 md:p-6">
+  <!-- categoryTitle がある場合のみグレーバーを表示 -->
+  {categoryTitle && <SectionGrayHeading title={categoryTitle} level="h3" />}
+
+  <!-- サービスごとの表示（変更なし） -->
+  ...
+</div>
 ```
 
-### 設計判断
-- **配置場所**: 会社情報セクション内（DONATIのブランドSNSとして自然な位置）
-- **スタイル**: `text-white/90` → `hover:text-white` でFooterの配色と統一
-- **安全性**: `target="_blank"` + `rel="noopener noreferrer"` で外部リンク
-- **アクセシビリティ**: `aria-label` で説明追加
+**ページデータの変更:**
 
----
+```typescript
+// 変更前: 3階層（カテゴリ→サービス→場所）
+const mediaSection = {
+  title: 'メディア出演・その他',
+  categories: [
+    {
+      categoryTitle: 'メディア出演',
+      services: [
+        { serviceName: 'ラジオ・テレビ出演', locations: [...] }
+      ]
+    },
+    {
+      categoryTitle: '自主企画イベント',
+      services: [
+        { serviceName: '主催イベント', locations: [...] }
+      ]
+    },
+    {
+      categoryTitle: '声の出演',
+      services: [
+        { serviceName: 'Moon Night Circus 2025', locations: ['オーディオガイド ナレーション'] }
+      ]
+    }
+  ]
+};
 
-## 影響ファイル一覧
+// 変更後: 2階層（サービス→場所）、カテゴリタイトルなし
+const mediaSection = {
+  title: 'メディア出演・その他',
+  categories: [
+    {
+      categoryTitle: '',
+      services: [
+        {
+          serviceName: 'メディア出演',
+          locations: [
+            'FM福井「Morning Tune」',
+            'FBCテレビ「おじゃまっテレ」',
+            'FBCラジオ「ふむふむいっぱいラジカフェ」'
+          ]
+        },
+        {
+          serviceName: '自主企画イベント',
+          locations: [
+            'お菓子な科学実験教室',
+            '星のお話と音楽会',
+            '【R15】大人のプラネタリウム など'
+          ]
+        },
+        {
+          serviceName: '声の出演',
+          locations: [
+            'Moon Night Circus 2025 （オーディオガイド ナレーション）'
+          ]
+        }
+      ]
+    }
+  ]
+};
+```
 
-| ファイル | Issue | 変更内容 |
-|---------|-------|---------|
-| `src/pages/service-fuji.astro` | #217 | overviewDescription × 3箇所の文言差し替え |
-| `src/components/common/Header.astro` | #218 | `<header>` タグのクラス変更（1行） |
-| `src/components/common/Footer.astro` | #219 | siteConfigインポート + Instagramアイコン追加 |
+**ポイント:**
+- categories 配列は1要素のみ（categoryTitle は空文字列）
+- 旧カテゴリ名（メディア出演、自主企画イベント、声の出演）をサービス名に降格
+- 旧サービス名（ラジオ・テレビ出演、主催イベント）を削除し、場所を直接紐づけ
+- 「Moon Night Circus 2025 （オーディオガイド ナレーション）」を1つの場所項目に統合
 
-## リスク・注意点
+### 変更3: スペース表記の統一
+**ファイル**: `src/pages/professional-experience.astro`
 
-- Header固定化により、ページ内アンカーリンク（`#science` 等）でジャンプ時にヘッダー分ずれる可能性 → まず基本実装を行い確認。必要なら `scroll-margin-top` で対応
+Issue の内容に合わせて全角スペース「　」を半角スペース「 」に統一する箇所:
+- `'ふじしま認定こども園　など'` → `'ふじしま認定こども園 など'`
+- `'Fun! Family　など'` → `'Fun! Family など'`
+- `'子ども食堂 木のおうち　など'` → `'子ども食堂 木のおうち など'`
+- `'イオンそよら福井開発　など'` → `'イオンそよら福井開発 など'`
+- `'【R15】大人のプラネタリウム　など'` → `'【R15】大人のプラネタリウム など'`
+
+## 変更ファイル一覧
+
+| ファイル | 変更内容 |
+|---------|---------|
+| `src/components/professional-experience/CategorySection.astro` | categoryTitle を optional 化、空の場合 SectionGrayHeading 非表示 |
+| `src/pages/professional-experience.astro` | データ更新（差分1〜3） |
+| `docs/05-implementation-guides/components-guide.md` | CategorySection の Props 変更を反映 |
+
+## 影響範囲
+
+- CategorySection は `professional-experience.astro` でのみ使用されているため、他ページへの影響なし
+- MajorSection、SectionGrayHeading は変更不要
+- 既存のスタイル変更（青色テキスト、・マーク）はそのまま維持
+
+## 検証項目
+
+1. サイエンス事業セクションのカテゴリ見出し（グレーバー）が正常に表示されること
+2. 星空事業セクションのカテゴリ見出し（グレーバー）が正常に表示されること
+3. メディア出演・その他セクションにカテゴリ見出しが表示されないこと
+4. メディア出演・その他セクションのサービス名（青色・太字）が正しく表示されること
+5. わくわく科学実験室のサービス名に括弧記述が含まれていないこと
+6. `（スライム・色変パンケーキ・DNA抽出 ほか）` が場所リストの先頭に表示されること
+7. 全角スペースが半角スペースに統一されていること
+8. `npm run build` がエラーなく完了すること
