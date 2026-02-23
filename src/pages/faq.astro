@@ -29,7 +29,7 @@ import { faqData } from '../config/faq';
         <!-- 2. 料金についてのご案内 -->
         <div id="pricing">
           <SectionHeading title={faqData.introSection.title} waveLineCount={5} titleMarginLeft="ml-4" />
-          <div class="mb-12">
+          <div class="mb-16 pricing-content">
             {faqData.introSection.content.map((paragraph) => (
               <p class="text-text-gray mb-3 leading-relaxed text-sm md:text-base whitespace-pre-line">{paragraph}</p>
             ))}
@@ -103,11 +103,11 @@ import { faqData } from '../config/faq';
         <!-- 6. よくあるご質問 (FAQ) -->
         <div id="faq">
           <SectionHeading title="よくあるご質問 (FAQ)" waveLineCount={5} titleMarginLeft="ml-4" />
-        </div>
-        <div class="space-y-4 mb-16">
-          {faqData.faqItems.map((item, index) => (
-            <FAQItem question={item.question} answer={item.answer} index={index} />
-          ))}
+          <div class="space-y-4 mb-16">
+            {faqData.faqItems.map((item, index) => (
+              <FAQItem question={item.question} answer={item.answer} index={index} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -129,7 +129,7 @@ import { faqData } from '../config/faq';
   }
 
   /* SectionHeading の幅を752pxに制限 */
-  :global(.max-w-4xl div.mb-12) {
+  :global(.pricing-content) {
     max-width: 752px;
   }
 </style>
