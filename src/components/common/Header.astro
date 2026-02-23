@@ -145,10 +145,10 @@ const navIcons = [
   <!-- ドロワーコンテンツ -->
   <div
     id="mobile-menu-drawer"
-    class="absolute right-0 top-0 h-full w-72 sm:w-80 bg-gradient-to-b from-[#d4eaf7] to-[#b8ddf2] shadow-xl transform translate-x-full transition-transform duration-300 ease-out"
+    class="absolute right-0 top-0 h-full w-72 sm:w-80 bg-gradient-to-b from-[#d4eaf7] to-[#b8ddf2] shadow-xl transform translate-x-full transition-transform duration-300 ease-out flex flex-col"
   >
     <!-- ドロワーヘッダー -->
-    <div class="flex justify-between items-center p-4 border-b border-overview-sky/20">
+    <div class="flex justify-between items-center p-4 border-b border-overview-sky/20 flex-shrink-0">
       <span class="text-overview-dark-blue font-medium">メニュー</span>
       <button
         id="mobile-menu-close"
@@ -161,8 +161,8 @@ const navIcons = [
       </button>
     </div>
 
-    <!-- ナビゲーションリンク -->
-    <nav class="p-4 space-y-2">
+    <!-- ナビゲーションリンク（スクロール可能） -->
+    <nav class="flex-1 overflow-y-auto p-4 space-y-2">
       {navIcons.map((item) => (
         <a
           href={item.href}
@@ -183,7 +183,7 @@ const navIcons = [
     </nav>
 
     <!-- ホームへ戻るリンク -->
-    <div class="absolute bottom-8 left-0 right-0 px-4">
+    <div class="flex-shrink-0 px-4 py-6 border-t border-overview-sky/20">
       <a
         href="/"
         class="flex items-center justify-center gap-2 p-3 rounded-lg bg-overview-sky/30 hover:bg-overview-sky/40 transition-colors duration-200"
