@@ -24,15 +24,12 @@ const { categoryTitle, services } = Astro.props;
       <!-- 中分類（太字） -->
       <p class="font-bold text-[#65B7EC] mb-2">・{service.serviceName}</p>
 
-      <!-- 小分類（黒丸リスト） -->
-      <ul class="space-y-2">
+      <!-- 小分類 -->
+      <div class="text-gray-700 leading-relaxed">
         {service.locations.map((location) => (
-          <li class="flex items-start text-gray-700 leading-relaxed">
-            <span class="mr-3 flex-shrink-0">●</span>
-            <span>{location}</span>
-          </li>
+          <p>{location}</p>
         ))}
-      </ul>
+      </div>
     </div>
   ))}
 </div>
