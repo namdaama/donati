@@ -12,14 +12,6 @@ interface Props {
 }
 
 const { categoryTitle, services } = Astro.props;
-
-const processedServices = services.map((service) => {
-  const lines: string[] = [];
-  for (let i = 0; i < service.locations.length; i += 2) {
-    lines.push(service.locations.slice(i, i + 2).join('／'));
-  }
-  return { serviceName: service.serviceName, lines };
-});
 ---
 
 <div class="rounded-lg p-4 md:p-6">
@@ -27,15 +19,15 @@ const processedServices = services.map((service) => {
   {categoryTitle && <SectionGrayHeading title={categoryTitle} level="h3" />}
 
   <!-- サービスごとの表示 -->
-  {processedServices.map((service, index) => (
+  {services.map((service, index) => (
     <div class={index > 0 ? 'mt-6' : 'mt-4'}>
       <!-- 中分類（太字） -->
       <p class="font-bold text-[#65B7EC] mb-2">・{service.serviceName}</p>
 
-      <!-- 小分類（2つずつ／区切り） -->
+      <!-- 小分類 -->
       <div class="text-gray-700 leading-relaxed">
-        {service.lines.map((line) => (
-          <p>{line}</p>
+        {service.locations.map((location) => (
+          <p>{location}</p>
         ))}
       </div>
     </div>
