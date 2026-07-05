@@ -36,13 +36,6 @@ const Tag = level;
     object-fit: fill;
   }
 
-  @media (max-width: 768px) {
-    .section-cloudy-bg {
-      object-fit: contain;
-      object-position: left center;
-    }
-  }
-
   .section-cloudy-heading {
     position: relative;
     z-index: 1;
@@ -60,7 +53,9 @@ const Tag = level;
 
   @media (max-width: 768px) {
     .section-cloudy-heading-wrapper {
-      height: 50px;
+      height: auto;
+      aspect-ratio: 988 / 135; /* もくもくSVG (introductionCloud.svg) の原寸比 */
+      min-height: 50px;
     }
 
     .section-cloudy-heading {
